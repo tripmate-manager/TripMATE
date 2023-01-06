@@ -4,6 +4,6 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface TestService {
-    @GET("test/dao")
+    @GET("v1/test/dao")
     Call<Object> getTest();
 }
