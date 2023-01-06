@@ -14,7 +14,7 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/test")
 public class TestController {
-    private static Logger log = LoggerFactory.getLogger(TestController.class);
+    private static final Logger log = LoggerFactory.getLogger(TestController.class);
 
     @GetMapping("/page")
     public String testPage() {
@@ -33,8 +33,14 @@ public class TestController {
         Call<Object> getTest = RetrofitClient.getApiService().getTest();
 
         try {
-            log.info(getTest.clone().execute().body().toString());
-            mav.addObject("data", getTest.clone().execute().body());
+            Object body = getTest.clone().execute().body();
+
+            if (body == null) {
+                body = "Retrofit client's body is null";
+            }
+
+            log.info(body.toString());
+            mav.addObject("data", body);
         } catch (IOException e) {
             e.printStackTrace();
         }
