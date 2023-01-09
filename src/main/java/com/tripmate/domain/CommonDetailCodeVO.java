@@ -1,10 +1,12 @@
 package com.tripmate.domain;
 
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.Date;
 
 @Data
+@ToString
 public class CommonDetailCodeVO {
     private String commCd;
     private String commDtlCd;
@@ -18,22 +20,4 @@ public class CommonDetailCodeVO {
     private Date regDtime;
     private long uptNo;
     private Date uptDtime;
-
-    @Override
-    public String toString() {
-        return "CommonDetailCodeVO{" +
-            "commCd='" + commCd + '\'' +
-            ", commDtlCd='" + commDtlCd + '\'' +
-            ", commDtlNm='" + commDtlNm + '\'' +
-            ", grpCd1='" + grpCd1 + '\'' +
-            ", grpCd2='" + grpCd2 + '\'' +
-            ", grpCd3='" + grpCd3 + '\'' +
-            ", sortSeq=" + sortSeq +
-            ", useYn='" + useYn + '\'' +
-            ", regNo=" + regNo +
-            ", regDtime=" + regDtime +
-            ", uptNo=" + uptNo +
-            ", uptDtime=" + uptDtime +
-            '}';
-    }
 }
