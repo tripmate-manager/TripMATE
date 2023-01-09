@@ -23,6 +23,8 @@
   * `File -> Settings -> Editor -> File Encodings -> Default encoding for properties files -> UTF-8`
 2. Lombok Plugin
   * `File -> Settings -> Build, Excution, Deployment -> Compiler -> Annotation Processors -> Enable Annotation Processing check`
+3. Tomcat VM option
+  * `-Dserver.type=local -Dfile.encoding=UTF-8`
 
 ### Source
 * [GitHub](https://github.com/tripmate-manager/TripMATE)

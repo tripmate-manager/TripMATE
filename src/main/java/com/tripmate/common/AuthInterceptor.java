@@ -1,4 +1,4 @@
-package com.tripmate.util;
+package com.tripmate.common;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
