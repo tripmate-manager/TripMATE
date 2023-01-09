@@ -1,0 +1,323 @@
+
+html {
+    font-size:62.5%;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+ul, li {
+    list-style: none;
+}
+input {
+    border: none;
+}
+body {
+    width: 37.5rem;
+}.signup__wrap {
+     width: 100%;
+     overflow: hidden;
+     position: relative;
+     /* align-items: center; */
+     display: flex;
+     flex-direction: column;
+     background-color: #ffffff;
+ }
+.signup__wrap .signup_form {
+    width: 100%;
+    height: 87.6rem;
+    position: relative;
+    flex-shrink: 0;
+}
+.signup__wrap .signup_title {
+    width: 6.8rem;
+    height: 3.9rem;
+    position: absolute;
+    left: 2.5rem;
+    top: 4.95rem;
+    display: flex;
+    font-size: 2.8rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #000000;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+}
+.signup__wrap .signup_form .signup_form_item {
+    margin-bottom: 1.5rem;
+    width: 32.7rem;
+    height: 5.95rem;
+    position: relative;
+    left: 2.3rem;
+    top: 10.55rem;
+    display: flex;
+    align-items: flex-end;
+}
+.signup__wrap .signup_form .signup_form_item .signup_form_input {
+    margin-right: 0.7rem;
+    box-sizing: border-box;
+    width: 24.5rem;
+    height: 4rem;
+    padding: 0.7rem 0rem 0rem 0.5rem;
+    position : relative;
+    flex-shrink: 0;
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #646464;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    border: solid 0.1rem #646464;
+    background-color: #ffffff;
+    flex-shrink: 0;
+}
+.signup__wrap .signup_form .signup_form_item .signup_form_input_2 {
+    box-sizing: border-box;
+    width: 100%;
+    height: 4rem;
+    padding: 0.7rem 0rem 0rem 0.5rem;
+    position : relative;
+    flex-shrink: 0;
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #646464;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    border: solid 0.1rem #646464;
+    background-color: #ffffff;
+    flex-shrink: 0;
+}
+.signup__wrap .signup_form .signup_form_item .signup_subtitle {
+    width: 2.6rem;
+    height: 2rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    font-size: 1.4rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #1e1e1e;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+}
+.signup__wrap .signup_form .signup_form_item .signup_duplicate {
+    margin-top: 1.95rem;
+    box-sizing: border-box;
+    padding: 1rem 1rem;
+    align-items: center;
+    width: 7.5rem;
+    height: 4rem;
+    display: flex;
+    font-size: 1.5rem;
+    font-weight: 350;
+    line-height: 1.3625;
+    color: #ffffff;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    background-color: #393c88;
+    border-radius: 0.5rem;
+    flex-shrink: 0;
+}
+.signup__wrap .signup_form .auto-group-xuzt-jhu {
+    width: 32.7rem;
+    height: 4.05rem;
+    position: absolute;
+    left: 2.5rem;
+    top: 70.75rem;
+    display: flex;
+    align-items: flex-start;
+}
+.signup__wrap .signup_form .auto-group-xuzt-jhu .item--GC3 {
+    margin-right: 19rem;
+    display: flex;
+    font-size: 1.4rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #1e1e1e;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.signup__wrap .signup_form .auto-group-xuzt-jhu .auto-group-bq7r-PXZ {
+    margin-top: 0.05rem;
+    box-sizing: border-box;
+    padding-right: 2.7rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    background-color: #eeeded;
+    border-radius: 0.5rem;
+    flex-shrink: 0;
+}
+.signup__wrap .signup_form .auto-group-xuzt-jhu .auto-group-bq7r-PXZ .auto-group-jbwy-uko {
+    margin-right: 2.3rem;
+    width: 6rem;
+    height: 100%;
+    display: flex;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #646464;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    align-items: center;
+    justify-content: center;
+    border: solid 0.1rem #646464;
+    box-sizing: border-box;
+    background-color: #eeeded;
+    border-radius: 0.5rem 0 0 0.5rem;
+    flex-shrink: 0;
+}
+.signup__wrap .signup_form .auto-group-xuzt-jhu .auto-group-bq7r-PXZ .item--mo1 {
+    margin-top: 0.4rem;
+    display: flex;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.signup__wrap .signup_form .signup_form_message {
+    margin-top: 1.7rem;
+    width: 11.4rem;
+    height: 1.7rem;
+    left: 3.3rem;
+    top: 33.05rem;
+    display: flex;
+    font-size: 1.0rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #e40000;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+}
+.signup__wrap .signup_form .auto-group-aoaj-jNT {
+    width: 32.7rem;
+    height: 5.95rem;
+    position: absolute;
+    left: 2.5rem;
+    top: 61.75rem;
+}
+.signup__wrap .signup_form .auto-group-aoaj-jNT .rectangle-32-4vX {
+    width: 32.7rem;
+    height: 4rem;
+    position: absolute;
+    left: 0;
+    top: 1.95rem;
+    border: solid 0.1rem #646464;
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+.signup__wrap .signup_form .auto-group-aoaj-jNT .item--o7R {
+    width: 3.4rem;
+    height: 2rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    font-size: 1.4rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #1e1e1e;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+}
+.signup__wrap .signup_form .auto-group-aoaj-jNT .yymmdd-uAT {
+    width: 5.4rem;
+    height: 1.7rem;
+    position: absolute;
+    left: 0.8rem;
+    top: 3.1rem;
+    display: flex;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #646464;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+}
+.signup__wrap .signup_complete {
+    width: 100%;
+    height: 5rem;
+    display: flex;
+    font-size: 1.8rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #ffffff;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    align-items: center;
+    justify-content: center;
+    background-color: #393c88;
+    flex-shrink: 0;
+}
+.signup__wrap .signup_form .signup_form_gender {
+    width: 32.7rem;
+    height: 4.05rem;
+    position: absolute;
+    left: 2.5rem;
+    top: 70.75rem;
+    display: flex;
+    align-items: flex-start;
+}
+.signup__wrap .signup_form .signup_form_gender .signup_subtitle {
+    margin-right: 19rem;
+    display: flex;
+    font-size: 1.4rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #1e1e1e;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.signup__wrap .signup_form .signup_form_gender .btn-toggle {
+    margin-top: 0.05rem;
+    box-sizing: border-box;
+    width: 12rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    background-color: #eeeded;
+    border-radius: 0.5rem;
+    flex-shrink: 0;
+}
+.signup__wrap .signup_form .signup_form_gender .btn-toggle .btn-default {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    align-items: center;
+    justify-content: center;
+    border: solid 0.1rem #646464;
+    box-sizing: border-box;
+    background-color: #eeeded;
+    border-radius: 0.5rem;
+    flex-shrink: 0;
+}
+.signup__wrap .signup_form .signup_form_gender .btn-toggle .active {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    align-items: center;
+    justify-content: center;
+    border: solid 0rem ;
+    border-radius: 0.5rem;
+    background-color: #eeeded;
+    flex-shrink: 0;
+}
