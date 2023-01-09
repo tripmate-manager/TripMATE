@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface CommonCodeService {
     @GET("v1/common/codeList")
-    Call<List<CommonDetailCodeVO>> searchCommonDetailCodeList(@Query("commCd") String commCd);
+    Call<List<CommonDetailCodeVO>> searchCommonDetailCodeList(@Query("commonCode") String commCd);
 
     @GET("v1/common/code")
-    Call<CommonDetailCodeVO> getCommonDetailCode(@Query("commCd") String commCd,
-                                                 @Query("commDtlCd") String commDtlCd);
+    Call<CommonDetailCodeVO> getCommonDetailCode(@Query("commonCode") String commCd,
+                                                 @Query("commonDetailCode") String commDtlCd);
 }

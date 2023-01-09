@@ -1,5 +1,7 @@
 package com.tripmate.entity;
 
-public class ConstCode {
-    public static final String POST_TYPE_CODE = "CT001";
+public interface ConstCode {
+    String POST_TYPE_CODE = "CT001";
+    String POST_TYPE_CODE_LODGING = "10";
+
 }

@@ -1,6 +1,7 @@
 package com.tripmate.controller;
 
 import com.tripmate.client.RetrofitClient;
+import com.tripmate.domain.CommonDetailCodeVO;
 import com.tripmate.entity.ConstCode;
 import com.tripmate.service.CodeUtil;
 import com.tripmate.service.TestService;
@@ -13,11 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 import retrofit2.Call;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/test")
 public class TestController {
-    private static Logger log = LoggerFactory.getLogger(TestController.class);
+    private static final Logger log = LoggerFactory.getLogger(TestController.class);
 
     @GetMapping("/page")
     public String testPage() {
@@ -38,8 +40,8 @@ public class TestController {
         try {
             log.info(getTest.clone().execute().body().toString());
             mav.addObject("data", getTest.clone().execute().body());
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
         }
         return mav;
     }
@@ -47,16 +49,22 @@ public class TestController {
     @GetMapping("/callApiCodeList")
     public ModelAndView callApiCodeList() {
         ModelAndView mav = new ModelAndView("test");
-        mav.addObject("data", CodeUtil.searchCommonDetailCodeList(ConstCode.POST_TYPE_CODE).toString());
-        log.debug(CodeUtil.searchCommonDetailCodeList(ConstCode.POST_TYPE_CODE).toString());
+
+        List<CommonDetailCodeVO> codeList = CodeUtil.searchCommonDetailCodeList(ConstCode.POST_TYPE_CODE);
+        log.debug(codeList.toString());
+
+        mav.addObject("data", codeList.toString());
         return mav;
     }
 
     @GetMapping("/callApiCode")
     public ModelAndView callApiCode() {
         ModelAndView mav = new ModelAndView("test");
-        mav.addObject("data", CodeUtil.getCommonDetailCode(ConstCode.POST_TYPE_CODE, "10").toString());
-        log.debug(CodeUtil.getCommonDetailCode(ConstCode.POST_TYPE_CODE, "10").toString());
+
+        CommonDetailCodeVO code = CodeUtil.getCommonDetailCode(ConstCode.POST_TYPE_CODE, ConstCode.POST_TYPE_CODE_LODGING);
+        log.debug(code.toString());
+
+        mav.addObject("data", code.toString());
         return mav;
     }
 }
