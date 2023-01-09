@@ -1,6 +1,7 @@
 package com.tripmate.controller;
 
 import com.tripmate.client.RetrofitClient;
+import com.tripmate.entity.ConstCode;
 import com.tripmate.service.CodeUtil;
 import com.tripmate.service.TestService;
 import org.slf4j.Logger;
@@ -46,16 +47,16 @@ public class TestController {
     @GetMapping("/callApiCodeList")
     public ModelAndView callApiCodeList() {
         ModelAndView mav = new ModelAndView("test");
-        mav.addObject("data", CodeUtil.searchCommonDetailCodeList("CT001").toString());
-        log.debug(CodeUtil.searchCommonDetailCodeList("CT001").toString());
+        mav.addObject("data", CodeUtil.searchCommonDetailCodeList(ConstCode.POST_TYPE_CODE).toString());
+        log.debug(CodeUtil.searchCommonDetailCodeList(ConstCode.POST_TYPE_CODE).toString());
         return mav;
     }
 
     @GetMapping("/callApiCode")
     public ModelAndView callApiCode() {
         ModelAndView mav = new ModelAndView("test");
-        mav.addObject("data", CodeUtil.getCommonDetailCode("CT001", "10").toString());
-        log.debug(CodeUtil.getCommonDetailCode("CT001", "10").toString());
+        mav.addObject("data", CodeUtil.getCommonDetailCode(ConstCode.POST_TYPE_CODE, "10").toString());
+        log.debug(CodeUtil.getCommonDetailCode(ConstCode.POST_TYPE_CODE, "10").toString());
         return mav;
     }
 }

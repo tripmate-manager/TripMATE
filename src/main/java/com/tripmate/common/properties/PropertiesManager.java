@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
 public class PropertiesManager {
 
@@ -47,7 +48,7 @@ public class PropertiesManager {
     public void loadProperties(String propertiesFileName) {
         String newPropertiesFileName = choosePropertiesName(propertiesFileName);
 
-        if (newPropertiesFileName == null || "".equals(newPropertiesFileName)) {
+        if (StringUtils.isEmpty(newPropertiesFileName)) {
             if (logger.isErrorEnabled()) {
                 logger.error("'" + newPropertiesFileName + "' File not found.");
             }
@@ -105,6 +106,6 @@ public class PropertiesManager {
     }
 
     static boolean isEmpty(String str) {
-        return (str == null || str.isEmpty());
+        return (StringUtils.isEmpty(str));
     }
 }
