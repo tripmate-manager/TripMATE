@@ -1,21 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/jsp/common/common.jsp" %>
-<%@ include file="../common/messagePopUp.jsp" %>
 
 <html>
-
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="theme-color" content="#000000"/>
-    <title>SignUp</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans%3A500%2C600"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A500%2C600"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/signUp.css"/>
+    <jsp:include page="../common/header.jsp">
+        <jsp:param name="title" value="SignUp"/>
+    </jsp:include>
+    <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/member/signUp.css"/>
+    <script src="<%=Const.STATIC_JS_PATH%>/validationCheck.js"></script>
+    <script src="<%=Const.STATIC_JS_PATH%>/popUp.js"></script>
 </head>
 
 <body>
-
+<jsp:include page="../common/messagePopUp.jsp"/>
 <div class="signup__wrap">
     <div class="signup_title">회원가입</div>
     <form name="signupForm" id="signupForm" method="post">
