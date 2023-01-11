@@ -14,6 +14,6 @@ public class RetrofitClient {
     private static Retrofit getInstance() {
         Gson gson = new GsonBuilder().setLenient().create();
 
-        return new Retrofit.Builder().baseUrl(Const.API_URL).addConverterFactory(GsonConverterFactory.create(gson)).build();
+        return new Retrofit.Builder().baseUrl("http://127.0.0.1:8888/api/").addConverterFactory(GsonConverterFactory.create(gson)).build();
     }
 }

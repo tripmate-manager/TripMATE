@@ -2,6 +2,8 @@ package com.tripmate.controller;
 
 import com.tripmate.client.RetrofitClient;
 import com.tripmate.domain.CommonDetailCodeVO;
+import com.tripmate.domain.ResponseWrapper;
+import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.entity.ConstCode;
 import com.tripmate.service.CodeUtil;
 import com.tripmate.service.TestService;
@@ -12,9 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import retrofit2.Call;
-
-import java.io.IOException;
-import java.util.List;
 
 @Controller
 @RequestMapping("/test")
@@ -38,8 +37,11 @@ public class TestController {
         Call<Object> getTest = RetrofitClient.getApiService(TestService.class).getTest();
 
         try {
-            log.info(getTest.clone().execute().body().toString());
-            mav.addObject("data", getTest.clone().execute().body());
+            Object body = getTest.clone().execute().body();
+            body = body == null ? "body is null" : body;
+
+            log.info(body.toString());
+            mav.addObject("data", body);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
@@ -50,21 +52,39 @@ public class TestController {
     public ModelAndView callApiCodeList() {
         ModelAndView mav = new ModelAndView("test");
 
-        List<CommonDetailCodeVO> codeList = CodeUtil.searchCommonDetailCodeList(ConstCode.POST_TYPE_CODE);
-        log.debug(codeList.toString());
+        ResponseWrapper<CommonDetailCodeVO> codeListResponse = CodeUtil.searchCommonDetailCodeList(ConstCode.POST_TYPE_CODE);
+        log.debug(codeListResponse.toString());
 
-        mav.addObject("data", codeList.toString());
-        return mav;
+        StringBuilder sb = new StringBuilder();
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(codeListResponse.getCode())) {
+            codeListResponse.getData().forEach(commonDetailCodeVO -> sb.append(commonDetailCodeVO).append("\n"));
+        } else {
+            sb.append(codeListResponse.getCode())
+              .append("\n")
+              .append(codeListResponse.getMessage());
+        }
+
+        return mav.addObject("data", sb);
     }
 
     @GetMapping("/callApiCode")
     public ModelAndView callApiCode() {
         ModelAndView mav = new ModelAndView("test");
 
-        CommonDetailCodeVO code = CodeUtil.getCommonDetailCode(ConstCode.POST_TYPE_CODE, ConstCode.POST_TYPE_CODE_LODGING);
-        log.debug(code.toString());
+        ResponseWrapper<CommonDetailCodeVO> codeResponse = CodeUtil.getCommonDetailCode(ConstCode.POST_TYPE_CODE, ConstCode.POST_TYPE_CODE_LODGING);
+        log.debug(codeResponse.toString());
 
-        mav.addObject("data", code.toString());
-        return mav;
+        StringBuilder sb = new StringBuilder();
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(codeResponse.getCode())) {
+            codeResponse.getData().forEach(commonDetailCodeVO -> sb.append(commonDetailCodeVO).append("\n"));
+        } else {
+            sb.append(codeResponse.getCode())
+              .append("\n")
+              .append(codeResponse.getMessage());
+        }
+
+        return mav.addObject("data", sb);
     }
 }
