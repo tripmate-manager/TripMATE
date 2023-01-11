@@ -2,8 +2,6 @@ package com.tripmate.controller;
 
 import com.tripmate.client.RetrofitClient;
 import com.tripmate.domain.CommonDetailCodeVO;
-import com.tripmate.domain.ResponseWrapper;
-import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.entity.ConstCode;
 import com.tripmate.service.CodeUtil;
 import com.tripmate.service.TestService;
@@ -14,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import retrofit2.Call;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/test")
@@ -50,41 +50,20 @@ public class TestController {
 
     @GetMapping("/callApiCodeList")
     public ModelAndView callApiCodeList() {
-        ModelAndView mav = new ModelAndView("test");
-
-        ResponseWrapper<CommonDetailCodeVO> codeListResponse = CodeUtil.searchCommonDetailCodeList(ConstCode.POST_TYPE_CODE);
-        log.debug(codeListResponse.toString());
+        List<CommonDetailCodeVO> codeList = CodeUtil.searchCommonDetailCodeList(ConstCode.POST_TYPE_CODE);
+        log.debug(codeList.toString());
 
         StringBuilder sb = new StringBuilder();
+        codeList.forEach(commonDetailCodeVO -> sb.append(commonDetailCodeVO).append("\n"));
 
-        if (ApiResultEnum.SUCCESS.getCode().equals(codeListResponse.getCode())) {
-            codeListResponse.getData().forEach(commonDetailCodeVO -> sb.append(commonDetailCodeVO).append("\n"));
-        } else {
-            sb.append(codeListResponse.getCode())
-              .append("\n")
-              .append(codeListResponse.getMessage());
-        }
-
-        return mav.addObject("data", sb);
+        return new ModelAndView("test").addObject("data", sb);
     }
 
     @GetMapping("/callApiCode")
     public ModelAndView callApiCode() {
-        ModelAndView mav = new ModelAndView("test");
+        CommonDetailCodeVO code = CodeUtil.getCommonDetailCode(ConstCode.POST_TYPE_CODE, ConstCode.POST_TYPE_CODE_LODGING);
+        log.debug(code.toString());
 
-        ResponseWrapper<CommonDetailCodeVO> codeResponse = CodeUtil.getCommonDetailCode(ConstCode.POST_TYPE_CODE, ConstCode.POST_TYPE_CODE_LODGING);
-        log.debug(codeResponse.toString());
-
-        StringBuilder sb = new StringBuilder();
-
-        if (ApiResultEnum.SUCCESS.getCode().equals(codeResponse.getCode())) {
-            codeResponse.getData().forEach(commonDetailCodeVO -> sb.append(commonDetailCodeVO).append("\n"));
-        } else {
-            sb.append(codeResponse.getCode())
-              .append("\n")
-              .append(codeResponse.getMessage());
-        }
-
-        return mav.addObject("data", sb);
+        return new ModelAndView("test").addObject("data", code);
     }
 }
