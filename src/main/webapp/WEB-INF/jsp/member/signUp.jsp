@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ include file="/WEB-INF/jsp/common/common.jsp" %>
+<%@ include file="/WEB-INF/jsp/common/include/commonImport.jsp" %>
 
 <html>
 <head>
-    <jsp:include page="../common/header.jsp">
+    <jsp:include page="../common/include/header.jsp">
         <jsp:param name="title" value="SignUp"/>
     </jsp:include>
     <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/member/signUp.css"/>

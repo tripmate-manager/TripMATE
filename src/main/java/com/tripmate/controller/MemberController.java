@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+
 @Slf4j
 @Controller
 @RequestMapping("/member")
@@ -22,7 +24,7 @@ public class MemberController {
     }
 
     @PostMapping("/signUp")
-    public ModelAndView signUp(MemberDTO memberDTO) {
+    public ModelAndView signUp(@Valid MemberDTO memberDTO) {
         ModelAndView mav = new ModelAndView("member/signUpResult");
         memberDTO.setMemberStatusCode(ConstCode.MEMBER_STATUS_CODE_TEMPORARY);
 
