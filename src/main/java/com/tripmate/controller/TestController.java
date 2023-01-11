@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import retrofit2.Call;
 
-import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -38,8 +37,11 @@ public class TestController {
         Call<Object> getTest = RetrofitClient.getApiService(TestService.class).getTest();
 
         try {
-            log.info(getTest.clone().execute().body().toString());
-            mav.addObject("data", getTest.clone().execute().body());
+            Object body = getTest.clone().execute().body();
+            body = body == null ? "body is null" : body;
+
+            log.info(body.toString());
+            mav.addObject("data", body);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
@@ -48,23 +50,20 @@ public class TestController {
 
     @GetMapping("/callApiCodeList")
     public ModelAndView callApiCodeList() {
-        ModelAndView mav = new ModelAndView("test");
-
         List<CommonDetailCodeVO> codeList = CodeUtil.searchCommonDetailCodeList(ConstCode.POST_TYPE_CODE);
         log.debug(codeList.toString());
 
-        mav.addObject("data", codeList.toString());
-        return mav;
+        StringBuilder sb = new StringBuilder();
+        codeList.forEach(commonDetailCodeVO -> sb.append(commonDetailCodeVO).append("\n"));
+
+        return new ModelAndView("test").addObject("data", sb);
     }
 
     @GetMapping("/callApiCode")
     public ModelAndView callApiCode() {
-        ModelAndView mav = new ModelAndView("test");
-
         CommonDetailCodeVO code = CodeUtil.getCommonDetailCode(ConstCode.POST_TYPE_CODE, ConstCode.POST_TYPE_CODE_LODGING);
         log.debug(code.toString());
 
-        mav.addObject("data", code.toString());
-        return mav;
+        return new ModelAndView("test").addObject("data", code);
     }
 }
