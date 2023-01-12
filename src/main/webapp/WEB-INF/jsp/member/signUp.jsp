@@ -12,7 +12,6 @@
 </head>
 
 <body>
-<jsp:include page="../common/messagePopUp.jsp"/>
 <div class="signup__wrap">
     <div class="signup_title">회원가입</div>
     <form name="signupForm" id="signupForm" method="post">
@@ -82,7 +81,7 @@
         <div class="signup_complete">회원가입</div>
     </form>
 </div>
-
+<jsp:include page="../common/messagePopUp.jsp"/>
 <script>
     $(function () {
 
