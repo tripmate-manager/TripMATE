@@ -10,14 +10,14 @@ import retrofit2.http.Query;
 
 public interface MemberService {
     @POST("v1/member")
-    Call<Object> insertMemberInfo(@Body MemberDTO memberDTO);
+    Call<ResponseWrapper<Integer>> signUp(@Body MemberDTO memberDTO);
+
+    @GET("v1/member/duplication/memberId")
+    Call<ResponseWrapper<Boolean>> isIdDuplicate(@Query("memberId") String memberId);
 
     @GET("v1/member/duplication/nickName")
-    Call<ResponseWrapper<Boolean>> getIdDuplicationCheckYn(@Query("memberId") String memberId);
-
-    @GET("v1/member/duplication/nickName")
-    Call<ResponseWrapper<Boolean>> getNickNameDuplicationCheckYn(@Query("nickName") String nickName);
+    Call<ResponseWrapper<Boolean>> isNickNameDuplicate(@Query("nickName") String nickName);
 
     @GET("v1/member/duplication/email")
-    Call<ResponseWrapper<Boolean>> getEmailDuplicationCheckYn(@Query("email") String email);
+    Call<ResponseWrapper<Boolean>> isEmailDuplicate(@Query("email") String email);
 }

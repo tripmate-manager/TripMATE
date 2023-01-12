@@ -1,17 +1,11 @@
 package com.tripmate.controller;
 
-import com.tripmate.client.RetrofitClient;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.entity.ConstCode;
-import com.tripmate.service.MemberService;
 import com.tripmate.service.MemberUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Slf4j
@@ -21,40 +15,43 @@ import org.springframework.web.servlet.ModelAndView;
 public class MemberController {
 
     @GetMapping("/signUp")
-    public String signUp() {
-        return "member/signUp";
+    public ModelAndView signUp() {
+        return new ModelAndView("member/signUp");
     }
 
     @PostMapping("/signUp")
-    public ModelAndView signUp(MemberDTO memberDTO) {
-        ModelAndView mav = new ModelAndView("member/signUpResult");
+    public String signUp(MemberDTO memberDTO) {
         memberDTO.setMemberStatusCode(ConstCode.MEMBER_STATUS_CODE_TEMPORARY);
 
-        try {
-            RetrofitClient.getApiService(MemberService.class).insertMemberInfo(memberDTO);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
+        int memberNo = MemberUtil.signUp(memberDTO);
+        if (memberNo != 0) {
+            return "redirect:/signUp/sendEmail";
+            //todo: 이메일전송
         }
 
-        return mav;
+        return "member/signUp";
     }
 
-    //todo: 메서드명 수정
     @GetMapping("/duplication/memberId")
-    public boolean idDuplicationCheckYn(@RequestParam(value = "memberId") String memberId) {
-        return MemberUtil.getDuplicationCheckYn(memberId, ConstCode.DUPLICATION_CHECK_MEMBER_ID);
+    public boolean isIdDuplicate(@RequestParam(value = "memberId") String memberId) {
+        return MemberUtil.isDuplicate(memberId, ConstCode.DUPLICATION_CHECK_MEMBER_ID);
     }
 
     @GetMapping("/duplication/nickName")
-    public boolean nickNameDuplicationCheckYn(@RequestParam(value = "nickName") String nickName) {
-        return MemberUtil.getDuplicationCheckYn(nickName, ConstCode.DUPLICATION_CHECK_NICK_NAME);
+    public boolean isNickNameDuplicate(@RequestParam(value = "nickName") String nickName) {
+        return MemberUtil.isDuplicate(nickName, ConstCode.DUPLICATION_CHECK_NICK_NAME);
     }
 
     @GetMapping("/duplication/email")
-    public boolean emailDuplicationCheckYn(@RequestParam(value = "email") String email) {
-        return MemberUtil.getDuplicationCheckYn(email, ConstCode.DUPLICATION_CHECK_EMAIL);
+    public boolean isEmailDuplicate(@RequestParam(value = "email") String email) {
+        return MemberUtil.isDuplicate(email, ConstCode.DUPLICATION_CHECK_EMAIL);
     }
 
+    @PostMapping("/signUp/sendEmail")
+    public ModelAndView sendSignUpEmail(MemberDTO memberDTO) {
+
+        return new ModelAndView("member/signUpResult");
+    }
 }
 
 

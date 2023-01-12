@@ -1,5 +1,5 @@
 function idValidationCheck(inputId) {
-    const regExp = /^[a-zA-Z][0-9a-zA-Z]{5,20}$/;
+    const regExp = /^[0-9a-zA-Z]{5,20}$/;
 
     if (!regExp.test(inputId)) {
         return false;
