@@ -44,7 +44,7 @@ function birthDayValidationCheck(inputBirthDay) {
 }
 
 function blankCheck(input) {
-    if(input.val() === "") {
+    if (input.val() === "") {
         input.focus();
         return false;
     }

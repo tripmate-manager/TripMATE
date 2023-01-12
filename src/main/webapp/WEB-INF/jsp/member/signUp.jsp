@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans%3A500%2C600"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A500%2C600"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/signUp.css"/>
+<%--    <script src="${pageContext.request.contextPath}/resources/js/member/signUp.js"></script>--%>
 </head>
 
 <body>
@@ -85,9 +86,24 @@
         <div class="signup_complete">회원가입</div>
     </form>
 </div>
-
+</body>
 <script>
     $(function () {
+        let duplicateIdCheckYn = false;
+        let duplicateNickNmCheckYn = false;
+        let duplicateEmailCheckYn = false;
+
+        $("#memberId").change(function () {
+            duplicateIdCheckYn = false;
+        });
+
+        $("#memberName").change(function () {
+            duplicateNickNmCheckYn = false;
+        });
+
+        $("#memberName").change(function () {
+            duplicateEmailCheckYn = false;
+        });
 
         $("#email").on('keyup', function () {
             const inputEmail = $(this).val();
@@ -99,13 +115,13 @@
             }
         });
 
-        $("#checkMemberPassword, #memberPassword").on('keyup', function () {
+        $("#memberPassword, #checkMemberPassword").on('keyup', function () {
             if ($("#checkMemberPassword").val() !== $("#memberPassword").val()) {
                 $("#checkMemberPasswordMessage").show();
+            } else {
+                $("#checkMemberPasswordMessage").hide();
             }
-            $("#checkMemberPasswordMessage").hide();
         });
-
 
         $(".btn-toggle").on('click', function () {
             const genderCd = $(this).find("#genderCode");
@@ -184,17 +200,98 @@
             return true;
         }
 
+        $(".signup_duplicate").on('click', function () {
+            $.ajax({
+                url: "/member/duplication/memberId.trip",
+                type: "get",
+                dataType: 'json',
+                data: {
+                    memberId: $('#memberId').val()
+                },
+                success: function (result) {
+                    if (result == true) {
+                        popUpOpen('사용 가능한 아이디입니다.')
+                        duplicateIdCheckYn = true;
+                    } else {
+                        popUpOpen('이미 사용 중인 아이디입니다.')
+                        duplicateIdCheckYn = false;
+                    }
+                },
+                error: function (error) {
+                }
+            })
+        });
+
+        $("#signup_duplicate_nick_name").on('click', function () {
+            $.ajax({
+                url: "/member/duplication/memberNickName.trip",
+                type: "get",
+                dataType: 'json',
+                data: {
+                    nickName: $('#nickName').val()
+                },
+                success: function (result) {
+                    if (result == true) {
+                        popUpOpen('사용 가능한 닉네임입니다.')
+                        duplicateIdCheckYn = true;
+                    } else {
+                        popUpOpen('이미 사용 중인 닉네임입니다.')
+                        duplicateIdCheckYn = false;
+                    }
+                },
+                error: function (error) {
+                }
+            })
+        });
+
+        $("#signup_duplicate_email").on('click', function () {
+            $.ajax({
+                url: "/member/duplication/memberEmail.trip",
+                type: "get",
+                dataType: 'json',
+                data: {
+                    email: $('#email').val()
+                },
+                success: function (result) {
+                    if (result == true) {
+                        popUpOpen('사용 가능한 이메일입니다.')
+                        duplicateIdCheckYn = true;
+                    } else {
+                        popUpOpen('이미 사용 중인 이메일입니다.')
+                        duplicateIdCheckYn = false;
+                    }
+                },
+                error: function (error) {
+                }
+            })
+        });
+
         $(".signup_complete").on('click', function () {
-            if (signUpFormCheck() && signUpValidationCheck()) {
+            if (signUpFormCheck()) {
+                if (signUpValidationCheck()) {
 
-                $("#signupForm").attr("action", "/member/signUp.trip").submit();
+                    if (duplicateIdCheckYn != true) {
+                        popupOpen('아이디 중복확인이 필요합니다.');
+                        return false;
+                    }
 
-                return true;
-            } else {
-                return false;
+                    if (duplicateNickNmCheckYn != true) {
+                        popupOpen('닉네임 중복확인이 필요합니다.');
+                        return false;
+                    }
+
+                    if (duplicateEmailCheckYn != true) {
+                        popupOpen('이메일 중복확인이 필요합니다.');
+                        return false;
+                    }
+
+                    $("#signupForm").attr("action", "/member/signUp.trip").submit();
+
+                    return true;
+                }
             }
+            return false;
         });
     });
 </script>
-</body>
 </html>
