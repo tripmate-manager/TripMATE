@@ -4,13 +4,9 @@ import com.tripmate.client.RetrofitClient;
 import com.tripmate.domain.CommonDetailCodeVO;
 import com.tripmate.domain.ResponseWrapper;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import retrofit2.Call;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 public class CodeRepository {

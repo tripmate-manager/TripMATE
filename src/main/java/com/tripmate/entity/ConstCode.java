@@ -19,7 +19,11 @@ public interface ConstCode {
     String EMAIL_TYPE_CODE_JOIN = "10";
     String EMAIL_TYPE_CODE_EMAIL_CHANGE = "20";
 
+    String DUPLICATION_CHECK_CODE = "MB005";
+    String DUPLICATION_CHECK_MEMBER_ID = "10";
+    String DUPLICATION_CHECK_NICK_NAME = "20";
+    String DUPLICATION_CHECK_EMAIL = "30";
+
     String POST_TYPE_CODE = "CT001";
     String POST_TYPE_CODE_LODGING = "10";
-
 }
