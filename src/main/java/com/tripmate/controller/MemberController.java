@@ -1,5 +1,6 @@
 package com.tripmate.controller;
 
+import com.tripmate.domain.MailDTO;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.entity.ConstCode;
 import com.tripmate.service.MemberUtil;
@@ -20,16 +21,10 @@ public class MemberController {
     }
 
     @PostMapping("/signUp")
-    public String signUp(MemberDTO memberDTO) {
+    public int signUp(MemberDTO memberDTO) {
         memberDTO.setMemberStatusCode(ConstCode.MEMBER_STATUS_CODE_TEMPORARY);
 
-        int memberNo = MemberUtil.signUp(memberDTO);
-        if (memberNo != 0) {
-            return "redirect:/signUp/sendEmail";
-            //todo: 이메일전송
-        }
-
-        return "member/signUp";
+        return MemberUtil.signUp(memberDTO);
     }
 
     @GetMapping("/duplication/memberId")
@@ -47,10 +42,9 @@ public class MemberController {
         return MemberUtil.isDuplicate(email, ConstCode.DUPLICATION_CHECK_EMAIL);
     }
 
-    @PostMapping("/signUp/sendEmail")
-    public ModelAndView sendSignUpEmail(MemberDTO memberDTO) {
-
-        return new ModelAndView("member/signUpResult");
+    @PostMapping("/signUp/sendMail")
+    public ModelAndView sendSignUpEmail(MailDTO mailDTO) {
+        return new ModelAndView("member/signUp");
     }
 }
 

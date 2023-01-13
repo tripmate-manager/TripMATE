@@ -54,26 +54,4 @@ public class MemberRepository {
 
         return result;
     }
-
-    public ResponseWrapper sendSignUpEmail(final String duplicationMemberInfo, String duplicationCheckType) {
-        ResponseWrapper<Boolean> result = null;
-
-        try {
-            Call<ResponseWrapper<Boolean>> data = null;
-
-            if (ConstCode.DUPLICATION_CHECK_MEMBER_ID.equals(duplicationCheckType)) {
-                data = RetrofitClient.getApiService(MemberService.class).isIdDuplicate(duplicationMemberInfo);
-            } else if (ConstCode.DUPLICATION_CHECK_NICK_NAME.equals(duplicationCheckType)) {
-                data = RetrofitClient.getApiService(MemberService.class).isNickNameDuplicate(duplicationMemberInfo);
-            } else if (ConstCode.DUPLICATION_CHECK_EMAIL.equals(duplicationCheckType)) {
-                data = RetrofitClient.getApiService(MemberService.class).isEmailDuplicate(duplicationMemberInfo);
-            }
-
-            result = data.clone().execute().body();
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
-        }
-
-        return result;
-    }
 }

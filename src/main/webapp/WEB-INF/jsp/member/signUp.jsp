@@ -82,7 +82,6 @@
         <div class="signup_complete">회원가입</div>
     </form>
 </div>
-<%--<jsp:include page="../common/messagePopUp.jsp"/>--%>
 <script>
     $(function () {
         let duplicateIdCheckYn = false;
@@ -134,7 +133,7 @@
             $(this).find(".btn").toggleClass('btn-default');
         });
 
-        function signUpFormCheck() {
+        function formBlankCheck() {
             if (!blankCheck($("#memberId"))) {
                 popUpOpen('아이디를 입력해 주세요.');
                 return false;
@@ -263,32 +262,67 @@
             })
         });
 
+        function duplicationCheck() {
+            if (duplicateIdCheckYn != true) {
+                popUpOpen('아이디 중복확인이 필요합니다.')
+                return false;
+            }
+
+            if (duplicateNickNmCheckYn != true) {
+                popUpOpen('닉네임 중복확인이 필요합니다.')
+                return false;
+            }
+
+            if (duplicateEmailCheckYn != true) {
+                popUpOpen('이메일 중복확인이 필요합니다.')
+                return false;
+            }
+            return true;
+        }
+
         $(".signup_complete").on('click', function () {
-            if (signUpFormCheck()) {
+            if (formBlankCheck()) {
                 if (signUpValidationCheck()) {
+                    if (duplicationCheck()) {
 
-                    if (duplicateIdCheckYn != true) {
-                        popUpOpen('아이디 중복확인이 필요합니다.')
-                        return false;
+                        $.ajax({
+                            url: "/member/signUp.trip",
+                            type: "post",
+                            dataType: 'json',
+                            data: $("#signupForm").serialize(),
+                            success: function (result) {
+                                console.log(result);
+                                sendMail(result);
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        })
+                        return true;
                     }
-
-                    if (duplicateNickNmCheckYn != true) {
-                        popUpOpen('닉네임 중복확인이 필요합니다.')
-                        return false;
-                    }
-
-                    if (duplicateEmailCheckYn != true) {
-                        popUpOpen('이메일 중복확인이 필요합니다.')
-                        return false;
-                    }
-
-                    $("#signupForm").attr("action", "/member/signUp.trip").submit();
-
-                    return true;
                 }
             }
             return false;
         });
+
+        function sendMail(memberNo) {
+            $.ajax({
+                url: "/member/signUp/sendMail.trip",
+                type: "post",
+                dataType: 'json',
+                data: {
+                    memberNo: memberNo,
+                    email: $("#email").val()
+                },
+                success: function (result) {
+                    console.log(result)
+                    return true;
+                },
+                error: function (error) {
+                }
+            })
+        }
+
     });
 </script>
 </body>

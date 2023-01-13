@@ -17,7 +17,7 @@ public interface Const {
 
     String MEMBER_INFO_SESSION  = "memberInfo";
 
-    String TRIP_MATE_MAIL_SENDER = "tripmate@gmail.com";
+    String TRIP_MATE_MAIL_SENDER = "tripmate-manager@gmail.com";
 
     static String getProperty(final String key) {
         return getProperty(key, "");

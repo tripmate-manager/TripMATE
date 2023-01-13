@@ -1,5 +1,6 @@
 package com.tripmate.service;
 
+import com.tripmate.domain.MailDTO;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.ResponseWrapper;
 import retrofit2.Call;
