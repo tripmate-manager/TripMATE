@@ -256,7 +256,7 @@
                     email: $('#email').val()
                 },
                 success: function (result) {
-                    if (result == true) {
+                    if (result) {
                         popUpOpen('사용 가능한 이메일입니다.')
                         duplicateEmailCheckYn = true;
                     } else {
@@ -271,17 +271,17 @@
         });
 
         function duplicationCheck() {
-            if (duplicateIdCheckYn != true) {
+            if (!duplicateIdCheckYn) {
                 popUpOpen('아이디 중복확인이 필요합니다.')
                 return false;
             }
 
-            if (duplicateNickNmCheckYn != true) {
+            if (!duplicateNickNmCheckYn) {
                 popUpOpen('닉네임 중복확인이 필요합니다.')
                 return false;
             }
 
-            if (duplicateEmailCheckYn != true) {
+            if (!duplicateEmailCheckYn) {
                 popUpOpen('이메일 중복확인이 필요합니다.')
                 return false;
             }
