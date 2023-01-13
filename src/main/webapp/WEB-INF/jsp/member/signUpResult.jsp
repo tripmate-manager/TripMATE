@@ -15,7 +15,7 @@
         <img class="signup_result_icon" src="/resources/images/icon-mail.png"/>
         <div class="signup_result_sub_message">인증 메일이 발송되었습니다</div>
         <div class="tripmategmailcom--zuR">
-            메일함에서 (<%=Const.TRIP_MATE_MAIL_SENDER%>>) 인증 메일을 확인 바랍니다.
+            메일함에서 인증 메일을 확인 바랍니다.
             <br>
             인증 메일 확인 시 회원가입이 완료됩니다.
         </div>

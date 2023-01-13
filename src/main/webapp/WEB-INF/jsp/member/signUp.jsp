@@ -1,5 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/jsp/common/include/commonImport.jsp" %>
+<%@ include file="/WEB-INF/jsp/common/messagePopUp.jsp" %>
 
 <html>
 <head>
@@ -7,8 +8,8 @@
         <jsp:param name="title" value="SignUp"/>
     </jsp:include>
     <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/member/signUp.css"/>
-    <script src="<%=Const.STATIC_JS_PATH%>/validationCheck.js"></script>
-    <script src="<%=Const.STATIC_JS_PATH%>/popUp.js"></script>
+    <script src="<%=Const.STATIC_JS_PATH%>/common/validationCheck.js"></script>
+    <script src="<%=Const.STATIC_JS_PATH%>/common/popUp.js"></script>
 </head>
 
 <body>
@@ -81,11 +82,30 @@
         <div class="signup_complete">회원가입</div>
     </form>
 </div>
-<jsp:include page="../common/messagePopUp.jsp"/>
 <script>
     $(function () {
+        let duplicateIdCheckYn = false;
+        let duplicateNickNmCheckYn = false;
+        let duplicateEmailCheckYn = false;
 
-        $("#email").on('keyup', function () {
+        let inputMemberId = $("#memberId");
+        let inputMemberName= $("#memberName");
+        let inputEmail = $("#email");
+        let inputBirthDay = $("#birthDay");
+
+        inputMemberId.change(function () {
+            duplicateIdCheckYn = false;
+        });
+
+        inputMemberName.change(function () {
+            duplicateNickNmCheckYn = false;
+        });
+
+        inputEmail.change(function () {
+            duplicateEmailCheckYn = false;
+        });
+
+        inputEmail.on('keyup', function () {
             const inputEmail = $(this).val();
 
             if (!emailValidationCheck(inputEmail)) {
@@ -95,11 +115,12 @@
             }
         });
 
-        $("#checkMemberPassword, #memberPassword").on('keyup', function () {
+        $("#memberPassword, #checkMemberPassword").on('keyup', function () {
             if ($("#checkMemberPassword").val() !== $("#memberPassword").val()) {
                 $("#checkMemberPasswordMessage").show();
+            } else {
+                $("#checkMemberPasswordMessage").hide();
             }
-            $("#checkMemberPasswordMessage").hide();
         });
 
 
@@ -117,8 +138,8 @@
             $(this).find(".btn").toggleClass('btn-default');
         });
 
-        function signUpFormCheck() {
-            if (!blankCheck($("#memberId"))) {
+        function formBlankCheck() {
+            if (!blankCheck(inputMemberId)) {
                 popUpOpen('아이디를 입력해 주세요.');
                 return false;
             }
@@ -128,7 +149,7 @@
                 return false;
             }
 
-            if (!blankCheck($("#memberName"))) {
+            if (!blankCheck(inputMemberName)) {
                 popUpOpen('이름을 입력해 주세요.');
                 return false;
             }
@@ -138,12 +159,12 @@
                 return false;
             }
 
-            if (!blankCheck($("#email"))) {
+            if (!blankCheck(inputEmail)) {
                 popUpOpen('이메일을 입력해 주세요.');
                 return false;
             }
 
-            if (!blankCheck($("#birthDay"))) {
+            if (!blankCheck(inputBirthDay)) {
                 popUpOpen('생년월일을 입력해 주세요.');
                 return false;
             }
@@ -152,27 +173,27 @@
         }
 
         function signUpValidationCheck() {
-            if (!idValidationCheck($("#memberId"))) {
+            if (!idValidationCheck(inputMemberId.val())) {
                 popUpOpen('아이디는 영문, 숫자로 이루어진 5~20자의 아이디만 입력 가능합니다.');
                 return false;
             }
 
-            if (!passwordValidationCheck($("#memberPassword"))) {
+            if (!passwordValidationCheck($("#memberPassword").val())) {
                 popUpOpen('비밀번호는 영문, 숫자, 특수기호가 적어도 1개 이상씩 포함된 8~20자의 비밀번호만 입력 가능합니다.');
                 return false;
             }
 
-            if (!nameValidationCheck($("#memberName"))) {
+            if (!nameValidationCheck(inputMemberName.val())) {
                 popUpOpen('이름은 영문이나 한글로 이루어진 2~20자의 이름만 입력 가능합니다.');
                 return false;
             }
 
-            if (!emailValidationCheck($("#email"))) {
+            if (!emailValidationCheck(inputEmail.val())) {
                 popUpOpen('이메일이 형식에 맞지 않습니다.');
                 return false;
             }
 
-            if (!birthDayValidationCheck($("#birthDay"))) {
+            if (!birthDayValidationCheck(inputBirthDay.val())) {
                 popUpOpen('생년월일은 YYYYMMDD 형태만 입력 가능합니다.');
                 return false;
             }
@@ -180,16 +201,139 @@
             return true;
         }
 
-        $(".signup_complete").on('click', function () {
-            if (signUpFormCheck() && signUpValidationCheck()) {
+        $("#signup_duplicate_id").on('click', function () {
+            $.ajax({
+                url: "/member/duplication/memberId.trip",
+                type: "get",
+                dataType: 'json',
+                data: {
+                    memberId: $('#memberId').val()
+                },
+                success: function (result) {
+                    if (result == true) {
+                        popUpOpen('사용 가능한 아이디입니다.')
+                        duplicateIdCheckYn = true;
+                    } else {
+                        popUpOpen('이미 사용 중인 아이디입니다.')
+                        duplicateIdCheckYn = false;
+                    }
+                },
+                error: function (error) {
+                    popUpOpen("처리 중 오류가 발생하였습니다.");
+                }
+            })
+        });
 
-                $("#signupForm").attr("action", "/member/signUp.trip").submit();
+        $("#signup_duplicate_nick_name").on('click', function () {
+            $.ajax({
+                url: "/member/duplication/nickName.trip",
+                type: "get",
+                dataType: 'json',
+                data: {
+                    nickName: $('#nickName').val()
+                },
+                success: function (result) {
+                    if (result == true) {
+                        popUpOpen('사용 가능한 닉네임입니다.')
+                        duplicateNickNmCheckYn = true;
+                    } else {
+                        popUpOpen('이미 사용 중인 닉네임입니다.')
+                        duplicateNickNmCheckYn = false;
+                    }
+                },
+                error: function (error) {
+                    popUpOpen("처리 중 오류가 발생하였습니다.");
+                }
+            })
+        });
 
-                return true;
-            } else {
+        $("#signup_duplicate_email").on('click', function () {
+            $.ajax({
+                url: "/member/duplication/email.trip",
+                type: "get",
+                dataType: 'json',
+                data: {
+                    email: $('#email').val()
+                },
+                success: function (result) {
+                    if (result) {
+                        popUpOpen('사용 가능한 이메일입니다.')
+                        duplicateEmailCheckYn = true;
+                    } else {
+                        popUpOpen('이미 사용 중인 이메일입니다.')
+                        duplicateEmailCheckYn = false;
+                    }
+                },
+                error: function (error) {
+                    popUpOpen("처리 중 오류가 발생하였습니다.");
+                }
+            })
+        });
+
+        function duplicationCheck() {
+            if (!duplicateIdCheckYn) {
+                popUpOpen('아이디 중복확인이 필요합니다.')
                 return false;
             }
+
+            if (!duplicateNickNmCheckYn) {
+                popUpOpen('닉네임 중복확인이 필요합니다.')
+                return false;
+            }
+
+            if (!duplicateEmailCheckYn) {
+                popUpOpen('이메일 중복확인이 필요합니다.')
+                return false;
+            }
+            return true;
+        }
+
+        $(".signup_complete").on('click', function () {
+            if (!formBlankCheck()) {
+                return false;
+            }
+            if (!signUpValidationCheck()) {
+                return false;
+            }
+            if (!duplicationCheck()) {
+                return false;
+            }
+
+            $.ajax({
+                url: "/member/signUp.trip",
+                type: "post",
+                dataType: 'json',
+                data: $("#signupForm").serialize(),
+                success: function (result) {
+                    if (result == 0) {
+                        popUpOpen("처리 중 오류가 발생하였습니다.");
+                        return false;
+                    }
+                    sendMail(result);
+                },
+                error: function (error) {
+                    popUpOpen("처리 중 오류가 발생하였습니다.");
+                }
+            })
+            return true;
         });
+
+        function sendMail(memberNo) {
+            $.ajax({
+                url: "/member/signUp/sendMail.trip",
+                type: "post",
+                dataType: 'json',
+                data: {
+                    memberNo: memberNo,
+                    email: inputEmail.val()
+                },
+                success: function (result) {
+                },
+                error: function (error) {
+                    popUpOpen("처리 중 오류가 발생하였습니다.");
+                }
+            })
+        }
     });
 </script>
 </body>
