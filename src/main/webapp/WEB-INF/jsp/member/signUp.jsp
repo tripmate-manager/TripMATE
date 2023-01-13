@@ -88,19 +88,24 @@
         let duplicateNickNmCheckYn = false;
         let duplicateEmailCheckYn = false;
 
-        $("#memberId").change(function () {
+        let inputMemberId = $("#memberId");
+        let inputMemberName= $("#memberName");
+        let inputEmail = $("#email");
+        let inputBirthDay = $("#birthDay");
+
+        inputMemberId.change(function () {
             duplicateIdCheckYn = false;
         });
 
-        $("#memberName").change(function () {
+        inputMemberName.change(function () {
             duplicateNickNmCheckYn = false;
         });
 
-        $("#memberName").change(function () {
+        inputEmail.change(function () {
             duplicateEmailCheckYn = false;
         });
 
-        $("#email").on('keyup', function () {
+        inputEmail.on('keyup', function () {
             const inputEmail = $(this).val();
 
             if (!emailValidationCheck(inputEmail)) {
@@ -134,7 +139,7 @@
         });
 
         function formBlankCheck() {
-            if (!blankCheck($("#memberId"))) {
+            if (!blankCheck(inputMemberId)) {
                 popUpOpen('아이디를 입력해 주세요.');
                 return false;
             }
@@ -144,7 +149,7 @@
                 return false;
             }
 
-            if (!blankCheck($("#memberName"))) {
+            if (!blankCheck(inputMemberName)) {
                 popUpOpen('이름을 입력해 주세요.');
                 return false;
             }
@@ -154,12 +159,12 @@
                 return false;
             }
 
-            if (!blankCheck($("#email"))) {
+            if (!blankCheck(inputEmail)) {
                 popUpOpen('이메일을 입력해 주세요.');
                 return false;
             }
 
-            if (!blankCheck($("#birthDay"))) {
+            if (!blankCheck(inputBirthDay)) {
                 popUpOpen('생년월일을 입력해 주세요.');
                 return false;
             }
@@ -168,7 +173,7 @@
         }
 
         function signUpValidationCheck() {
-            if (!idValidationCheck($("#memberId").val())) {
+            if (!idValidationCheck(inputMemberId.val())) {
                 popUpOpen('아이디는 영문, 숫자로 이루어진 5~20자의 아이디만 입력 가능합니다.');
                 return false;
             }
@@ -178,17 +183,17 @@
                 return false;
             }
 
-            if (!nameValidationCheck($("#memberName").val())) {
+            if (!nameValidationCheck(inputMemberName.val())) {
                 popUpOpen('이름은 영문이나 한글로 이루어진 2~20자의 이름만 입력 가능합니다.');
                 return false;
             }
 
-            if (!emailValidationCheck($("#email").val())) {
+            if (!emailValidationCheck(inputEmail.val())) {
                 popUpOpen('이메일이 형식에 맞지 않습니다.');
                 return false;
             }
 
-            if (!birthDayValidationCheck($("#birthDay").val())) {
+            if (!birthDayValidationCheck(inputBirthDay.val())) {
                 popUpOpen('생년월일은 YYYYMMDD 형태만 입력 가능합니다.');
                 return false;
             }
@@ -214,6 +219,7 @@
                     }
                 },
                 error: function (error) {
+                    popUpOpen("처리 중 오류가 발생하였습니다.");
                 }
             })
         });
@@ -236,6 +242,7 @@
                     }
                 },
                 error: function (error) {
+                    popUpOpen("처리 중 오류가 발생하였습니다.");
                 }
             })
         });
@@ -258,6 +265,7 @@
                     }
                 },
                 error: function (error) {
+                    popUpOpen("처리 중 오류가 발생하였습니다.");
                 }
             })
         });
@@ -281,28 +289,33 @@
         }
 
         $(".signup_complete").on('click', function () {
-            if (formBlankCheck()) {
-                if (signUpValidationCheck()) {
-                    if (duplicationCheck()) {
-
-                        $.ajax({
-                            url: "/member/signUp.trip",
-                            type: "post",
-                            dataType: 'json',
-                            data: $("#signupForm").serialize(),
-                            success: function (result) {
-                                console.log(result);
-                                sendMail(result);
-                            },
-                            error: function (error) {
-                                console.log(error);
-                            }
-                        })
-                        return true;
-                    }
-                }
+            if (!formBlankCheck()) {
+                return false;
             }
-            return false;
+            if (!signUpValidationCheck()) {
+                return false;
+            }
+            if (!duplicationCheck()) {
+                return false;
+            }
+
+            $.ajax({
+                url: "/member/signUp.trip",
+                type: "post",
+                dataType: 'json',
+                data: $("#signupForm").serialize(),
+                success: function (result) {
+                    if (result == 0) {
+                        popUpOpen("처리 중 오류가 발생하였습니다.");
+                        return false;
+                    }
+                    sendMail(result);
+                },
+                error: function (error) {
+                    popUpOpen("처리 중 오류가 발생하였습니다.");
+                }
+            })
+            return true;
         });
 
         function sendMail(memberNo) {
@@ -312,17 +325,15 @@
                 dataType: 'json',
                 data: {
                     memberNo: memberNo,
-                    email: $("#email").val()
+                    email: inputEmail.val()
                 },
                 success: function (result) {
-                    console.log(result)
-                    return true;
                 },
                 error: function (error) {
+                    popUpOpen("처리 중 오류가 발생하였습니다.");
                 }
             })
         }
-
     });
 </script>
 </body>
