@@ -29,9 +29,9 @@ public class MemberController {
     }
 
     @PostMapping("/signUp")
-    public int signUp(MemberDTO memberDTO) {
+    public boolean signUp(MemberDTO memberDTO) {
+        int memberNo;
         memberDTO.setMemberStatusCode(ConstCode.MEMBER_STATUS_CODE_TEMPORARY);
-        int memberNo = 0;
 
         try {
             Call<ResponseWrapper<Integer>> data = RetrofitClient.getApiService(MemberService.class).signUp(memberDTO);
@@ -49,7 +49,7 @@ public class MemberController {
             log.error(e.getMessage(), e);
         }
 
-        return memberNo;
+        return true;
     }
 
     @GetMapping("/duplication/memberId")
@@ -119,6 +119,11 @@ public class MemberController {
         }
 
         return isEmailDuplicate;
+    }
+
+    @GetMapping("/signUp/signUpResult")
+    public ModelAndView sendSignUpMail() {
+        return new ModelAndView("member/signUpResult");
     }
 }
 

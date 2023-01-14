@@ -1,12 +1,12 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/jsp/common/include/commonImport.jsp" %>
-<%@ include file="/WEB-INF/jsp/common/messagePopUp.jsp" %>
 
 <html>
 <head>
     <jsp:include page="../common/include/header.jsp">
         <jsp:param name="title" value="SignUp"/>
     </jsp:include>
+    <jsp:include page="/WEB-INF/jsp/common/messagePopUp.jsp"/>
     <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/member/signUp.css"/>
     <script src="<%=Const.STATIC_JS_PATH%>/common/validationCheck.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/common/popUp.js"></script>
@@ -89,7 +89,7 @@
         let duplicateEmailCheckYn = false;
 
         let inputMemberId = $("#memberId");
-        let inputMemberName= $("#memberName");
+        let inputMemberName = $("#memberName");
         let inputEmail = $("#email");
         let inputBirthDay = $("#birthDay");
 
@@ -210,7 +210,7 @@
                     memberId: $('#memberId').val()
                 },
                 success: function (result) {
-                    if (result == true) {
+                    if (result) {
                         popUpOpen('사용 가능한 아이디입니다.')
                         duplicateIdCheckYn = true;
                     } else {
@@ -233,7 +233,7 @@
                     nickName: $('#nickName').val()
                 },
                 success: function (result) {
-                    if (result == true) {
+                    if (result) {
                         popUpOpen('사용 가능한 닉네임입니다.')
                         duplicateNickNmCheckYn = true;
                     } else {
@@ -305,11 +305,7 @@
                 dataType: 'json',
                 data: $("#signupForm").serialize(),
                 success: function (result) {
-                    if (result == 0) {
-                        popUpOpen("처리 중 오류가 발생하였습니다.");
-                        return false;
-                    }
-                    sendMail(result);
+                    window.location.href = "/member/signUp/signUpResult.trip";
                 },
                 error: function (error) {
                     popUpOpen("처리 중 오류가 발생하였습니다.");
@@ -317,23 +313,6 @@
             })
             return true;
         });
-
-        function sendMail(memberNo) {
-            $.ajax({
-                url: "/member/signUp/sendMail.trip",
-                type: "post",
-                dataType: 'json',
-                data: {
-                    memberNo: memberNo,
-                    email: inputEmail.val()
-                },
-                success: function (result) {
-                },
-                error: function (error) {
-                    popUpOpen("처리 중 오류가 발생하였습니다.");
-                }
-            })
-        }
     });
 </script>
 </body>

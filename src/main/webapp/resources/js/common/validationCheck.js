@@ -1,19 +1,13 @@
 function idValidationCheck(inputId) {
     const regExp = /^[0-9a-zA-Z]{5,20}$/;
 
-    if (!regExp.test(inputId)) {
-        return false;
-    }
-    return true;
+    return regExp.test(inputId);
 }
 
 function passwordValidationCheck(inputPassword) {
     const regExp = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\W)(?=\S+$).{8,20}/;
 
-    if (!regExp.test(inputPassword)) {
-        return false;
-    }
-    return true;
+    return regExp.test(inputPassword);
 }
 
 function nameValidationCheck(inputName) {
@@ -29,7 +23,7 @@ function emailValidationCheck(inputEmail) {
 }
 
 function birthDayValidationCheck(inputBirthDay) {
-    const regExp = /^\d{4}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$/;
+    const regExp = /^(19|20)\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$/;
 
     return regExp.test(inputBirthDay);
 }
