@@ -119,7 +119,7 @@ $(function () {
 
     $("#signup_duplicate_id").on('click', function () {
         $.ajax({
-            url: "/member/duplication/memberId.trip",
+            url: "/members/duplication/memberId.trip",
             type: "get",
             dataType: 'json',
             data: {
@@ -143,7 +143,7 @@ $(function () {
 
     $("#signup_duplicate_nick_name").on('click', function () {
         $.ajax({
-            url: "/member/duplication/nickName.trip",
+            url: "/members/duplication/nickName.trip",
             type: "get",
             dataType: 'json',
             data: {
@@ -166,7 +166,7 @@ $(function () {
 
     $("#signup_duplicate_email").on('click', function () {
         $.ajax({
-            url: "/member/duplication/email.trip",
+            url: "/members/duplication/email.trip",
             type: "get",
             dataType: 'json',
             data: {
@@ -217,7 +217,7 @@ $(function () {
         }
 
         $.ajax({
-            url: "/member/signUp.trip",
+            url: "/members/signUp.trip",
             type: "post",
             dataType: 'json',
             data: $("#signupForm").serialize(),

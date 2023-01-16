@@ -21,7 +21,7 @@ import java.io.IOException;
 
 @Slf4j
 @Controller
-@RequestMapping("/member")
+@RequestMapping("/members")
 @ResponseBody
 public class MemberController {
     @GetMapping("/signUp")

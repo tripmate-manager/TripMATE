@@ -9,5 +9,7 @@ function popUpOpen(message) {
 }
 
 function popUpClose() {
+    const popupWrap = $(".popup__wrap");
+
     popupWrap.hide();
 }
