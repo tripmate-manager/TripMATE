@@ -31,8 +31,6 @@ public class MemberController {
 
     @PostMapping("/signUp")
     public boolean signUp(@Valid MemberDTO memberDTO) {
-        int memberNo;
-
         try {
             memberDTO.setMemberStatusCode(ConstCode.MEMBER_STATUS_CODE_TEMPORARY);
 
@@ -43,8 +41,10 @@ public class MemberController {
                 if (response.getData().size() != 1) {
                     log.warn("response's data size is not 1");
                     throw new IOException("response's data size is not 1");
-                } else {
-                    memberNo = response.getData().get(0);
+                }
+                if (response.getData().get(0) == 0) {
+                    log.warn("response's data is not valid");
+                    throw new IOException("response's data is not valid");
                 }
             } else {
                 log.warn(response.getCode() + " : " + response.getMessage());
@@ -54,8 +54,6 @@ public class MemberController {
             log.error(e.getMessage(), e);
             return false;
         }
-
-        // 메일전송
 
         return true;
     }
@@ -139,8 +137,35 @@ public class MemberController {
     }
 
     @GetMapping("/signUp/signUpResult")
-    public ModelAndView sendSignUpMail() {
+    public ModelAndView signUpResult() {
         return new ModelAndView("member/signUpResult");
+    }
+
+    @GetMapping("/signUpMailConfirm")
+    public ModelAndView signUpMailConfirm(@RequestParam(value = "email") String email, @RequestParam(value = "key") String key) {
+
+        try {
+            Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(MemberService.class).signUpMailConfirm(email, key);
+            ResponseWrapper<Boolean> response = data.clone().execute().body();
+
+            if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+                if (response.getData().size() != 1) {
+                    log.warn("response's data size is not 1");
+                    throw new IOException("response's data size is not 1");
+                }
+                if (!response.getData().get(0)) {
+                    log.warn("response's data is not valid");
+                    throw new IOException("response's data is not valid");
+                }
+            } else {
+                log.warn(response.getCode() + " : " + response.getMessage());
+                throw new IOException("response code error");
+            }
+        } catch (NullPointerException | IOException e) {
+            log.error(e.getMessage(), e);
+        }
+
+        return new ModelAndView("member/signUp");
     }
 }
 

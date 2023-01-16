@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 @NoArgsConstructor
@@ -15,6 +16,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 public class MemberDTO {
+    @Positive
     private int memberNo;
 
     @NonNull
