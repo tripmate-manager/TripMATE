@@ -44,7 +44,7 @@ $(function () {
 
         $(this).find('.btn').toggleClass('active');
 
-        if (genderCd.val() == $("#GENDER_CODE_MALE").val()) {
+        if (genderCd.val() === $("#GENDER_CODE_MALE").val()) {
             $(this).find(".btn").toggleClass('btn-primary');
             genderCd.val($("#GENDER_CODE_FEMALE").val());
         } else {
