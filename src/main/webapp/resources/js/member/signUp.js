@@ -1,5 +1,3 @@
-// <script src="<%=Const.STATIC_JS_PATH%>/member/signUp.js"></script>
-
 $(function () {
     let duplicateIdCheckYn = false;
     let duplicateNickNmCheckYn = false;
@@ -46,12 +44,11 @@ $(function () {
 
         $(this).find('.btn').toggleClass('active');
 
-        // if (genderCd.val() === <%= ConstCode.GENDER_CODE_MALE %>) {
-        if (genderCd.val() === $("#GENDER_CODE_MALE")) {
+        if (genderCd.val() == $("#GENDER_CODE_MALE").val()) {
             $(this).find(".btn").toggleClass('btn-primary');
-            genderCd.val($("#GENDER_CODE_FEMALE"));
+            genderCd.val($("#GENDER_CODE_FEMALE").val());
         } else {
-            genderCd.val($("#GENDER_CODE_MALE"));
+            genderCd.val($("#GENDER_CODE_MALE").val());
         }
 
         $(this).find(".btn").toggleClass('btn-default');
@@ -129,7 +126,6 @@ $(function () {
                 memberId: $('#memberId').val()
             },
             success: function (result) {
-                console.log(result);
                 if (result) {
                     popUpOpen('사용 가능한 아이디입니다.')
                     duplicateIdCheckYn = true;

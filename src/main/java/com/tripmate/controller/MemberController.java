@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import retrofit2.Call;
 
+import javax.validation.Valid;
 import java.io.IOException;
 
 @Slf4j
@@ -29,11 +30,12 @@ public class MemberController {
     }
 
     @PostMapping("/signUp")
-    public boolean signUp(MemberDTO memberDTO) {
+    public boolean signUp(@Valid MemberDTO memberDTO) {
         int memberNo;
-        memberDTO.setMemberStatusCode(ConstCode.MEMBER_STATUS_CODE_TEMPORARY);
 
         try {
+            memberDTO.setMemberStatusCode(ConstCode.MEMBER_STATUS_CODE_TEMPORARY);
+
             Call<ResponseWrapper<Integer>> data = RetrofitClient.getApiService(MemberService.class).signUp(memberDTO);
             ResponseWrapper<Integer> response = data.clone().execute().body();
 
@@ -67,7 +69,7 @@ public class MemberController {
             ResponseWrapper<Boolean> response = data.clone().execute().body();
 
             if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
-                if (response.getData().size() == 1) {
+                if (response.getData().size() != 1) {
                     log.warn("response's data size is not 1");
                     throw new IOException("response's data size is not 1");
                 } else {
@@ -79,7 +81,6 @@ public class MemberController {
             }
         } catch (NullPointerException | IOException e) {
             log.error(e.getMessage(), e);
-            return false;
         }
 
         return isIdDuplicate;
@@ -106,7 +107,6 @@ public class MemberController {
             }
         } catch (NullPointerException | IOException e) {
             log.error(e.getMessage(), e);
-            return false;
         }
 
         return isNickNameDuplicate;
@@ -133,7 +133,6 @@ public class MemberController {
             }
         } catch (NullPointerException | IOException e) {
             log.error(e.getMessage(), e);
-            return false;
         }
 
         return isEmailDuplicate;

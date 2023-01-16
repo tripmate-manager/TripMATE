@@ -9,7 +9,7 @@
     <jsp:include page="/WEB-INF/jsp/common/messagePopUp.jsp"/>
     <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/member/signUp.css"/>
     <script src="<%=Const.STATIC_JS_PATH%>/member/signUp.js"></script>
-    <script src="<%=Const.STATIC_JS_PATH%>/common/validationCheck.js"></script>
+    <script src="<%=Const.STATIC_JS_PATH%>/member/validationCheck.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/common/popUp.js"></script>
 </head>
 
@@ -77,7 +77,7 @@
             <div class="signup_form_gender">
                 <div class="signup_subtitle">성별</div>
                 <div class="btn-toggle">
-                    <input type="text" name="genderCode" id="genderCode" value="<%=ConstCode.GENDER_CODE_MALE%>>" hidden>
+                    <input type="text" name="genderCode" id="genderCode" value="<%=ConstCode.GENDER_CODE_MALE%>" hidden>
                     <button class="btn btn-default" type="button">남</button>
                     <button class="btn btn-primary active" type="button">여</button>
                 </div>
