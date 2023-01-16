@@ -12,7 +12,7 @@
 <div class="signup_result__wrap">
     <div class="signup_result_title">회원가입</div>
     <div class="signup_result_message">
-        <img class="signup_result_icon" src="/resources/images/icon-mail.png"/>
+        <img class="signup_result_icon" src="<%=Const.STATIC_IMG_PATH%>/icon-mail.png"/>
         <div class="signup_result_sub_message">인증 메일이 발송되었습니다</div>
         <div class="tripmategmailcom--zuR">
             메일함에서 인증 메일을 확인 바랍니다.

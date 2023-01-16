@@ -40,14 +40,20 @@ public class MemberController {
             if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
                 if (response.getData().size() != 1) {
                     log.warn("response's data size is not 1");
+                    throw new IOException("response's data size is not 1");
+                } else {
+                    memberNo = response.getData().get(0);
                 }
-                memberNo = response.getData().get(0);
             } else {
                 log.warn(response.getCode() + " : " + response.getMessage());
+                throw new IOException("response code error");
             }
-        } catch (IOException e) {
+        } catch (NullPointerException | IOException e) {
             log.error(e.getMessage(), e);
+            return false;
         }
+
+        // 메일전송
 
         return true;
     }
@@ -61,15 +67,19 @@ public class MemberController {
             ResponseWrapper<Boolean> response = data.clone().execute().body();
 
             if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
-                if (response.getData().size() != 1) {
+                if (response.getData().size() == 1) {
                     log.warn("response's data size is not 1");
+                    throw new IOException("response's data size is not 1");
+                } else {
+                    isIdDuplicate = response.getData().get(0);
                 }
-                isIdDuplicate = response.getData().get(0);
             } else {
                 log.warn(response.getCode() + " : " + response.getMessage());
+                throw new IOException("response code error");
             }
-        } catch (IOException e) {
+        } catch (NullPointerException | IOException e) {
             log.error(e.getMessage(), e);
+            return false;
         }
 
         return isIdDuplicate;
@@ -86,13 +96,17 @@ public class MemberController {
             if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
                 if (response.getData().size() != 1) {
                     log.warn("response's data size is not 1");
+                    throw new IOException("response's data size is not 1");
+                } else {
+                    isNickNameDuplicate = response.getData().get(0);
                 }
-                isNickNameDuplicate = response.getData().get(0);
             } else {
                 log.warn(response.getCode() + " : " + response.getMessage());
+                throw new IOException("response code error");
             }
-        } catch (IOException e) {
+        } catch (NullPointerException | IOException e) {
             log.error(e.getMessage(), e);
+            return false;
         }
 
         return isNickNameDuplicate;
@@ -109,13 +123,17 @@ public class MemberController {
             if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
                 if (response.getData().size() != 1) {
                     log.warn("response's data size is not 1");
+                    throw new IOException("response's data size is not 1");
+                } else {
+                    isEmailDuplicate = response.getData().get(0);
                 }
-                isEmailDuplicate = response.getData().get(0);
             } else {
                 log.warn(response.getCode() + " : " + response.getMessage());
+                throw new IOException("response code error");
             }
-        } catch (IOException e) {
+        } catch (NullPointerException | IOException e) {
             log.error(e.getMessage(), e);
+            return false;
         }
 
         return isEmailDuplicate;
