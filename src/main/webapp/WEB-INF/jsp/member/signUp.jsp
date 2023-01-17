@@ -6,12 +6,17 @@
     <jsp:include page="../common/include/header.jsp">
         <jsp:param name="title" value="SignUp"/>
     </jsp:include>
+    <jsp:include page="/WEB-INF/jsp/common/messagePopUp.jsp"/>
     <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/member/signUp.css"/>
-    <script src="<%=Const.STATIC_JS_PATH%>/validationCheck.js"></script>
-    <script src="<%=Const.STATIC_JS_PATH%>/popUp.js"></script>
+    <script src="<%=Const.STATIC_JS_PATH%>/member/signUp.js"></script>
+    <script src="<%=Const.STATIC_JS_PATH%>/member/validationCheck.js"></script>
+    <script src="<%=Const.STATIC_JS_PATH%>/common/popUp.js"></script>
 </head>
 
 <body>
+<input type=hidden id="GENDER_CODE_MALE" value="<%=ConstCode.GENDER_CODE_MALE%>>"/>
+<input type=hidden id="GENDER_CODE_FEMALE" value="<%=ConstCode.GENDER_CODE_FEMALE%>>"/>
+
 <div class="signup__wrap">
     <div class="signup_title">회원가입</div>
     <form name="signupForm" id="signupForm" method="post">
@@ -72,7 +77,7 @@
             <div class="signup_form_gender">
                 <div class="signup_subtitle">성별</div>
                 <div class="btn-toggle">
-                    <input type="text" name="genderCode" id="genderCode" value="10" hidden>
+                    <input type="text" name="genderCode" id="genderCode" value="<%=ConstCode.GENDER_CODE_MALE%>" hidden>
                     <button class="btn btn-default" type="button">남</button>
                     <button class="btn btn-primary active" type="button">여</button>
                 </div>
@@ -81,116 +86,5 @@
         <div class="signup_complete">회원가입</div>
     </form>
 </div>
-<jsp:include page="../common/messagePopUp.jsp"/>
-<script>
-    $(function () {
-
-        $("#email").on('keyup', function () {
-            const inputEmail = $(this).val();
-
-            if (!emailValidationCheck(inputEmail)) {
-                $("#checkEmailMessage").show();
-            } else {
-                $("#checkEmailMessage").hide();
-            }
-        });
-
-        $("#checkMemberPassword, #memberPassword").on('keyup', function () {
-            if ($("#checkMemberPassword").val() !== $("#memberPassword").val()) {
-                $("#checkMemberPasswordMessage").show();
-            }
-            $("#checkMemberPasswordMessage").hide();
-        });
-
-
-        $(".btn-toggle").on('click', function () {
-            const genderCd = $(this).find("#genderCode");
-            $(this).find('.btn').toggleClass('active');
-
-            if (genderCd.val() === <%= ConstCode.GENDER_CODE_MALE %>) {
-                $(this).find(".btn").toggleClass('btn-primary');
-                genderCd.val(<%= ConstCode.GENDER_CODE_FEMALE %>);
-            } else {
-                genderCd.val(<%= ConstCode.GENDER_CODE_MALE %>);
-            }
-
-            $(this).find(".btn").toggleClass('btn-default');
-        });
-
-        function signUpFormCheck() {
-            if (!blankCheck($("#memberId"))) {
-                popUpOpen('아이디를 입력해 주세요.');
-                return false;
-            }
-
-            if (!blankCheck($("#memberPassword")) || !blankCheck($("#checkMemberPassword"))) {
-                popUpOpen('비밀번호를 입력해 주세요.');
-                return false;
-            }
-
-            if (!blankCheck($("#memberName"))) {
-                popUpOpen('이름을 입력해 주세요.');
-                return false;
-            }
-
-            if (!blankCheck($("#nickName"))) {
-                popUpOpen('닉네임을 입력해 주세요.');
-                return false;
-            }
-
-            if (!blankCheck($("#email"))) {
-                popUpOpen('이메일을 입력해 주세요.');
-                return false;
-            }
-
-            if (!blankCheck($("#birthDay"))) {
-                popUpOpen('생년월일을 입력해 주세요.');
-                return false;
-            }
-
-            return true;
-        }
-
-        function signUpValidationCheck() {
-            if (!idValidationCheck($("#memberId"))) {
-                popUpOpen('아이디는 영문, 숫자로 이루어진 5~20자의 아이디만 입력 가능합니다.');
-                return false;
-            }
-
-            if (!passwordValidationCheck($("#memberPassword"))) {
-                popUpOpen('비밀번호는 영문, 숫자, 특수기호가 적어도 1개 이상씩 포함된 8~20자의 비밀번호만 입력 가능합니다.');
-                return false;
-            }
-
-            if (!nameValidationCheck($("#memberName"))) {
-                popUpOpen('이름은 영문이나 한글로 이루어진 2~20자의 이름만 입력 가능합니다.');
-                return false;
-            }
-
-            if (!emailValidationCheck($("#email"))) {
-                popUpOpen('이메일이 형식에 맞지 않습니다.');
-                return false;
-            }
-
-            if (!birthDayValidationCheck($("#birthDay"))) {
-                popUpOpen('생년월일은 YYYYMMDD 형태만 입력 가능합니다.');
-                return false;
-            }
-
-            return true;
-        }
-
-        $(".signup_complete").on('click', function () {
-            if (signUpFormCheck() && signUpValidationCheck()) {
-
-                $("#signupForm").attr("action", "/member/signUp.trip").submit();
-
-                return true;
-            } else {
-                return false;
-            }
-        });
-    });
-</script>
 </body>
 </html>

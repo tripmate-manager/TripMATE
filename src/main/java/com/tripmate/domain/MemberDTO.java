@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 @NoArgsConstructor
@@ -15,8 +16,11 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 public class MemberDTO {
+    @Positive
+    private int memberNo;
+
     @NonNull
-    @Pattern(regexp="^[a-zA-Z][0-9a-zA-Z]{5,20}$",
+    @Pattern(regexp="^[0-9a-zA-Z]{5,20}$",
             message = "영문, 숫자로 이루어진 5자 ~ 20자의 아이디만 입력 가능합니다.")
     private String memberId;
 
@@ -45,7 +49,6 @@ public class MemberDTO {
     @Pattern(regexp = "^\\d{4}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$", message="생년월일은 'yyyyMMdd' 형태로 입력가능합니다.")
     private String birthDay;
 
-    @NonNull
     @Pattern(regexp = "^[123]0$", message = "성별코드는 10, 20, 30만 입력 가능합니다.")
     private String memberStatusCode;
 }
