@@ -6,6 +6,7 @@ import com.tripmate.domain.ResponseWrapper;
 import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.entity.ConstCode;
 import com.tripmate.service.MemberService;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 import retrofit2.Call;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 import java.io.IOException;
 
 @Slf4j
@@ -141,22 +144,15 @@ public class MemberController {
         return new ModelAndView("member/signUpResult");
     }
 
-    @GetMapping("/signUpMailConfirm")
-    public ModelAndView signUpMailConfirm(@RequestParam(value = "email") String email, @RequestParam(value = "key") String key) {
-
+    @GetMapping("/signUp/emailConfirm")
+    public ModelAndView signUpMailConfirm(@RequestParam(value = "email") @NonNull @Email String email,
+                                          @RequestParam(value = "key") @NonNull @Size(max = 100) String key) {
         try {
-            Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(MemberService.class).signUpMailConfirm(email, key);
-            ResponseWrapper<Boolean> response = data.clone().execute().body();
+            Call<ResponseWrapper> data = RetrofitClient.getApiService(MemberService.class).signUpMailConfirm(email, key);
+            ResponseWrapper response = data.clone().execute().body();
 
             if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
-                if (response.getData().size() != 1) {
-                    log.warn("response's data size is not 1");
-                    throw new IOException("response's data size is not 1");
-                }
-                if (!response.getData().get(0)) {
-                    log.warn("response's data is not valid");
-                    throw new IOException("response's data is not valid");
-                }
+                return new ModelAndView("member/signUpResult");
             } else {
                 log.warn(response.getCode() + " : " + response.getMessage());
                 throw new IOException("response code error");

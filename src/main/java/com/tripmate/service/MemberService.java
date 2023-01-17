@@ -22,5 +22,5 @@ public interface MemberService {
     Call<ResponseWrapper<Boolean>> isEmailDuplicate(@Query("email") String email);
 
     @GET("v1/members/signUpMailConfirm")
-    Call<ResponseWrapper<Boolean>> signUpMailConfirm(@Query("email") String email, @Query("key") String key);
+    Call<ResponseWrapper> signUpMailConfirm(@Query("email") String email, @Query("key") String key);
 }
