@@ -27,10 +27,6 @@ import java.io.IOException;
 @RequestMapping("/members")
 @ResponseBody
 public class MemberController {
-    @GetMapping("/signUp")
-    public ModelAndView signUp() {
-        return new ModelAndView("member/signUp");
-    }
 
     @PostMapping("/signUp")
     public boolean signUp(@Valid MemberDTO memberDTO) {
@@ -139,11 +135,6 @@ public class MemberController {
         return isEmailDuplicate;
     }
 
-    @GetMapping("/signUp/signUpResult")
-    public ModelAndView signUpResult() {
-        return new ModelAndView("member/signUpResult");
-    }
-
     @GetMapping("/signUp/emailConfirm")
     public ModelAndView signUpMailConfirm(@RequestParam(value = "email") @NonNull @Email String email,
                                           @RequestParam(value = "key") @NonNull @Size(max = 100) String key) {
@@ -152,7 +143,7 @@ public class MemberController {
             ResponseWrapper response = data.clone().execute().body();
 
             if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
-                return new ModelAndView("member/signUpResult");
+                return new ModelAndView("members/signUpResult");
             } else {
                 log.warn(response.getCode() + " : " + response.getMessage());
                 throw new IOException("response code error");
@@ -161,8 +152,7 @@ public class MemberController {
             log.error(e.getMessage(), e);
         }
 
-        return new ModelAndView("member/signUp");
+        return new ModelAndView("members/signUp");
     }
 }
-
 

@@ -7,9 +7,9 @@
         <jsp:param name="title" value="SignUp"/>
     </jsp:include>
     <jsp:include page="/WEB-INF/jsp/common/messagePopUp.jsp"/>
-    <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/member/signUp.css"/>
-    <script src="<%=Const.STATIC_JS_PATH%>/member/signUp.js"></script>
-    <script src="<%=Const.STATIC_JS_PATH%>/member/validationCheck.js"></script>
+    <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/members/signUp.css"/>
+    <script src="<%=Const.STATIC_JS_PATH%>/members/signUp.js"></script>
+    <script src="<%=Const.STATIC_JS_PATH%>/members/validationCheck.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/common/popUp.js"></script>
 </head>
 
