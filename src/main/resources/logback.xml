@@ -46,9 +46,9 @@
         </rollingPolicy>
     </appender>
 
-    <logger name="com.tripmate" level="DEBUG" additivity="false">
+    <root level="DEBUG">
         <appender-ref ref="Console"/>
         <appender-ref ref="File"/>
         <appender-ref ref="Error"/>
-    </logger>
+    </root>
 </configuration>
