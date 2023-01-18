@@ -223,7 +223,7 @@ $(function () {
             data: $("#signupForm").serialize(),
             success: function (result) {
                 if (result) {
-                    window.location.href = "/members/signUp/signUpResult.trip";
+                    window.location.href = "/forward/members/signUp/signUpResult.trip";
                 } else {
                     popUpOpen("처리 중 오류가 발생하였습니다.");
                 }
