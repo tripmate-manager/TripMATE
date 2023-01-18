@@ -8,8 +8,4 @@ $(function () {
             $(".email_error_message").hide();
         }
     });
-
-    $(".find_password_button").on('click', function () {
-
-    });
 });

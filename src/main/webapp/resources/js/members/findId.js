@@ -1,6 +1,6 @@
 $(function () {
-    let inputMemberName = $("#memberName");
-    let inputEmail = $("#email");
+    const inputMemberName = $("#memberName");
+    const inputEmail = $("#email");
 
     function findIdValidationCheck() {
         if (!nameValidationCheck(inputMemberName.val())) {

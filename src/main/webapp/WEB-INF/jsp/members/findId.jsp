@@ -29,5 +29,6 @@
         <div class="find_id_button">아이디 찾기</div>
         <div class="email_error_message" style="display: none;">잘못된 이메일 형식입니다.</div>
     </div>
+</div>
 </body>
 </html>

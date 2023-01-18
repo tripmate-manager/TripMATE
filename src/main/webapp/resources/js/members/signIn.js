@@ -1,5 +1,4 @@
 $(function () {
-
     $("#find_id").on('click', function () {
         window.location.href = "/forward/members/findId.trip";
     });
@@ -10,9 +9,5 @@ $(function () {
 
     $(".signin__menu_join").on('click', function () {
         window.location.href = "/forward/members/signUp.trip";
-    });
-
-    $(".signin_btn").on('click', function () {
-
     });
 });

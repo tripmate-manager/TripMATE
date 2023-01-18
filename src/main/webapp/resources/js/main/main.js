@@ -6,7 +6,7 @@ $(document).ready(function () {
 })
 
 window.onhashchange = function () {
-    if (location.hash != "#open") {
+    if (location.hash !== "#open") {
         $("#menu,.page_cover,html").removeClass("open");
     }
 };
