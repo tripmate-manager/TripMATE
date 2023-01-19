@@ -5,6 +5,7 @@ $(function () {
 
     let inputMemberId = $("#memberId");
     let inputMemberName = $("#memberName");
+    let inputNickName = $("#nickName");
     let inputEmail = $("#email");
     let inputBirthDay = $("#birthDay");
 
@@ -70,7 +71,7 @@ $(function () {
             return false;
         }
 
-        if (!blankCheck($("#nickName"))) {
+        if (!blankCheck(inputNickName)) {
             popUpOpen('닉네임을 입력해 주세요.');
             return false;
         }
@@ -101,6 +102,11 @@ $(function () {
 
         if (!nameValidationCheck(inputMemberName.val())) {
             popUpOpen('이름은 영문이나 한글로 이루어진 2~20자의 이름만 입력 가능합니다.');
+            return false;
+        }
+
+        if (!nickNameValidationCheck(inputNickName.val())) {
+            popUpOpen('닉네임은 한영자 숫자 기호 입력 가능하며, 1~20자의 닉네임만 입력 가능합니다.');
             return false;
         }
 
@@ -153,6 +159,10 @@ $(function () {
     $("#signup_duplicate_nick_name").on('click', function () {
         if (!blankCheck($("#nickName"))) {
             popUpOpen('닉네임을 입력해 주세요.');
+            return false;
+        }
+        if (!nickNameValidationCheck(inputNickName.val())) {
+            popUpOpen('닉네임은 한영자 숫자 기호 입력 가능하며, 1~20자의 닉네임만 입력 가능합니다.');
             return false;
         }
 

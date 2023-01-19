@@ -152,6 +152,7 @@ public class MemberController {
             ResponseWrapper response = data.clone().execute().body();
 
             if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+                // TODO: SignIn 페이지로 이동하도록 수정
                 return new ModelAndView("member/signUpResult");
             } else {
                 log.warn(response.getCode() + " : " + response.getMessage());
