@@ -3,11 +3,11 @@ $(function () {
     let duplicateNickNmCheckYn = false;
     let duplicateEmailCheckYn = false;
 
-    let inputMemberId = $("#memberId");
-    let inputMemberName = $("#memberName");
-    let inputNickName = $("#nickName");
-    let inputEmail = $("#email");
-    let inputBirthDay = $("#birthDay");
+    const inputMemberId = $("#memberId");
+    const inputMemberName = $("#memberName");
+    const inputNickName = $("#nickName");
+    const inputEmail = $("#email");
+    const inputBirthDay = $("#birthDay");
 
     inputMemberId.change(function () {
         duplicateIdCheckYn = false;
