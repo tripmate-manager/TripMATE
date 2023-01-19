@@ -4,7 +4,7 @@
 <html>
 <head>
     <jsp:include page="../common/include/header.jsp">
-        <jsp:param name="title" value="SignUp"/>
+        <jsp:param name="title" value="SignIn"/>
     </jsp:include>
     <jsp:include page="/WEB-INF/jsp/common/messagePopUp.jsp"/>
     <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/member/signIn.css"/>
@@ -13,9 +13,6 @@
     <script src="<%=Const.STATIC_JS_PATH%>/common/popUp.js"></script>
 </head>
 <body>
-<input type=hidden id="signInResult" value="${signUpResult}">
-<input type=hidden id="BOOLEAN_FALSE" value="<%=Const.BOOLEAN_FALSE%>">
-
 <div class="signin__wrap">
     <div class="signin_title">로그인</div>
     <form name="signinForm" id="signinForm" method="post">
