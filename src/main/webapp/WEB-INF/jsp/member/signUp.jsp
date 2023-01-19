@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/jsp/common/include/commonImport.jsp" %>
 
 <html>
@@ -14,8 +14,8 @@
 </head>
 
 <body>
-<input type=hidden id="GENDER_CODE_MALE" value="<%=ConstCode.GENDER_CODE_MALE%>>"/>
-<input type=hidden id="GENDER_CODE_FEMALE" value="<%=ConstCode.GENDER_CODE_FEMALE%>>"/>
+<input type=hidden id="GENDER_CODE_MALE" value="<%=ConstCode.GENDER_CODE_MALE%>">
+<input type=hidden id="GENDER_CODE_FEMALE" value="<%=ConstCode.GENDER_CODE_FEMALE%>">
 
 <div class="signup__wrap">
     <div class="signup_title">회원가입</div>

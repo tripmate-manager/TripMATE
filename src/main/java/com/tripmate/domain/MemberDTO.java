@@ -8,15 +8,12 @@ import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class MemberDTO {
-    @Positive
     private int memberNo;
 
     @NonNull
@@ -34,7 +31,7 @@ public class MemberDTO {
     private String memberName;
 
     @NonNull
-    @Size(min = 1, max = 20)
+    @Pattern(regexp = "^[가-힣0-9a-zA-Z~!@#$%^&*()_+|<>?:{}]{1,20}$", message = "한영자 숫자 기호 입력 가능하며 1~20자의 닉네임만 입력 가능합니다.")
     private String nickName;
 
     @NonNull
@@ -46,10 +43,10 @@ public class MemberDTO {
     private String genderCode;
 
     @NonNull
-    @Pattern(regexp = "^\\d{4}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$", message="생년월일은 'yyyyMMdd' 형태로 입력가능합니다.")
+    @Pattern(regexp = "^(19|20)\\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$", message="생년월일은 'yyyyMMdd' 형태로 입력가능합니다.")
     private String birthDay;
 
-    @Pattern(regexp = "^[123]0$", message = "성별코드는 10, 20, 30만 입력 가능합니다.")
+    @Pattern(regexp = "^[123]0$", message = "회원상태코드는 10, 20, 30만 입력 가능합니다.")
     private String memberStatusCode;
 }
 

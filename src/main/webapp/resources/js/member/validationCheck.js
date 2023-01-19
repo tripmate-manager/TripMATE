@@ -16,6 +16,12 @@ function nameValidationCheck(inputName) {
     return regExp.test(inputName);
 }
 
+function nickNameValidationCheck(inputNickName) {
+    const regExp = /^[가-힣0-9a-zA-Z~!@#$%^&*()_+|<>?:{}]{1,20}$/;
+
+    return regExp.test(inputNickName);
+}
+
 function emailValidationCheck(inputEmail) {
     const regExp = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.[a-zA-Z]{2,4}$/;
 

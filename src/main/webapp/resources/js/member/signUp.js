@@ -3,10 +3,11 @@ $(function () {
     let duplicateNickNmCheckYn = false;
     let duplicateEmailCheckYn = false;
 
-    let inputMemberId = $("#memberId");
-    let inputMemberName = $("#memberName");
-    let inputEmail = $("#email");
-    let inputBirthDay = $("#birthDay");
+    const inputMemberId = $("#memberId");
+    const inputMemberName = $("#memberName");
+    const inputNickName = $("#nickName");
+    const inputEmail = $("#email");
+    const inputBirthDay = $("#birthDay");
 
     inputMemberId.change(function () {
         duplicateIdCheckYn = false;
@@ -70,7 +71,7 @@ $(function () {
             return false;
         }
 
-        if (!blankCheck($("#nickName"))) {
+        if (!blankCheck(inputNickName)) {
             popUpOpen('닉네임을 입력해 주세요.');
             return false;
         }
@@ -104,6 +105,11 @@ $(function () {
             return false;
         }
 
+        if (!nickNameValidationCheck(inputNickName.val())) {
+            popUpOpen('닉네임은 한영자 숫자 기호 입력 가능하며, 1~20자의 닉네임만 입력 가능합니다.');
+            return false;
+        }
+
         if (!emailValidationCheck(inputEmail.val())) {
             popUpOpen('이메일이 형식에 맞지 않습니다.');
             return false;
@@ -118,6 +124,15 @@ $(function () {
     }
 
     $("#signup_duplicate_id").on('click', function () {
+        if (!blankCheck(inputMemberId)) {
+            popUpOpen('아이디를 입력해 주세요.');
+            return false;
+        }
+        if (!idValidationCheck(inputMemberId.val())) {
+            popUpOpen('아이디는 영문, 숫자로 이루어진 5~20자의 아이디만 입력 가능합니다.');
+            return false;
+        }
+
         $.ajax({
             url: "/members/duplication/memberId.trip",
             type: "get",
@@ -142,6 +157,15 @@ $(function () {
     });
 
     $("#signup_duplicate_nick_name").on('click', function () {
+        if (!blankCheck($("#nickName"))) {
+            popUpOpen('닉네임을 입력해 주세요.');
+            return false;
+        }
+        if (!nickNameValidationCheck(inputNickName.val())) {
+            popUpOpen('닉네임은 한영자 숫자 기호 입력 가능하며, 1~20자의 닉네임만 입력 가능합니다.');
+            return false;
+        }
+
         $.ajax({
             url: "/members/duplication/nickName.trip",
             type: "get",
@@ -165,6 +189,15 @@ $(function () {
     });
 
     $("#signup_duplicate_email").on('click', function () {
+        if (!blankCheck(inputEmail)) {
+            popUpOpen('이메일을 입력해 주세요.');
+            return false;
+        }
+        if (!emailValidationCheck(inputEmail.val())) {
+            popUpOpen('이메일이 형식에 맞지 않습니다.');
+            return false;
+        }
+
         $.ajax({
             url: "/members/duplication/email.trip",
             type: "get",
@@ -223,12 +256,13 @@ $(function () {
             data: $("#signupForm").serialize(),
             success: function (result) {
                 if (result) {
-                    window.location.href = "/member/signUp/signUpResult.trip";
+                    window.location.href = "/forward/member/signUpResult.trip";
                 } else {
                     popUpOpen("처리 중 오류가 발생하였습니다.");
                 }
             },
             error: function (error) {
+                console.log(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })
