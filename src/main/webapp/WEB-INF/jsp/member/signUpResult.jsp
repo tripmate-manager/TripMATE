@@ -23,8 +23,4 @@
     <div class="signup_result_check_btn">확인</div>
 </div>
 </body>
-<script>
-    $(".signup_result_check_btn").on('click', function () {
-    });
-</script>
 </html>
