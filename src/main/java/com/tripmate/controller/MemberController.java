@@ -3,7 +3,9 @@ package com.tripmate.controller;
 import com.tripmate.client.RetrofitClient;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.ResponseWrapper;
+import com.tripmate.domain.SignInDTO;
 import com.tripmate.entity.ApiResultEnum;
+import com.tripmate.entity.Const;
 import com.tripmate.entity.ConstCode;
 import com.tripmate.service.MemberService;
 import lombok.NonNull;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import retrofit2.Call;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
@@ -154,6 +158,35 @@ public class MemberController {
         }
 
         return new ModelAndView("member/signUp");
+    }
+
+    @PostMapping("/signIn")
+    public boolean signIn(HttpServletRequest request, SignInDTO signInDTO) {
+
+        try {
+            Call<ResponseWrapper<MemberDTO>> data = RetrofitClient.getApiService(MemberService.class).signIn(signInDTO);
+            ResponseWrapper<MemberDTO> response = data.clone().execute().body();
+
+            if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+                MemberDTO signInResult = response.getData().get(0);
+
+                if (signInResult.getMemberNo() > 0) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute(Const.MEMBER_INFO_SESSION, signInResult);
+
+                    return true;
+                } else {
+                    throw new IOException("response error");
+                }
+            } else {
+                log.warn(response.getCode() + " : " + response.getMessage());
+                throw new IOException("response code error");
+            }
+        } catch (NullPointerException | IOException e) {
+            log.error(e.getMessage(), e);
+        }
+
+        return false;
     }
 }
 

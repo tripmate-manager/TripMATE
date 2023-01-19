@@ -2,6 +2,7 @@ package com.tripmate.service;
 
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.ResponseWrapper;
+import com.tripmate.domain.SignInDTO;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -23,4 +24,7 @@ public interface MemberService {
 
     @GET("v1/members/signUpMailConfirm")
     Call<ResponseWrapper> signUpMailConfirm(@Query("email") String email, @Query("key") String key);
+
+    @POST("v1/members/signIn")
+    Call<ResponseWrapper<MemberDTO>> signIn(@Body SignInDTO signInDTO);
 }
