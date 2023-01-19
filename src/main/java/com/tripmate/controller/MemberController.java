@@ -27,10 +27,6 @@ import java.io.IOException;
 @RequestMapping("/members")
 @ResponseBody
 public class MemberController {
-    @GetMapping("/signUp")
-    public ModelAndView signUp() {
-        return new ModelAndView("member/signUp");
-    }
 
     @PostMapping("/signUp")
     public boolean signUp(@Valid MemberDTO memberDTO) {
@@ -137,11 +133,6 @@ public class MemberController {
         }
 
         return isEmailDuplicate;
-    }
-
-    @GetMapping("/signUp/signUpResult")
-    public ModelAndView signUpResult() {
-        return new ModelAndView("member/signUpResult");
     }
 
     @GetMapping("/signUp/emailConfirm")
