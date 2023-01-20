@@ -161,7 +161,8 @@ public class MemberController {
     }
 
     @PostMapping("/signIn")
-    public boolean signIn(HttpServletRequest request, SignInDTO signInDTO) {
+    public ModelAndView signIn(HttpServletRequest request, SignInDTO signInDTO) {
+        ModelAndView mav = new ModelAndView();
 
         try {
             Call<ResponseWrapper<MemberDTO>> data = RetrofitClient.getApiService(MemberService.class).signIn(signInDTO);
@@ -170,11 +171,16 @@ public class MemberController {
             if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
                 MemberDTO signInResult = response.getData().get(0);
 
-                if (signInResult.getMemberNo() > 0) {
+                if (ConstCode.MEMBER_STATUS_CODE_TEMPORARY.equals(signInResult.getMemberStatusCode())) {
+                    mav.setViewName("member/temporarySignInResult");
+                    return mav;
+                } else if (ConstCode.MEMBER_STATUS_CODE_COMPLETE.equals(signInResult.getMemberStatusCode())) {
                     HttpSession session = request.getSession();
                     session.setAttribute(Const.MEMBER_INFO_SESSION, signInResult);
 
-                    return true;
+                    //TODO: 로그인 성공 시 메인화면으로 이동하도록 수정
+                    mav.setViewName("member/signUp");
+                    return mav;
                 } else {
                     throw new IOException("response error");
                 }
@@ -184,10 +190,10 @@ public class MemberController {
             }
         } catch (NullPointerException | IOException e) {
             log.error(e.getMessage(), e);
-        }
 
-        return false;
+            mav.setViewName("member/signIn");
+            mav.addObject("signInResult", Const.BOOLEAN_FALSE);
+            return mav;
+        }
     }
 }
-
-

@@ -1,3 +1,13 @@
+window.onload = function () {
+    let signInResult = $("#signInResult").val();
+
+    if (signInResult === "N") {
+        popUpOpen("등록되지 않은 아이디이거나, 아이디 혹은 비밀번호를 잘못 입력했습니다.");
+    }
+
+    signInResult = null;
+};
+
 $(function () {
     const inputMemberId = $("#memberId");
     const inputMemberPassword = $("#memberPassword");
@@ -33,23 +43,6 @@ $(function () {
             return false;
         }
 
-        $.ajax({
-            url: "/members/signIn.trip",
-            type: "post",
-            dataType: 'json',
-            data: $("#signinForm").serialize(),
-            success: function (result) {
-                if (result) {
-                    // TODO: 로그인 성공 시 main으로 이동하도록 수정
-                    window.location.href = "/forward/member/signUp.trip";
-                } else {
-                    popUpOpen("등록되지 않은 아이디이거나, 아이디 혹은 비밀번호를 잘못 입력했습니다.");
-                }
-            },
-            error: function (error) {
-                console.log(error);
-                popUpOpen("처리 중 오류가 발생하였습니다.");
-            }
-        })
+        $("#signinForm").attr("action", "/members/signIn.trip").submit();
     });
 });
