@@ -3,12 +3,14 @@ package com.tripmate.controller;
 import com.tripmate.client.RetrofitClient;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.ResponseWrapper;
+import com.tripmate.entity.ApiResult;
 import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.entity.ConstCode;
 import com.tripmate.service.MemberService;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,110 +35,96 @@ public class MemberController {
     }
 
     @PostMapping("/signUp")
-    public boolean signUp(@Valid MemberDTO memberDTO) {
+    public String signUp(@Valid MemberDTO memberDTO) {
+        ApiResult result;
         try {
             memberDTO.setMemberStatusCode(ConstCode.MEMBER_STATUS_CODE_TEMPORARY);
 
             Call<ResponseWrapper<Integer>> data = RetrofitClient.getApiService(MemberService.class).signUp(memberDTO);
             ResponseWrapper<Integer> response = data.clone().execute().body();
 
-            if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
-                if (response.getData().size() != 1) {
-                    log.warn("response's data size is not 1");
-                    throw new IOException("response's data size is not 1");
-                }
-                if (response.getData().get(0) == 0) {
-                    log.warn("response's data is not valid");
-                    throw new IOException("response's data is not valid");
-                }
+            if (ObjectUtils.isEmpty(response)) {
+                throw new IOException("api response data is empty");
             } else {
-                log.warn(response.getCode() + " : " + response.getMessage());
-                throw new IOException("response code error");
+                if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+                    if (response.getData().size() != 1) {
+                        throw new IOException("response's data size is not 1");
+                    }
+                    if (response.getData().get(0) == 0) {
+                        throw new IOException("response's data is not valid");
+                    }
+
+                    log.debug("member no is {}", response.getData().get(0));
+                }
+
+                result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
             }
-        } catch (NullPointerException | IOException e) {
+
+        } catch (IOException e) {
+            log.info(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return false;
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
         }
 
-        return true;
+        return result.toJson();
     }
 
     @GetMapping("/duplication/memberId")
-    public boolean isIdDuplicate(@RequestParam(value = "memberId") String memberId) {
-        boolean isIdDuplicate = false;
-
-        try {
-            Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(MemberService.class).isIdDuplicate(memberId);
-            ResponseWrapper<Boolean> response = data.clone().execute().body();
-
-            if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
-                if (response.getData().size() != 1) {
-                    log.warn("response's data size is not 1");
-                    throw new IOException("response's data size is not 1");
-                } else {
-                    isIdDuplicate = response.getData().get(0);
-                }
-            } else {
-                log.warn(response.getCode() + " : " + response.getMessage());
-                throw new IOException("response code error");
-            }
-        } catch (NullPointerException | IOException e) {
-            log.error(e.getMessage(), e);
-        }
-
-        return isIdDuplicate;
+    public String isIdDuplicate(@RequestParam(value = "memberId") String memberId) {
+        return isDuplicate(ConstCode.DUPLICATION_CHECK_MEMBER_ID, memberId);
     }
 
     @GetMapping("/duplication/nickName")
-    public boolean isNickNameDuplicate(@RequestParam(value = "nickName") String nickName) {
-        boolean isNickNameDuplicate = false;
-
-        try {
-            Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(MemberService.class).isNickNameDuplicate(nickName);
-            ResponseWrapper<Boolean> response = data.clone().execute().body();
-
-            if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
-                if (response.getData().size() != 1) {
-                    log.warn("response's data size is not 1");
-                    throw new IOException("response's data size is not 1");
-                } else {
-                    isNickNameDuplicate = response.getData().get(0);
-                }
-            } else {
-                log.warn(response.getCode() + " : " + response.getMessage());
-                throw new IOException("response code error");
-            }
-        } catch (NullPointerException | IOException e) {
-            log.error(e.getMessage(), e);
-        }
-
-        return isNickNameDuplicate;
+    public String isNickNameDuplicate(@RequestParam(value = "nickName") String nickName) {
+        return isDuplicate(ConstCode.DUPLICATION_CHECK_NICK_NAME, nickName);
     }
 
     @GetMapping("/duplication/email")
-    public boolean isEmailDuplicate(@RequestParam(value = "email") String email) {
-        boolean isEmailDuplicate = false;
+    public String isEmailDuplicate(@RequestParam(value = "email") String email) {
+        return isDuplicate(ConstCode.DUPLICATION_CHECK_EMAIL, email);
+    }
+
+    private String isDuplicate(final String type, final String value) {
+        ApiResult result;
 
         try {
-            Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(MemberService.class).isEmailDuplicate(email);
+            Call<ResponseWrapper<Boolean>> data;
+
+            switch (type) {
+                case ConstCode.DUPLICATION_CHECK_MEMBER_ID:
+                    data = RetrofitClient.getApiService(MemberService.class).isIdDuplicate(value);
+                    break;
+                case ConstCode.DUPLICATION_CHECK_NICK_NAME:
+                    data = RetrofitClient.getApiService(MemberService.class).isNickNameDuplicate(value);
+                    break;
+                default:
+                    data = RetrofitClient.getApiService(MemberService.class).isEmailDuplicate(value);
+            }
+
             ResponseWrapper<Boolean> response = data.clone().execute().body();
 
-            if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
-                if (response.getData().size() != 1) {
-                    log.warn("response's data size is not 1");
-                    throw new IOException("response's data size is not 1");
-                } else {
-                    isEmailDuplicate = response.getData().get(0);
-                }
+            if (ObjectUtils.isEmpty(response)) {
+                throw new IOException("api response data is empty");
             } else {
-                log.warn(response.getCode() + " : " + response.getMessage());
-                throw new IOException("response code error");
+                if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+                    if (response.getData().size() != 1) {
+                        throw new IOException("response's data size is not 1");
+                    }
+                }
+                result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
+                result.put("isDuplicate", response.getData().get(0).booleanValue());
             }
         } catch (NullPointerException | IOException e) {
+            log.info(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        } catch (Exception e) {
             log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
         }
 
-        return isEmailDuplicate;
+        return result.toJson();
     }
 
     @GetMapping("/signUp/signUpResult")

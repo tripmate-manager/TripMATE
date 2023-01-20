@@ -2,6 +2,7 @@ $(function () {
     let duplicateIdCheckYn = false;
     let duplicateNickNmCheckYn = false;
     let duplicateEmailCheckYn = false;
+    let isAjaxProcessing = false;
 
     const inputMemberId = $("#memberId");
     const inputMemberName = $("#memberName");
@@ -141,7 +142,12 @@ $(function () {
                 memberId: $('#memberId').val()
             },
             success: function (result) {
-                if (result) {
+                if (result.code !== '0000') {
+                    popUpOpen(result.message);
+                    return;
+                }
+
+                if (result.isDuplicate) {
                     popUpOpen('사용 가능한 아이디입니다.')
                     duplicateIdCheckYn = true;
                 } else {
@@ -174,7 +180,12 @@ $(function () {
                 nickName: $('#nickName').val()
             },
             success: function (result) {
-                if (result) {
+                if (result.code !== '0000') {
+                    popUpOpen(result.message);
+                    return;
+                }
+
+                if (result.isDuplicate) {
                     popUpOpen('사용 가능한 닉네임입니다.')
                     duplicateNickNmCheckYn = true;
                 } else {
@@ -206,7 +217,12 @@ $(function () {
                 email: $('#email').val()
             },
             success: function (result) {
-                if (result) {
+                if (result.code !== "0000") {
+                    popUpOpen(result.message);
+                    return;
+                }
+
+                if (result.isDuplicate) {
                     popUpOpen('사용 가능한 이메일입니다.')
                     duplicateEmailCheckYn = true;
                 } else {
@@ -249,19 +265,28 @@ $(function () {
             return false;
         }
 
+        if(isAjaxProcessing) {
+            popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
+            return;
+        } else {
+            isAjaxProcessing = true;
+        }
+
         $.ajax({
             url: "/members/signUp.trip",
             type: "post",
             dataType: 'json',
             data: $("#signupForm").serialize(),
             success: function (result) {
-                if (result) {
+                isAjaxProcessing = false;
+                if (result.code === "0000") {
                     window.location.href = "/forward/member/signUpResult.trip";
                 } else {
-                    popUpOpen("처리 중 오류가 발생하였습니다.");
+                    popUpOpen(result.message);
                 }
             },
             error: function (error) {
+                isAjaxProcessing = false;
                 console.log(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
