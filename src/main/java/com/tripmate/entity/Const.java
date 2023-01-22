@@ -17,9 +17,6 @@ public interface Const {
 
     String MEMBER_INFO_SESSION  = "memberInfo";
 
-    String BOOLEAN_TRUE  = "Y";
-    String BOOLEAN_FALSE  = "N";
-
     static String getProperty(final String key) {
         return getProperty(key, "");
     }

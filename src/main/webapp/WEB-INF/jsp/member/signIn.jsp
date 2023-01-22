@@ -13,8 +13,6 @@
     <script src="<%=Const.STATIC_JS_PATH%>/common/popUp.js"></script>
 </head>
 <body>
-<input type=hidden id="signInResult" value=${signInResult}>
-
 <div class="signin__wrap">
     <div class="signin_title">로그인</div>
     <form name="signinForm" id="signinForm" method="post">

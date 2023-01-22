@@ -148,10 +148,10 @@ $(function () {
                 }
 
                 if (result.isDuplicate) {
-                    popUpOpen('사용 가능한 아이디입니다.')
+                    popUpOpen('이미 사용 중인 아이디입니다.')
                     duplicateIdCheckYn = true;
                 } else {
-                    popUpOpen('이미 사용 중인 아이디입니다.')
+                    popUpOpen('사용 가능한 아이디입니다.')
                     duplicateIdCheckYn = false;
                 }
             },
@@ -186,10 +186,10 @@ $(function () {
                 }
 
                 if (result.isDuplicate) {
-                    popUpOpen('사용 가능한 닉네임입니다.')
+                    popUpOpen('이미 사용 중인 닉네임입니다.')
                     duplicateNickNmCheckYn = true;
                 } else {
-                    popUpOpen('이미 사용 중인 닉네임입니다.')
+                    popUpOpen('사용 가능한 닉네임입니다.')
                     duplicateNickNmCheckYn = false;
                 }
             },
@@ -223,10 +223,10 @@ $(function () {
                 }
 
                 if (result.isDuplicate) {
-                    popUpOpen('사용 가능한 이메일입니다.')
+                    popUpOpen('이미 사용 중인 이메일입니다.')
                     duplicateEmailCheckYn = true;
                 } else {
-                    popUpOpen('이미 사용 중인 이메일입니다.')
+                    popUpOpen('사용 가능한 이메일입니다.')
                     duplicateEmailCheckYn = false;
                 }
             },

@@ -3,8 +3,10 @@ package com.tripmate.controller;
 import com.tripmate.client.RetrofitClient;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.ResponseWrapper;
+import com.tripmate.domain.SignInDTO;
 import com.tripmate.entity.ApiResult;
 import com.tripmate.entity.ApiResultEnum;
+import com.tripmate.entity.Const;
 import com.tripmate.entity.ConstCode;
 import com.tripmate.service.MemberService;
 import lombok.NonNull;
@@ -147,39 +149,42 @@ public class MemberController {
     }
 
     @PostMapping("/signIn")
-    public ModelAndView signIn(HttpServletRequest request, SignInDTO signInDTO) {
-        ModelAndView mav = new ModelAndView();
+    public String signIn(HttpServletRequest request, SignInDTO signInDTO) {
+        ApiResult result;
 
         try {
             Call<ResponseWrapper<MemberDTO>> data = RetrofitClient.getApiService(MemberService.class).signIn(signInDTO);
             ResponseWrapper<MemberDTO> response = data.clone().execute().body();
 
-            if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
-                MemberDTO signInResult = response.getData().get(0);
-
-                if (ConstCode.MEMBER_STATUS_CODE_TEMPORARY.equals(signInResult.getMemberStatusCode())) {
-                    mav.setViewName("member/temporarySignInResult");
-                    return mav;
-                } else if (ConstCode.MEMBER_STATUS_CODE_COMPLETE.equals(signInResult.getMemberStatusCode())) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute(Const.MEMBER_INFO_SESSION, signInResult);
-
-                    //TODO: 로그인 성공 시 메인화면으로 이동하도록 수정
-                    mav.setViewName("member/signUp");
-                    return mav;
-                } else {
-                    throw new IOException("response error");
-                }
+            if (ObjectUtils.isEmpty(response)) {
+                throw new IOException("api response data is empty");
             } else {
-                log.warn(response.getCode() + " : " + response.getMessage());
-                throw new IOException("response code error");
+                if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+                    if (response.getData().size() != 1) {
+                        throw new IOException("response's data size is not 1");
+                    }
+
+                    result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
+                    MemberDTO memberDTO = response.getData().get(0);
+
+                    if (ConstCode.MEMBER_STATUS_CODE_COMPLETE.equals(memberDTO.getMemberStatusCode())) {
+                        HttpSession session = request.getSession();
+                        session.setAttribute(Const.MEMBER_INFO_SESSION, memberDTO);
+                    }
+
+                    result.put("memberStatusCode", memberDTO.getMemberStatusCode());
+                } else {
+                    result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+                }
             }
         } catch (NullPointerException | IOException e) {
             log.error(e.getMessage(), e);
-
-            mav.setViewName("member/signIn");
-            mav.addObject("signInResult", Const.BOOLEAN_FALSE);
-            return mav;
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
         }
+
+        return result.toJson();
     }
 }
