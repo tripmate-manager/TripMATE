@@ -136,7 +136,7 @@ public class MemberController {
 
             if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
                 // TODO: SignIn 페이지로 이동하도록 수정
-                return new ModelAndView("member/signUpResult");
+                return new ModelAndView("members/signUpResult");
             } else {
                 log.warn(response.getCode() + " : " + response.getMessage());
                 throw new IOException("response code error");
@@ -145,7 +145,7 @@ public class MemberController {
             log.error(e.getMessage(), e);
         }
 
-        return new ModelAndView("member/signUp");
+        return new ModelAndView("members/signUp");
     }
 
     @PostMapping("/signIn")

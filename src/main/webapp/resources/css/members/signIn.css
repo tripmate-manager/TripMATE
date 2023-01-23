@@ -14,7 +14,7 @@ input {
 }
 body {
   width: 37.5rem;
-}.signin__wrap {
+}.signin_wrap {
   box-sizing: border-box;
   padding: 4.95rem 1.1rem 24.8rem 1.4rem;
   width: 100%;
@@ -25,7 +25,7 @@ body {
   flex-direction: column;
   background-color: #ffffff;
 }
-.signin__wrap .signin_title {
+.signin_wrap .signin_title {
   margin: 0rem 27.7rem 2.85rem 0rem;
   display: flex;
   font-size: 2.8rem;
@@ -36,7 +36,7 @@ body {
   white-space: nowrap;
   flex-shrink: 0;
 }
-.signin__wrap .signin__form .signin__form_input {
+.signin_wrap .signin_form .signin_form_input {
   margin: 0rem 1.2rem 1.7rem 1.1rem;
   box-sizing: border-box;
   padding: 1.5rem 13rem 1.5rem 2rem;
@@ -52,7 +52,7 @@ body {
   background-color: #ffffff;
   flex-shrink: 0;
 }
-.signin__wrap .signin_btn {
+.signin_wrap .signin_btn {
   margin: 0rem 1.2rem 1.6rem 1.1rem;
   width: calc(100% - 2.3rem);
   height: 5rem;
@@ -69,14 +69,14 @@ body {
   border-radius: 1rem;
   flex-shrink: 0;
 }
-.signin__wrap .signin__menu {
+.signin_wrap .signin_menu {
   margin: 0rem 6.4rem 5.164rem 4.1rem;
   width: calc(100% - 10.5rem);
   display: flex;
   align-items: center;
   flex-shrink: 0;
 }
-.signin__wrap .signin__menu .signin__menu_find {
+.signin_wrap .signin_menu .signin_menu_find {
   margin: 0rem 0.5rem 0rem 0.5rem;
   display: flex;
   font-size: 1.5rem;
@@ -87,14 +87,14 @@ body {
   white-space: nowrap;
   flex-shrink: 0;
 }
-.signin__wrap .signin__menu .signin__menu_line {
+.signin_wrap .signin_menu .signin_menu_line {
   margin: 0rem 1rem 0rem 1rem;
   width: 0.1rem;
   height: 2.2361rem;
   background-color: #000000;
   flex-shrink: 0;
 }
-.signin__wrap .signin__menu .signin__menu_join {
+.signin_wrap .signin_menu .signin_menu_join {
   margin: 0rem 0.5rem 0rem 0.5rem;
   display: flex;
   font-size: 1.5rem;
@@ -105,14 +105,14 @@ body {
   white-space: nowrap;
   flex-shrink: 0;
 }
-.signin__wrap .signin__divi_line {
+.signin_wrap .signin_divi_line {
   margin-bottom: 7.3rem;
   width: 100%;
   height: 0.1rem;
   background-color: #212352;
   flex-shrink: 0;
 }
-.signin__wrap .signin__social {
+.signin_wrap .signin_social {
   margin: 0rem 2.7rem 0.9rem 2.3rem;
   box-sizing: border-box;
   padding: 0rem 12.8rem 0rem 0.5rem;
@@ -123,7 +123,7 @@ body {
   border-radius: 0.5rem;
   flex-shrink: 0;
 }
-.signin__wrap .signin__social .signin_naver_logo {
+.signin_wrap .signin_social .signin_naver_logo {
   margin-right: 6.4rem;
   width: 4.5rem;
   height: 4.5rem;
@@ -131,7 +131,7 @@ body {
   vertical-align: top;
   flex-shrink: 0;
 }
-.signin__wrap .signin__social .signin_naver {
+.signin_wrap .signin_social .signin_naver {
   margin-top: 0.1rem;
   display: flex;
   font-size: 1.5rem;
@@ -142,7 +142,7 @@ body {
   white-space: nowrap;
   flex-shrink: 0;
 }
-.signin__wrap .signin_kakao {
+.signin_wrap .signin_kakao {
   margin-right: 0.4rem;
   width: 30rem;
   height: 4.5rem;

@@ -3,6 +3,7 @@ $(function () {
     let duplicateNickNmCheckYn = false;
     let duplicateEmailCheckYn = false;
     let isAjaxProcessing = false;
+    let inputGenderCode = $("#genderCode");
 
     const inputMemberId = $("#memberId");
     const inputMemberName = $("#memberName");
@@ -41,19 +42,24 @@ $(function () {
     });
 
 
-    $(".btn-toggle").on('click', function () {
-        const genderCd = $(this).find("#genderCode");
+    $(".btn-default").on('click', function () {
+        const genderFemaleBtn = $(this).parent().find(".btn-primary");
 
-        $(this).find('.btn').toggleClass('active');
-
-        if (genderCd.val() === $("#GENDER_CODE_MALE").val()) {
-            $(this).find(".btn").toggleClass('btn-primary');
-            genderCd.val($("#GENDER_CODE_FEMALE").val());
-        } else {
-            genderCd.val($("#GENDER_CODE_MALE").val());
+        if (inputGenderCode.val() !== $("#GENDER_CODE_MALE").val()) {
+            $(this).toggleClass('active');
+            genderFemaleBtn.toggleClass('active');
+            inputGenderCode.val($("#GENDER_CODE_MALE").val());
         }
+    });
 
-        $(this).find(".btn").toggleClass('btn-default');
+    $(".btn-primary").on('click', function () {
+        const genderMaleBtn = $(this).parent().find(".btn-default");
+
+        if (inputGenderCode.val() !== $("#GENDER_CODE_FEMALE").val()) {
+            $(this).toggleClass('active');
+            genderMaleBtn.toggleClass('active');
+            inputGenderCode.val($("#GENDER_CODE_FEMALE").val());
+        }
     });
 
     function formBlankCheck() {
@@ -280,7 +286,7 @@ $(function () {
             success: function (result) {
                 isAjaxProcessing = false;
                 if (result.code === "0000") {
-                    window.location.href = "/forward/member/signUpResult.trip";
+                    window.location.href = "/forward/members/signUpResult.trip";
                 } else {
                     popUpOpen(result.message);
                 }

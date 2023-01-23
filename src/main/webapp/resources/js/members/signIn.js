@@ -12,7 +12,7 @@ $(function () {
         window.location.href = "/forward/members/findPassword.trip";
     });
 
-    $(".signin__menu_join").on('click', function () {
+    $(".signin_menu_join").on('click', function () {
         window.location.href = "/forward/members/signUp.trip";
     });
 
@@ -52,9 +52,9 @@ $(function () {
                 if (result.code === "0000") {
                     if (result.memberStatusCode === "10") {
                         //TODO: 메인으로 이동하도록 수정
-                        window.location.href = "/forward/member/signUpResult.trip";
+                        window.location.href = "/forward/members/signUpResult.trip";
                     } else if (result.memberStatusCode === "20"){
-                        window.location.href = "/forward/member/temporarySignInResult.trip";
+                        window.location.href = "/forward/members/temporarySignInResult.trip";
                     }
                 } else {
                     popUpOpen("등록되지 않은 아이디이거나, 아이디 혹은 비밀번호를 잘못 입력했습니다.");

@@ -6,18 +6,18 @@
     <jsp:include page="../common/include/header.jsp">
         <jsp:param name="title" value="TemporaryLoginResult"/>
     </jsp:include>
-    <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/member/temporarySignInResult.css"/>
-    <script src="<%=Const.STATIC_JS_PATH%>/member/temporarySignInResult.js"></script>
+    <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/members/temporarySignInResult.css"/>
+    <script src="<%=Const.STATIC_JS_PATH%>/members/temporarySignInResult.js"></script>
 </head>
 
 <body>
-<div class="temporary__wrap">
+<div class="temporary_wrap">
     <img class="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png" onclick="history.back()"/>
     <div class="temporary_title">임시 회원</div>
-    <div class="auto-group-xgyy-PoH">
-        <div class="eva-alert-triangle-outline-6So">
-            <img class="vector-Lrw" src="<%=Const.STATIC_IMG_PATH%>/member/icon_emphasis_1.png"/>
-            <img class="vector-Gkb" src="<%=Const.STATIC_IMG_PATH%>/member/icon_emphasis_2.png"/>
+    <div class="temporary_contents">
+        <div class="temporary_icon_wrap">
+            <img class="temporary_icon1" src="<%=Const.STATIC_IMG_PATH%>/members/icon_emphasis_1.png"/>
+            <img class="temporary_icon2" src="<%=Const.STATIC_IMG_PATH%>/members/icon_emphasis_2.png"/>
         </div>
         <div class="temporary_message">서비스를 이용할 수 없습니다.</div>
         <div class="temporary_message_2">
