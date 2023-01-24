@@ -4,14 +4,6 @@ $(function () {
     const inputMemberId = $("#memberId");
     const inputMemberPassword = $("#memberPassword");
 
-    $("#find_id").on('click', function () {
-        window.location.href = "/forward/members/findId.trip";
-    });
-
-    $("#find_password").on('click', function () {
-        window.location.href = "/forward/members/findPassword.trip";
-    });
-
     $(".signin_menu_join").on('click', function () {
         window.location.href = "/forward/members/signUp.trip";
     });
@@ -50,6 +42,11 @@ $(function () {
             success: function (result) {
                 isAjaxProcessing = false;
                 if (result.code === "0000") {
+                    if (result.logInRequestCnt >= 5) {
+                        popUpOpen("로그인 시도 횟수를 초과하여 지금은 로그인할 수 없습니다.");
+                        return false;
+                    }
+
                     if (result.memberStatusCode === "10") {
                         //TODO: 메인으로 이동하도록 수정
                         window.location.href = "/forward/members/signUpResult.trip";
@@ -65,7 +62,5 @@ $(function () {
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })
-
-        $("#signinForm")[0].reset();
     });
 });

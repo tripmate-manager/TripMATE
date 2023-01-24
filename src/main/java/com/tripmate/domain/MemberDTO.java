@@ -48,5 +48,7 @@ public class MemberDTO {
 
     @Pattern(regexp = "^[123]0$", message = "회원상태코드는 10, 20, 30만 입력 가능합니다.")
     private String memberStatusCode;
+
+    private int logInRequestCnt;
 }
 

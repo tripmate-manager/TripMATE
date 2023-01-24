@@ -167,6 +167,11 @@ public class MemberController {
                     result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
                     MemberDTO memberDTO = response.getData().get(0);
 
+                    if (memberDTO.getLogInRequestCnt() >= 5) {
+                        result.put("logInRequestCnt", memberDTO.getLogInRequestCnt());
+                        return result.toJson();
+                    }
+
                     if (ConstCode.MEMBER_STATUS_CODE_COMPLETE.equals(memberDTO.getMemberStatusCode())) {
                         HttpSession session = request.getSession();
                         session.setAttribute(Const.MEMBER_INFO_SESSION, memberDTO);
