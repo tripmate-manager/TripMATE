@@ -6,6 +6,8 @@ $(function () {
     let inputGenderCode = $("#genderCode");
 
     const inputMemberId = $("#memberId");
+    const inputMemberPassword = $("#memberPassword");
+    const inputMemberPasswordCheck = $("#checkMemberPassword");
     const inputMemberName = $("#memberName");
     const inputNickName = $("#nickName");
     const inputEmail = $("#email");
@@ -68,7 +70,7 @@ $(function () {
             return false;
         }
 
-        if (!blankCheck($("#memberPassword")) || !blankCheck($("#checkMemberPassword"))) {
+        if (!blankCheck(inputMemberPassword) || !blankCheck(inputMemberPasswordCheck)) {
             popUpOpen('비밀번호를 입력해 주세요.');
             return false;
         }
@@ -90,6 +92,25 @@ $(function () {
 
         if (!blankCheck(inputBirthDay)) {
             popUpOpen('생년월일을 입력해 주세요.');
+            return false;
+        }
+
+        return true;
+    }
+
+    function formSpaceCheck() {
+        if (!spaceCheck(inputMemberId)) {
+            popUpOpen('아이디에 공백이 입력되었습니다.');
+            return false;
+        }
+
+        if (!spaceCheck(inputMemberPassword)) {
+            popUpOpen('비밀번호에 공백이 입력되었습니다.');
+            return false;
+        }
+
+        if (!spaceCheck(inputMemberName)) {
+            popUpOpen('이름에 공백이 입력되었습니다.');
             return false;
         }
 
@@ -133,6 +154,10 @@ $(function () {
     $("#signup_duplicate_id").on('click', function () {
         if (!blankCheck(inputMemberId)) {
             popUpOpen('아이디를 입력해 주세요.');
+            return false;
+        }
+        if (!spaceCheck(inputMemberId)) {
+            popUpOpen('아이디에 공백이 입력되었습니다.');
             return false;
         }
         if (!idValidationCheck(inputMemberId.val())) {
@@ -262,6 +287,9 @@ $(function () {
 
     $(".signup_complete").on('click', function () {
         if (!formBlankCheck()) {
+            return false;
+        }
+        if (!formSpaceCheck()) {
             return false;
         }
         if (!signUpValidationCheck()) {

@@ -21,9 +21,25 @@ $(function () {
 
         return true;
     }
+    function formSpaceCheck() {
+        if (!spaceCheck(inputMemberId)) {
+            popUpOpen('아이디에 공백이 입력되었습니다.');
+            return false;
+        }
+
+        if (!spaceCheck(inputMemberPassword)) {
+            popUpOpen('비밀번호에 공백이 입력되었습니다.');
+            return false;
+        }
+
+        return true;
+    }
 
     $(".signin_btn").on('click', function () {
         if (!formBlankCheck()) {
+            return false;
+        }
+        if (!formSpaceCheck()) {
             return false;
         }
 

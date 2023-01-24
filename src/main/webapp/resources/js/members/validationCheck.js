@@ -41,3 +41,9 @@ function blankCheck(input) {
     }
     return true;
 }
+
+function spaceCheck(input) {
+    const regExp = /[\s]/g;
+
+    return !regExp.test(input.val());
+}
