@@ -65,7 +65,7 @@ $(function () {
 
                     if (result.memberStatusCode === "10") {
                         //TODO: 메인으로 이동하도록 수정
-                        window.location.href = "/forward/members/signUpResult.trip";
+                        window.location.replace("/forward/members/signUpResult.trip");
                     } else if (result.memberStatusCode === "20"){
                         window.location.href = "/forward/members/temporarySignInResult.trip";
                     }

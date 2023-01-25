@@ -123,7 +123,7 @@ $(function () {
             return false;
         }
 
-        if (!passwordValidationCheck($("#memberPassword").val())) {
+        if (!passwordValidationCheck(inputMemberPassword.val())) {
             popUpOpen('비밀번호는 영문, 숫자, 특수기호가 적어도 1개 이상씩 포함된 8~20자의 비밀번호만 입력 가능합니다.');
             return false;
         }
@@ -174,17 +174,16 @@ $(function () {
             },
             success: function (result) {
                 if (result.code !== '0000') {
-                    console.log(result.message.toString());
                     popUpOpen(result.message);
                     return;
                 }
 
                 if (result.isDuplicate) {
                     popUpOpen('이미 사용 중인 아이디입니다.')
-                    duplicateIdCheckYn = true;
+                    duplicateIdCheckYn = false;
                 } else {
                     popUpOpen('사용 가능한 아이디입니다.')
-                    duplicateIdCheckYn = false;
+                    duplicateIdCheckYn = true;
                 }
             },
             error: function (error) {
@@ -218,10 +217,10 @@ $(function () {
 
                 if (result.isDuplicate) {
                     popUpOpen('이미 사용 중인 닉네임입니다.')
-                    duplicateNickNmCheckYn = true;
+                    duplicateNickNmCheckYn = false;
                 } else {
                     popUpOpen('사용 가능한 닉네임입니다.')
-                    duplicateNickNmCheckYn = false;
+                    duplicateNickNmCheckYn = true;
                 }
             },
             error: function (error) {
@@ -255,10 +254,10 @@ $(function () {
 
                 if (result.isDuplicate) {
                     popUpOpen('이미 사용 중인 이메일입니다.')
-                    duplicateEmailCheckYn = true;
+                    duplicateEmailCheckYn = false;
                 } else {
                     popUpOpen('사용 가능한 이메일입니다.')
-                    duplicateEmailCheckYn = false;
+                    duplicateEmailCheckYn = true;
                 }
             },
             error: function (error) {
@@ -314,7 +313,7 @@ $(function () {
             success: function (result) {
                 isAjaxProcessing = false;
                 if (result.code === "0000") {
-                    window.location.href = "/forward/members/signUpResult.trip";
+                    window.location.replace("/forward/members/signUpResult.trip");
                 } else {
                     popUpOpen(result.message);
                 }
