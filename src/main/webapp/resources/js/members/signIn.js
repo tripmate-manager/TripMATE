@@ -58,7 +58,7 @@ $(function () {
             success: function (result) {
                 isAjaxProcessing = false;
                 if (result.code === "0000") {
-                    if (result.signInRequestCnt >= 5) {
+                    if (result.signInRequestCnt >= $("#SIGNIN_LIMIT_CNT").val()) {
                         popUpOpen("로그인 시도 횟수를 초과하여 지금은 로그인할 수 없습니다.");
                         return false;
                     }

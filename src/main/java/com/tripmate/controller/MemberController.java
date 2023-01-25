@@ -166,7 +166,7 @@ public class MemberController {
                     result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
                     MemberDTO memberDTO = response.getData().get(0);
 
-                    if (memberDTO.getSignInRequestCnt() >= 5) {
+                    if (memberDTO.getSignInRequestCnt() >= Const.SIGNIN_LIMIT_CNT) {
                         result.put("signInRequestCnt", memberDTO.getSignInRequestCnt());
                         return result.toJson();
                     }
@@ -182,7 +182,7 @@ public class MemberController {
                 }
             }
         } catch (NullPointerException | IOException e) {
-            log.error(e.getMessage(), e);
+            log.info(e.getMessage(), e);
             result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
         } catch (Exception e) {
             log.error(e.getMessage(), e);

@@ -13,6 +13,8 @@
     <script src="<%=Const.STATIC_JS_PATH%>/common/popUp.js"></script>
 </head>
 <body>
+<input type=hidden id="SIGNIN_LIMIT_CNT" value="<%=Const.SIGNIN_LIMIT_CNT%>">
+
 <div class="signin_wrap">
     <div class="signin_title">로그인</div>
     <form name="signinForm" id="signinForm" method="post">

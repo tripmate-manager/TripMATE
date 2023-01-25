@@ -28,4 +28,6 @@ public interface Const {
         }
         return value;
     }
+
+    int SIGNIN_LIMIT_CNT        = 5;
 }
