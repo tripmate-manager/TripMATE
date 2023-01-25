@@ -166,8 +166,8 @@ public class MemberController {
                     result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
                     MemberDTO memberDTO = response.getData().get(0);
 
-                    if (memberDTO.getLogInRequestCnt() >= 5) {
-                        result.put("logInRequestCnt", memberDTO.getLogInRequestCnt());
+                    if (memberDTO.getSignInRequestCnt() >= 5) {
+                        result.put("signInRequestCnt", memberDTO.getSignInRequestCnt());
                         return result.toJson();
                     }
 

@@ -38,10 +38,10 @@
     <div class="signin_divi_line">
     </div>
     <div class="signin_social">
-        <img class="signin_naver_logo" src="<%=Const.STATIC_IMG_PATH%>/members/icon_naverlogin.png"/>
+        <img class="signin_naver_logo" src="<%=Const.STATIC_IMG_PATH%>/members/icon_naver_signin.png"/>
         <div class="signin_naver">네이버 로그인</div>
     </div>
-    <img class="signin_kakao" src="<%=Const.STATIC_IMG_PATH%>/members/icon_kakaologin_wide.png"/>
+    <img class="signin_kakao" src="<%=Const.STATIC_IMG_PATH%>/members/icon_kakao_signin_wide.png"/>
 </div>
 </body>
 </html>
