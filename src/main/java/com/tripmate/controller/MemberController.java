@@ -148,7 +148,7 @@ public class MemberController {
     }
 
     @PostMapping("/signIn")
-    public String signIn(HttpServletRequest request, SignInDTO signInDTO) {
+    public String signIn(HttpServletRequest request, @Valid SignInDTO signInDTO) {
         ApiResult result;
 
         try {
@@ -178,7 +178,7 @@ public class MemberController {
 
                     result.put("memberStatusCode", memberDTO.getMemberStatusCode());
                 } else {
-                    result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+                    result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
                 }
             }
         } catch (NullPointerException | IOException e) {

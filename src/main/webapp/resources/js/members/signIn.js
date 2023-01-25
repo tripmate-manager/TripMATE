@@ -42,6 +42,10 @@ $(function () {
         if (!formSpaceCheck()) {
             return false;
         }
+        if (!idValidationCheck(inputMemberId.val())) {
+            popUpOpen('아이디는 영문, 숫자로 이루어진 5~20자의 아이디만 입력 가능합니다.');
+            return false;
+        }
 
         if(isAjaxProcessing) {
             popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
@@ -69,7 +73,7 @@ $(function () {
                     } else if (result.memberStatusCode === "20"){
                         window.location.href = "/forward/members/temporarySignInResult.trip";
                     }
-                } else {
+                } else if (result.code === "9001") {
                     popUpOpen("등록되지 않은 아이디이거나, 아이디 혹은 비밀번호를 잘못 입력했습니다.");
                 }
             },
