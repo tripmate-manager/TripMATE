@@ -67,10 +67,10 @@ $(function () {
                         return false;
                     }
 
-                    if (result.memberStatusCode === "10") {
+                    if (result.memberStatusCode === constCode.global.memberStatusCodeComplete) {
                         //TODO: 메인으로 이동하도록 수정
                         window.location.replace("/forward/members/signUpResult.trip");
-                    } else if (result.memberStatusCode === "20"){
+                    } else if (result.memberStatusCode === constCode.global.memberStatusCodeTemporary){
                         window.location.href = "/forward/members/temporarySignInResult.trip";
                     }
                 } else if (result.code === constCode.global.resultCodeWrongParameter) {

@@ -21,7 +21,10 @@
             resultCodeMessaging: "<%= Const.RESULT_CODE_MESSAGING %>",
             resultCodeValidation: "<%= Const.RESULT_CODE_VALIDATION %>",
             resultCodeWrongParameter: "<%= Const.RESULT_CODE_WRONG_PARAMETER %>",
-            resultCodeUnknown: "<%= Const.RESULT_CODE_UNKNOWN %>"
+            resultCodeUnknown: "<%= Const.RESULT_CODE_UNKNOWN %>",
+
+            memberStatusCodeComplete: "<%= ConstCode.MEMBER_STATUS_CODE_COMPLETE %>",
+            memberStatusCodeTemporary: "<%= ConstCode.MEMBER_STATUS_CODE_TEMPORARY %>",
         }
     }());
 </script>
