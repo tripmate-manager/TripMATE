@@ -27,4 +27,7 @@ public interface MemberService {
 
     @POST("v1/members/signIn")
     Call<ResponseWrapper<MemberDTO>> signIn(@Body SignInDTO signInDTO);
+
+    @GET("v1/members/findId")
+    Call<ResponseWrapper<String>> findId(@Query("memberName") String memberName, @Query("email") String email);
 }

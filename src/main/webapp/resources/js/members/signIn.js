@@ -8,6 +8,10 @@ $(function () {
         window.location.href = "/forward/members/signUp.trip";
     });
 
+    $(".signin_menu_find").on('click', function () {
+        window.location.href = "/forward/members/findId.trip";
+    });
+
     function formBlankCheck() {
         if (!blankCheck(inputMemberId)) {
             popUpOpen('아이디를 입력해 주세요.');

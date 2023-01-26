@@ -9,7 +9,6 @@ import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.entity.Const;
 import com.tripmate.entity.ConstCode;
 import com.tripmate.service.MemberService;
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
@@ -25,7 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
 import java.io.IOException;
 
 @Slf4j
@@ -128,8 +128,8 @@ public class MemberController {
     }
 
     @GetMapping("/signUp/emailConfirm")
-    public ModelAndView signUpMailConfirm(@RequestParam(value = "email") @NonNull @Email String email,
-                                          @RequestParam(value = "key") @NonNull @Size(max = 100) String key) {
+    public ModelAndView signUpMailConfirm(@RequestParam(value = "email") @NotBlank @Email String email,
+                                          @RequestParam(value = "key") @NotBlank @Max(100) String key) {
         try {
             Call<ResponseWrapper> data = RetrofitClient.getApiService(MemberService.class).signUpMailConfirm(email, key);
             ResponseWrapper response = data.clone().execute().body();
@@ -180,6 +180,39 @@ public class MemberController {
                 } else {
                     result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
                 }
+            }
+        } catch (IOException e) {
+            log.info(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
+    }
+
+    @GetMapping("/signIn/findId")
+    public String findId(@RequestParam(value = "memberName") @NotBlank @Max(20) String memberName,
+                         @RequestParam(value = "email") @NotBlank @Email String email) {
+        ApiResult result;
+
+        try {
+            Call<ResponseWrapper<String>> data = RetrofitClient.getApiService(MemberService.class).findId(memberName, email);
+            ResponseWrapper<String> response = data.clone().execute().body();
+
+            if (ObjectUtils.isEmpty(response)) {
+                throw new IOException("response is Empty");
+            }
+            if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+                if (response.getData().size() != 1) {
+                    throw new IOException("response's data size is not 1");
+                }
+
+                result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
+                result.put("memberId", response.getData().get(0));
+            } else {
+                result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
             }
         } catch (IOException e) {
             log.info(e.getMessage(), e);
