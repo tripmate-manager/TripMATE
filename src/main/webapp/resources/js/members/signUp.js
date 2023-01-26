@@ -173,7 +173,7 @@ $(function () {
                 memberId: $('#memberId').val()
             },
             success: function (result) {
-                if (result.code !== '0000') {
+                if (result.code !== constCode.global.resultCodeSuccess) {
                     popUpOpen(result.message);
                     return;
                 }
@@ -210,7 +210,7 @@ $(function () {
                 nickName: $('#nickName').val()
             },
             success: function (result) {
-                if (result.code !== '0000') {
+                if (result.code !== constCode.global.resultCodeSuccess) {
                     popUpOpen(result.message);
                     return;
                 }
@@ -247,7 +247,7 @@ $(function () {
                 email: $('#email').val()
             },
             success: function (result) {
-                if (result.code !== "0000") {
+                if (result.code !== constCode.global.resultCodeSuccess) {
                     popUpOpen(result.message);
                     return;
                 }
@@ -312,7 +312,7 @@ $(function () {
             data: $("#signupForm").serialize(),
             success: function (result) {
                 isAjaxProcessing = false;
-                if (result.code === "0000") {
+                if (result.code === constCode.global.resultCodeSuccess) {
                     window.location.replace("/forward/members/signUpResult.trip");
                 } else {
                     popUpOpen(result.message);

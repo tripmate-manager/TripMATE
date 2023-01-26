@@ -61,7 +61,7 @@ $(function () {
             data: $("#signinForm").serialize(),
             success: function (result) {
                 isAjaxProcessing = false;
-                if (result.code === "0000") {
+                if (result.code === constCode.global.resultCodeSuccess) {
                     if (result.signInRequestCnt >= $("#SIGNIN_LIMIT_CNT").val()) {
                         popUpOpen("로그인 시도 횟수를 초과하여 지금은 로그인할 수 없습니다.");
                         return false;
@@ -73,7 +73,7 @@ $(function () {
                     } else if (result.memberStatusCode === "20"){
                         window.location.href = "/forward/members/temporarySignInResult.trip";
                     }
-                } else if (result.code === "9001") {
+                } else if (result.code === constCode.global.resultCodeWrongParameter) {
                     popUpOpen("등록되지 않은 아이디이거나, 아이디 혹은 비밀번호를 잘못 입력했습니다.");
                 }
             },

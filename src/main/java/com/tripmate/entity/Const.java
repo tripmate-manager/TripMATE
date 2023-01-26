@@ -29,5 +29,11 @@ public interface Const {
         return value;
     }
 
+    String RESULT_CODE_SUCCESS = "0000";
+    String RESULT_CODE_MESSAGING = "8888";
+    String RESULT_CODE_VALIDATION = "9000";
+    String RESULT_CODE_WRONG_PARAMETER = "9001";
+    String RESULT_CODE_UNKNOWN = "9999";
+
     int SIGNIN_LIMIT_CNT        = 5;
 }

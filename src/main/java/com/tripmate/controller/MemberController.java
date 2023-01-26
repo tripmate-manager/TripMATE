@@ -181,7 +181,7 @@ public class MemberController {
                     result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
                 }
             }
-        } catch (NullPointerException | IOException e) {
+        } catch (IOException e) {
             log.info(e.getMessage(), e);
             result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
         } catch (Exception e) {
