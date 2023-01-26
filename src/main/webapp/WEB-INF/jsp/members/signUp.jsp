@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ include file="/WEB-INF/jsp/common/include/commonImport.jsp" %>
 
 <html>
@@ -7,9 +7,9 @@
         <jsp:param name="title" value="SignUp"/>
     </jsp:include>
     <jsp:include page="/WEB-INF/jsp/common/messagePopUp.jsp"/>
-    <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/member/signUp.css"/>
-    <script src="<%=Const.STATIC_JS_PATH%>/member/signUp.js"></script>
-    <script src="<%=Const.STATIC_JS_PATH%>/member/validationCheck.js"></script>
+    <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/members/signUp.css"/>
+    <script src="<%=Const.STATIC_JS_PATH%>/members/signUp.js"></script>
+    <script src="<%=Const.STATIC_JS_PATH%>/members/validationCheck.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/common/popUp.js"></script>
 </head>
 
@@ -17,7 +17,7 @@
 <input type=hidden id="GENDER_CODE_MALE" value="<%=ConstCode.GENDER_CODE_MALE%>">
 <input type=hidden id="GENDER_CODE_FEMALE" value="<%=ConstCode.GENDER_CODE_FEMALE%>">
 
-<div class="signup__wrap">
+<div class="signup_wrap">
     <div class="signup_title">회원가입</div>
     <form name="signupForm" id="signupForm" method="post">
         <div class="signup_form">
@@ -78,8 +78,8 @@
                 <div class="signup_subtitle">성별</div>
                 <div class="btn-toggle">
                     <input type="text" name="genderCode" id="genderCode" value="<%=ConstCode.GENDER_CODE_MALE%>" hidden>
-                    <button class="btn btn-default" type="button">남</button>
-                    <button class="btn btn-primary active" type="button">여</button>
+                    <button class="btn-default" type="button">남</button>
+                    <button class="btn-primary active" type="button">여</button>
                 </div>
             </div>
         </div>

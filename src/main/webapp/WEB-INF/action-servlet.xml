@@ -16,7 +16,7 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <!--<mvc:mapping path="/**"/>-->
-            <mvc:mapping path="/test/sessionTest.trip"/>
+            <mvc:mapping path="/forward/sessionTest.trip"/>
             <bean class="com.tripmate.common.AuthInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>

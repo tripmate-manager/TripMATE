@@ -1,5 +1,5 @@
 function popUpOpen(message) {
-    const popupWrap = $(".popup__wrap");
+    const popupWrap = $(".popup_wrap");
 
     popupWrap.css("position", "absolute");
     popupWrap.css("top", (($(window).height() - popupWrap.outerHeight()) / 3) + $(window).scrollTop());
@@ -9,7 +9,7 @@ function popUpOpen(message) {
 }
 
 function popUpClose() {
-    const popupWrap = $(".popup__wrap");
+    const popupWrap = $(".popup_wrap");
 
     popupWrap.hide();
 }

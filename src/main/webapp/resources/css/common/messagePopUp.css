@@ -21,7 +21,7 @@ body {
 }
 
 
-.popup__wrap {
+.popup_wrap {
     display: none;
     z-index: 1000;
     box-sizing: border-box;
@@ -35,10 +35,8 @@ body {
     background-color: #ffffff;
 }
 
-.popup__wrap .popup_message {
-    width: 100%;
-    height: 100%;
-    padding: 4.5rem 0rem 4.5rem 0rem;
+.popup_wrap .popup_message {
+    padding: 4.5rem 3.0rem 4.5rem 3.0rem;
     align-items: center;
     justify-content: center;
     display: flex;
@@ -47,11 +45,11 @@ body {
     line-height: 1.3625;
     color: #000000;
     font-family: Noto Sans, 'Source Sans Pro';
-    white-space: nowrap;
+    white-space: normal;
     flex-shrink: 0;
 }
 
-.popup__wrap .popup_close_btn {
+.popup_wrap .popup_close_btn {
     width: 100%;
     height: 4.5rem;
     display: flex;

@@ -3,8 +3,11 @@ $(function () {
     let duplicateNickNmCheckYn = false;
     let duplicateEmailCheckYn = false;
     let isAjaxProcessing = false;
+    let inputGenderCode = $("#genderCode");
 
     const inputMemberId = $("#memberId");
+    const inputMemberPassword = $("#memberPassword");
+    const inputMemberPasswordCheck = $("#checkMemberPassword");
     const inputMemberName = $("#memberName");
     const inputNickName = $("#nickName");
     const inputEmail = $("#email");
@@ -41,19 +44,24 @@ $(function () {
     });
 
 
-    $(".btn-toggle").on('click', function () {
-        const genderCd = $(this).find("#genderCode");
+    $(".btn-default").on('click', function () {
+        const genderFemaleBtn = $(this).parent().find(".btn-primary");
 
-        $(this).find('.btn').toggleClass('active');
-
-        if (genderCd.val() === $("#GENDER_CODE_MALE").val()) {
-            $(this).find(".btn").toggleClass('btn-primary');
-            genderCd.val($("#GENDER_CODE_FEMALE").val());
-        } else {
-            genderCd.val($("#GENDER_CODE_MALE").val());
+        if (inputGenderCode.val() !== $("#GENDER_CODE_MALE").val()) {
+            $(this).toggleClass('active');
+            genderFemaleBtn.toggleClass('active');
+            inputGenderCode.val($("#GENDER_CODE_MALE").val());
         }
+    });
 
-        $(this).find(".btn").toggleClass('btn-default');
+    $(".btn-primary").on('click', function () {
+        const genderMaleBtn = $(this).parent().find(".btn-default");
+
+        if (inputGenderCode.val() !== $("#GENDER_CODE_FEMALE").val()) {
+            $(this).toggleClass('active');
+            genderMaleBtn.toggleClass('active');
+            inputGenderCode.val($("#GENDER_CODE_FEMALE").val());
+        }
     });
 
     function formBlankCheck() {
@@ -62,7 +70,7 @@ $(function () {
             return false;
         }
 
-        if (!blankCheck($("#memberPassword")) || !blankCheck($("#checkMemberPassword"))) {
+        if (!blankCheck(inputMemberPassword) || !blankCheck(inputMemberPasswordCheck)) {
             popUpOpen('비밀번호를 입력해 주세요.');
             return false;
         }
@@ -90,13 +98,32 @@ $(function () {
         return true;
     }
 
+    function formSpaceCheck() {
+        if (!spaceCheck(inputMemberId)) {
+            popUpOpen('아이디에 공백이 입력되었습니다.');
+            return false;
+        }
+
+        if (!spaceCheck(inputMemberPassword)) {
+            popUpOpen('비밀번호에 공백이 입력되었습니다.');
+            return false;
+        }
+
+        if (!spaceCheck(inputMemberName)) {
+            popUpOpen('이름에 공백이 입력되었습니다.');
+            return false;
+        }
+
+        return true;
+    }
+
     function signUpValidationCheck() {
         if (!idValidationCheck(inputMemberId.val())) {
             popUpOpen('아이디는 영문, 숫자로 이루어진 5~20자의 아이디만 입력 가능합니다.');
             return false;
         }
 
-        if (!passwordValidationCheck($("#memberPassword").val())) {
+        if (!passwordValidationCheck(inputMemberPassword.val())) {
             popUpOpen('비밀번호는 영문, 숫자, 특수기호가 적어도 1개 이상씩 포함된 8~20자의 비밀번호만 입력 가능합니다.');
             return false;
         }
@@ -129,6 +156,10 @@ $(function () {
             popUpOpen('아이디를 입력해 주세요.');
             return false;
         }
+        if (!spaceCheck(inputMemberId)) {
+            popUpOpen('아이디에 공백이 입력되었습니다.');
+            return false;
+        }
         if (!idValidationCheck(inputMemberId.val())) {
             popUpOpen('아이디는 영문, 숫자로 이루어진 5~20자의 아이디만 입력 가능합니다.');
             return false;
@@ -142,21 +173,20 @@ $(function () {
                 memberId: $('#memberId').val()
             },
             success: function (result) {
-                if (result.code !== '0000') {
+                if (result.code !== constCode.global.resultCodeSuccess) {
                     popUpOpen(result.message);
                     return;
                 }
 
                 if (result.isDuplicate) {
-                    popUpOpen('사용 가능한 아이디입니다.')
-                    duplicateIdCheckYn = true;
-                } else {
                     popUpOpen('이미 사용 중인 아이디입니다.')
                     duplicateIdCheckYn = false;
+                } else {
+                    popUpOpen('사용 가능한 아이디입니다.')
+                    duplicateIdCheckYn = true;
                 }
             },
             error: function (error) {
-                console.log(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })
@@ -180,17 +210,17 @@ $(function () {
                 nickName: $('#nickName').val()
             },
             success: function (result) {
-                if (result.code !== '0000') {
+                if (result.code !== constCode.global.resultCodeSuccess) {
                     popUpOpen(result.message);
                     return;
                 }
 
                 if (result.isDuplicate) {
-                    popUpOpen('사용 가능한 닉네임입니다.')
-                    duplicateNickNmCheckYn = true;
-                } else {
                     popUpOpen('이미 사용 중인 닉네임입니다.')
                     duplicateNickNmCheckYn = false;
+                } else {
+                    popUpOpen('사용 가능한 닉네임입니다.')
+                    duplicateNickNmCheckYn = true;
                 }
             },
             error: function (error) {
@@ -217,17 +247,17 @@ $(function () {
                 email: $('#email').val()
             },
             success: function (result) {
-                if (result.code !== "0000") {
+                if (result.code !== constCode.global.resultCodeSuccess) {
                     popUpOpen(result.message);
                     return;
                 }
 
                 if (result.isDuplicate) {
-                    popUpOpen('사용 가능한 이메일입니다.')
-                    duplicateEmailCheckYn = true;
-                } else {
                     popUpOpen('이미 사용 중인 이메일입니다.')
                     duplicateEmailCheckYn = false;
+                } else {
+                    popUpOpen('사용 가능한 이메일입니다.')
+                    duplicateEmailCheckYn = true;
                 }
             },
             error: function (error) {
@@ -258,6 +288,9 @@ $(function () {
         if (!formBlankCheck()) {
             return false;
         }
+        if (!formSpaceCheck()) {
+            return false;
+        }
         if (!signUpValidationCheck()) {
             return false;
         }
@@ -279,8 +312,8 @@ $(function () {
             data: $("#signupForm").serialize(),
             success: function (result) {
                 isAjaxProcessing = false;
-                if (result.code === "0000") {
-                    window.location.href = "/forward/member/signUpResult.trip";
+                if (result.code === constCode.global.resultCodeSuccess) {
+                    window.location.replace("/forward/members/signUpResult.trip");
                 } else {
                     popUpOpen(result.message);
                 }

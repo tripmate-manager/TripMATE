@@ -28,4 +28,9 @@ public interface Const {
         }
         return value;
     }
+
+    String RESULT_CODE_SUCCESS = "0000";
+    String RESULT_CODE_UNKNOWN = "9999";
+
+    int SIGNIN_LIMIT_CNT        = 5;
 }

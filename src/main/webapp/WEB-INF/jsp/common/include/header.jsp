@@ -1,3 +1,5 @@
+<%@ page import="com.tripmate.entity.ConstCode" %>
+<%@ page import="com.tripmate.entity.Const" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <meta charset="utf-8"/>
@@ -9,3 +11,17 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans%3A500%2C600"/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A500%2C600"/>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+    'use strict';
+    let constCode = window.constCode || {};
+
+    constCode.global = (function () {
+        return {
+            resultCodeSuccess: "<%= Const.RESULT_CODE_SUCCESS %>",
+            resultCodeUnknown: "<%= Const.RESULT_CODE_UNKNOWN %>",
+
+            memberStatusCodeComplete: "<%= ConstCode.MEMBER_STATUS_CODE_COMPLETE %>",
+            memberStatusCodeTemporary: "<%= ConstCode.MEMBER_STATUS_CODE_TEMPORARY %>",
+        }
+    }());
+</script>

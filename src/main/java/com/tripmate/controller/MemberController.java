@@ -3,8 +3,10 @@ package com.tripmate.controller;
 import com.tripmate.client.RetrofitClient;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.ResponseWrapper;
+import com.tripmate.domain.SignInDTO;
 import com.tripmate.entity.ApiResult;
 import com.tripmate.entity.ApiResultEnum;
+import com.tripmate.entity.Const;
 import com.tripmate.entity.ConstCode;
 import com.tripmate.service.MemberService;
 import lombok.NonNull;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import retrofit2.Call;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
@@ -29,10 +33,6 @@ import java.io.IOException;
 @RequestMapping("/members")
 @ResponseBody
 public class MemberController {
-    @GetMapping("/signUp")
-    public ModelAndView signUp() {
-        return new ModelAndView("member/signUp");
-    }
 
     @PostMapping("/signUp")
     public String signUp(@Valid MemberDTO memberDTO) {
@@ -127,11 +127,6 @@ public class MemberController {
         return result.toJson();
     }
 
-    @GetMapping("/signUp/signUpResult")
-    public ModelAndView signUpResult() {
-        return new ModelAndView("member/signUpResult");
-    }
-
     @GetMapping("/signUp/emailConfirm")
     public ModelAndView signUpMailConfirm(@RequestParam(value = "email") @NonNull @Email String email,
                                           @RequestParam(value = "key") @NonNull @Size(max = 100) String key) {
@@ -140,8 +135,7 @@ public class MemberController {
             ResponseWrapper response = data.clone().execute().body();
 
             if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
-                // TODO: SignIn 페이지로 이동하도록 수정
-                return new ModelAndView("member/signUpResult");
+                return new ModelAndView("members/signIn");
             } else {
                 log.warn(response.getCode() + " : " + response.getMessage());
                 throw new IOException("response code error");
@@ -150,8 +144,51 @@ public class MemberController {
             log.error(e.getMessage(), e);
         }
 
-        return new ModelAndView("member/signUp");
+        return new ModelAndView("members/signUp");
+    }
+
+    @PostMapping("/signIn")
+    public String signIn(HttpServletRequest request, @Valid SignInDTO signInDTO) {
+        ApiResult result;
+
+        try {
+            Call<ResponseWrapper<MemberDTO>> data = RetrofitClient.getApiService(MemberService.class).signIn(signInDTO);
+            ResponseWrapper<MemberDTO> response = data.clone().execute().body();
+
+            if (ObjectUtils.isEmpty(response)) {
+                throw new IOException("api response data is empty");
+            } else {
+                if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+                    if (response.getData().size() != 1) {
+                        throw new IOException("response's data size is not 1");
+                    }
+
+                    result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
+                    MemberDTO memberDTO = response.getData().get(0);
+
+                    if (memberDTO.getSignInRequestCnt() >= Const.SIGNIN_LIMIT_CNT) {
+                        result.put("signInRequestCnt", memberDTO.getSignInRequestCnt());
+                        return result.toJson();
+                    }
+
+                    if (ConstCode.MEMBER_STATUS_CODE_COMPLETE.equals(memberDTO.getMemberStatusCode())) {
+                        HttpSession session = request.getSession();
+                        session.setAttribute(Const.MEMBER_INFO_SESSION, memberDTO);
+                    }
+
+                    result.put("memberStatusCode", memberDTO.getMemberStatusCode());
+                } else {
+                    result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
+                }
+            }
+        } catch (IOException e) {
+            log.info(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
     }
 }
-
-

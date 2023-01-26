@@ -15,7 +15,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         Object obj = session.getAttribute(Const.MEMBER_INFO_SESSION);
 
         if (obj == null) {
-            response.sendRedirect("/test/page.trip"); // TODO 추후 세션 없을 시 로그인 페이지로 이동 필요
+            response.sendRedirect("/forward/members/signIn.trip"); // TODO 추후 세션 없을 시 로그인 페이지로 이동 필요
             return false;
         }
 
