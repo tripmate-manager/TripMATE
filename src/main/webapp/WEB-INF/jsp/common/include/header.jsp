@@ -13,14 +13,11 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script>
     'use strict';
-    let constCode = window.constcode || {};
+    let constCode = window.constCode || {};
 
     constCode.global = (function () {
         return {
             resultCodeSuccess: "<%= Const.RESULT_CODE_SUCCESS %>",
-            resultCodeMessaging: "<%= Const.RESULT_CODE_MESSAGING %>",
-            resultCodeValidation: "<%= Const.RESULT_CODE_VALIDATION %>",
-            resultCodeWrongParameter: "<%= Const.RESULT_CODE_WRONG_PARAMETER %>",
             resultCodeUnknown: "<%= Const.RESULT_CODE_UNKNOWN %>",
 
             memberStatusCodeComplete: "<%= ConstCode.MEMBER_STATUS_CODE_COMPLETE %>",

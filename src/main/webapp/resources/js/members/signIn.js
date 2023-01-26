@@ -73,8 +73,10 @@ $(function () {
                     } else if (result.memberStatusCode === constCode.global.memberStatusCodeTemporary){
                         window.location.href = "/forward/members/temporarySignInResult.trip";
                     }
-                } else if (result.code === constCode.global.resultCodeWrongParameter) {
+                } else if (result.code === "9001") {
                     popUpOpen("등록되지 않은 아이디이거나, 아이디 혹은 비밀번호를 잘못 입력했습니다.");
+                } else {
+                    popUpOpen(result.message);
                 }
             },
             error: function (error) {
