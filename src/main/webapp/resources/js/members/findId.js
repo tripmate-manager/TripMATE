@@ -56,15 +56,15 @@ $(function () {
     }
 
     $(".find_id_button").on('click', function () {
-        // if (!formBlankCheck()) {
-        //     return false;
-        // }
-        // if (!formSpaceCheck()) {
-        //     return false;
-        // }
-        // if (!formValidationCheck()) {
-        //     return false;
-        // }
+        if (!formBlankCheck()) {
+            return false;
+        }
+        if (!formSpaceCheck()) {
+            return false;
+        }
+        if (!formValidationCheck()) {
+            return false;
+        }
 
         if (isAjaxProcessing) {
             popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
@@ -85,9 +85,7 @@ $(function () {
                 isAjaxProcessing = false;
 
                 if (result.code === constCode.global.resultCodeSuccess) {
-                    popUpOpen("사용자의 아이디는 " + maskingId(result.memberId) + "입니다.");
-                } else if (result.code === "9001") {
-                    popUpOpen("존재하지 않는 회원 정보입니다.");
+                    popUpOpen("사용자의 아이디는 " + result.memberId + "입니다.");
                 } else {
                     popUpOpen(result.message);
                 }
@@ -98,12 +96,4 @@ $(function () {
             }
         })
     });
-
-    function maskingId(memberId) {
-        if (memberId === undefined || memberId === '') {
-            return '';
-        }
-        const pattern = /.{4}$/; // 정규식
-        return memberId.replace(pattern, "****");
-    }
 });
