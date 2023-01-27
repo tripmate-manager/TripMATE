@@ -25,6 +25,9 @@ public interface MemberService {
     @GET("v1/members/signup-mail-confirm")
     Call<ResponseWrapper> signUpMailConfirm(@Query("email") String email, @Query("key") String key);
 
-    @POST("v1/members/signIn")
+    @POST("v1/members/sign-in")
     Call<ResponseWrapper<MemberDTO>> signIn(@Body SignInDTO signInDTO);
+
+    @GET("v1/members/find-id")
+    Call<ResponseWrapper<String>> findId(@Query("memberName") String memberName, @Query("email") String email);
 }
