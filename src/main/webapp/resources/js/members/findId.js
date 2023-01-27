@@ -74,7 +74,7 @@ $(function () {
         }
 
         $.ajax({
-            url: "/members/signIn/findId.trip",
+            url: "/members/findId.trip",
             type: "get",
             dataType: 'json',
             data: {
@@ -86,7 +86,9 @@ $(function () {
 
                 if (result.code === constCode.global.resultCodeSuccess) {
                     popUpOpen("사용자의 아이디는 " + result.memberId + "입니다.");
-                } else {
+                    $(".popup_close_btn").on('click', function () {
+                        popUpClose("/forward/members/signIn.trip");
+                    });                } else {
                     popUpOpen(result.message);
                 }
             },

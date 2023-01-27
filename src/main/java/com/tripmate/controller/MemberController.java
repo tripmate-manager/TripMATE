@@ -192,7 +192,7 @@ public class MemberController {
         return result.toJson();
     }
 
-    @GetMapping( "/signIn/findId")
+    @GetMapping( "/findId")
     public @ResponseBody String findId(@RequestParam(value = "memberName") @NotBlank @Max(20) String memberName,
                          @RequestParam(value = "email") @NotBlank @Email String email) {
         ApiResult result;

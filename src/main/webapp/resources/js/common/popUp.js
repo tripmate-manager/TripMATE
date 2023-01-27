@@ -8,8 +8,12 @@ function popUpOpen(message) {
     popupWrap.show();
 }
 
-function popUpClose() {
+function popUpClose(url) {
     const popupWrap = $(".popup_wrap");
 
     popupWrap.hide();
+
+    if (url !== null && url !== undefined) {
+        window.location.replace(url);
+    }
 }

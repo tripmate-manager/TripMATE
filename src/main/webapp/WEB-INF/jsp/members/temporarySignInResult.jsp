@@ -3,7 +3,7 @@
 
 <html>
 <head>
-    <jsp:include page="../common/include/header.jsp">
+    <jsp:include page="/WEB-INF/jsp/common/include/header.jsp">
         <jsp:param name="title" value="TemporarySignIninResult"/>
     </jsp:include>
     <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/members/temporarySignInResult.css"/>
