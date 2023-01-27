@@ -13,7 +13,7 @@ function popUpClose(url) {
 
     popupWrap.hide();
 
-    if (url !== null && url !== undefined) {
+    if (url) {
         window.location.replace(url);
     }
 }

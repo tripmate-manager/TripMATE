@@ -58,10 +58,6 @@ public class MemberController {
 
                 result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
             }
-
-        } catch (IOException e) {
-            log.info(e.getMessage(), e);
-            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
@@ -115,9 +111,6 @@ public class MemberController {
                 result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
                 result.put("isDuplicate", response.getData().get(0).booleanValue());
             }
-        } catch (NullPointerException | IOException e) {
-            log.info(e.getMessage(), e);
-            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
@@ -181,9 +174,6 @@ public class MemberController {
                     result.put("memberStatusCode", memberDTO.getMemberStatusCode());
                 }
             }
-        } catch (IOException e) {
-            log.info(e.getMessage(), e);
-            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
@@ -216,9 +206,6 @@ public class MemberController {
                 String memberId = response.getData().get(0);
                 result.put("memberId", memberId.substring(0, memberId.length()-4) + "****");
             }
-        } catch (IOException e) {
-            log.info(e.getMessage(), e);
-            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
