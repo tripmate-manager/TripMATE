@@ -1,6 +1,6 @@
 $(function () {
     let isAjaxProcessing = false;
-    const inputMemberName = $("#memberName");
+    const inputMemberId = $("#memberId");
     const inputEmail = $("#email");
 
     inputEmail.on('keyup', function () {
@@ -14,8 +14,8 @@ $(function () {
     });
 
     function formBlankCheck() {
-        if (!blankCheck(inputMemberName)) {
-            popUpOpen('이름을 입력해 주세요.');
+        if (!blankCheck(inputMemberId)) {
+            popUpOpen('아이디를 입력해 주세요.');
             return false;
         }
 
@@ -28,8 +28,8 @@ $(function () {
     }
 
     function formSpaceCheck() {
-        if (!spaceCheck(inputMemberName)) {
-            popUpOpen('이름에 공백이 입력되었습니다.');
+        if (!spaceCheck(inputMemberId)) {
+            popUpOpen('아이디에 공백이 입력되었습니다.');
             return false;
         }
 
@@ -42,8 +42,8 @@ $(function () {
     }
 
     function formValidationCheck() {
-        if (!nameValidationCheck(inputMemberName.val())) {
-            popUpOpen('이름은 영문이나 한글로 이루어진 2~20자의 이름만 입력 가능합니다.');
+        if (!idValidationCheck(inputMemberId.val())) {
+            popUpOpen('아이디는 영문, 숫자로 이루어진 5~20자의 아이디만 입력 가능합니다.');
             return false;
         }
 
@@ -55,7 +55,7 @@ $(function () {
         return true;
     }
 
-    $(".find_id_button").on('click', function () {
+    $(".find_password_button").on('click', function () {
         if (!formBlankCheck()) {
             return false;
         }
@@ -74,18 +74,18 @@ $(function () {
         }
 
         $.ajax({
-            url: "/members/findId.trip",
-            type: "get",
+            url: "/members/sendPasswordMail.trip",
+            type: "post",
             dataType: 'json',
             data: {
-                memberName: inputMemberName.val(),
-                email: inputEmail.val()
+                memberId: inputMemberId.val(),
+                to: inputEmail.val()
             },
             success: function (result) {
                 isAjaxProcessing = false;
 
                 if (result.code === constCode.global.resultCodeSuccess) {
-                    popUpOpen("사용자의 아이디는 " + result.memberId + "입니다.");
+                    popUpOpen("인증메일을 전송하였습니다. 이메일을 확인해주세요.");
                     $(".popup_close_btn").on('click', function () {
                         popUpClose("/forward/members/signIn.trip");
                     });

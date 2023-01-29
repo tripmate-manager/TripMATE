@@ -8,9 +8,18 @@
     </jsp:include>
     <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/members/temporarySignInResult.css"/>
     <script src="<%=Const.STATIC_JS_PATH%>/members/temporarySignInResult.js"></script>
+    <script src="<%=Const.STATIC_JS_PATH%>/common/popUp.js"></script>
 </head>
 
 <body>
+<%
+    String memberId = request.getParameter("memberId");
+    String email = request.getParameter("email");
+%>
+<input type=hidden id="memberId" value=<%=memberId%>>
+<input type=hidden id="email" value="<%=email%>">
+<input type=hidden id="EMAIL_TYPE_CODE_JOIN" value="<%=ConstCode.EMAIL_TYPE_CODE_JOIN%>">
+
 <div class="temporary_wrap">
     <img class="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png" onclick="history.back()"/>
     <div class="temporary_title">임시 회원</div>

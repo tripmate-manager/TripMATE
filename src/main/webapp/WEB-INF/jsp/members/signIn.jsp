@@ -17,7 +17,7 @@
 
 <div class="signin_wrap">
     <div class="signin_title">로그인</div>
-    <form name="signinForm" id="signinForm" method="post">
+    <form name="signinForm" id="signinForm" method="get">
         <div class="signin_form">
             <div class="signin_form_input">
                 <input type="text" name="memberId" id="memberId" class="memberId" placeholder="아이디">
@@ -25,6 +25,7 @@
             <div class="signin_form_input">
                 <input type="password" name="memberPassword" id="memberPassword" class="memberPassword" placeholder="비밀번호">
             </div>
+            <input type="text" name="email" id="email" class="email" hidden>
             <div class="signin_btn">로그인</div>
         </div>
     </form>

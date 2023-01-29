@@ -8,8 +8,12 @@ $(function () {
         window.location.href = "/forward/members/signUp.trip";
     });
 
-    $(".signin_menu_find").on('click', function () {
+    $("#find_id").on('click', function () {
         window.location.href = "/forward/members/findId.trip";
+    });
+
+    $("#find_password").on('click', function () {
+        window.location.href = "/forward/members/findPassword.trip";
     });
 
     function formBlankCheck() {
@@ -74,8 +78,11 @@ $(function () {
                     if (result.memberStatusCode === constCode.global.memberStatusCodeComplete) {
                         //TODO: 메인으로 이동하도록 수정
                         window.location.replace("/forward/members/signUpResult.trip");
-                    } else if (result.memberStatusCode === constCode.global.memberStatusCodeTemporary){
-                        window.location.href = "/forward/members/temporarySignInResult.trip";
+                        $("#signinForm")[0].reset();
+                    } else if (result.memberStatusCode === constCode.global.memberStatusCodeTemporary) {
+                        $("#email").val(result.email);
+                        $("#memberPassword").prop("disabled", true);
+                        $("#signinForm").attr("action", "temporarySignInResult.trip").submit();
                     }
                 } else {
                     popUpOpen(result.message);
