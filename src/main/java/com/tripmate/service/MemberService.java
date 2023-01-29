@@ -1,6 +1,7 @@
 package com.tripmate.service;
 
 import com.tripmate.domain.MemberDTO;
+import com.tripmate.domain.MemberMailDTO;
 import com.tripmate.domain.ResponseWrapper;
 import com.tripmate.domain.SignInDTO;
 import retrofit2.Call;
@@ -23,11 +24,17 @@ public interface MemberService {
     Call<ResponseWrapper<Boolean>> isEmailDuplicate(@Query("email") String email);
 
     @GET("v1/members/signup-mail-confirm")
-    Call<ResponseWrapper> signUpMailConfirm(@Query("email") String email, @Query("key") String key);
+    Call<ResponseWrapper> certificationMailConfirm(@Query("email") String email, @Query("key") String key, @Query("mailTypeCd") String mailTypeCd);
 
     @POST("v1/members/sign-in")
     Call<ResponseWrapper<MemberDTO>> signIn(@Body SignInDTO signInDTO);
 
     @GET("v1/members/find-id")
     Call<ResponseWrapper<String>> findId(@Query("memberName") String memberName, @Query("email") String email);
+
+    @POST("v1/members/send-mail/certification")
+    Call<ResponseWrapper> sendCertificationMail(@Body MemberMailDTO memberMailDTO);
+
+    @POST("v1/members/send-mail/password")
+    Call<ResponseWrapper> sendPasswordMail(@Body MemberMailDTO memberMailDTO);
 }
