@@ -28,6 +28,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.IOException;
 
 @Slf4j
@@ -122,11 +123,11 @@ public class MemberController {
     }
 
     @GetMapping("/signUp/emailConfirm")
-    public ModelAndView certificationMailConfirm(@RequestParam(value = "email") @NotBlank @Email String email,
+    public ModelAndView certificationMailConfirm(@RequestParam(value = "memberId") @NotBlank @Size(min = 5, max = 20) String memberId,
                                           @RequestParam(value = "key") @NotBlank @Max(100) String key,
                                           @RequestParam(value = "mailTypeCode") @NotBlank @Pattern(regexp = "^[12]0$") String mailTypeCode) {
         try {
-            Call<ResponseWrapper> data = RetrofitClient.getApiService(MemberService.class).certificationMailConfirm(email, key, mailTypeCode);
+            Call<ResponseWrapper> data = RetrofitClient.getApiService(MemberService.class).certificationMailConfirm(memberId, key, mailTypeCode);
             ResponseWrapper response = data.clone().execute().body();
 
             if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
