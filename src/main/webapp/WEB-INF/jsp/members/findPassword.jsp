@@ -27,7 +27,7 @@
             <input type="text" name="email" id="email" class="email" placeholder="example@email.com">
         </div>
         <div class="find_password_button">임시 비밀번호 전송</div>
-        <div class="email_error_message" style="display: none;">잘못된 이메일 형식입니다.</div>
+        <div class="email_error_message" id="checkEmailMessage" style="display: none;">잘못된 이메일 형식입니다.</div>
     </div>
 </div>
 </body>
