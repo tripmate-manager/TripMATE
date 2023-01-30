@@ -4,7 +4,7 @@ $(function () {
     const email = $("#email").val();
 
     $(".temporary_email_resend_button").on('click', function () {
-        if(isAjaxProcessing) {
+        if (isAjaxProcessing) {
             popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
             return;
         } else {
@@ -33,6 +33,7 @@ $(function () {
             },
             error: function (error) {
                 isAjaxProcessing = false;
+                console.log(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })

@@ -29,6 +29,7 @@ $(function () {
 
         return true;
     }
+
     function formSpaceCheck() {
         if (!spaceCheck(inputMemberId)) {
             popUpOpen('아이디에 공백이 입력되었습니다.');
@@ -55,7 +56,7 @@ $(function () {
             return false;
         }
 
-        if(isAjaxProcessing) {
+        if (isAjaxProcessing) {
             popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
             return;
         } else {
@@ -90,6 +91,7 @@ $(function () {
             },
             error: function (error) {
                 isAjaxProcessing = false;
+                console.log(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })

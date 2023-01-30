@@ -27,6 +27,6 @@ public class MemberMailDTO {
     @Size(max = 100, message = "100자 이하인 값만 입력 가능합니다.")
     private String key;
 
-    @Pattern(regexp = "^[12]0$", message = "메일인증타입코드는 10, 20만 입력 가능합니다.")
+    @Pattern(regexp = "^[12]0$", message = "메일인증타입코드는 10, 20만 입력 가능합니다. (10: 회원가입 인증, 20: 이메일 변경)")
     private String mailTypeCode;
 }

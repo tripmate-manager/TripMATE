@@ -56,13 +56,7 @@ $(function () {
     }
 
     $(".find_id_button").on('click', function () {
-        if (!formBlankCheck()) {
-            return false;
-        }
-        if (!formSpaceCheck()) {
-            return false;
-        }
-        if (!formValidationCheck()) {
+        if (!formBlankCheck() || !formSpaceCheck() || !formValidationCheck()) {
             return false;
         }
 
@@ -95,6 +89,7 @@ $(function () {
             },
             error: function (error) {
                 isAjaxProcessing = false;
+                console.log(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })
