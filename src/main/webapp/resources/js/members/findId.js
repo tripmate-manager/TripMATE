@@ -80,6 +80,7 @@ $(function () {
 
                 if (result.code === constCode.global.resultCodeSuccess) {
                     popUpOpen("사용자의 아이디는 " + result.memberId + "입니다.");
+                    $(".popup_close_btn").attr("onclick", null);
                     $(".popup_close_btn").on('click', function () {
                         popUpClose("/forward/members/signIn.trip");
                     });
