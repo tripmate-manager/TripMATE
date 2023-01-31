@@ -124,8 +124,8 @@ public class MemberController {
 
     @GetMapping("/signUp/emailConfirm")
     public ModelAndView certificationMailConfirm(@RequestParam(value = "memberId") @NotBlank @Size(min = 5, max = 20) String memberId,
-                                          @RequestParam(value = "key") @NotBlank @Max(100) String key,
-                                          @RequestParam(value = "mailTypeCode") @NotBlank @Pattern(regexp = "^[12]0$") String mailTypeCode) {
+                                                 @RequestParam(value = "key") @NotBlank @Max(100) String key,
+                                                 @RequestParam(value = "mailTypeCode") @NotBlank @Pattern(regexp = "^[12]0$") String mailTypeCode) {
         try {
             Call<ResponseWrapper> data = RetrofitClient.getApiService(MemberService.class).certificationMailConfirm(memberId, key, mailTypeCode);
             ResponseWrapper response = data.clone().execute().body();
@@ -187,7 +187,7 @@ public class MemberController {
         return result.toJson();
     }
 
-    @GetMapping( "/findId")
+    @GetMapping("/findId")
     public String findId(@RequestParam(value = "memberName") @NotBlank @Max(20) String memberName,
                          @RequestParam(value = "email") @NotBlank @Email String email) {
         ApiResult result;
@@ -209,7 +209,7 @@ public class MemberController {
                 }
 
                 String memberId = response.getData().get(0);
-                result.put("memberId", memberId.substring(0, memberId.length()-4) + "****");
+                result.put("memberId", memberId.substring(0, memberId.length() - 4) + "****");
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
@@ -221,36 +221,42 @@ public class MemberController {
 
     @PostMapping("/sendCertificationMail")
     public @ResponseBody String sendCertificationMail(@Valid MemberMailDTO memberMailDTO) {
-        ApiResult result;
-
-        try {
-            Call<ResponseWrapper> data = RetrofitClient.getApiService(MemberService.class).sendCertificationMail(memberMailDTO);
-            ResponseWrapper response = data.clone().execute().body();
-
-            if (ObjectUtils.isEmpty(response)) {
-                throw new IOException("response is Empty");
-            }
-            result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
-        }
-
-        return result.toJson();
+        return isSendMailSuccess(ConstCode.EMAIL_TYPE_CODE_JOIN, memberMailDTO);
     }
 
     @PostMapping("/sendPasswordMail")
     public @ResponseBody String sendPasswordMail(@Valid MemberMailDTO memberMailDTO) {
+        return isSendMailSuccess(ConstCode.EMAIL_TYPE_CODE_TEMPORARY_PASSWORD, memberMailDTO);
+    }
+
+    private String isSendMailSuccess(final String type, final MemberMailDTO memberMailDTO) {
         ApiResult result;
 
         try {
-            Call<ResponseWrapper> data = RetrofitClient.getApiService(MemberService.class).sendPasswordMail(memberMailDTO);
-            ResponseWrapper response = data.clone().execute().body();
+            Call<ResponseWrapper<Boolean>> data;
+            switch (type) {
+                case ConstCode.EMAIL_TYPE_CODE_JOIN:
+                    data = RetrofitClient.getApiService(MemberService.class).sendCertificationMail(memberMailDTO);
+                    break;
+                default:
+                    data = RetrofitClient.getApiService(MemberService.class).sendPasswordMail(memberMailDTO);
+            }
+            ResponseWrapper<Boolean> response = data.clone().execute().body();
 
             if (ObjectUtils.isEmpty(response)) {
                 throw new IOException("response is Empty");
             }
             result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
+            if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+                if (response.getData().size() != 1) {
+                    throw new IOException("response's data size is not 1");
+                }
+                if (ObjectUtils.isEmpty(response.getData().get(0))) {
+                    throw new IOException("response's data is Empty");
+                }
+
+                result.put("sendMailSuccess", response.getData().get(0));
+            }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();

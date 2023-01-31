@@ -33,8 +33,8 @@ public interface MemberService {
     Call<ResponseWrapper<String>> findId(@Query("memberName") String memberName, @Query("email") String email);
 
     @POST("v1/members/send-mail/certification")
-    Call<ResponseWrapper> sendCertificationMail(@Body MemberMailDTO memberMailDTO);
+    Call<ResponseWrapper<Boolean>> sendCertificationMail(@Body MemberMailDTO memberMailDTO);
 
     @POST("v1/members/send-mail/password")
-    Call<ResponseWrapper> sendPasswordMail(@Body MemberMailDTO memberMailDTO);
+    Call<ResponseWrapper<Boolean>> sendPasswordMail(@Body MemberMailDTO memberMailDTO);
 }

@@ -18,6 +18,7 @@ public interface ConstCode {
     String EMAIL_TYPE_CODE = "MB004";
     String EMAIL_TYPE_CODE_JOIN = "10";
     String EMAIL_TYPE_CODE_EMAIL_CHANGE = "20";
+    String EMAIL_TYPE_CODE_TEMPORARY_PASSWORD = "30";
 
     String DUPLICATION_CHECK_CODE = "MB005";
     String DUPLICATION_CHECK_MEMBER_ID = "10";

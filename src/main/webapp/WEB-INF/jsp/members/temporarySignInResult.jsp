@@ -6,6 +6,7 @@
     <jsp:include page="/WEB-INF/jsp/common/include/header.jsp">
         <jsp:param name="title" value="TemporarySignIninResult"/>
     </jsp:include>
+    <jsp:include page="/WEB-INF/jsp/common/messagePopUp.jsp"/>
     <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/members/temporarySignInResult.css"/>
     <script src="<%=Const.STATIC_JS_PATH%>/members/temporarySignInResult.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/common/popUp.js"></script>
