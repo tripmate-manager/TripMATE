@@ -16,7 +16,6 @@
 <body>
 <div class="change_password_wrap">
     <div class="change_password_title_wrap">
-        <img class="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png" onclick="history.back()"/>
         <div class="change_password_title">비밀번호 변경</div>
     </div>
     <div class="change_password_divi_line">
@@ -37,7 +36,8 @@
         </div>
         <div class="change_password_message" id="checkMemberPasswordMessage" style="display:none;">비밀번호 값이 일치하지 않습니다.
         </div>
-        <div class="change_password_complete">비밀번호 변경</div>
+        <div class="change_password_complete" id="change_password_complete">비밀번호 변경</div>
+        <div class="change_password_complete" id="change_password_next">다음에 변경하기</div>
     </div>
 </div>
 </body>

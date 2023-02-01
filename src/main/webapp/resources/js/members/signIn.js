@@ -80,6 +80,8 @@ $(function () {
                     } else if (result.memberStatusCode === constCode.global.memberStatusCodeTemporary) {
                         $("#email").val(result.email);
                         $("#signinForm").attr("action", "../../members/temporarySignInResult.trip").submit();
+                    } else if (result.memberStatusCode === constCode.global.memberStatusCodeIssueTemporaryPassword) {
+                        window.location.replace("/forward/members/changePassword.trip");
                     }
                 } else {
                     popUpOpen(result.message);

@@ -22,6 +22,7 @@
 
             memberStatusCodeComplete: "<%= ConstCode.MEMBER_STATUS_CODE_COMPLETE %>",
             memberStatusCodeTemporary: "<%= ConstCode.MEMBER_STATUS_CODE_TEMPORARY %>",
+            memberStatusCodeIssueTemporaryPassword: "<%= ConstCode.MEMBER_STATUS_CODE_ISSUE_TEMPORARY_PASSWORD %>",
         }
     }());
 </script>
