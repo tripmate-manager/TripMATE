@@ -14,6 +14,10 @@
 </head>
 
 <body>
+<input type=hidden id="memberId" value=${signInInfo.memberId}>
+<input type=hidden id="email" value=${signInInfo.email}>
+<input type=hidden id="EMAIL_TYPE_CODE_EMAIL_CHANGE" value="<%=ConstCode.EMAIL_TYPE_CODE_EMAIL_CHANGE%>">
+
 <div class="change_email_wrap">
     <div class="change_email_title_wrap">
         <img class="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png" onclick="history.back()"/>
@@ -25,7 +29,7 @@
         <div class="change_email_input_form">
             <div class="change_email_input">
                 <div class="change_email_sub_title">이메일</div>
-                <input type="password" name="memberEmail" id="memberEmail" class="memberEmail"
+                <input type="text" name="memberEmail" id="memberEmail" class="memberEmail"
                        placeholder="example@email.com">
             </div>
             <div class="change_email_duplicate">중복확인</div>

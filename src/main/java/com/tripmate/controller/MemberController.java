@@ -1,6 +1,7 @@
 package com.tripmate.controller;
 
 import com.tripmate.client.RetrofitClient;
+import com.tripmate.domain.ChangePasswordDTO;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.MemberMailDTO;
 import com.tripmate.domain.ResponseWrapper;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import retrofit2.Call;
-import retrofit2.http.Body;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -197,6 +197,14 @@ public class MemberController {
         return mav;
     }
 
+    @PostMapping("/changeEmail")
+    public ModelAndView changeEmail(@Valid SignInDTO signInDTO) {
+        ModelAndView mav = new ModelAndView("members/changeEmail");
+        mav.addObject("signInInfo", signInDTO);
+
+        return mav;
+    }
+
     @GetMapping("/findId")
     public String findId(@RequestParam(value = "memberName") @NotBlank @Max(20) String memberName,
                          @RequestParam(value = "email") @NotBlank @Email String email) {
@@ -236,7 +244,7 @@ public class MemberController {
 
     @PostMapping("/sendPasswordMail")
     public @ResponseBody String sendPasswordMail(@Valid MemberMailDTO memberMailDTO) {
-        return isSendMailSuccess(ConstCode.EMAIL_TYPE_CODE_TEMPORARY_PASSWORD, memberMailDTO);
+        return isSendMailSuccess(memberMailDTO.getMailTypeCode(), memberMailDTO);
     }
 
     private String isSendMailSuccess(final String type, final MemberMailDTO memberMailDTO) {
@@ -246,6 +254,7 @@ public class MemberController {
             Call<ResponseWrapper<Boolean>> data;
             switch (type) {
                 case ConstCode.EMAIL_TYPE_CODE_JOIN:
+                case ConstCode.EMAIL_TYPE_CODE_EMAIL_CHANGE:
                     data = RetrofitClient.getApiService(MemberService.class).sendCertificationMail(memberMailDTO);
                     break;
                 default:
@@ -275,17 +284,28 @@ public class MemberController {
         return result.toJson();
     }
 
-    @PutMapping("/change-password")
-    public @ResponseBody String changePassword(@Valid @Body MemberDTO memberDTO) {
+    @PutMapping("/changePassword")
+    public @ResponseBody String changePassword(HttpServletRequest request, @Valid ChangePasswordDTO changePasswordDTO) {
         ApiResult result;
+        MemberDTO sessionDTO = (MemberDTO) request.getSession().getAttribute(Const.MEMBER_INFO_SESSION);
 
         try {
-            Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(MemberService.class).changePassword(memberDTO);
+            if (ObjectUtils.isEmpty(sessionDTO)) {
+                throw new IOException("session is Empty");
+            }
+            ChangePasswordDTO changePasswordRequestDTO = ChangePasswordDTO.builder()
+                    .memberNo(sessionDTO.getMemberNo())
+                    .memberPassword(changePasswordDTO.getMemberPassword())
+                    .newMemberPassword(changePasswordDTO.getNewMemberPassword())
+                    .build();
+
+            Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(MemberService.class).changePassword(changePasswordRequestDTO);
             ResponseWrapper<Boolean> response = data.clone().execute().body();
 
             if (ObjectUtils.isEmpty(response)) {
                 throw new IOException("response is Empty");
             }
+
             result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
             if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
                 if (response.getData().size() != 1) {
@@ -294,6 +314,7 @@ public class MemberController {
                 if (ObjectUtils.isEmpty(response.getData().get(0))) {
                     throw new IOException("response's data is Empty");
                 }
+                result.put("changePasswordSuccess", response.getData().get(0));
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);

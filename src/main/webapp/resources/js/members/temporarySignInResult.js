@@ -1,11 +1,7 @@
 $(function () {
     let isAjaxProcessing = false;
-    const memberId = $("#memberId").val();
+    const memberId = $("#signInInfo").val();
     const email = $("#email").val();
-
-    $(".temporary_email_change_button").on('click', function () {
-        window.location.href = "/forward/members/changeEmail.trip";
-    });
 
     $(".temporary_email_resend_button").on('click', function () {
         if (isAjaxProcessing) {
@@ -48,5 +44,9 @@ $(function () {
                 }
             }
         )
+    });
+
+    $(".temporary_email_change_button").on('click', function () {
+        $("#temporaryForm").attr("action", "/members/changeEmail.trip").submit();
     });
 });

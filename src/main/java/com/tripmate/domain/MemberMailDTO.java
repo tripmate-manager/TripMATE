@@ -16,6 +16,8 @@ import javax.validation.constraints.Size;
 @Setter
 public class MemberMailDTO {
 
+    private int memberNo;
+
     @NotBlank(message = "메일수신자 주소를 입력하세요")
     @Email
     private String to;
