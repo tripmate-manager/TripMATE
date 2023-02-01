@@ -82,8 +82,7 @@ $(function () {
                         $("#signinForm")[0].reset();
                     } else if (result.memberStatusCode === constCode.global.memberStatusCodeTemporary) {
                         $("#email").val(result.email);
-                        $("#memberPassword").prop("disabled", true);
-                        $("#signinForm").attr("action", "temporarySignInResult.trip").submit();
+                        $("#signinForm").attr("action", "../../members/temporarySignInResult.trip").submit();
                     }
                 } else {
                     popUpOpen(result.message);

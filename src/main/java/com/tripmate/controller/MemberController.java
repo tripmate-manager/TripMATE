@@ -187,6 +187,14 @@ public class MemberController {
         return result.toJson();
     }
 
+    @PostMapping("/temporarySignInResult")
+    public ModelAndView temporarySignInResult(@Valid SignInDTO signInDTO) {
+        ModelAndView mav = new ModelAndView("members/temporarySignInResult");
+        mav.addObject("signInInfo", signInDTO);
+
+        return mav;
+    }
+
     @GetMapping("/findId")
     public String findId(@RequestParam(value = "memberName") @NotBlank @Max(20) String memberName,
                          @RequestParam(value = "email") @NotBlank @Email String email) {

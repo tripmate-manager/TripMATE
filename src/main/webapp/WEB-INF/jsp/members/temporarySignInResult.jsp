@@ -13,12 +13,8 @@
 </head>
 
 <body>
-<%
-    String memberId = request.getParameter("memberId");
-    String email = request.getParameter("email");
-%>
-<input type=hidden id="memberId" value=<%=memberId%>>
-<input type=hidden id="email" value="<%=email%>">
+<input type=hidden id="memberId" value=${signInInfo.memberId}>
+<input type=hidden id="email" value=${signInInfo.email}>
 <input type=hidden id="EMAIL_TYPE_CODE_JOIN" value="<%=ConstCode.EMAIL_TYPE_CODE_JOIN%>">
 
 <div class="temporary_wrap">
@@ -33,7 +29,6 @@
         <div class="temporary_message_2">
             인증 메일 확인 전엔 서비스 이용이 제한됩니다.
             <br/>
-
             <br/>
             메일함에서 인증 메일 확인 후 다시 로그인해주세요.
         </div>

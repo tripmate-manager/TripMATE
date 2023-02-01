@@ -1,11 +1,13 @@
 package com.tripmate.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
@@ -22,4 +24,7 @@ public class SignInDTO {
     @NonNull
     @NotBlank(message = "비밀번호를 입력해주세요.")
     private String memberPassword;
+
+    @Email
+    private String email;
 }

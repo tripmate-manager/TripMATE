@@ -17,7 +17,7 @@
 
 <div class="signin_wrap">
     <div class="signin_title">로그인</div>
-    <form name="signinForm" id="signinForm" method="get">
+    <form name="signinForm" id="signinForm" method="post">
         <div class="signin_form">
             <div class="signin_form_input">
                 <input type="text" name="memberId" id="memberId" class="memberId" placeholder="아이디">
