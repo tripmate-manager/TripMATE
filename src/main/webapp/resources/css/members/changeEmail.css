@@ -86,7 +86,7 @@ body {
     font-family: Noto Sans, 'Source Sans Pro';
     white-space: nowrap;
 }
-.change_email_wrap .change_email_input_wrap .change_email_input_form .change_email_input .memberPassword {
+.change_email_wrap .change_email_input_wrap .change_email_input_form .change_email_input .memberEmail {
     box-sizing: border-box;
     padding: 1.05rem 0.9rem 0.95rem 0.9rem;
     width: 100%;
