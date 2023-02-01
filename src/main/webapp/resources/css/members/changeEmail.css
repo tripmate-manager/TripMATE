@@ -1,0 +1,158 @@
+
+html {
+    font-size:62.5%;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+ul, li {
+    list-style: none;
+}
+input {
+    border: none;
+}
+body {
+    width: 100%;
+}.change_email_wrap {
+     box-sizing: border-box;
+     padding-top: 1.4917rem;
+     width: 100%;
+     overflow: hidden;
+     position: relative;
+     display: flex;
+     flex-direction: column;
+     background-color: #ffffff;
+ }
+.change_email_wrap .change_email_title_wrap {
+    margin: 0rem 16.9rem 1.4rem 1.375rem;
+    width: calc(100% - 18.275rem);
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+.change_email_wrap .change_email_title_wrap .icon_arrow_left {
+    margin: 0rem 10.309rem 0.092rem 0rem;
+    width: 1.7165rem;
+    height: 2.9167rem;
+    object-fit: contain;
+    vertical-align: top;
+    flex-shrink: 0;
+}
+.change_email_wrap .change_email_title_wrap .change_email_title {
+    margin-top: 0.0083rem;
+    display: flex;
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.change_email_wrap .change_email_divi_line {
+    width: 38.7rem;
+    height: 0.1rem;
+    background-color: #646464;
+    flex-shrink: 0;
+}
+.change_email_wrap .change_email_input_wrap {
+    box-sizing: border-box;
+    padding: 2.75rem 2.2rem 61rem 2.3rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+.change_email_wrap .change_email_input_wrap .change_email_input_form {
+    margin-bottom: 1rem;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    flex-shrink: 0;
+}
+.change_email_wrap .change_email_input_wrap .change_email_input_form .change_email_input {
+    margin: 0rem 0.9rem 0.2rem 0rem;
+    width: 24.6rem;
+    flex-shrink: 0;
+}
+.change_email_wrap .change_email_input_wrap .change_email_input_form .change_email_input .change_email_sub_title {
+    margin: 0rem 0rem 0.25rem 0.2rem;
+    display: flex;
+    font-size: 1.4rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #1e1e1e;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+}
+.change_email_wrap .change_email_input_wrap .change_email_input_form .change_email_input .memberPassword {
+    box-sizing: border-box;
+    padding: 1.05rem 0.9rem 0.95rem 0.9rem;
+    width: 100%;
+    display: flex;
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #000000;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    border: solid 0.1rem #646464;
+    background-color: #ffffff;
+}
+.change_email_wrap .change_email_input_wrap .change_email_input_form .change_email_duplicate {
+    margin-top: 1.95rem;
+    box-sizing: border-box;
+    padding: 1.25rem 0.9rem 1.15rem 0.9rem;
+    width: 7.5rem;
+    display: flex;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #ffffff;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    background-color: #393c88;
+    border-radius: 0.5rem;
+    flex-shrink: 0;
+}
+.change_email_wrap .change_email_input_wrap .change_email_form_message {
+    margin-top: 2rem;
+    display: flex;
+    font-size: 1.3rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #50555c;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.change_email_wrap .change_email_complete {
+    width: 100%;
+    height: 5rem;
+    display: flex;
+    font-size: 1.8rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #ffffff;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    align-items: center;
+    justify-content: center;
+    background-color: #393c88;
+    flex-shrink: 0;
+}
+.change_email_wrap .change_email_input_wrap .change_email_valid_message {
+    width: 0rem;
+    height: 0rem;
+    display: flex;
+    position : relative;
+    flex-shrink: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: red;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
