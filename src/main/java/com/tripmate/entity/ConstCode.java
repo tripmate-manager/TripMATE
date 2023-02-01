@@ -10,6 +10,7 @@ public interface ConstCode {
     String MEMBER_STATUS_CODE_COMPLETE = "10";
     String MEMBER_STATUS_CODE_TEMPORARY = "20";
     String MEMBER_STATUS_CODE_WITHDRAW = "30";
+    String MEMBER_STATUS_CODE_ISSUE_TEMPORARY_PASSWORD = "40";
 
     String GENDER_CODE = "MB003";
     String GENDER_CODE_MALE = "10";

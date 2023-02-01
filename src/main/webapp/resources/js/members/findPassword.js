@@ -56,10 +56,7 @@ $(function () {
     }
 
     $(".find_password_button").on('click', function () {
-        if (!formBlankCheck()) {
-            return false;
-        }
-        if (!formSpaceCheck()) {
+        if (!formBlankCheck() ||!formSpaceCheck()) {
             return false;
         }
         if (!formValidationCheck()) {

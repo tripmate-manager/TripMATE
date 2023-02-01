@@ -3,6 +3,10 @@ $(function () {
     const memberId = $("#memberId").val();
     const email = $("#email").val();
 
+    $(".temporary_email_change_button").on('click', function () {
+        window.location.href = "/forward/members/changeEmail.trip";
+    });
+
     $(".temporary_email_resend_button").on('click', function () {
         if (isAjaxProcessing) {
             popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');

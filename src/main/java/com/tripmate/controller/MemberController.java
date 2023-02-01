@@ -15,11 +15,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import retrofit2.Call;
+import retrofit2.http.Body;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -170,7 +172,7 @@ public class MemberController {
                         return result.toJson();
                     }
 
-                    if (ConstCode.MEMBER_STATUS_CODE_COMPLETE.equals(memberDTO.getMemberStatusCode())) {
+                    if (ConstCode.MEMBER_STATUS_CODE_COMPLETE.equals(memberDTO.getMemberStatusCode()) || ConstCode.MEMBER_STATUS_CODE_ISSUE_TEMPORARY_PASSWORD.equals(memberDTO.getMemberStatusCode())) {
                         HttpSession session = request.getSession();
                         session.setAttribute(Const.MEMBER_INFO_SESSION, memberDTO);
                     }
@@ -264,6 +266,34 @@ public class MemberController {
                 }
 
                 result.put("sendMailSuccess", response.getData().get(0));
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
+    }
+
+    @PutMapping("/change-password")
+    public @ResponseBody String changePassword(@Valid @Body MemberDTO memberDTO) {
+        ApiResult result;
+
+        try {
+            Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(MemberService.class).changePassword(memberDTO);
+            ResponseWrapper<Boolean> response = data.clone().execute().body();
+
+            if (ObjectUtils.isEmpty(response)) {
+                throw new IOException("response is Empty");
+            }
+            result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
+            if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+                if (response.getData().size() != 1) {
+                    throw new IOException("response's data size is not 1");
+                }
+                if (ObjectUtils.isEmpty(response.getData().get(0))) {
+                    throw new IOException("response's data is Empty");
+                }
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
