@@ -6,11 +6,17 @@
     <jsp:include page="/WEB-INF/jsp/common/include/header.jsp">
         <jsp:param name="title" value="TemporarySignIninResult"/>
     </jsp:include>
+    <jsp:include page="/WEB-INF/jsp/common/messagePopUp.jsp"/>
     <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/members/temporarySignInResult.css"/>
     <script src="<%=Const.STATIC_JS_PATH%>/members/temporarySignInResult.js"></script>
+    <script src="<%=Const.STATIC_JS_PATH%>/common/popUp.js"></script>
 </head>
 
 <body>
+<input type=hidden id="memberId" value=${signInInfo.memberId}>
+<input type=hidden id="email" value=${signInInfo.email}>
+<input type=hidden id="EMAIL_TYPE_CODE_JOIN" value="<%=ConstCode.EMAIL_TYPE_CODE_JOIN%>">
+
 <div class="temporary_wrap">
     <img class="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png" onclick="history.back()"/>
     <div class="temporary_title">임시 회원</div>
@@ -23,7 +29,6 @@
         <div class="temporary_message_2">
             인증 메일 확인 전엔 서비스 이용이 제한됩니다.
             <br/>
-
             <br/>
             메일함에서 인증 메일 확인 후 다시 로그인해주세요.
         </div>

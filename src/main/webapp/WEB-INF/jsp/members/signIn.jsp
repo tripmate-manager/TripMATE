@@ -25,6 +25,7 @@
             <div class="signin_form_input">
                 <input type="password" name="memberPassword" id="memberPassword" class="memberPassword" placeholder="비밀번호">
             </div>
+            <input type="text" name="email" id="email" class="email" hidden>
             <div class="signin_btn">로그인</div>
         </div>
     </form>

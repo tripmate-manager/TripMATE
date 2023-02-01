@@ -8,8 +8,12 @@ $(function () {
         window.location.href = "/forward/members/signUp.trip";
     });
 
-    $(".signin_menu_find").on('click', function () {
+    $("#find_id").on('click', function () {
         window.location.href = "/forward/members/findId.trip";
+    });
+
+    $("#find_password").on('click', function () {
+        window.location.href = "/forward/members/findPassword.trip";
     });
 
     function formBlankCheck() {
@@ -25,6 +29,7 @@ $(function () {
 
         return true;
     }
+
     function formSpaceCheck() {
         if (!spaceCheck(inputMemberId)) {
             popUpOpen('아이디에 공백이 입력되었습니다.');
@@ -51,7 +56,7 @@ $(function () {
             return false;
         }
 
-        if(isAjaxProcessing) {
+        if (isAjaxProcessing) {
             popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
             return;
         } else {
@@ -74,8 +79,10 @@ $(function () {
                     if (result.memberStatusCode === constCode.global.memberStatusCodeComplete) {
                         //TODO: 메인으로 이동하도록 수정
                         window.location.replace("/forward/members/signUpResult.trip");
-                    } else if (result.memberStatusCode === constCode.global.memberStatusCodeTemporary){
-                        window.location.href = "/forward/members/temporarySignInResult.trip";
+                        $("#signinForm")[0].reset();
+                    } else if (result.memberStatusCode === constCode.global.memberStatusCodeTemporary) {
+                        $("#email").val(result.email);
+                        $("#signinForm").attr("action", "../../members/temporarySignInResult.trip").submit();
                     }
                 } else {
                     popUpOpen(result.message);
@@ -83,6 +90,7 @@ $(function () {
             },
             error: function (error) {
                 isAjaxProcessing = false;
+                console.log(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })

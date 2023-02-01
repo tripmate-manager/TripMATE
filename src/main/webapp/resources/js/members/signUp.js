@@ -117,7 +117,7 @@ $(function () {
         return true;
     }
 
-    function signUpValidationCheck() {
+    function formValidationCheck() {
         if (!idValidationCheck(inputMemberId.val())) {
             popUpOpen('아이디는 영문, 숫자로 이루어진 5~20자의 아이디만 입력 가능합니다.');
             return false;
@@ -187,6 +187,7 @@ $(function () {
                 }
             },
             error: function (error) {
+                console.log(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })
@@ -224,6 +225,7 @@ $(function () {
                 }
             },
             error: function (error) {
+                console.log(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })
@@ -261,6 +263,7 @@ $(function () {
                 }
             },
             error: function (error) {
+                console.log(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })
@@ -285,20 +288,11 @@ $(function () {
     }
 
     $(".signup_complete").on('click', function () {
-        if (!formBlankCheck()) {
-            return false;
-        }
-        if (!formSpaceCheck()) {
-            return false;
-        }
-        if (!signUpValidationCheck()) {
-            return false;
-        }
-        if (!duplicationCheck()) {
+        if (!formBlankCheck() || !formSpaceCheck() || !formValidationCheck() || !duplicationCheck()) {
             return false;
         }
 
-        if(isAjaxProcessing) {
+        if (isAjaxProcessing) {
             popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
             return;
         } else {
