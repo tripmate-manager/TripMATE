@@ -38,4 +38,50 @@ $(function () {
 
         return true;
     }
+
+    $("#change_password_complete").on('click', function () {
+        if (!formBlankCheck() || !formSpaceCheck() || !formValidationCheck()) {
+            return false;
+        }
+
+        if (isAjaxProcessing) {
+            popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
+            return;
+        } else {
+            isAjaxProcessing = true;
+        }
+
+        $.ajax({
+            url: "/members/changePassword.trip",
+            type: "post",
+            dataType: 'json',
+            data: {
+                memberPassword: inputPresentMemberPassword.val(),
+                newMemberPassword: inputNewMemberPassword.val()
+            },
+            success: function (result) {
+                isAjaxProcessing = false;
+
+                if (result.code === constCode.global.resultCodeSuccess) {
+                    if (result.changePasswordSuccess === true) {
+                        popUpOpen("비밀번호 변경이 완료되었습니다.");
+                        $(".popup_close_btn").attr("onclick", null);
+                        $(".popup_close_btn").on('click', function () {
+                            // TODO: main으로 이동
+                            popUpClose("/forward/members/signIn.trip");
+                        });
+                    } else {
+                        popUpOpen("처리 중 오류가 발생하였습니다.");
+                    }
+                } else {
+                    popUpOpen(result.message);
+                }
+            },
+            error: function (error) {
+                isAjaxProcessing = false;
+                console.log(error);
+                popUpOpen("처리 중 오류가 발생하였습니다.");
+            }
+        })
+    });
 });

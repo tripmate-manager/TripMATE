@@ -16,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -284,7 +283,7 @@ public class MemberController {
         return result.toJson();
     }
 
-    @PutMapping("/changePassword")
+    @PostMapping("/changePassword")
     public @ResponseBody String changePassword(HttpServletRequest request, @Valid ChangePasswordDTO changePasswordDTO) {
         ApiResult result;
         MemberDTO sessionDTO = (MemberDTO) request.getSession().getAttribute(Const.MEMBER_INFO_SESSION);
@@ -295,6 +294,7 @@ public class MemberController {
             }
             ChangePasswordDTO changePasswordRequestDTO = ChangePasswordDTO.builder()
                     .memberNo(sessionDTO.getMemberNo())
+                    .memberId(sessionDTO.getMemberId())
                     .memberPassword(changePasswordDTO.getMemberPassword())
                     .newMemberPassword(changePasswordDTO.getNewMemberPassword())
                     .build();
