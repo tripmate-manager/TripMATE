@@ -13,7 +13,6 @@ import com.tripmate.entity.ConstCode;
 import com.tripmate.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,7 +45,7 @@ public class MemberController {
             Call<ResponseWrapper<Integer>> data = RetrofitClient.getApiService(MemberService.class).signUp(memberDTO);
             ResponseWrapper<Integer> response = data.clone().execute().body();
 
-            if (ObjectUtils.isEmpty(response)) {
+            if (response == null) {
                 throw new IOException("api response data is empty");
             } else {
                 if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
@@ -104,7 +103,7 @@ public class MemberController {
 
             ResponseWrapper<Boolean> response = data.clone().execute().body();
 
-            if (ObjectUtils.isEmpty(response)) {
+            if (response == null) {
                 throw new IOException("api response data is empty");
             } else {
                 if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
@@ -152,7 +151,7 @@ public class MemberController {
             Call<ResponseWrapper<MemberDTO>> data = RetrofitClient.getApiService(MemberService.class).signIn(signInDTO);
             ResponseWrapper<MemberDTO> response = data.clone().execute().body();
 
-            if (ObjectUtils.isEmpty(response)) {
+            if (response == null) {
                 throw new IOException("api response data is empty");
             } else {
                 result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
@@ -161,7 +160,7 @@ public class MemberController {
                     if (response.getData().size() != 1) {
                         throw new IOException("response's data size is not 1");
                     }
-                    if (ObjectUtils.isEmpty(response.getData().get(0))) {
+                    if (response.getData().get(0) == null) {
                         throw new IOException("response's data is Empty");
                     }
                     MemberDTO memberDTO = response.getData().get(0);
@@ -207,7 +206,7 @@ public class MemberController {
             Call<ResponseWrapper<String>> data = RetrofitClient.getApiService(MemberService.class).findId(memberName, email);
             ResponseWrapper<String> response = data.clone().execute().body();
 
-            if (ObjectUtils.isEmpty(response)) {
+            if (response == null) {
                 throw new IOException("response is Empty");
             }
             result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
@@ -215,7 +214,7 @@ public class MemberController {
                 if (response.getData().size() != 1) {
                     throw new IOException("response's data size is not 1");
                 }
-                if (ObjectUtils.isEmpty(response.getData().get(0))) {
+                if (response.getData().get(0) == null) {
                     throw new IOException("response's data is Empty");
                 }
 
@@ -255,7 +254,7 @@ public class MemberController {
             }
             ResponseWrapper<Boolean> response = data.clone().execute().body();
 
-            if (ObjectUtils.isEmpty(response)) {
+            if (response == null) {
                 throw new IOException("response is Empty");
             }
             result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
@@ -263,7 +262,7 @@ public class MemberController {
                 if (response.getData().size() != 1) {
                     throw new IOException("response's data size is not 1");
                 }
-                if (ObjectUtils.isEmpty(response.getData().get(0))) {
+                if (response.getData().get(0) == null) {
                     throw new IOException("response's data is Empty");
                 }
 
@@ -296,7 +295,7 @@ public class MemberController {
             Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(MemberService.class).changePassword(changePasswordRequestDTO);
             ResponseWrapper<Boolean> response = data.clone().execute().body();
 
-            if (ObjectUtils.isEmpty(response)) {
+            if (response == null) {
                 throw new IOException("response is Empty");
             }
 
@@ -305,7 +304,7 @@ public class MemberController {
                 if (response.getData().size() != 1) {
                     throw new IOException("response's data size is not 1");
                 }
-                if (ObjectUtils.isEmpty(response.getData().get(0))) {
+                if (response.getData().get(0) == null) {
                     throw new IOException("response's data is Empty");
                 }
                 result.put("changePasswordSuccess", response.getData().get(0));
