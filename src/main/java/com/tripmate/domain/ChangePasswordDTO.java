@@ -13,7 +13,6 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter
 public class ChangePasswordDTO {
 
     private int memberNo;

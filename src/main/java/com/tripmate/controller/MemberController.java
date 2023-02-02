@@ -190,18 +190,12 @@ public class MemberController {
 
     @PostMapping("/temporarySignInResult")
     public ModelAndView temporarySignInResult(@Valid SignInDTO signInDTO) {
-        ModelAndView mav = new ModelAndView("members/temporarySignInResult");
-        mav.addObject("signInInfo", signInDTO);
-
-        return mav;
+        return new ModelAndView("members/temporarySignInResult").addObject("signInInfo", signInDTO);
     }
 
     @PostMapping("/changeEmail")
     public ModelAndView changeEmail(@Valid SignInDTO signInDTO) {
-        ModelAndView mav = new ModelAndView("members/changeEmail");
-        mav.addObject("signInInfo", signInDTO);
-
-        return mav;
+        return new ModelAndView("members/changeEmail").addObject("signInInfo", signInDTO);
     }
 
     @GetMapping("/findId")

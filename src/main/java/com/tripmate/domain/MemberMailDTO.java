@@ -13,7 +13,6 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter
 public class MemberMailDTO {
 
     private int memberNo;
