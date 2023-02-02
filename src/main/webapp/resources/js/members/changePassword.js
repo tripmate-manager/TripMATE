@@ -44,6 +44,11 @@ $(function () {
             return false;
         }
 
+        if (inputPresentMemberPassword.val() === inputNewMemberPassword.val) {
+            popUpOpen('현재 비밀번호와 새비밀번호가 일치합니다.');
+            return false;
+        }
+
         if (isAjaxProcessing) {
             popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
             return;

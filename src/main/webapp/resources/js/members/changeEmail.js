@@ -29,6 +29,13 @@ $(function () {
             return false;
         }
 
+        if (isAjaxProcessing) {
+            popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
+            return;
+        } else {
+            isAjaxProcessing = true;
+        }
+
         $.ajax({
             url: "/members/duplication/email.trip",
             type: "get",
@@ -37,6 +44,8 @@ $(function () {
                 email: inputEmail.val()
             },
             success: function (result) {
+                isAjaxProcessing = false;
+
                 if (result.code !== constCode.global.resultCodeSuccess) {
                     popUpOpen(result.message);
                     return;
