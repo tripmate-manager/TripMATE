@@ -283,7 +283,7 @@ public class MemberController {
         MemberDTO sessionDTO = (MemberDTO) request.getSession().getAttribute(Const.MEMBER_INFO_SESSION);
 
         try {
-            if (ObjectUtils.isEmpty(sessionDTO)) {
+            if (sessionDTO == null) {
                 throw new IOException("session is Empty");
             }
             ChangePasswordDTO changePasswordRequestDTO = ChangePasswordDTO.builder()
