@@ -1,6 +1,6 @@
 $(function () {
     let isAjaxProcessing = false;
-    const memberId = $("#memberId").val();
+    const memberId = $("#signInInfo").val();
     const email = $("#email").val();
 
     $(".temporary_email_resend_button").on('click', function () {
@@ -44,5 +44,9 @@ $(function () {
                 }
             }
         )
+    });
+
+    $(".temporary_email_change_button").on('click', function () {
+        $("#temporaryForm").attr("action", "/members/changeEmail.trip").submit();
     });
 });

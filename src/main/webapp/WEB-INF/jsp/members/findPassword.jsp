@@ -13,6 +13,8 @@
     <script src="<%=Const.STATIC_JS_PATH%>/members/findPassword.js"></script>
 </head>
 <body>
+<input type=hidden id="EMAIL_TYPE_CODE_TEMPORARY_PASSWORD" value="<%=ConstCode.EMAIL_TYPE_CODE_TEMPORARY_PASSWORD%>">
+
 <div class="find_password_wrap">
     <div class="find_password_title">비밀번호 찾기</div>
     <div class="find_password_rectangle">

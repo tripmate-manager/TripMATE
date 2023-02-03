@@ -13,9 +13,12 @@
 </head>
 
 <body>
-<input type=hidden id="memberId" value=${signInInfo.memberId}>
-<input type=hidden id="email" value=${signInInfo.email}>
-<input type=hidden id="EMAIL_TYPE_CODE_JOIN" value="<%=ConstCode.EMAIL_TYPE_CODE_JOIN%>">
+<form name="temporaryForm" id="temporaryForm" method="post">
+    <input type=hidden id="memberId" name="memberId" value=${signInInfo.memberId}>
+    <input type=hidden id="memberPassword" name="memberPassword" value=${signInInfo.memberPassword}>
+    <input type=hidden id="email" name="email" value=${signInInfo.email}>
+    <input type=hidden id="EMAIL_TYPE_CODE_JOIN" value="<%=ConstCode.EMAIL_TYPE_CODE_JOIN%>">
+</form>
 
 <div class="temporary_wrap">
     <img class="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png" onclick="history.back()"/>

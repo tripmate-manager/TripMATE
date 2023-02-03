@@ -45,10 +45,7 @@ $(function () {
     }
 
     $(".signin_btn").on('click', function () {
-        if (!formBlankCheck()) {
-            return false;
-        }
-        if (!formSpaceCheck()) {
+        if (!formBlankCheck() || !formSpaceCheck()) {
             return false;
         }
         if (!idValidationCheck(inputMemberId.val())) {
@@ -83,6 +80,8 @@ $(function () {
                     } else if (result.memberStatusCode === constCode.global.memberStatusCodeTemporary) {
                         $("#email").val(result.email);
                         $("#signinForm").attr("action", "../../members/temporarySignInResult.trip").submit();
+                    } else if (result.memberStatusCode === constCode.global.memberStatusCodeIssueTemporaryPassword) {
+                        window.location.replace("/forward/members/changePassword.trip");
                     }
                 } else {
                     popUpOpen(result.message);

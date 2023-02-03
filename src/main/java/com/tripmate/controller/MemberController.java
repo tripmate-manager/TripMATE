@@ -1,6 +1,7 @@
 package com.tripmate.controller;
 
 import com.tripmate.client.RetrofitClient;
+import com.tripmate.domain.ChangePasswordDTO;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.MemberMailDTO;
 import com.tripmate.domain.ResponseWrapper;
@@ -12,7 +13,6 @@ import com.tripmate.entity.ConstCode;
 import com.tripmate.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,7 +45,7 @@ public class MemberController {
             Call<ResponseWrapper<Integer>> data = RetrofitClient.getApiService(MemberService.class).signUp(memberDTO);
             ResponseWrapper<Integer> response = data.clone().execute().body();
 
-            if (ObjectUtils.isEmpty(response)) {
+            if (response == null) {
                 throw new IOException("api response data is empty");
             } else {
                 if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
@@ -103,7 +103,7 @@ public class MemberController {
 
             ResponseWrapper<Boolean> response = data.clone().execute().body();
 
-            if (ObjectUtils.isEmpty(response)) {
+            if (response == null) {
                 throw new IOException("api response data is empty");
             } else {
                 if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
@@ -151,7 +151,7 @@ public class MemberController {
             Call<ResponseWrapper<MemberDTO>> data = RetrofitClient.getApiService(MemberService.class).signIn(signInDTO);
             ResponseWrapper<MemberDTO> response = data.clone().execute().body();
 
-            if (ObjectUtils.isEmpty(response)) {
+            if (response == null) {
                 throw new IOException("api response data is empty");
             } else {
                 result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
@@ -160,7 +160,7 @@ public class MemberController {
                     if (response.getData().size() != 1) {
                         throw new IOException("response's data size is not 1");
                     }
-                    if (ObjectUtils.isEmpty(response.getData().get(0))) {
+                    if (response.getData().get(0) == null) {
                         throw new IOException("response's data is Empty");
                     }
                     MemberDTO memberDTO = response.getData().get(0);
@@ -170,7 +170,7 @@ public class MemberController {
                         return result.toJson();
                     }
 
-                    if (ConstCode.MEMBER_STATUS_CODE_COMPLETE.equals(memberDTO.getMemberStatusCode())) {
+                    if (ConstCode.MEMBER_STATUS_CODE_COMPLETE.equals(memberDTO.getMemberStatusCode()) || ConstCode.MEMBER_STATUS_CODE_ISSUE_TEMPORARY_PASSWORD.equals(memberDTO.getMemberStatusCode())) {
                         HttpSession session = request.getSession();
                         session.setAttribute(Const.MEMBER_INFO_SESSION, memberDTO);
                     }
@@ -189,10 +189,12 @@ public class MemberController {
 
     @PostMapping("/temporarySignInResult")
     public ModelAndView temporarySignInResult(@Valid SignInDTO signInDTO) {
-        ModelAndView mav = new ModelAndView("members/temporarySignInResult");
-        mav.addObject("signInInfo", signInDTO);
+        return new ModelAndView("members/temporarySignInResult").addObject("signInInfo", signInDTO);
+    }
 
-        return mav;
+    @PostMapping("/changeEmail")
+    public ModelAndView changeEmail(@Valid SignInDTO signInDTO) {
+        return new ModelAndView("members/changeEmail").addObject("signInInfo", signInDTO);
     }
 
     @GetMapping("/findId")
@@ -204,7 +206,7 @@ public class MemberController {
             Call<ResponseWrapper<String>> data = RetrofitClient.getApiService(MemberService.class).findId(memberName, email);
             ResponseWrapper<String> response = data.clone().execute().body();
 
-            if (ObjectUtils.isEmpty(response)) {
+            if (response == null) {
                 throw new IOException("response is Empty");
             }
             result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
@@ -212,7 +214,7 @@ public class MemberController {
                 if (response.getData().size() != 1) {
                     throw new IOException("response's data size is not 1");
                 }
-                if (ObjectUtils.isEmpty(response.getData().get(0))) {
+                if (response.getData().get(0) == null) {
                     throw new IOException("response's data is Empty");
                 }
 
@@ -234,7 +236,7 @@ public class MemberController {
 
     @PostMapping("/sendPasswordMail")
     public @ResponseBody String sendPasswordMail(@Valid MemberMailDTO memberMailDTO) {
-        return isSendMailSuccess(ConstCode.EMAIL_TYPE_CODE_TEMPORARY_PASSWORD, memberMailDTO);
+        return isSendMailSuccess(memberMailDTO.getMailTypeCode(), memberMailDTO);
     }
 
     private String isSendMailSuccess(final String type, final MemberMailDTO memberMailDTO) {
@@ -244,6 +246,7 @@ public class MemberController {
             Call<ResponseWrapper<Boolean>> data;
             switch (type) {
                 case ConstCode.EMAIL_TYPE_CODE_JOIN:
+                case ConstCode.EMAIL_TYPE_CODE_EMAIL_CHANGE:
                     data = RetrofitClient.getApiService(MemberService.class).sendCertificationMail(memberMailDTO);
                     break;
                 default:
@@ -251,7 +254,7 @@ public class MemberController {
             }
             ResponseWrapper<Boolean> response = data.clone().execute().body();
 
-            if (ObjectUtils.isEmpty(response)) {
+            if (response == null) {
                 throw new IOException("response is Empty");
             }
             result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
@@ -259,11 +262,52 @@ public class MemberController {
                 if (response.getData().size() != 1) {
                     throw new IOException("response's data size is not 1");
                 }
-                if (ObjectUtils.isEmpty(response.getData().get(0))) {
+                if (response.getData().get(0) == null) {
                     throw new IOException("response's data is Empty");
                 }
 
                 result.put("sendMailSuccess", response.getData().get(0));
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
+    }
+
+    @PostMapping("/changePassword")
+    public @ResponseBody String changePassword(HttpServletRequest request, @Valid ChangePasswordDTO changePasswordDTO) {
+        ApiResult result;
+        MemberDTO sessionDTO = (MemberDTO) request.getSession().getAttribute(Const.MEMBER_INFO_SESSION);
+
+        try {
+            if (sessionDTO == null) {
+                throw new IOException("session is Empty");
+            }
+            ChangePasswordDTO changePasswordRequestDTO = ChangePasswordDTO.builder()
+                    .memberNo(sessionDTO.getMemberNo())
+                    .memberId(sessionDTO.getMemberId())
+                    .memberPassword(changePasswordDTO.getMemberPassword())
+                    .newMemberPassword(changePasswordDTO.getNewMemberPassword())
+                    .build();
+
+            Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(MemberService.class).changePassword(changePasswordRequestDTO);
+            ResponseWrapper<Boolean> response = data.clone().execute().body();
+
+            if (response == null) {
+                throw new IOException("response is Empty");
+            }
+
+            result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
+            if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+                if (response.getData().size() != 1) {
+                    throw new IOException("response's data size is not 1");
+                }
+                if (response.getData().get(0) == null) {
+                    throw new IOException("response's data is Empty");
+                }
+                result.put("changePasswordSuccess", response.getData().get(0));
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);

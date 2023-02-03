@@ -56,10 +56,7 @@ $(function () {
     }
 
     $(".find_password_button").on('click', function () {
-        if (!formBlankCheck()) {
-            return false;
-        }
-        if (!formSpaceCheck()) {
+        if (!formBlankCheck() ||!formSpaceCheck()) {
             return false;
         }
         if (!formValidationCheck()) {
@@ -79,7 +76,8 @@ $(function () {
             dataType: 'json',
             data: {
                 memberId: inputMemberId.val(),
-                to: inputEmail.val()
+                to: inputEmail.val(),
+                mailTypeCode: $("#EMAIL_TYPE_CODE_TEMPORARY_PASSWORD").val()
             },
             success: function (result) {
                 isAjaxProcessing = false;

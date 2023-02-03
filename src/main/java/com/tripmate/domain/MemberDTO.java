@@ -46,7 +46,7 @@ public class MemberDTO {
     @Pattern(regexp = "^(19|20)\\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$", message="생년월일은 'yyyyMMdd' 형태로 입력가능합니다.")
     private String birthDay;
 
-    @Pattern(regexp = "^[123]0$", message = "회원상태코드는 10, 20, 30만 입력 가능합니다.")
+    @Pattern(regexp = "^[1234]0$", message = "회원상태코드는 10, 20, 30, 40만 입력 가능합니다.")
     private String memberStatusCode;
 
     private int signInRequestCnt;
