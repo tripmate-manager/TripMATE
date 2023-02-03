@@ -18,10 +18,7 @@ input {
 
 body {
     width: 25rem;
-}
-
-
-.popup_wrap {
+}.popup_wrap {
     display: none;
     z-index: 1000;
     box-sizing: border-box;
