@@ -231,7 +231,7 @@ public class MemberController {
 
     @PostMapping("/sendCertificationMail")
     public @ResponseBody String sendCertificationMail(@Valid MemberMailDTO memberMailDTO) {
-        return isSendMailSuccess(ConstCode.EMAIL_TYPE_CODE_JOIN, memberMailDTO);
+        return isSendMailSuccess(memberMailDTO.getMailTypeCode(), memberMailDTO);
     }
 
     @PostMapping("/sendPasswordMail")
@@ -308,6 +308,57 @@ public class MemberController {
                     throw new IOException("response's data is Empty");
                 }
                 result.put("changePasswordSuccess", response.getData().get(0));
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
+    }
+
+    @PostMapping("/signOut")
+    public String signOut(HttpServletRequest request) {
+        request.getSession().invalidate();
+
+        return "redirect:forward/main/main.trip";
+    }
+
+    @PostMapping("/withdraw")
+    public @ResponseBody String withdraw(HttpServletRequest request, @Valid SignInDTO signInDTO) {
+        ApiResult result;
+        MemberDTO sessionDTO = (MemberDTO) request.getSession().getAttribute(Const.MEMBER_INFO_SESSION);
+
+        try {
+            if (sessionDTO == null) {
+                throw new IOException("session is Empty");
+            }
+
+            SignInDTO withdrawDTO = SignInDTO.builder()
+                    .memberNo(sessionDTO.getMemberNo())
+                    .memberId(signInDTO.getMemberId())
+                    .memberPassword(signInDTO.getMemberPassword())
+                    .memberStatusCode(ConstCode.MEMBER_STATUS_CODE_WITHDRAW)
+                    .build();
+
+            Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(MemberService.class).withdraw(withdrawDTO);
+            ResponseWrapper<Boolean> response = data.clone().execute().body();
+
+            if (response == null) {
+                throw new IOException("response is Empty");
+            }
+
+            result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
+            if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+                if (response.getData().size() != 1) {
+                    throw new IOException("response's data size is not 1");
+                }
+                if (response.getData().get(0) == null) {
+                    throw new IOException("response's data is Empty");
+                }
+
+                request.getSession().invalidate();
+                result.put("withDrawSuccess", response.getData().get(0));
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);

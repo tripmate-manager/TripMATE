@@ -22,7 +22,7 @@
         <div class="main_title">TripMATE</div>
         <div class="icon_alarm_wrap"  style="display: none;">
             <img class="icon_alarm" id="icon_alarm_off" src="<%=Const.STATIC_IMG_PATH%>/main/icon_alarm_off.png" />
-            <img class="icon_alarm" id="icon_alarm_on" src="<%=Const.STATIC_IMG_PATH%>/main/icon_alarm_on.png" />
+            <img class="icon_alarm" id="icon_alarm_on" style="display: none;" src="<%=Const.STATIC_IMG_PATH%>/main/icon_alarm_on.png" />
         </div>
     </div>
     <div class="main_search_wrap">

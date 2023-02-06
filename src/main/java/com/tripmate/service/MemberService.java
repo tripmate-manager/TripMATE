@@ -43,4 +43,6 @@ public interface MemberService {
     @PUT("v1/members/change-password")
     Call<ResponseWrapper<Boolean>> changePassword(@Body ChangePasswordDTO changePasswordDTO);
 
+    @PUT("v1/members/withdraw")
+    Call<ResponseWrapper<Boolean>> withdraw(@Body SignInDTO signInDTO);
 }

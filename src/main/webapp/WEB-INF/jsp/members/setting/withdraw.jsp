@@ -1,3 +1,4 @@
+<%@ page import="com.tripmate.domain.MemberDTO" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ include file="/WEB-INF/jsp/common/include/commonImport.jsp" %>
 
@@ -9,17 +10,25 @@
     <jsp:include page="/WEB-INF/jsp/common/messagePopUp.jsp"/>
     <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/members/setting/withdraw.css"/>
     <script src="<%=Const.STATIC_JS_PATH%>/members/setting/withdraw.js"></script>
+    <script src="<%=Const.STATIC_JS_PATH%>/members/validationCheck.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/common/popUp.js"></script>
 </head>
 
 <body>
+<%
+    session = request.getSession();
+    MemberDTO memberInfo = (MemberDTO) session.getAttribute(Const.MEMBER_INFO_SESSION);
+%>
+
+<input type=hidden id="memberId" value=<%=memberInfo.getMemberId()%>>
+
 <div class="wirhdraw_wrap">
     <img class="arrow_left_icon" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png" onclick="history.back()"/>
     <div class="withdraw_title">회원 탈퇴</div>
     <div class="withdraw_subtitle_password">비밀번호</div>
-    <input type="password" name="memberPassword" class="withdraw_input_password">
+    <input type="password" name="memberPassword" id="memberPassword" class="withdraw_input_password">
     <div class="withdraw_subtitle_check_password">비밀번호 확인</div>
-    <input type="password" name="memberPassword" class="withdraw_input_check_password">
+    <input type="password" name="checkMemberPassword" id="checkMemberPassword" class="withdraw_input_check_password">
     <div class="withdraw_contents_title_wrap">
         <div class="withdraw_icon_wrap">
             <img class="withdraw_icon_1" src="<%=Const.STATIC_IMG_PATH%>/members/icon_emphasis_1.png" />

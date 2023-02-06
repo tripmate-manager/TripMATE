@@ -1,4 +1,16 @@
-$(document).ready(function () {
+window.onhashchange = function () {
+    if (location.hash !== "#open") {
+        $("#menu,.page_cover,html").removeClass("open");
+    }
+};
+
+$(function () {
+    const sessionMemberInfo = $("#memberInfo").val();
+
+    if (sessionMemberInfo) {
+        $(".icon_alarm_wrap").show();
+    }
+
     $(".main_menu_button").click(function () {
         $("#menu,.page_cover,html").addClass("open");
         window.location.hash = "#open";
@@ -8,20 +20,4 @@ $(document).ready(function () {
     $("#menu ul.nav li").click(function () {
         $("ul", this).slideToggle("fast");
     })
-})
-
-window.onhashchange = function () {
-    if (location.hash !== "#open") {
-        $("#menu,.page_cover,html").removeClass("open");
-    }
-};
-
-function logout() {
-    checkPopUpOpen("로그아웃 하시겠습니까?");
-}
-
-$(function () {
-    $("#menu_logout").on('click', function () {
-        checkPopUpOpen("로그아웃 하시겠습니까?");
-    });
 });

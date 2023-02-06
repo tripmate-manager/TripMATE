@@ -8,10 +8,12 @@
 <body>
 <div class="check_popup_wrap" style="display: none">
     <div class="check_popup_message"></div>
-    <div class="check_popup_btn">
-        <div class="check_popup_btn_cancel" onclick="popUpCancel()">취소</div>
-        <div class="check_popup_btn_ok" onclick="popUpOk()">확인</div>
-    </div>
+    <form name="checkPopUpForm" id="checkPopUpForm" method="post">
+        <div class="check_popup_btn">
+            <div class="check_popup_btn_cancel" onclick="popUpCancel()">취소</div>
+            <div class="check_popup_btn_ok" onclick="popUpOk()">확인</div>
+        </div>
+    </form>
 </div>
 </body>
 </html>
