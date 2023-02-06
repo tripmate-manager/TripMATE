@@ -40,11 +40,13 @@ $(function () {
     }
 
     $("#change_password_complete").on('click', function () {
+        console.log(inputPresentMemberPassword.val() + " " + inputNewMemberPassword.val());
+
         if (!formBlankCheck() || !formSpaceCheck() || !formValidationCheck()) {
             return false;
         }
 
-        if (inputPresentMemberPassword.val() === inputNewMemberPassword.val) {
+        if (inputPresentMemberPassword.val() === inputNewMemberPassword.val()) {
             popUpOpen('현재 비밀번호와 새비밀번호가 일치합니다.');
             return false;
         }
@@ -72,8 +74,7 @@ $(function () {
                         popUpOpen("비밀번호 변경이 완료되었습니다.");
                         $(".popup_close_btn").attr("onclick", null);
                         $(".popup_close_btn").on('click', function () {
-                            // TODO: main으로 이동
-                            popUpClose("/forward/members/signIn.trip");
+                            popUpClose("/forward/main/main.trip");
                         });
                     } else {
                         popUpOpen("처리 중 오류가 발생하였습니다.");
@@ -88,5 +89,9 @@ $(function () {
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })
+    });
+
+    $(".change_password_next").on('click', function () {
+        window.location.href = "../../main/main.trip";
     });
 });
