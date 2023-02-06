@@ -15,6 +15,7 @@ input {
 body {
     width: 25rem;
 }.check_popup_wrap {
+     margin-top: 8rem;
      display: none;
      z-index: 1000;
      box-sizing: border-box;

@@ -14,7 +14,7 @@ input {
 }
 body {
     width: 24.8rem;
-}.mainnavimenulogout-uTR {
+}.main_menu_wrap {
      box-sizing: border-box;
      padding: 12.35rem 0rem 51.15rem 0rem;
      width: 100%;
@@ -24,14 +24,14 @@ body {
      flex-direction: column;
      background-color: #ffffff;
  }
-.mainnavimenulogout-uTR .auto-group-oeqh-2Y3 {
-    margin: 0rem 8.725rem 3.15rem 2.2rem;
+.main_menu_wrap .main_menu_login_info_wrap {
+    margin: 3rem 8.725rem 2rem 2.2rem;
     width: calc(100% - 10.925rem);
     display: flex;
     align-items: center;
     flex-shrink: 0;
 }
-.mainnavimenulogout-uTR .auto-group-oeqh-2Y3 .item--A8T {
+.main_menu_wrap .main_menu_login_info_wrap .main_menu_login_text {
     margin-right: 5.349rem;
     display: flex;
     font-size: 2rem;
@@ -42,23 +42,29 @@ body {
     white-space: nowrap;
     flex-shrink: 0;
 }
-.mainnavimenulogout-uTR .auto-group-oeqh-2Y3 .ic-sharp-arrow-back-ios-new-fqu {
-    margin-bottom: 0rem;
-    width: 1.226rem;
-    height: 2.0833rem;
-    object-fit: contain;
-    vertical-align: top;
-    flex-shrink: 0;
-}
-.mainnavimenulogout-uTR .line-3-bDm {
+.main_menu_wrap .main_menu_divi_line {
     margin: 0rem 0.1rem 3.05rem 0rem;
     width: calc(100% - 0.1rem);
     height: 0.1rem;
     background-color: #646464;
     flex-shrink: 0;
 }
-.mainnavimenulogout-uTR .my-plan-7xo {
-    margin: 0rem 0rem 2.9rem 2.2rem;
+.main_menu_wrap li.main_menu_item {
+    padding: 0rem 0rem 2.8rem 2.2rem;
+    display: flex;
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.main_menu_wrap ul.main_menu_item_login {
+    margin-top: calc(120%);
+}
+.main_menu_wrap .main_menu_login_info .main_menu_login_id {
+    margin: 0rem 0rem 0.55rem 2.2rem;
     display: flex;
     font-size: 2rem;
     font-weight: 500;
@@ -68,10 +74,10 @@ body {
     white-space: nowrap;
     flex-shrink: 0;
 }
-.mainnavimenulogout-uTR .item--qdu {
-    margin-left: 2.2rem;
+.main_menu_wrap .main_menu_login_info .main_menu_login_nick_name {
+    margin: 0rem 0rem 1.6rem 2.4rem;
     display: flex;
-    font-size: 2rem;
+    font-size: 1.6rem;
     font-weight: 500;
     line-height: 1.3625;
     color: #212352;
