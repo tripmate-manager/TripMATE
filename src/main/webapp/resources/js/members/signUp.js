@@ -43,7 +43,6 @@ $(function () {
         }
     });
 
-
     $(".btn-default").on('click', function () {
         const genderFemaleBtn = $(this).parent().find(".btn-primary");
 

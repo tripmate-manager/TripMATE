@@ -74,8 +74,7 @@ $(function () {
                     }
 
                     if (result.memberStatusCode === constCode.global.memberStatusCodeComplete) {
-                        //TODO: 메인으로 이동하도록 수정
-                        window.location.replace("/forward/members/signUpResult.trip");
+                        window.location.replace("/forward/main/main.trip");
                         $("#signinForm")[0].reset();
                     } else if (result.memberStatusCode === constCode.global.memberStatusCodeTemporary) {
                         $("#email").val(result.email);
