@@ -1,0 +1,87 @@
+
+html {
+    font-size:62.5%;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+ul, li {
+    list-style: none;
+}
+input {
+    border: none;
+}
+body {
+    width: 24.8rem;
+}.main_menu_wrap {
+     box-sizing: border-box;
+     padding: 12.35rem 0rem 51.15rem 0rem;
+     width: 100%;
+     overflow: hidden;
+     position: relative;
+     display: flex;
+     flex-direction: column;
+     background-color: #ffffff;
+ }
+.main_menu_wrap .main_menu_login_info_wrap {
+    margin: 3rem 8.725rem 2rem 2.2rem;
+    width: calc(100% - 10.925rem);
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+.main_menu_wrap .main_menu_login_info_wrap .main_menu_login_text {
+    margin-right: 5.349rem;
+    display: flex;
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.main_menu_wrap .main_menu_divi_line {
+    margin: 0rem 0.1rem 3.05rem 0rem;
+    width: calc(100% - 0.1rem);
+    height: 0.1rem;
+    background-color: #646464;
+    flex-shrink: 0;
+}
+.main_menu_wrap li.main_menu_item {
+    padding: 0rem 0rem 2.8rem 2.2rem;
+    display: flex;
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.main_menu_wrap ul.main_menu_item_login {
+    margin-top: calc(120%);
+}
+.main_menu_wrap .main_menu_login_info .main_menu_login_id {
+    margin: 0rem 0rem 0.55rem 2.2rem;
+    display: flex;
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.main_menu_wrap .main_menu_login_info .main_menu_login_nick_name {
+    margin: 0rem 0rem 1.6rem 2.4rem;
+    display: flex;
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
