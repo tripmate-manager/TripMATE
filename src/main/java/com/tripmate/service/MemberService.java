@@ -26,7 +26,7 @@ public interface MemberService {
     Call<ResponseWrapper<Boolean>> isEmailDuplicate(@Query("email") String email);
 
     @GET("v1/members/certification-mail-confirm")
-    Call<ResponseWrapper> certificationMailConfirm(@Query("memberId") String memberId, @Query("key") String key, @Query("mailTypeCode") String mailTypeCode);
+    Call<ResponseWrapper<String>> certificationMailConfirm(@Query("memberId") String memberId, @Query("key") String key, @Query("mailTypeCode") String mailTypeCode);
 
     @POST("v1/members/sign-in")
     Call<ResponseWrapper<MemberDTO>> signIn(@Body SignInDTO signInDTO);

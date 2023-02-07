@@ -22,7 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 import retrofit2.Call;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
@@ -122,15 +121,40 @@ public class MemberController {
         return result.toJson();
     }
 
-    @GetMapping("/signUp/emailConfirm")
-    public ModelAndView certificationMailConfirm(@RequestParam(value = "memberId") @NotBlank @Size(min = 5, max = 20) String memberId,
+    @GetMapping("/emailConfirm")
+    public ModelAndView certificationMailConfirm(HttpServletRequest request,
+                                                 @RequestParam(value = "memberId") @NotBlank @Size(min = 5, max = 20) String memberId,
                                                  @RequestParam(value = "key") @NotBlank @Max(100) String key,
-                                                 @RequestParam(value = "mailTypeCode") @NotBlank @Pattern(regexp = "^[12]0$") String mailTypeCode) {
+                                                 @RequestParam(value = "mailTypeCode") @NotBlank @Pattern(regexp = "^[123]0$") String mailTypeCode) {
         try {
-            Call<ResponseWrapper> data = RetrofitClient.getApiService(MemberService.class).certificationMailConfirm(memberId, key, mailTypeCode);
-            ResponseWrapper response = data.clone().execute().body();
+            Call<ResponseWrapper<String>> data = RetrofitClient.getApiService(MemberService.class).certificationMailConfirm(memberId, key, mailTypeCode);
+            ResponseWrapper<String> response = data.clone().execute().body();
 
             if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+                if (response.getData().size() != 1) {
+                    throw new IOException("response's data size is not 1");
+                }
+                if (response.getData().get(0) == null) {
+                    throw new IOException("response's data is Empty");
+                }
+
+                if (ConstCode.EMAIL_TYPE_CODE_EMAIL_CHANGE.equals(mailTypeCode)) {
+                    MemberDTO memberInfoSession = (MemberDTO) request.getSession().getAttribute(Const.MEMBER_INFO_SESSION);
+                    MemberDTO memberDTO = MemberDTO.builder()
+                            .memberNo(memberInfoSession.getMemberNo())
+                            .memberId(memberInfoSession.getMemberId())
+                            .memberPassword(memberInfoSession.getMemberPassword())
+                            .memberName(memberInfoSession.getMemberName())
+                            .nickName(memberInfoSession.getNickName())
+                            .email(response.getData().get(0))
+                            .genderCode(memberInfoSession.getGenderCode())
+                            .birthDay(memberInfoSession.getBirthDay())
+                            .memberStatusCode(memberInfoSession.getMemberStatusCode())
+                            .signInRequestCnt(memberInfoSession.getSignInRequestCnt())
+                            .build();
+                    request.getSession().setAttribute(Const.MEMBER_INFO_SESSION, memberDTO);
+                }
+
                 return new ModelAndView("members/signIn");
             } else {
                 log.warn(response.getCode() + " : " + response.getMessage());
@@ -171,8 +195,7 @@ public class MemberController {
                     }
 
                     if (ConstCode.MEMBER_STATUS_CODE_COMPLETE.equals(memberDTO.getMemberStatusCode()) || ConstCode.MEMBER_STATUS_CODE_ISSUE_TEMPORARY_PASSWORD.equals(memberDTO.getMemberStatusCode())) {
-                        HttpSession session = request.getSession();
-                        session.setAttribute(Const.MEMBER_INFO_SESSION, memberDTO);
+                        request.getSession().setAttribute(Const.MEMBER_INFO_SESSION, memberDTO);
                     }
 
                     result.put("memberStatusCode", memberDTO.getMemberStatusCode());
@@ -198,7 +221,7 @@ public class MemberController {
     }
 
     @GetMapping("/findId")
-    public String findId(@RequestParam(value = "memberName") @NotBlank @Max(20) String memberName,
+    public @ResponseBody String findId(@RequestParam(value = "memberName") @NotBlank @Max(20) String memberName,
                          @RequestParam(value = "email") @NotBlank @Email String email) {
         ApiResult result;
 
@@ -279,15 +302,15 @@ public class MemberController {
     @PostMapping("/changePassword")
     public @ResponseBody String changePassword(HttpServletRequest request, @Valid ChangePasswordDTO changePasswordDTO) {
         ApiResult result;
-        MemberDTO sessionDTO = (MemberDTO) request.getSession().getAttribute(Const.MEMBER_INFO_SESSION);
+        MemberDTO memberInfoSession = (MemberDTO) request.getSession().getAttribute(Const.MEMBER_INFO_SESSION);
 
         try {
-            if (sessionDTO == null) {
+            if (memberInfoSession == null) {
                 throw new IOException("session is Empty");
             }
             ChangePasswordDTO changePasswordRequestDTO = ChangePasswordDTO.builder()
-                    .memberNo(sessionDTO.getMemberNo())
-                    .memberId(sessionDTO.getMemberId())
+                    .memberNo(memberInfoSession.getMemberNo())
+                    .memberId(memberInfoSession.getMemberId())
                     .memberPassword(changePasswordDTO.getMemberPassword())
                     .newMemberPassword(changePasswordDTO.getNewMemberPassword())
                     .build();
@@ -307,6 +330,21 @@ public class MemberController {
                 if (response.getData().get(0) == null) {
                     throw new IOException("response's data is Empty");
                 }
+
+                MemberDTO memberDTO = MemberDTO.builder()
+                        .memberNo(memberInfoSession.getMemberNo())
+                        .memberId(memberInfoSession.getMemberId())
+                        .memberPassword(changePasswordDTO.getNewMemberPassword())
+                        .memberName(memberInfoSession.getMemberName())
+                        .nickName(memberInfoSession.getNickName())
+                        .email(memberInfoSession.getEmail())
+                        .genderCode(memberInfoSession.getGenderCode())
+                        .birthDay(memberInfoSession.getBirthDay())
+                        .memberStatusCode(memberInfoSession.getMemberStatusCode())
+                        .signInRequestCnt(memberInfoSession.getSignInRequestCnt())
+                        .build();
+                request.getSession().setAttribute(Const.MEMBER_INFO_SESSION, memberDTO);
+
                 result.put("changePasswordSuccess", response.getData().get(0));
             }
         } catch (Exception e) {
@@ -321,7 +359,7 @@ public class MemberController {
     public String signOut(HttpServletRequest request) {
         request.getSession().invalidate();
 
-        return "redirect:forward/main/main.trip";
+        return "redirect:/forward/main/main.trip";
     }
 
     @PostMapping("/withdraw")
@@ -337,7 +375,7 @@ public class MemberController {
             SignInDTO withdrawDTO = SignInDTO.builder()
                     .memberNo(sessionDTO.getMemberNo())
                     .memberId(signInDTO.getMemberId())
-                    .memberPassword(signInDTO.getMemberPassword())
+                    .memberPassword(sessionDTO.getMemberPassword())
                     .memberStatusCode(ConstCode.MEMBER_STATUS_CODE_WITHDRAW)
                     .build();
 

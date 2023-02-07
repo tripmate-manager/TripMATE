@@ -1,6 +1,6 @@
 $(function () {
     let isAjaxProcessing = false;
-    const memberId = $("#signInInfo").val();
+    const memberId = $("#memberId").val();
     const email = $("#email").val();
 
     $(".temporary_email_resend_button").on('click', function () {
