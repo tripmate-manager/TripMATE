@@ -9,15 +9,13 @@ function checkPopUpOpen(message) {
 }
 
 function popUpCancel() {
-    const popupWrap = $(".check_popup_wrap");
-    popupWrap.hide();
+    $(".check_popup_wrap").hide();
 }
 
 function popUpOk(url) {
-    const popupWrap = $(".check_popup_wrap");
-    popupWrap.hide();
+    $(".check_popup_wrap").hide();
 
     if (url) {
-        window.location.replace(url);
+        pageReplace(url);
     }
 }

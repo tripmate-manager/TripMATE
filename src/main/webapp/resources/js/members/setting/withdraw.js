@@ -42,8 +42,7 @@ $(function () {
                 if (result.code === constCode.global.resultCodeSuccess) {
                     if (result.withDrawSuccess === true) {
                         popUpOpen("회원 탈퇴가 완료되었습니다.");
-                        $(".popup_close_btn").attr("onclick", null);
-                        $(".popup_close_btn").on('click', function () {
+                        $(".popup_close_btn").attr("onclick", null).on('click', function () {
                             popUpClose("/forward/main/main.trip");
                         });
                     }
@@ -53,7 +52,7 @@ $(function () {
             },
             error: function (error) {
                 isAjaxProcessing = false;
-                console.log(error);
+                console.error(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })

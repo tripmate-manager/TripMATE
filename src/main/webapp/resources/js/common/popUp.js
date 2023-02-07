@@ -9,11 +9,9 @@ function popUpOpen(message) {
 }
 
 function popUpClose(url) {
-    const popupWrap = $(".popup_wrap");
-
-    popupWrap.hide();
+    $(".popup_wrap").hide();
 
     if (url) {
-        window.location.replace(url);
+        pageReplace(url);
     }
 }

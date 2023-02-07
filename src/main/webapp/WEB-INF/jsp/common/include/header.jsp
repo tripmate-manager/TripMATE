@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans%3A500%2C600"/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A500%2C600"/>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="<%=Const.STATIC_JS_PATH%>/common/common.js"></script>
 <script>
     'use strict';
     let constCode = window.constCode || {};
@@ -23,6 +24,9 @@
             memberStatusCodeComplete: "<%= ConstCode.MEMBER_STATUS_CODE_COMPLETE %>",
             memberStatusCodeTemporary: "<%= ConstCode.MEMBER_STATUS_CODE_TEMPORARY %>",
             memberStatusCodeIssueTemporaryPassword: "<%= ConstCode.MEMBER_STATUS_CODE_ISSUE_TEMPORARY_PASSWORD %>",
+
+            memberGenderCodeMale: "<%= ConstCode.GENDER_CODE_MALE %>",
+            memberGenderCodeFemale: "<%= ConstCode.GENDER_CODE_FEMALE %>",
         }
     }());
 </script>

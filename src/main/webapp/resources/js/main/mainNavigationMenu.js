@@ -14,22 +14,21 @@ $(function () {
     }
 
     $(".main_menu_login_text").on('click', function () {
-        window.location.href = "../members/signIn.trip";
+        pageLink("/forward/members/signIn.trip");
     });
 
     $("#menu_edit_member_info").on('click', function () {
-        window.location.href = "../members/mypage/mypage.trip";
+        pageLink("/forward/members/mypage/mypage.trip");
     });
 
     $("#menu_logout").on('click', function () {
         checkPopUpOpen("로그아웃 하시겠습니까?");
-        $(".check_popup_btn_ok").attr("onclick", null);
-        $(".check_popup_btn_ok").on('click', function () {
-            $("#checkPopUpForm").attr("action", "../../members/signOut.trip").submit();
+        $(".check_popup_btn_ok").attr("onclick", null).on('click', function () {
+            $("#checkPopUpForm").attr("action", "/members/signOut.trip").submit();
         });
     });
 
     $("#menu_setting").on('click', function () {
-        window.location.href = "../members/setting/setting.trip";
+        pageLink("/forward/members/setting/setting.trip");
     });
 });

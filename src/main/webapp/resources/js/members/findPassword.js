@@ -85,8 +85,7 @@ $(function () {
                 if (result.code === constCode.global.resultCodeSuccess) {
                     if (result.sendMailSuccess === true) {
                         popUpOpen("인증메일을 전송하였습니다. 이메일을 확인해주세요.");
-                        $(".popup_close_btn").attr("onclick", null);
-                        $(".popup_close_btn").on('click', function () {
+                        $(".popup_close_btn").attr("onclick", null).on('click', function () {
                             popUpClose("/forward/members/signIn.trip");
                         });
                     } else {
@@ -98,7 +97,7 @@ $(function () {
             },
             error: function (error) {
                 isAjaxProcessing = false;
-                console.log(error);
+                console.error(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })
