@@ -7,9 +7,9 @@ $(function () {
     const genderMaleBtn = $(".btn-default");
     const inputNickName = $("#nickName");
     const inputBirthDay = $("#birthDay");
-    const sessionNickName = $("#memberNickName");
-    const sessionBirthDay = $("#memberBirthDay");
-    const sessionGenderCode = $("#memberGenderCode");
+    const sessionNickName = $("#sessionNickName");
+    const sessionBirthDay = $("#sessionBirthDay");
+    const sessionGenderCode = $("#sessionGenderCode");
 
     inputNickName.change(function () {
         duplicateNickNmCheckYn = false;
@@ -159,6 +159,9 @@ $(function () {
                 isAjaxProcessing = false;
                 if (result.code === constCode.global.resultCodeSuccess) {
                     popUpOpen('회원 정보 수정이 완료되었습니다.');
+                    $(".popup_close_btn").attr("onclick", null).on('click', function () {
+                        location.reload();
+                    });
                 } else {
                     popUpOpen(result.message);
                 }

@@ -25,9 +25,9 @@
 %>
 
 <% if (memberInfo != null) { %>
-<input type=hidden id="memberNickName" value=<%=memberInfo.getNickName()%>>
-<input type=hidden id="memberBirthDay" value=<%=memberInfo.getBirthDay()%>>
-<input type=hidden id="memberGenderCode" value=<%=memberInfo.getGenderCode()%>>
+<input type=hidden id="sessionNickName" value=<%=memberInfo.getNickName()%>>
+<input type=hidden id="sessionBirthDay" value=<%=memberInfo.getBirthDay()%>>
+<input type=hidden id="sessionGenderCode" value=<%=memberInfo.getGenderCode()%>>
 <% } %>
 
 <div class="mypage_wrap">
