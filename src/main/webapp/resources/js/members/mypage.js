@@ -1,12 +1,15 @@
 $(function () {
     let isAjaxProcessing = false;
-    let duplicateNickNmCheckYn = false;
+    let duplicateNickNmCheckYn = true;
 
     const memberGenderCode = $("#memberGenderCode");
     const genderFemaleBtn = $(".btn-primary");
     const genderMaleBtn = $(".btn-default");
     const inputNickName = $("#nickName");
     const inputBirthDay = $("#birthDay");
+    const sessionNickName = $("#memberNickName");
+    const sessionBirthDay = $("#memberBirthDay");
+    const sessionGenderCode = $("#memberGenderCode");
 
     inputNickName.change(function () {
         duplicateNickNmCheckYn = false;
@@ -71,6 +74,11 @@ $(function () {
     }
 
     $(".mypage_nick_name_duplicate").on('click', function () {
+        if (inputNickName.val() === sessionNickName.val()) {
+            popUpOpen('새로운 닉네임을 입력해주세요.');
+            return false;
+        }
+
         if (!blankCheck($("#nickName"))) {
             popUpOpen('닉네임을 입력해 주세요.');
             return false;
@@ -107,7 +115,21 @@ $(function () {
         })
     });
 
+    function formChangeCheck() {
+        if (inputNickName.val() === sessionNickName.val()
+            && inputBirthDay.val() === sessionBirthDay.val()
+            && memberGenderCode.val() === sessionGenderCode.val()) {
+            popUpOpen("수정된 항목이 없습니다.");
+            return false;
+        }
+        return true;
+    }
+
     $(".mypage_edit_save").on('click', function () {
+        if (!formChangeCheck()) {
+            return false;
+        }
+
         if (!formBlankCheck() || !formValidationCheck()) {
             return false;
         }
