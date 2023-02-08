@@ -423,7 +423,7 @@ public class MemberController {
                     .birthDay(mypageDTO.getBirthDay())
                     .genderCode(mypageDTO.getGenderCode()).build();
 
-            Call<ResponseWrapper<MypageDTO>> data = RetrofitClient.getApiService(MemberService.class).editMemberInfo(requestMypageInfo.getMemberNo(), requestMypageInfo);
+            Call<ResponseWrapper<MypageDTO>> data = RetrofitClient.getApiService(MemberService.class).updateMemberInfo(requestMypageInfo.getMemberNo(), requestMypageInfo);
             ResponseWrapper<MypageDTO> response = data.clone().execute().body();
 
             if (response == null) {

@@ -50,5 +50,5 @@ public interface MemberService {
     Call<ResponseWrapper<Boolean>> withdraw(@Path("memberNo") int memberNo);
 
     @PUT("v1/members/{memberNo}")
-    Call<ResponseWrapper<MypageDTO>> editMemberInfo(@Path("memberNo") int memberNo, @Body MypageDTO mypageDTO);
+    Call<ResponseWrapper<MypageDTO>> updateMemberInfo(@Path("memberNo") int memberNo, @Body MypageDTO mypageDTO);
 }
