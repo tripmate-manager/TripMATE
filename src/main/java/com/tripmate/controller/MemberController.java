@@ -4,6 +4,7 @@ import com.tripmate.client.RetrofitClient;
 import com.tripmate.domain.ChangePasswordDTO;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.MemberMailDTO;
+import com.tripmate.domain.MypageDTO;
 import com.tripmate.domain.ResponseWrapper;
 import com.tripmate.domain.SignInDTO;
 import com.tripmate.entity.ApiResult;
@@ -379,7 +380,7 @@ public class MemberController {
                     .memberStatusCode(ConstCode.MEMBER_STATUS_CODE_WITHDRAW)
                     .build();
 
-            Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(MemberService.class).withdraw(withdrawDTO);
+            Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(MemberService.class).withdraw(withdrawDTO.getMemberNo());
             ResponseWrapper<Boolean> response = data.clone().execute().body();
 
             if (response == null) {
@@ -397,6 +398,62 @@ public class MemberController {
 
                 request.getSession().invalidate();
                 result.put("withDrawSuccess", response.getData().get(0));
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
+    }
+
+    @PostMapping("/editMemberInfo")
+    public @ResponseBody String editMypageMemberInfo(HttpServletRequest request, @Valid MypageDTO mypageDTO) {
+        ApiResult result;
+        MemberDTO memberInfoSession = (MemberDTO) request.getSession().getAttribute(Const.MEMBER_INFO_SESSION);
+
+        try {
+            if (memberInfoSession == null) {
+                throw new IOException("session is Empty");
+            }
+
+            MypageDTO requestMypageInfo = MypageDTO.builder()
+                    .memberNo(memberInfoSession.getMemberNo())
+                    .nickName(mypageDTO.getNickName())
+                    .birthDay(mypageDTO.getBirthDay())
+                    .genderCode(mypageDTO.getGenderCode()).build();
+
+            Call<ResponseWrapper<MypageDTO>> data = RetrofitClient.getApiService(MemberService.class).editMemberInfo(requestMypageInfo.getMemberNo(), requestMypageInfo);
+            ResponseWrapper<MypageDTO> response = data.clone().execute().body();
+
+            if (response == null) {
+                throw new IOException("response is Empty");
+            }
+
+            result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
+            if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+                if (response.getData().size() != 1) {
+                    throw new IOException("response's data size is not 1");
+                }
+                if (response.getData().get(0) == null) {
+                    throw new IOException("response's data is Empty");
+                }
+
+                MypageDTO resultMypageInfo = response.getData().get(0);
+
+                MemberDTO memberDTO = MemberDTO.builder()
+                        .memberNo(resultMypageInfo.getMemberNo())
+                        .memberId(memberInfoSession.getMemberId())
+                        .memberPassword(memberInfoSession.getMemberPassword())
+                        .memberName(memberInfoSession.getMemberName())
+                        .nickName(resultMypageInfo.getNickName())
+                        .email(memberInfoSession.getEmail())
+                        .genderCode(resultMypageInfo.getGenderCode())
+                        .birthDay(resultMypageInfo.getBirthDay())
+                        .memberStatusCode(memberInfoSession.getMemberStatusCode())
+                        .signInRequestCnt(memberInfoSession.getSignInRequestCnt())
+                        .build();
+                request.getSession().setAttribute(Const.MEMBER_INFO_SESSION, memberDTO);
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
