@@ -43,7 +43,6 @@ $(function () {
         }
     });
 
-
     $(".btn-default").on('click', function () {
         const genderFemaleBtn = $(this).parent().find(".btn-primary");
 
@@ -187,7 +186,6 @@ $(function () {
                 }
             },
             error: function (error) {
-                console.log(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })
@@ -225,7 +223,6 @@ $(function () {
                 }
             },
             error: function (error) {
-                console.log(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })
@@ -263,7 +260,6 @@ $(function () {
                 }
             },
             error: function (error) {
-                console.log(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })
@@ -307,14 +303,13 @@ $(function () {
             success: function (result) {
                 isAjaxProcessing = false;
                 if (result.code === constCode.global.resultCodeSuccess) {
-                    window.location.replace("/forward/members/signUpResult.trip");
+                    pageReplace("/forward/members/signUpResult.trip");
                 } else {
                     popUpOpen(result.message);
                 }
             },
             error: function (error) {
                 isAjaxProcessing = false;
-                console.log(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })

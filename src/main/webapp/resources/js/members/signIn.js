@@ -5,15 +5,15 @@ $(function () {
     const inputMemberPassword = $("#memberPassword");
 
     $(".signin_menu_join").on('click', function () {
-        window.location.href = "/forward/members/signUp.trip";
+        pageLink("/forward/members/signUp.trip");
     });
 
     $("#find_id").on('click', function () {
-        window.location.href = "/forward/members/findId.trip";
+        pageLink("/forward/members/findId.trip");
     });
 
     $("#find_password").on('click', function () {
-        window.location.href = "/forward/members/findPassword.trip";
+        pageLink("/forward/members/findPassword.trip");
     });
 
     function formBlankCheck() {
@@ -74,14 +74,13 @@ $(function () {
                     }
 
                     if (result.memberStatusCode === constCode.global.memberStatusCodeComplete) {
-                        //TODO: 메인으로 이동하도록 수정
-                        window.location.replace("/forward/members/signUpResult.trip");
+                        pageReplace("/forward/main/main.trip");
                         $("#signinForm")[0].reset();
                     } else if (result.memberStatusCode === constCode.global.memberStatusCodeTemporary) {
                         $("#email").val(result.email);
-                        $("#signinForm").attr("action", "../../members/temporarySignInResult.trip").submit();
+                        $("#signinForm").attr("action", "/members/temporarySignInResult.trip").submit();
                     } else if (result.memberStatusCode === constCode.global.memberStatusCodeIssueTemporaryPassword) {
-                        window.location.replace("/forward/members/changePassword.trip");
+                        pageReplace("/forward/members/changePassword.trip");
                     }
                 } else {
                     popUpOpen(result.message);
@@ -89,7 +88,6 @@ $(function () {
             },
             error: function (error) {
                 isAjaxProcessing = false;
-                console.log(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })

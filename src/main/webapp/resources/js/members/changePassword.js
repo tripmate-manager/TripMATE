@@ -44,7 +44,7 @@ $(function () {
             return false;
         }
 
-        if (inputPresentMemberPassword.val() === inputNewMemberPassword.val) {
+        if (inputPresentMemberPassword.val() === inputNewMemberPassword.val()) {
             popUpOpen('현재 비밀번호와 새비밀번호가 일치합니다.');
             return false;
         }
@@ -70,10 +70,8 @@ $(function () {
                 if (result.code === constCode.global.resultCodeSuccess) {
                     if (result.changePasswordSuccess === true) {
                         popUpOpen("비밀번호 변경이 완료되었습니다.");
-                        $(".popup_close_btn").attr("onclick", null);
-                        $(".popup_close_btn").on('click', function () {
-                            // TODO: main으로 이동
-                            popUpClose("/forward/members/signIn.trip");
+                        $(".popup_close_btn").attr("onclick", null).on('click', function () {
+                            popUpClose("/forward/main/main.trip");
                         });
                     } else {
                         popUpOpen("처리 중 오류가 발생하였습니다.");
@@ -84,9 +82,12 @@ $(function () {
             },
             error: function (error) {
                 isAjaxProcessing = false;
-                console.log(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })
+    });
+
+    $(".change_password_next").on('click', function () {
+        pageLink("/forward/main/main.trip");
     });
 });

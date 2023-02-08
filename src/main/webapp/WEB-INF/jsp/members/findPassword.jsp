@@ -4,7 +4,7 @@
 <html>
 <head>
     <jsp:include page="/WEB-INF/jsp/common/include/header.jsp">
-        <jsp:param name="title" value="FindId"/>
+        <jsp:param name="title" value="FindPassword"/>
     </jsp:include>
     <jsp:include page="/WEB-INF/jsp/common/messagePopUp.jsp"/>
     <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/members/findPassword.css"/>

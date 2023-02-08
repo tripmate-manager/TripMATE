@@ -60,7 +60,6 @@ $(function () {
                 }
             },
             error: function (error) {
-                console.log(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })
@@ -109,8 +108,7 @@ $(function () {
                 if (result.code === constCode.global.resultCodeSuccess) {
                     if (result.sendMailSuccess === true) {
                         popUpOpen("인증메일을 전송하였습니다. 인증 메일 확인 시 해당 이메일로 서비스 이용이 가능합니다.");
-                        $(".popup_close_btn").attr("onclick", null);
-                        $(".popup_close_btn").on('click', function () {
+                        $(".popup_close_btn").attr("onclick", null).on('click', function () {
                             popUpClose("/forward/members/signIn.trip");
                         });
                     } else {
@@ -122,7 +120,6 @@ $(function () {
             },
             error: function (error) {
                 isAjaxProcessing = false;
-                console.log(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })
