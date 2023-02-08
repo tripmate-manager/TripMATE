@@ -186,7 +186,6 @@ $(function () {
                 }
             },
             error: function (error) {
-                console.error(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })
@@ -224,7 +223,6 @@ $(function () {
                 }
             },
             error: function (error) {
-                console.error(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })
@@ -262,7 +260,6 @@ $(function () {
                 }
             },
             error: function (error) {
-                console.error(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })
@@ -313,7 +310,6 @@ $(function () {
             },
             error: function (error) {
                 isAjaxProcessing = false;
-                console.error(error);
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })
