@@ -32,10 +32,6 @@ $(function () {
             url: "/members/withdraw.trip",
             type: "post",
             dataType: 'json',
-            data: {
-                memberId: memberId.val(),
-                memberPassword: inputMemberPassword.val()
-            },
             success: function (result) {
                 isAjaxProcessing = false;
 

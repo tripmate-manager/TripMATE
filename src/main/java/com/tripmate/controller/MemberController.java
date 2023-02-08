@@ -364,7 +364,7 @@ public class MemberController {
     }
 
     @PostMapping("/withdraw")
-    public @ResponseBody String withdraw(HttpServletRequest request, @Valid SignInDTO signInDTO) {
+    public @ResponseBody String withdraw(HttpServletRequest request) {
         ApiResult result;
         MemberDTO sessionDTO = (MemberDTO) request.getSession().getAttribute(Const.MEMBER_INFO_SESSION);
 
@@ -373,14 +373,7 @@ public class MemberController {
                 throw new IOException("session is Empty");
             }
 
-            SignInDTO withdrawDTO = SignInDTO.builder()
-                    .memberNo(sessionDTO.getMemberNo())
-                    .memberId(signInDTO.getMemberId())
-                    .memberPassword(sessionDTO.getMemberPassword())
-                    .memberStatusCode(ConstCode.MEMBER_STATUS_CODE_WITHDRAW)
-                    .build();
-
-            Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(MemberService.class).withdraw(withdrawDTO.getMemberNo());
+            Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(MemberService.class).withdraw(sessionDTO.getMemberNo());
             ResponseWrapper<Boolean> response = data.clone().execute().body();
 
             if (response == null) {
