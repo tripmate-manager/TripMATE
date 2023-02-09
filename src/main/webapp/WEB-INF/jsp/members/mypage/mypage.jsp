@@ -25,9 +25,9 @@
 %>
 
 <% if (memberInfo != null) { %>
-<input type=hidden id="memberInfo" value=<%=memberInfo%>>
-<input type=hidden id="memberId" value=<%=memberInfo.getMemberId()%>>
-<input type=hidden id="memberNickName" value=<%=memberInfo.getNickName()%>>
+<input type=hidden id="sessionNickName" value=<%=memberInfo.getNickName()%>>
+<input type=hidden id="sessionBirthDay" value=<%=memberInfo.getBirthDay()%>>
+<input type=hidden id="sessionGenderCode" value=<%=memberInfo.getGenderCode()%>>
 <% } %>
 
 <div class="mypage_wrap">
@@ -46,7 +46,7 @@
         <div class="mypage_name"><%=memberInfo.getMemberName()%></div>
         <div class="mypage_subtitle_nick_name">닉네임</div>
         <div class="mypage_change_nick_name_wrap">
-            <div class="mypage_input_nick_name"><%=memberInfo.getNickName()%></div>
+            <input type="text" name="nickName" id="nickName" class="mypage_input_nick_name" value=<%=memberInfo.getNickName()%>>
             <div class="mypage_nick_name_duplicate">중복확인</div>
         </div>
         <div class="mypage_email_wrap">
@@ -57,8 +57,7 @@
             <div class="mypage_change_email_btn">변경</div>
         </div>
         <div class="mypage_subtitle_birthday">생년월일</div>
-        <div class="mypage_birthday"><%=memberInfo.getBirthDay()%></div>
-
+        <input type="text" name="birthDay" id="birthDay" class="mypage_birthday" value=<%=memberInfo.getBirthDay()%>>
         <div class="mypage_gender">
             <div class="mypage_subtitle_gender">성별</div>
             <input type="text" name="memberGenderCode" id="memberGenderCode" value="<%=memberInfo.getGenderCode()%>" hidden>

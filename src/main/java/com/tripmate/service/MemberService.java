@@ -3,13 +3,16 @@ package com.tripmate.service;
 import com.tripmate.domain.ChangePasswordDTO;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.MemberMailDTO;
+import com.tripmate.domain.MypageDTO;
 import com.tripmate.domain.ResponseWrapper;
 import com.tripmate.domain.SignInDTO;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface MemberService {
@@ -43,6 +46,9 @@ public interface MemberService {
     @PUT("v1/members/change-password")
     Call<ResponseWrapper<Boolean>> changePassword(@Body ChangePasswordDTO changePasswordDTO);
 
-    @PUT("v1/members/withdraw")
-    Call<ResponseWrapper<Boolean>> withdraw(@Body SignInDTO signInDTO);
+    @DELETE("v1/members/{memberNo}")
+    Call<ResponseWrapper<Boolean>> withdraw(@Path("memberNo") int memberNo);
+
+    @PUT("v1/members/{memberNo}")
+    Call<ResponseWrapper<MypageDTO>> updateMemberInfo(@Path("memberNo") int memberNo, @Body MypageDTO mypageDTO);
 }
