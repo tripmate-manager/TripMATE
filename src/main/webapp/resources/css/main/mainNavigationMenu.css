@@ -64,7 +64,7 @@ body {
     margin-top: calc(120%);
 }
 .main_menu_wrap .main_menu_login_info .main_menu_login_id {
-    margin: 0rem 0rem 0.55rem 2.2rem;
+    margin: 0rem 0rem 0.55rem 0rem;
     display: flex;
     font-size: 2rem;
     font-weight: 500;
@@ -75,7 +75,7 @@ body {
     flex-shrink: 0;
 }
 .main_menu_wrap .main_menu_login_info .main_menu_login_nick_name {
-    margin: 0rem 0rem 1.6rem 2.4rem;
+    margin: 1rem 0rem 1.6rem 0rem;
     display: flex;
     font-size: 1.6rem;
     font-weight: 500;
