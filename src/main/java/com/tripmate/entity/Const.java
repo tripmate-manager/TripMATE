@@ -33,4 +33,7 @@ public interface Const {
     String RESULT_CODE_UNKNOWN = "9999";
 
     int SIGNIN_LIMIT_CNT        = 5;
+
+    String BOOLEAN_TRUE = "Y";
+    String BOOLEAN_FALSE = "N";
 }

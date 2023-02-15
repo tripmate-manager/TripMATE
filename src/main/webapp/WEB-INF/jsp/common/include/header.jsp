@@ -27,6 +27,9 @@
 
             memberGenderCodeMale: "<%= ConstCode.GENDER_CODE_MALE %>",
             memberGenderCodeFemale: "<%= ConstCode.GENDER_CODE_FEMALE %>",
+
+            booleanTrue: "<%= Const.BOOLEAN_TRUE %>",
+            booleanFalse: "<%= Const.BOOLEAN_FALSE %>",
         }
     }());
 </script>

@@ -28,4 +28,8 @@ public interface ConstCode {
 
     String POST_TYPE_CODE = "CT001";
     String POST_TYPE_CODE_LODGING = "10";
+
+    String ATTRIBUTE_TYPE_CODE = "CT003";
+    String ATTRIBUTE_TYPE_CODE_HASHTAG = "10";
+    String ATTRIBUTE_TYPE_CODE_TRIP_THEME = "20";
 }
