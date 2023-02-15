@@ -1,8 +1,7 @@
 function address_option(option) {
-    console.log(option);
     $.ajax({
         type: 'GET',
-        url: '/plans/addressOption/'+ option + '.trip',
+        url: '/plans/addressOption/' + option + '.trip',
         dataType: 'json',
         data: {
             sidoName: option
