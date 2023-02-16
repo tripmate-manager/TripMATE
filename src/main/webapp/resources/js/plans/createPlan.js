@@ -7,6 +7,7 @@ function address_option(option) {
             sidoName: option
         },
         success: function (result) {
+            isAjaxProcessing = false;
             $('#select_option_sigungu').empty();
 
             for (i = 0; i < result.addressOptionList.length; i++) {
@@ -183,20 +184,13 @@ $(function () {
 
     $(".createplan_save").on('click', function () {
         if ($('#checkboxPublic').is(':checked')) {
-            inputPublicYn = constCode.global.booleanTrue;
+            inputPublicYn = constCode.global.Y;
         } else {
-            inputPublicYn = constCode.global.booleanFalse;
+            inputPublicYn = constCode.global.N;
         }
 
         if (!formBlankCheck() || !formValidationCheck()) {
             return false;
-        }
-
-        if (isAjaxProcessing) {
-            popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
-            return;
-        } else {
-            isAjaxProcessing = true;
         }
 
         let planThemeList = [];
@@ -214,13 +208,20 @@ $(function () {
             planAddressList.push($(this).attr("value"));
         });
 
-        if (planThemeList.length === 0) {
+        if (planAddressList.length === 0) {
             popUpOpen('여행지를 입력해주세요.');
             return false;
         }
 
+        if (isAjaxProcessing) {
+            popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
+            return;
+        } else {
+            isAjaxProcessing = true;
+        }
+
         $.ajax({
-            url: "/plans.trip",
+            url: "/plans/createPlan.trip",
             type: "post",
             traditional: true,
             dataType: 'json',

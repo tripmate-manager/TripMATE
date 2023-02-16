@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="myplanlist_wrap">
-    <form id="myPlanForm" method="post">
+    <form id="myPlanForm" method="get">
         <div class="myplanlist_title_wrap">
             <img class="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png"
                  onclick="history.back()"/>

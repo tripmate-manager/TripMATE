@@ -31,7 +31,7 @@ import java.util.Set;
 @RequestMapping(value = "/plans", produces = "application/json; charset=utf8")
 public class PlanController {
 
-    @PostMapping("/createPlan")
+    @GetMapping("/createPlan")
     public ModelAndView viewCreatePlan(HttpServletRequest request) {
         try {
             Call<ResponseWrapper<PlanAttributeVO>> planAttributeData = RetrofitClient.getApiService(PlanService.class).selectPlanAttributeList(ConstCode.ATTRIBUTE_TYPE_CODE_TRIP_THEME);
@@ -42,23 +42,22 @@ public class PlanController {
 
             if (planAttributeResponse == null || planAddressResponse == null) {
                 throw new IOException("api response data is empty");
-            } else {
-                if (ApiResultEnum.SUCCESS.getCode().equals(planAttributeResponse.getCode())
-                        && ApiResultEnum.SUCCESS.getCode().equals(planAddressResponse.getCode())) {
-                    if (planAttributeResponse.getData().get(0) == null || planAddressResponse.getData().get(0) == null) {
-                        throw new IOException("response's data is Empty");
-                    }
-
-                    Set<String> sidoNameList = new HashSet<>();
-                    for (PlanAddressVO planAddressVO : planAddressResponse.getData()) {
-                        sidoNameList.add(planAddressVO.getSidoName());
-                    }
-
-                    request.setAttribute("planThemeList", planAttributeResponse.getData());
-                    request.setAttribute("sidoNameList", sidoNameList);
-                }
             }
 
+            if (ApiResultEnum.SUCCESS.getCode().equals(planAttributeResponse.getCode())
+                    && ApiResultEnum.SUCCESS.getCode().equals(planAddressResponse.getCode())) {
+                if (planAttributeResponse.getData().get(0) == null || planAddressResponse.getData().get(0) == null) {
+                    throw new IOException("response's data is Empty");
+                }
+
+                Set<String> sidoNameList = new HashSet<>();
+                for (PlanAddressVO planAddressVO : planAddressResponse.getData()) {
+                    sidoNameList.add(planAddressVO.getSidoName());
+                }
+
+                request.setAttribute("planThemeList", planAttributeResponse.getData());
+                request.setAttribute("sidoNameList", sidoNameList);
+            }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
@@ -77,6 +76,7 @@ public class PlanController {
             if (response == null) {
                 throw new IOException("response is Empty");
             }
+
             result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
             if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
                 if (response.getData().get(0) == null) {
@@ -93,7 +93,7 @@ public class PlanController {
         return result.toJson();
     }
 
-    @PostMapping
+    @PostMapping("/createPlan")
     public @ResponseBody String createPlan(@Valid CreatePlanDTO createPlanDTO) {
         ApiResult result;
 
@@ -103,19 +103,19 @@ public class PlanController {
 
             if (response == null) {
                 throw new IOException("api response data is empty");
-            } else {
-                result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
+            }
 
-                if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
-                    if (response.getData().size() != 1) {
-                        throw new IOException("response's data size is not 1");
-                    }
-                    if (response.getData().get(0) == null) {
-                        throw new IOException("response's data is Empty");
-                    }
+            result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
 
-                    result.put("createPlanSuccess", response.getData().get(0));
+            if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+                if (response.getData().size() != 1) {
+                    throw new IOException("response's data size is not 1");
                 }
+                if (response.getData().get(0) == null) {
+                    throw new IOException("response's data is Empty");
+                }
+
+                result.put("createPlanSuccess", response.getData().get(0));
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);

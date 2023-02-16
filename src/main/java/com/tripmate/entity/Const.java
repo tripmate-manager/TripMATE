@@ -34,6 +34,6 @@ public interface Const {
 
     int SIGNIN_LIMIT_CNT        = 5;
 
-    String BOOLEAN_TRUE = "Y";
-    String BOOLEAN_FALSE = "N";
+    String Y = "Y";
+    String N = "N";
 }
