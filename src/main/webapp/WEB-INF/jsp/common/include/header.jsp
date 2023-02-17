@@ -27,6 +27,9 @@
 
             memberGenderCodeMale: "<%= ConstCode.GENDER_CODE_MALE %>",
             memberGenderCodeFemale: "<%= ConstCode.GENDER_CODE_FEMALE %>",
+
+            Y: "<%= Const.Y %>",
+            N: "<%= Const.N %>",
         }
     }());
 </script>
