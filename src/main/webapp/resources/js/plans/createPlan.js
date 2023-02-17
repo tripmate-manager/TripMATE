@@ -1,4 +1,14 @@
 function address_option(option) {
+    const selectOptionSigungu = $('#select_option_sigungu');
+
+    if(option === 'default') {
+        selectOptionSigungu.empty().attr("disabled", true);
+
+        let optionItem = $("<option value=\"default\">--시군구 선택--</option>");
+        selectOptionSigungu.append(optionItem);
+        return false;
+    }
+
     $.ajax({
         type: 'GET',
         url: '/plans/addressOption/' + option + '.trip',
@@ -8,13 +18,14 @@ function address_option(option) {
         },
         success: function (result) {
             isAjaxProcessing = false;
-            $('#select_option_sigungu').empty();
+            selectOptionSigungu.empty();
 
             for (i = 0; i < result.addressOptionList.length; i++) {
                 const jsonOptionObject = JSON.parse(JSON.stringify(result.addressOptionList[i]));
 
-                let option = $("<option value=" + jsonOptionObject.addressNo + ">" + jsonOptionObject.sigunguName + "</option>");
-                $('#select_option_sigungu').append(option);
+                let optionItem = $("<option value=" + jsonOptionObject.addressNo + ">" + jsonOptionObject.sigunguName + "</option>");
+                selectOptionSigungu.append(optionItem).attr("disabled", false);
+
             }
         },
         error: function (error) {
@@ -137,8 +148,8 @@ $(function () {
         })
 
         if (!isHashtagDuplicate) {
-            let option = $("<div class=\"hashtag_item_text\">" + inputHashtag.val() + "</div>");
-            $(".createplan_hashtag_list").append(option);
+            let optionItem = $("<div class=\"hashtag_item_text\">" + inputHashtag.val() + "</div>");
+            $(".createplan_hashtag_list").append(optionItem);
         }
 
         inputHashtag.val("");
@@ -167,8 +178,8 @@ $(function () {
         });
 
         if (!isAddressDuplicate) {
-            let option = $("<div class=\"address_item_text\" value=" + inputAddressNo + ">" + inputSido + " " + inputSigungu + "</div>");
-            $(".createplan_address_list").append(option);
+            let optionItem = $("<div class=\"address_item_text\" value=" + inputAddressNo + ">" + inputSido + " " + inputSigungu + "</div>");
+            $(".createplan_address_list").append(optionItem);
             $("#planAddress").text(inputSido + " " + inputSigungu);
 
             if (isAddressInputFirst) {

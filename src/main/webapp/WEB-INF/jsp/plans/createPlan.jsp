@@ -70,7 +70,7 @@
                     </select>
                     <br>
                     <label class="label_selectbox_title">시군구명</label>
-                    <select name="select_option_sigungu" class="select_option" id="select_option_sigungu">
+                    <select name="select_option_sigungu" class="select_option" id="select_option_sigungu" disabled>
                         <option value="default">--시군구 선택--</option>
                     </select>
                     <input type="button" id="select_address_btn" value="확인">
