@@ -238,8 +238,8 @@ $(function () {
             dataType: 'json',
             data: {
                 memberNo: sessionMemberNo.val(),
-                planTitle: inputPlanTitle.val(),
-                planDescription: inputPlanDescription.val(),
+                planTitle: inputPlanTitle.val().trim(),
+                planDescription: inputPlanDescription.val().trim(),
                 publicYn: inputPublicYn,
                 tripStartDate: inputTripStartDate.val(),
                 tripEndDate: inputTripEndDate.val(),

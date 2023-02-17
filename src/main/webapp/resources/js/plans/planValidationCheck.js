@@ -1,5 +1,5 @@
 function blankCheck(input) {
-    if (input.val() === "") {
+    if (input.val().trim() === "") {
         input.focus();
         return false;
     }
