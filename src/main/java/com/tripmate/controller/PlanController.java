@@ -66,7 +66,7 @@ public class PlanController {
     }
 
     @GetMapping("/addressOption/{sidoName}")
-    public @ResponseBody String findId(@PathVariable(value = "sidoName") @NotBlank String sidoName) {
+    public @ResponseBody String getAddressOptionList(@PathVariable(value = "sidoName") @NotBlank String sidoName) {
         ApiResult result;
 
         try {
