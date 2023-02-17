@@ -3,6 +3,7 @@ package com.tripmate.service;
 import com.tripmate.domain.CreatePlanDTO;
 import com.tripmate.domain.PlanAddressVO;
 import com.tripmate.domain.PlanAttributeVO;
+import com.tripmate.domain.PlanVO;
 import com.tripmate.domain.ResponseWrapper;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -20,4 +21,6 @@ public interface PlanService {
     Call<ResponseWrapper<PlanAddressVO>> selectAddressList(@Path("sidoName") String sidoName);
     @POST("v1/plans")
     Call<ResponseWrapper<Boolean>> createPlan(@Body CreatePlanDTO createPlanDTO);
+    @GET("v1/plans/{memberNo}")
+    Call<ResponseWrapper<PlanVO>> selectPlanList(@Path("memberNo") String memberNo);
 }

@@ -2,11 +2,14 @@ package com.tripmate.controller;
 
 import com.tripmate.client.RetrofitClient;
 import com.tripmate.domain.CreatePlanDTO;
+import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.PlanAddressVO;
 import com.tripmate.domain.PlanAttributeVO;
+import com.tripmate.domain.PlanVO;
 import com.tripmate.domain.ResponseWrapper;
 import com.tripmate.entity.ApiResult;
 import com.tripmate.entity.ApiResultEnum;
+import com.tripmate.entity.Const;
 import com.tripmate.entity.ConstCode;
 import com.tripmate.service.PlanService;
 import lombok.extern.slf4j.Slf4j;
@@ -116,6 +119,35 @@ public class PlanController {
                 }
 
                 result.put("createPlanSuccess", response.getData().get(0));
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
+    }
+
+    @GetMapping("/myPlan")
+    public @ResponseBody String myPlan(HttpServletRequest request) {
+        ApiResult result;
+        MemberDTO memberInfoSession = (MemberDTO) request.getSession().getAttribute(Const.MEMBER_INFO_SESSION);
+
+        try {
+            Call<ResponseWrapper<PlanVO>> data = RetrofitClient.getApiService(PlanService.class).selectPlanList(String.valueOf(memberInfoSession.getMemberNo()));
+            ResponseWrapper<PlanVO> response = data.clone().execute().body();
+
+            if (response == null) {
+                throw new IOException("response is Empty");
+            }
+
+            result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
+            if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+                if (response.getData().get(0) == null) {
+                    throw new IOException("response's data is Empty");
+                }
+
+                result.put("planList", response.getData());
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
