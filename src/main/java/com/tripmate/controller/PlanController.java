@@ -129,8 +129,7 @@ public class PlanController {
     }
 
     @GetMapping("/myPlan")
-    public @ResponseBody String myPlan(HttpServletRequest request) {
-        ApiResult result;
+    public @ResponseBody ModelAndView myPlan(HttpServletRequest request) {
         MemberDTO memberInfoSession = (MemberDTO) request.getSession().getAttribute(Const.MEMBER_INFO_SESSION);
 
         try {
@@ -141,19 +140,17 @@ public class PlanController {
                 throw new IOException("response is Empty");
             }
 
-            result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
             if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
-                if (response.getData().get(0) == null) {
+                if (response.getData() == null) {
                     throw new IOException("response's data is Empty");
                 }
 
-                result.put("planList", response.getData());
+                request.setAttribute("planList", response.getData());
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
         }
 
-        return result.toJson();
+        return new ModelAndView("plans/myPlan");
     }
 }

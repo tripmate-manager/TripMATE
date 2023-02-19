@@ -22,7 +22,7 @@ $(function () {
             popUpOpen("로그인 시 이용할 수 있는 서비스입니다.");
             return false;
         }
-        pageLink("/forward/plans/myPlan.trip");
+        pageLink("/plans/myPlan.trip");
     });
 
     $("#menu_my_like_plan").on('click', function () {

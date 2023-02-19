@@ -25,7 +25,6 @@ function address_option(option) {
 
                 let optionItem = $("<option value=" + jsonOptionObject.addressNo + ">" + jsonOptionObject.sigunguName + "</option>");
                 selectOptionSigungu.append(optionItem).attr("disabled", false);
-
             }
         },
         error: function (error) {
@@ -80,7 +79,8 @@ $(function () {
     $(".icon_arrow_left").on('click', function () {
         checkPopUpOpen("작성한 내용은 저장되지 않습니다.\n" + "작성을 취소하시겠습니까?");
         $(".check_popup_btn_ok").attr("onclick", null).on('click', function () {
-            popUpOk("/forward/plans/myPlan.trip");
+            // popUpOk("/forward/plans/myPlan.trip");
+            window.location = document.referrer;
         });
     });
 
@@ -140,15 +140,15 @@ $(function () {
             return false;
         }
 
-        $("div[class='hashtag_item_text']").each(function (item) {
-            if (inputHashtag.val() === $(this).text()) {
+        $("div[class='hashtag_item_text']").each(function () {
+            if (inputHashtag.val().trim() === $(this).text().trim()) {
                 popUpOpen('이미 입력된 해시태그입니다.');
                 isHashtagDuplicate = true;
             }
         })
 
         if (!isHashtagDuplicate) {
-            let optionItem = $("<div class=\"hashtag_item_text\">" + inputHashtag.val() + "</div>");
+            let optionItem = $("<div class=\"hashtag_item_text\">" + inputHashtag.val().trim() + "</div>");
             $(".createplan_hashtag_list").append(optionItem);
         }
 
@@ -251,7 +251,7 @@ $(function () {
                 isAjaxProcessing = false;
                 if (result.code === constCode.global.resultCodeSuccess) {
                     if (result.createPlanSuccess == true) {
-                        pageReplace("/forward/plans/myPlan.trip");
+                        window.location = document.referrer;
                     }
                 } else {
                     popUpOpen(result.message);

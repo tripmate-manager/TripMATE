@@ -1,3 +1,5 @@
+<%@ page import="com.tripmate.domain.PlanVO" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/jsp/common/include/commonImport.jsp" %>
 
@@ -13,6 +15,12 @@
     <script src="<%=Const.STATIC_JS_PATH%>/common/popUp.js"></script>
 </head>
 <body>
+<%
+    List<PlanVO> planList = (List<PlanVO>) request.getAttribute("planList");
+%>
+
+<input type=hidden id="planList" value=<%=planList%>>
+
 <div class="myplanlist_wrap">
     <form id="myPlanForm" method="get">
         <div class="myplanlist_title_wrap">
@@ -24,25 +32,42 @@
         <div class="myplanlist_divi_line">
         </div>
         <div class="myplanlist_list_wrap">
+            <% if(planList.size() == 0) { %>
             <div class="myplanlist_empty_item_wrap">
                 <div class="empty_item_text">플랜을 생성해주세요</div>
                 <img class="icon_plus_circle" src="<%=Const.STATIC_IMG_PATH%>/plans/icon_plus_circle.png"/>
             </div>
-            <div class="myplanlist_plan_item_wrap" style="display:none;">
-                <div class="myplanlist_item_title_wrap">
-                    <div class="myplanlist_item_title">플랜명</div>
-                    <img class="icon_dot_menu" src="<%=Const.STATIC_IMG_PATH%>/common/icon_dot_menu.png"/>
+            <% } else {
+                for(PlanVO planVO : planList) { %>
+                <div class="myplanlist_plan_item_wrap">
+                    <div class="myplanList_item_no" value="<%=planVO.getPlanNo()%>"></div>
+                    <div class="myplanlist_item_title_wrap">
+                        <div class="myplanlist_item_title"><%=planVO.getPlanTitle()%>
+                        </div>
+                        <img class="icon_dot_menu" src="<%=Const.STATIC_IMG_PATH%>/common/icon_dot_menu.png"/>
+                    </div>
+                    <div class="myplanlist_item_desc"><%=planVO.getPlanDescription()%>
+                    </div>
+                    <div class="myplanlist_item_address_wrap">
+                        <img class="icon_location" src="<%=Const.STATIC_IMG_PATH%>/common/icon_location.png"/>
+                        <div class="myplanlist_plan_location"><%=planVO.getPlanAddressList().get(0).getSidoName()%> <%=planVO.getPlanAddressList().get(0).getSigunguName()%>
+                        </div>
+                    </div>
+                    <div class="myplanlist_trip_term_wrap">
+                        <img class="icon_calendar" src="<%=Const.STATIC_IMG_PATH%>/common/icon_calendar.png"/>
+                        <div class="myplanlist_trip_term">여행일자 [&nbsp;</div>
+                        <div class="myplanlist_trip_term" id="trip_term">
+                            <% if (planVO.getTripTerm() == 0) { %>
+                            당일치기
+                            <% } else { %>
+                            <%=planVO.getTripTerm()%>박&nbsp;<%=planVO.getTripTerm() + 1%>일 <%
+                            } %>
+                        </div>
+                        <div class="myplanlist_trip_term">&nbsp;]</div>
+                    </div>
                 </div>
-                <div class="myplanlist_item_desc">여행에 대한 설명</div>
-                <div class="myplanlist_item_address_wrap">
-                    <img class="icon_location" src="<%=Const.STATIC_IMG_PATH%>/common/icon_location.png"/>
-                    <div class="myplanlist_plan_location">여행지</div>
-                </div>
-                <div class="myplanlist_plan_period_wrap">
-                    <img class="icon_calendar" src="<%=Const.STATIC_IMG_PATH%>/common/icon_calendar.png"/>
-                    <div class="myplanlist_plan_period">여행일자 [ 여행기간 ]</div>
-                </div>
-            </div>
+            <% }
+            } %>
         </div>
     </form>
 </div>

@@ -24,6 +24,8 @@ public class PlanVO {
 
     private String tripEndDate;
 
+    private int tripTerm;
+
     private int likeRegistrationCnt;
 
     private int achieveRate;
