@@ -56,13 +56,8 @@
                     <div class="myplanlist_trip_term_wrap">
                         <img class="icon_calendar" src="<%=Const.STATIC_IMG_PATH%>/common/icon_calendar.png"/>
                         <div class="myplanlist_trip_term">여행일자 [&nbsp;</div>
-                        <div class="myplanlist_trip_term" id="trip_term">
-                            <% if (planVO.getTripTerm() == 0) { %>
-                            당일치기
-                            <% } else { %>
-                            <%=planVO.getTripTerm()%>박&nbsp;<%=planVO.getTripTerm() + 1%>일 <%
-                            } %>
-                        </div>
+                        <% String tripTerm = planVO.getTripTerm() == 0 ? "당일치기": planVO.getTripTerm() + "박 " + (planVO.getTripTerm() + 1) + "일"; %>
+                        <div class="myplanlist_trip_term" id="trip_term"><%=tripTerm%></div>
                         <div class="myplanlist_trip_term">&nbsp;]</div>
                     </div>
                 </div>
