@@ -18,9 +18,6 @@
 <%
     List<PlanVO> planList = (List<PlanVO>) request.getAttribute("planList");
 %>
-
-<input type=hidden id="planList" value=<%=planList%>>
-
 <div class="myplanlist_wrap">
     <form id="myPlanForm" method="get">
         <div class="myplanlist_title_wrap">
