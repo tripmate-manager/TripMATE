@@ -79,8 +79,7 @@ $(function () {
     $(".icon_arrow_left").on('click', function () {
         checkPopUpOpen("작성한 내용은 저장되지 않습니다.\n" + "작성을 취소하시겠습니까?");
         $(".check_popup_btn_ok").attr("onclick", null).on('click', function () {
-            // popUpOk("/forward/plans/myPlan.trip");
-            window.location = document.referrer;
+            $("#createPlanForm").attr("action", "/plans/myPlan.trip").submit();
         });
     });
 
@@ -251,7 +250,7 @@ $(function () {
                 isAjaxProcessing = false;
                 if (result.code === constCode.global.resultCodeSuccess) {
                     if (result.createPlanSuccess == true) {
-                        window.location = document.referrer;
+                        $("#createPlanForm").attr("action", "/plans/myPlan.trip").submit();
                     }
                 } else {
                     popUpOpen(result.message);
