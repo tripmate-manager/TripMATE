@@ -1,6 +1,5 @@
 package com.tripmate.controller;
 
-import com.tripmate.client.RetrofitClient;
 import com.tripmate.domain.CreatePlanDTO;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.PlanAddressVO;
@@ -11,8 +10,9 @@ import com.tripmate.entity.ApiResult;
 import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.entity.Const;
 import com.tripmate.entity.ConstCode;
-import com.tripmate.service.PlanService;
+import com.tripmate.service.apiservice.PlanApiService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import retrofit2.Call;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -33,15 +32,18 @@ import java.util.Set;
 @Controller
 @RequestMapping(value = "/plans", produces = "application/json; charset=utf8")
 public class PlanController {
+    private final PlanApiService planApiService;
+
+    @Autowired
+    public PlanController(PlanApiService planApiService) {
+        this.planApiService = planApiService;
+    }
 
     @GetMapping("/createPlan")
     public ModelAndView viewCreatePlan(HttpServletRequest request) {
         try {
-            Call<ResponseWrapper<PlanAttributeVO>> planAttributeData = RetrofitClient.getApiService(PlanService.class).selectPlanAttributeList(ConstCode.ATTRIBUTE_TYPE_CODE_TRIP_THEME);
-            ResponseWrapper<PlanAttributeVO> planAttributeResponse = planAttributeData.clone().execute().body();
-
-            Call<ResponseWrapper<PlanAddressVO>> planAddressData = RetrofitClient.getApiService(PlanService.class).selectAddressList();
-            ResponseWrapper<PlanAddressVO> planAddressResponse = planAddressData.clone().execute().body();
+            ResponseWrapper<PlanAttributeVO> planAttributeResponse = planApiService.selectPlanAttributeList(ConstCode.ATTRIBUTE_TYPE_CODE_TRIP_THEME);
+            ResponseWrapper<PlanAddressVO> planAddressResponse = planApiService.selectAddressList();
 
             if (planAttributeResponse == null || planAddressResponse == null) {
                 throw new IOException("api response data is empty");
@@ -73,8 +75,7 @@ public class PlanController {
         ApiResult result;
 
         try {
-            Call<ResponseWrapper<PlanAddressVO>> data = RetrofitClient.getApiService(PlanService.class).selectAddressList(sidoName);
-            ResponseWrapper<PlanAddressVO> response = data.clone().execute().body();
+            ResponseWrapper<PlanAddressVO> response = planApiService.selectAddressList(sidoName);
 
             if (response == null) {
                 throw new IOException("response is Empty");
@@ -101,8 +102,7 @@ public class PlanController {
         ApiResult result;
 
         try {
-            Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(PlanService.class).createPlan(createPlanDTO);
-            ResponseWrapper<Boolean> response = data.clone().execute().body();
+            ResponseWrapper<Boolean> response = planApiService.createPlan(createPlanDTO);
 
             if (response == null) {
                 throw new IOException("api response data is empty");
@@ -133,8 +133,7 @@ public class PlanController {
         MemberDTO memberInfoSession = (MemberDTO) request.getSession().getAttribute(Const.MEMBER_INFO_SESSION);
 
         try {
-            Call<ResponseWrapper<PlanVO>> data = RetrofitClient.getApiService(PlanService.class).selectPlanList(String.valueOf(memberInfoSession.getMemberNo()));
-            ResponseWrapper<PlanVO> response = data.clone().execute().body();
+            ResponseWrapper<PlanVO> response = planApiService.searchMemberPlanList(String.valueOf(memberInfoSession.getMemberNo()));
 
             if (response == null) {
                 throw new IOException("response is Empty");

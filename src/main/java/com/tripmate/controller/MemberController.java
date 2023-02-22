@@ -1,6 +1,5 @@
 package com.tripmate.controller;
 
-import com.tripmate.client.RetrofitClient;
 import com.tripmate.domain.ChangePasswordDTO;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.MemberMailDTO;
@@ -11,8 +10,9 @@ import com.tripmate.entity.ApiResult;
 import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.entity.Const;
 import com.tripmate.entity.ConstCode;
-import com.tripmate.service.MemberService;
+import com.tripmate.service.apiservice.MemberApiService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import retrofit2.Call;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -35,6 +34,12 @@ import java.io.IOException;
 @Controller
 @RequestMapping(value = "/members", produces = "application/json; charset=utf8")
 public class MemberController {
+    private final MemberApiService memberApiService;
+
+    @Autowired
+    public MemberController(MemberApiService memberApiService) {
+        this.memberApiService = memberApiService;
+    }
 
     @PostMapping("/signUp")
     public @ResponseBody String signUp(@Valid MemberDTO memberDTO) {
@@ -42,8 +47,7 @@ public class MemberController {
         try {
             memberDTO.setMemberStatusCode(ConstCode.MEMBER_STATUS_CODE_TEMPORARY);
 
-            Call<ResponseWrapper<Integer>> data = RetrofitClient.getApiService(MemberService.class).signUp(memberDTO);
-            ResponseWrapper<Integer> response = data.clone().execute().body();
+            ResponseWrapper<Integer> response = memberApiService.signUp(memberDTO);
 
             if (response == null) {
                 throw new IOException("api response data is empty");
@@ -88,20 +92,7 @@ public class MemberController {
         ApiResult result;
 
         try {
-            Call<ResponseWrapper<Boolean>> data;
-
-            switch (type) {
-                case ConstCode.DUPLICATION_CHECK_MEMBER_ID:
-                    data = RetrofitClient.getApiService(MemberService.class).isIdDuplicate(value);
-                    break;
-                case ConstCode.DUPLICATION_CHECK_NICK_NAME:
-                    data = RetrofitClient.getApiService(MemberService.class).isNickNameDuplicate(value);
-                    break;
-                default:
-                    data = RetrofitClient.getApiService(MemberService.class).isEmailDuplicate(value);
-            }
-
-            ResponseWrapper<Boolean> response = data.clone().execute().body();
+            ResponseWrapper<Boolean> response = memberApiService.isDuplicate(type, value);
 
             if (response == null) {
                 throw new IOException("api response data is empty");
@@ -128,8 +119,7 @@ public class MemberController {
                                                  @RequestParam(value = "key") @NotBlank @Max(100) String key,
                                                  @RequestParam(value = "mailTypeCode") @NotBlank @Pattern(regexp = "^[123]0$") String mailTypeCode) {
         try {
-            Call<ResponseWrapper<String>> data = RetrofitClient.getApiService(MemberService.class).certificationMailConfirm(memberId, key, mailTypeCode);
-            ResponseWrapper<String> response = data.clone().execute().body();
+            ResponseWrapper<String> response = memberApiService.certificationMailConfirm(memberId, key, mailTypeCode);
 
             if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
                 if (response.getData().size() != 1) {
@@ -173,8 +163,7 @@ public class MemberController {
         ApiResult result;
 
         try {
-            Call<ResponseWrapper<MemberDTO>> data = RetrofitClient.getApiService(MemberService.class).signIn(signInDTO);
-            ResponseWrapper<MemberDTO> response = data.clone().execute().body();
+            ResponseWrapper<MemberDTO> response = memberApiService.signIn(signInDTO);
 
             if (response == null) {
                 throw new IOException("api response data is empty");
@@ -227,12 +216,12 @@ public class MemberController {
         ApiResult result;
 
         try {
-            Call<ResponseWrapper<String>> data = RetrofitClient.getApiService(MemberService.class).findId(memberName, email);
-            ResponseWrapper<String> response = data.clone().execute().body();
+            ResponseWrapper<String> response = memberApiService.findId(memberName, email);
 
             if (response == null) {
                 throw new IOException("response is Empty");
             }
+
             result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
             if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
                 if (response.getData().size() != 1) {
@@ -267,16 +256,7 @@ public class MemberController {
         ApiResult result;
 
         try {
-            Call<ResponseWrapper<Boolean>> data;
-            switch (type) {
-                case ConstCode.EMAIL_TYPE_CODE_JOIN:
-                case ConstCode.EMAIL_TYPE_CODE_EMAIL_CHANGE:
-                    data = RetrofitClient.getApiService(MemberService.class).sendCertificationMail(memberMailDTO);
-                    break;
-                default:
-                    data = RetrofitClient.getApiService(MemberService.class).sendPasswordMail(memberMailDTO);
-            }
-            ResponseWrapper<Boolean> response = data.clone().execute().body();
+            ResponseWrapper<Boolean> response = memberApiService.isSendMailSuccess(type, memberMailDTO);
 
             if (response == null) {
                 throw new IOException("response is Empty");
@@ -316,8 +296,7 @@ public class MemberController {
                     .newMemberPassword(changePasswordDTO.getNewMemberPassword())
                     .build();
 
-            Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(MemberService.class).changePassword(changePasswordRequestDTO);
-            ResponseWrapper<Boolean> response = data.clone().execute().body();
+            ResponseWrapper<Boolean> response = memberApiService.changePassword(changePasswordRequestDTO);
 
             if (response == null) {
                 throw new IOException("response is Empty");
@@ -373,8 +352,7 @@ public class MemberController {
                 throw new IOException("session is Empty");
             }
 
-            Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(MemberService.class).withdraw(sessionDTO.getMemberNo());
-            ResponseWrapper<Boolean> response = data.clone().execute().body();
+            ResponseWrapper<Boolean> response = memberApiService.withdraw(sessionDTO.getMemberNo());
 
             if (response == null) {
                 throw new IOException("response is Empty");
@@ -416,8 +394,7 @@ public class MemberController {
                     .birthDay(mypageDTO.getBirthDay())
                     .genderCode(mypageDTO.getGenderCode()).build();
 
-            Call<ResponseWrapper<MypageDTO>> data = RetrofitClient.getApiService(MemberService.class).updateMemberInfo(requestMypageInfo.getMemberNo(), requestMypageInfo);
-            ResponseWrapper<MypageDTO> response = data.clone().execute().body();
+            ResponseWrapper<MypageDTO> response = memberApiService.editMypageMemberInfo(requestMypageInfo.getMemberNo(), requestMypageInfo);
 
             if (response == null) {
                 throw new IOException("response is Empty");

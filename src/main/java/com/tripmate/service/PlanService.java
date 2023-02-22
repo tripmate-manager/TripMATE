@@ -21,6 +21,6 @@ public interface PlanService {
     Call<ResponseWrapper<PlanAddressVO>> selectAddressList(@Path("sidoName") String sidoName);
     @POST("v1/plans")
     Call<ResponseWrapper<Boolean>> createPlan(@Body CreatePlanDTO createPlanDTO);
-    @GET("v1/plans/{memberNo}")
-    Call<ResponseWrapper<PlanVO>> selectPlanList(@Path("memberNo") String memberNo);
+    @GET("v1/plans/")
+    Call<ResponseWrapper<PlanVO>> searchMemberPlanList(@Query("memberNo") String memberNo);
 }
