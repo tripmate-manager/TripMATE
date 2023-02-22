@@ -158,6 +158,14 @@ $(function () {
         }
     });
 
+    $(".createplan_hashtag_list").on('click', '.hashtag_item_text', function () {
+        $(this).remove();
+
+        if ($("div[class='hashtag_item_text']").length == 0) {
+            $(".createplan_hashtag_list").hide();
+        }
+    });
+
     $("#select_address_btn").on('click', function () {
         const inputAddressNo = $("#select_option_sigungu option:selected").val();
         const inputSido = $("#select_option_sido option:selected").val();
@@ -189,6 +197,14 @@ $(function () {
 
         if ($("div[class='address_item_text']").length > 0) {
             $(".createplan_address_list").show();
+        }
+    });
+
+    $(".createplan_address_list").on('click', '.address_item_text', function () {
+        $(this).remove();
+
+        if ($("div[class='address_item_text']").length == 0) {
+            $(".createplan_address_list").hide();
         }
     });
 
