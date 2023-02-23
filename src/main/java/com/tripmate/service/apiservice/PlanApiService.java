@@ -4,12 +4,13 @@ import com.tripmate.domain.CreatePlanDTO;
 import com.tripmate.domain.PlanAddressVO;
 import com.tripmate.domain.PlanAttributeVO;
 import com.tripmate.domain.PlanVO;
-import com.tripmate.domain.ResponseWrapper;
+
+import java.util.List;
 
 public interface PlanApiService {
-    ResponseWrapper<PlanAttributeVO> selectPlanAttributeList(String attributeTypeCode);
-    ResponseWrapper<PlanAddressVO> selectAddressList();
-    ResponseWrapper<PlanAddressVO> selectAddressList(String sidoName);
-    ResponseWrapper<Boolean> createPlan(CreatePlanDTO createPlanDTO);
-    ResponseWrapper<PlanVO> searchMemberPlanList(String memberNo);
+    List<PlanAttributeVO> searchPlanAttributeList(String attributeTypeCode) throws Exception;
+    List<PlanAddressVO> searchAddressList() throws Exception;
+    List<PlanAddressVO> searchAddressList(String sidoName) throws Exception;
+    boolean createPlan(CreatePlanDTO createPlanDTO) throws Exception;
+    List<PlanVO> searchMemberPlanList(String memberNo) throws Exception;
 }

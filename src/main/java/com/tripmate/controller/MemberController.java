@@ -1,10 +1,10 @@
 package com.tripmate.controller;
 
+import com.tripmate.common.exception.ApiCommonException;
 import com.tripmate.domain.ChangePasswordDTO;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.MemberMailDTO;
 import com.tripmate.domain.MypageDTO;
-import com.tripmate.domain.ResponseWrapper;
 import com.tripmate.domain.SignInDTO;
 import com.tripmate.entity.ApiResult;
 import com.tripmate.entity.ApiResultEnum;
@@ -44,27 +44,14 @@ public class MemberController {
     @PostMapping("/signUp")
     public @ResponseBody String signUp(@Valid MemberDTO memberDTO) {
         ApiResult result;
+
         try {
             memberDTO.setMemberStatusCode(ConstCode.MEMBER_STATUS_CODE_TEMPORARY);
+            memberApiService.signUp(memberDTO);
 
-            ResponseWrapper<Integer> response = memberApiService.signUp(memberDTO);
-
-            if (response == null) {
-                throw new IOException("api response data is empty");
-            } else {
-                if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
-                    if (response.getData().size() != 1) {
-                        throw new IOException("response's data size is not 1");
-                    }
-                    if (response.getData().get(0) == 0) {
-                        throw new IOException("response's data is not valid");
-                    }
-
-                    log.debug("member no is {}", response.getData().get(0));
-                }
-
-                result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
-            }
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
@@ -92,20 +79,13 @@ public class MemberController {
         ApiResult result;
 
         try {
-            ResponseWrapper<Boolean> response = memberApiService.isDuplicate(type, value);
+            Boolean isDuplicate = memberApiService.isDuplicate(type, value);
 
-            if (response == null) {
-                throw new IOException("api response data is empty");
-            } else {
-                if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
-                    if (response.getData().size() != 1) {
-                        throw new IOException("response's data size is not 1");
-                    }
-                }
-                result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
-                result.put("isDuplicate", response.getData().get(0).booleanValue());
-            }
-        } catch (Exception e) {
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            result.put("isDuplicate", isDuplicate);
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
+        }  catch (Exception e) {
             log.error(e.getMessage(), e);
             result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
         }
@@ -119,39 +99,27 @@ public class MemberController {
                                                  @RequestParam(value = "key") @NotBlank @Max(100) String key,
                                                  @RequestParam(value = "mailTypeCode") @NotBlank @Pattern(regexp = "^[123]0$") String mailTypeCode) {
         try {
-            ResponseWrapper<String> response = memberApiService.certificationMailConfirm(memberId, key, mailTypeCode);
+            String email = memberApiService.certificationMailConfirm(memberId, key, mailTypeCode);
 
-            if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
-                if (response.getData().size() != 1) {
-                    throw new IOException("response's data size is not 1");
-                }
-                if (response.getData().get(0) == null) {
-                    throw new IOException("response's data is Empty");
-                }
-
-                if (ConstCode.EMAIL_TYPE_CODE_EMAIL_CHANGE.equals(mailTypeCode)) {
-                    MemberDTO memberInfoSession = (MemberDTO) request.getSession().getAttribute(Const.MEMBER_INFO_SESSION);
-                    MemberDTO memberDTO = MemberDTO.builder()
-                            .memberNo(memberInfoSession.getMemberNo())
-                            .memberId(memberInfoSession.getMemberId())
-                            .memberPassword(memberInfoSession.getMemberPassword())
-                            .memberName(memberInfoSession.getMemberName())
-                            .nickName(memberInfoSession.getNickName())
-                            .email(response.getData().get(0))
-                            .genderCode(memberInfoSession.getGenderCode())
-                            .birthDay(memberInfoSession.getBirthDay())
-                            .memberStatusCode(memberInfoSession.getMemberStatusCode())
-                            .signInRequestCnt(memberInfoSession.getSignInRequestCnt())
-                            .build();
-                    request.getSession().setAttribute(Const.MEMBER_INFO_SESSION, memberDTO);
-                }
-
-                return new ModelAndView("members/signIn");
-            } else {
-                log.warn(response.getCode() + " : " + response.getMessage());
-                throw new IOException("response code error");
+            if (ConstCode.EMAIL_TYPE_CODE_EMAIL_CHANGE.equals(mailTypeCode)) {
+                MemberDTO memberInfoSession = (MemberDTO) request.getSession().getAttribute(Const.MEMBER_INFO_SESSION);
+                MemberDTO memberDTO = MemberDTO.builder()
+                        .memberNo(memberInfoSession.getMemberNo())
+                        .memberId(memberInfoSession.getMemberId())
+                        .memberPassword(memberInfoSession.getMemberPassword())
+                        .memberName(memberInfoSession.getMemberName())
+                        .nickName(memberInfoSession.getNickName())
+                        .email(email)
+                        .genderCode(memberInfoSession.getGenderCode())
+                        .birthDay(memberInfoSession.getBirthDay())
+                        .memberStatusCode(memberInfoSession.getMemberStatusCode())
+                        .signInRequestCnt(memberInfoSession.getSignInRequestCnt())
+                        .build();
+                request.getSession().setAttribute(Const.MEMBER_INFO_SESSION, memberDTO);
             }
-        } catch (NullPointerException | IOException e) {
+
+            return new ModelAndView("members/signIn");
+        } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
 
@@ -163,35 +131,23 @@ public class MemberController {
         ApiResult result;
 
         try {
-            ResponseWrapper<MemberDTO> response = memberApiService.signIn(signInDTO);
+            MemberDTO memberDTO = memberApiService.signIn(signInDTO);
 
-            if (response == null) {
-                throw new IOException("api response data is empty");
-            } else {
-                result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
 
-                if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
-                    if (response.getData().size() != 1) {
-                        throw new IOException("response's data size is not 1");
-                    }
-                    if (response.getData().get(0) == null) {
-                        throw new IOException("response's data is Empty");
-                    }
-                    MemberDTO memberDTO = response.getData().get(0);
-
-                    if (memberDTO.getSignInRequestCnt() >= Const.SIGNIN_LIMIT_CNT) {
-                        result.put("signInRequestCnt", memberDTO.getSignInRequestCnt());
-                        return result.toJson();
-                    }
-
-                    if (ConstCode.MEMBER_STATUS_CODE_COMPLETE.equals(memberDTO.getMemberStatusCode()) || ConstCode.MEMBER_STATUS_CODE_ISSUE_TEMPORARY_PASSWORD.equals(memberDTO.getMemberStatusCode())) {
-                        request.getSession().setAttribute(Const.MEMBER_INFO_SESSION, memberDTO);
-                    }
-
-                    result.put("memberStatusCode", memberDTO.getMemberStatusCode());
-                    result.put("email", memberDTO.getEmail());
-                }
+            if (memberDTO.getSignInRequestCnt() >= Const.SIGNIN_LIMIT_CNT) {
+                result.put("signInRequestCnt", memberDTO.getSignInRequestCnt());
+                return result.toJson();
             }
+
+            if (ConstCode.MEMBER_STATUS_CODE_COMPLETE.equals(memberDTO.getMemberStatusCode()) || ConstCode.MEMBER_STATUS_CODE_ISSUE_TEMPORARY_PASSWORD.equals(memberDTO.getMemberStatusCode())) {
+                request.getSession().setAttribute(Const.MEMBER_INFO_SESSION, memberDTO);
+            }
+
+            result.put("memberStatusCode", memberDTO.getMemberStatusCode());
+            result.put("email", memberDTO.getEmail());
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
@@ -216,24 +172,12 @@ public class MemberController {
         ApiResult result;
 
         try {
-            ResponseWrapper<String> response = memberApiService.findId(memberName, email);
+            String memberId = memberApiService.findId(memberName, email);
 
-            if (response == null) {
-                throw new IOException("response is Empty");
-            }
-
-            result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
-            if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
-                if (response.getData().size() != 1) {
-                    throw new IOException("response's data size is not 1");
-                }
-                if (response.getData().get(0) == null) {
-                    throw new IOException("response's data is Empty");
-                }
-
-                String memberId = response.getData().get(0);
-                result.put("memberId", memberId.substring(0, memberId.length() - 4) + "****");
-            }
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            result.put("memberId", memberId.substring(0, memberId.length() - 4) + "****");
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
@@ -256,22 +200,12 @@ public class MemberController {
         ApiResult result;
 
         try {
-            ResponseWrapper<Boolean> response = memberApiService.isSendMailSuccess(type, memberMailDTO);
+            boolean isSendMailSuccess = memberApiService.isSendMailSuccess(type, memberMailDTO);
 
-            if (response == null) {
-                throw new IOException("response is Empty");
-            }
-            result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
-            if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
-                if (response.getData().size() != 1) {
-                    throw new IOException("response's data size is not 1");
-                }
-                if (response.getData().get(0) == null) {
-                    throw new IOException("response's data is Empty");
-                }
-
-                result.put("sendMailSuccess", response.getData().get(0));
-            }
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            result.put("sendMailSuccess", isSendMailSuccess);
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
@@ -289,6 +223,7 @@ public class MemberController {
             if (memberInfoSession == null) {
                 throw new IOException("session is Empty");
             }
+
             ChangePasswordDTO changePasswordRequestDTO = ChangePasswordDTO.builder()
                     .memberNo(memberInfoSession.getMemberNo())
                     .memberId(memberInfoSession.getMemberId())
@@ -296,37 +231,26 @@ public class MemberController {
                     .newMemberPassword(changePasswordDTO.getNewMemberPassword())
                     .build();
 
-            ResponseWrapper<Boolean> response = memberApiService.changePassword(changePasswordRequestDTO);
+            boolean isChangePasswordSuccess = memberApiService.changePassword(changePasswordRequestDTO);
 
-            if (response == null) {
-                throw new IOException("response is Empty");
-            }
+            MemberDTO memberDTO = MemberDTO.builder()
+                    .memberNo(memberInfoSession.getMemberNo())
+                    .memberId(memberInfoSession.getMemberId())
+                    .memberPassword(changePasswordDTO.getNewMemberPassword())
+                    .memberName(memberInfoSession.getMemberName())
+                    .nickName(memberInfoSession.getNickName())
+                    .email(memberInfoSession.getEmail())
+                    .genderCode(memberInfoSession.getGenderCode())
+                    .birthDay(memberInfoSession.getBirthDay())
+                    .memberStatusCode(memberInfoSession.getMemberStatusCode())
+                    .signInRequestCnt(memberInfoSession.getSignInRequestCnt())
+                    .build();
+            request.getSession().setAttribute(Const.MEMBER_INFO_SESSION, memberDTO);
 
-            result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
-            if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
-                if (response.getData().size() != 1) {
-                    throw new IOException("response's data size is not 1");
-                }
-                if (response.getData().get(0) == null) {
-                    throw new IOException("response's data is Empty");
-                }
-
-                MemberDTO memberDTO = MemberDTO.builder()
-                        .memberNo(memberInfoSession.getMemberNo())
-                        .memberId(memberInfoSession.getMemberId())
-                        .memberPassword(changePasswordDTO.getNewMemberPassword())
-                        .memberName(memberInfoSession.getMemberName())
-                        .nickName(memberInfoSession.getNickName())
-                        .email(memberInfoSession.getEmail())
-                        .genderCode(memberInfoSession.getGenderCode())
-                        .birthDay(memberInfoSession.getBirthDay())
-                        .memberStatusCode(memberInfoSession.getMemberStatusCode())
-                        .signInRequestCnt(memberInfoSession.getSignInRequestCnt())
-                        .build();
-                request.getSession().setAttribute(Const.MEMBER_INFO_SESSION, memberDTO);
-
-                result.put("changePasswordSuccess", response.getData().get(0));
-            }
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            result.put("isChangePasswordSuccess", isChangePasswordSuccess);
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
@@ -352,24 +276,14 @@ public class MemberController {
                 throw new IOException("session is Empty");
             }
 
-            ResponseWrapper<Boolean> response = memberApiService.withdraw(sessionDTO.getMemberNo());
+            boolean isWithdrawSuccess = memberApiService.withdraw(sessionDTO.getMemberNo());
 
-            if (response == null) {
-                throw new IOException("response is Empty");
-            }
+            request.getSession().invalidate();
 
-            result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
-            if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
-                if (response.getData().size() != 1) {
-                    throw new IOException("response's data size is not 1");
-                }
-                if (response.getData().get(0) == null) {
-                    throw new IOException("response's data is Empty");
-                }
-
-                request.getSession().invalidate();
-                result.put("withDrawSuccess", response.getData().get(0));
-            }
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            result.put("isWithdrawSuccess", isWithdrawSuccess);
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
@@ -394,37 +308,24 @@ public class MemberController {
                     .birthDay(mypageDTO.getBirthDay())
                     .genderCode(mypageDTO.getGenderCode()).build();
 
-            ResponseWrapper<MypageDTO> response = memberApiService.editMypageMemberInfo(requestMypageInfo.getMemberNo(), requestMypageInfo);
+            MypageDTO mypageResultDTO = memberApiService.editMypageMemberInfo(requestMypageInfo.getMemberNo(), requestMypageInfo);
 
-            if (response == null) {
-                throw new IOException("response is Empty");
-            }
-
-            result = ApiResult.builder().code(response.getCode()).message(response.getMessage()).build();
-            if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
-                if (response.getData().size() != 1) {
-                    throw new IOException("response's data size is not 1");
-                }
-                if (response.getData().get(0) == null) {
-                    throw new IOException("response's data is Empty");
-                }
-
-                MypageDTO resultMypageInfo = response.getData().get(0);
-
-                MemberDTO memberDTO = MemberDTO.builder()
-                        .memberNo(resultMypageInfo.getMemberNo())
-                        .memberId(memberInfoSession.getMemberId())
-                        .memberPassword(memberInfoSession.getMemberPassword())
-                        .memberName(memberInfoSession.getMemberName())
-                        .nickName(resultMypageInfo.getNickName())
-                        .email(memberInfoSession.getEmail())
-                        .genderCode(resultMypageInfo.getGenderCode())
-                        .birthDay(resultMypageInfo.getBirthDay())
-                        .memberStatusCode(memberInfoSession.getMemberStatusCode())
-                        .signInRequestCnt(memberInfoSession.getSignInRequestCnt())
-                        .build();
-                request.getSession().setAttribute(Const.MEMBER_INFO_SESSION, memberDTO);
-            }
+            MemberDTO memberDTO = MemberDTO.builder()
+                    .memberNo(mypageResultDTO.getMemberNo())
+                    .memberId(memberInfoSession.getMemberId())
+                    .memberPassword(memberInfoSession.getMemberPassword())
+                    .memberName(memberInfoSession.getMemberName())
+                    .nickName(mypageResultDTO.getNickName())
+                    .email(memberInfoSession.getEmail())
+                    .genderCode(mypageResultDTO.getGenderCode())
+                    .birthDay(mypageResultDTO.getBirthDay())
+                    .memberStatusCode(memberInfoSession.getMemberStatusCode())
+                    .signInRequestCnt(memberInfoSession.getSignInRequestCnt())
+                    .build();
+            request.getSession().setAttribute(Const.MEMBER_INFO_SESSION, memberDTO);
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();

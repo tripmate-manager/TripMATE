@@ -1,12 +1,14 @@
 package com.tripmate.service.apiservice;
 
 import com.tripmate.client.RetrofitClient;
+import com.tripmate.common.exception.ApiCommonException;
 import com.tripmate.domain.ChangePasswordDTO;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.MemberMailDTO;
 import com.tripmate.domain.MypageDTO;
 import com.tripmate.domain.ResponseWrapper;
 import com.tripmate.domain.SignInDTO;
+import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.entity.ConstCode;
 import com.tripmate.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
@@ -20,23 +22,39 @@ import java.io.IOException;
 public class MemberApiServiceImpl implements MemberApiService {
 
     @Override
-    public ResponseWrapper<Integer> signUp(MemberDTO memberDTO) {
+    public int signUp(MemberDTO memberDTO) throws Exception {
         Call<ResponseWrapper<Integer>> data = RetrofitClient.getApiService(MemberService.class).signUp(memberDTO);
-        ResponseWrapper<Integer> response = null;
+        int result;
 
-        try {
-            response = data.clone().execute().body();
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
+        ResponseWrapper<Integer> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("api response data is empty");
+        }
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData().size() != 1) {
+                throw new IOException("response's data size is not 1");
+            }
+            if (response.getData().get(0) == 0) {
+                throw new IOException("response's data is not valid");
+            }
+
+            log.debug("member no is {}", response.getData().get(0));
+            result = response.getData().get(0);
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new ApiCommonException(response.getCode(), response.getMessage());
         }
 
-        return response;
+        return result;
     }
 
     @Override
-    public ResponseWrapper<Boolean> isDuplicate(String type, String value) {
+    public Boolean isDuplicate(String type, String value) throws Exception {
         Call<ResponseWrapper<Boolean>> data;
-        ResponseWrapper<Boolean> response = null;
+        Boolean result;
+
+        ResponseWrapper<Boolean> response;
 
         switch (type) {
             case ConstCode.DUPLICATION_CHECK_MEMBER_ID:
@@ -49,60 +67,114 @@ public class MemberApiServiceImpl implements MemberApiService {
                 data = RetrofitClient.getApiService(MemberService.class).isEmailDuplicate(value);
         }
 
-        try {
-            response = data.clone().execute().body();
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
+        response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("api response data is empty");
         }
 
-        return response;
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData().size() != 1) {
+                throw new IOException("response's data size is not 1");
+            }
+            if (response.getData().get(0) == null) {
+                throw new IOException("response's data is Empty");
+            }
+
+            result = response.getData().get(0);
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new ApiCommonException(response.getCode(), response.getMessage());
+        }
+
+        return result;
     }
 
+
     @Override
-    public ResponseWrapper<String> certificationMailConfirm(String memberId, String key, String mailTypeCode) {
+    public String certificationMailConfirm(String memberId, String key, String mailTypeCode) throws Exception {
         Call<ResponseWrapper<String>> data = RetrofitClient.getApiService(MemberService.class).certificationMailConfirm(memberId, key, mailTypeCode);
-        ResponseWrapper<String> response = null;
+        String result;
 
-        try {
-            response = data.clone().execute().body();
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
+        ResponseWrapper<String> response = data.clone().execute().body();
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData().size() != 1) {
+                throw new IOException("response's data size is not 1");
+            }
+            if (response.getData().get(0) == null) {
+                throw new IOException("response's data is Empty");
+            }
+
+            result = response.getData().get(0);
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new IOException(response.getMessage());
         }
-        return response;
+
+        return result;
     }
 
     @Override
-    public ResponseWrapper<MemberDTO> signIn(SignInDTO signInDTO) {
+    public MemberDTO signIn(SignInDTO signInDTO) throws Exception {
         Call<ResponseWrapper<MemberDTO>> data = RetrofitClient.getApiService(MemberService.class).signIn(signInDTO);
-        ResponseWrapper<MemberDTO> response = null;
+        MemberDTO result;
 
-        try {
-            response = data.clone().execute().body();
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
+        ResponseWrapper<MemberDTO> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("api response data is empty");
+        } else {
+            if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+                if (response.getData().size() != 1) {
+                    throw new IOException("response's data size is not 1");
+                }
+                if (response.getData().get(0) == null) {
+                    throw new IOException("response's data is Empty");
+                }
+
+                result = response.getData().get(0);
+            } else {
+                log.warn(response.getCode() + " : " + response.getMessage());
+                throw new ApiCommonException(response.getCode(), response.getMessage());
+            }
         }
 
-        return response;
+        return result;
     }
 
     @Override
-    public ResponseWrapper<String> findId(String memberName, String email){
+    public String findId(String memberName, String email) throws Exception {
         Call<ResponseWrapper<String>> data = RetrofitClient.getApiService(MemberService.class).findId(memberName, email);
-        ResponseWrapper<String> response = null;
+        String result;
 
-        try {
-            response = data.clone().execute().body();
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
+        ResponseWrapper<String> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
         }
 
-        return response;
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData().size() != 1) {
+                throw new IOException("response's data size is not 1");
+            }
+            if (response.getData().get(0) == null) {
+                throw new IOException("response's data is Empty");
+            }
+
+            result = response.getData().get(0);
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new ApiCommonException(response.getCode(), response.getMessage());
+        }
+
+        return result;
     }
 
     @Override
-    public ResponseWrapper<Boolean> isSendMailSuccess(String type, MemberMailDTO memberMailDTO) {
+    public boolean isSendMailSuccess(String type, MemberMailDTO memberMailDTO) throws Exception {
         Call<ResponseWrapper<Boolean>> data;
-        ResponseWrapper<Boolean> response = null;
+        boolean result;
 
         switch (type) {
             case ConstCode.EMAIL_TYPE_CODE_JOIN:
@@ -113,54 +185,116 @@ public class MemberApiServiceImpl implements MemberApiService {
                 data = RetrofitClient.getApiService(MemberService.class).sendPasswordMail(memberMailDTO);
         }
 
-        try {
-            response = data.clone().execute().body();
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
+        ResponseWrapper<Boolean> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
+        }
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData().size() != 1) {
+                throw new IOException("response's data size is not 1");
+            }
+            if (response.getData().get(0) == null) {
+                throw new IOException("response's data is Empty");
+            }
+            if (!response.getData().get(0)) {
+                throw new IOException("failed to send email");
+            }
+            result = response.getData().get(0);
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new ApiCommonException(response.getCode(), response.getMessage());
         }
 
-        return response;
+        return result;
     }
 
     @Override
-    public ResponseWrapper<Boolean> changePassword(ChangePasswordDTO changePasswordDTO) {
+    public boolean changePassword(ChangePasswordDTO changePasswordDTO) throws Exception {
         Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(MemberService.class).changePassword(changePasswordDTO);
-        ResponseWrapper<Boolean> response = null;
+        boolean result;
 
-        try {
-            response = data.clone().execute().body();
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
+        ResponseWrapper<Boolean> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
         }
 
-        return response;
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData().size() != 1) {
+                throw new IOException("response's data size is not 1");
+            }
+            if (response.getData().get(0) == null) {
+                throw new IOException("response's data is Empty");
+            }
+            if (!response.getData().get(0)) {
+                throw new IOException("failed to change password");
+            }
+
+            result = response.getData().get(0);
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new ApiCommonException(response.getCode(), response.getMessage());
+        }
+
+        return result;
     }
 
     @Override
-    public ResponseWrapper<Boolean> withdraw(int memberNo) {
+    public boolean withdraw(int memberNo) throws Exception {
         Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(MemberService.class).withdraw(memberNo);
-        ResponseWrapper<Boolean> response = null;
+        boolean result;
 
-        try {
-            response = data.clone().execute().body();
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
+        ResponseWrapper<Boolean> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
         }
 
-        return response;
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData().size() != 1) {
+                throw new IOException("response's data size is not 1");
+            }
+            if (response.getData().get(0) == null) {
+                throw new IOException("response's data is Empty");
+            }
+            if (!response.getData().get(0)) {
+                throw new IOException("failed to withdraw");
+            }
+            result = response.getData().get(0);
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new ApiCommonException(response.getCode(), response.getMessage());
+        }
+
+        return result;
     }
 
     @Override
-    public ResponseWrapper<MypageDTO> editMypageMemberInfo(int memberNo, MypageDTO mypageDTO) {
+    public MypageDTO editMypageMemberInfo(int memberNo, MypageDTO mypageDTO) throws Exception {
         Call<ResponseWrapper<MypageDTO>> data = RetrofitClient.getApiService(MemberService.class).updateMemberInfo(memberNo, mypageDTO);
-        ResponseWrapper<MypageDTO> response = null;
+        MypageDTO result;
 
-        try {
-            response = data.clone().execute().body();
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
+        ResponseWrapper<MypageDTO> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
         }
 
-        return response;
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData().size() != 1) {
+                throw new IOException("response's data size is not 1");
+            }
+            if (response.getData().get(0) == null) {
+                throw new IOException("response's data is Empty");
+            }
+
+            result = response.getData().get(0);
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new ApiCommonException(response.getCode(), response.getMessage());
+        }
+
+        return result;
     }
 }
