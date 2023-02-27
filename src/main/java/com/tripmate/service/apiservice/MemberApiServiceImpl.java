@@ -2,12 +2,12 @@ package com.tripmate.service.apiservice;
 
 import com.tripmate.client.RetrofitClient;
 import com.tripmate.common.exception.ApiCommonException;
-import com.tripmate.domain.ChangePasswordDTO;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.MemberMailDTO;
 import com.tripmate.domain.MypageDTO;
 import com.tripmate.domain.ResponseWrapper;
 import com.tripmate.domain.SignInDTO;
+import com.tripmate.domain.UpdatePasswordDTO;
 import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.entity.ConstCode;
 import com.tripmate.service.MemberService;
@@ -210,7 +210,7 @@ public class MemberApiServiceImpl implements MemberApiService {
     }
 
     @Override
-    public boolean changePassword(ChangePasswordDTO changePasswordDTO) throws Exception {
+    public boolean updatePassword(UpdatePasswordDTO changePasswordDTO) throws Exception {
         Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(MemberService.class).changePassword(changePasswordDTO);
         boolean result;
 

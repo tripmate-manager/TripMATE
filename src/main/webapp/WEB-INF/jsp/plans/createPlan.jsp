@@ -34,7 +34,6 @@
 <input type=hidden id="memberNo" value=<%=memberInfo.getMemberNo()%>>
 <% } %>
 
-<input type=hidden id="planThemeList" value=<%=planThemeList%>>
 <div class="createplan_wrap">
     <div class="createplan_title_wrap">
         <img class="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png"/>

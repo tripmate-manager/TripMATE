@@ -14,7 +14,7 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ChangePasswordDTO {
+public class UpdatePasswordDTO {
 
     private int memberNo;
 

@@ -1,7 +1,7 @@
 package com.tripmate.controller;
 
 import com.tripmate.common.exception.ApiCommonException;
-import com.tripmate.domain.ChangePasswordDTO;
+import com.tripmate.domain.UpdatePasswordDTO;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.MemberMailDTO;
 import com.tripmate.domain.MypageDTO;
@@ -215,7 +215,7 @@ public class MemberController {
     }
 
     @PostMapping("/changePassword")
-    public @ResponseBody String changePassword(HttpServletRequest request, @Valid ChangePasswordDTO changePasswordDTO) {
+    public @ResponseBody String changePassword(HttpServletRequest request, @Valid UpdatePasswordDTO updatePasswordDTO) {
         ApiResult result;
         MemberDTO memberInfoSession = (MemberDTO) request.getSession().getAttribute(Const.MEMBER_INFO_SESSION);
 
@@ -224,19 +224,19 @@ public class MemberController {
                 throw new IOException("session is Empty");
             }
 
-            ChangePasswordDTO changePasswordRequestDTO = ChangePasswordDTO.builder()
+            UpdatePasswordDTO changePasswordRequestDTO = UpdatePasswordDTO.builder()
                     .memberNo(memberInfoSession.getMemberNo())
                     .memberId(memberInfoSession.getMemberId())
-                    .memberPassword(changePasswordDTO.getMemberPassword())
-                    .newMemberPassword(changePasswordDTO.getNewMemberPassword())
+                    .memberPassword(updatePasswordDTO.getMemberPassword())
+                    .newMemberPassword(updatePasswordDTO.getNewMemberPassword())
                     .build();
 
-            boolean isChangePasswordSuccess = memberApiService.changePassword(changePasswordRequestDTO);
+            boolean isChangePasswordSuccess = memberApiService.updatePassword(changePasswordRequestDTO);
 
             MemberDTO memberDTO = MemberDTO.builder()
                     .memberNo(memberInfoSession.getMemberNo())
                     .memberId(memberInfoSession.getMemberId())
-                    .memberPassword(changePasswordDTO.getNewMemberPassword())
+                    .memberPassword(updatePasswordDTO.getNewMemberPassword())
                     .memberName(memberInfoSession.getMemberName())
                     .nickName(memberInfoSession.getNickName())
                     .email(memberInfoSession.getEmail())
