@@ -106,7 +106,7 @@ $(function () {
                 isAjaxProcessing = false;
 
                 if (result.code === constCode.global.resultCodeSuccess) {
-                    if (result.sendMailSuccess === true) {
+                    if (result.isSendMailSuccess === true) {
                         popUpOpen("인증메일을 전송하였습니다. 인증 메일 확인 시 해당 이메일로 서비스 이용이 가능합니다.");
                         $(".popup_close_btn").attr("onclick", null).on('click', function () {
                             popUpClose("/forward/members/signIn.trip");

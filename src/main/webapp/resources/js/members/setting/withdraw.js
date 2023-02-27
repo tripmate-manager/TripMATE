@@ -36,7 +36,7 @@ $(function () {
                 isAjaxProcessing = false;
 
                 if (result.code === constCode.global.resultCodeSuccess) {
-                    if (result.withDrawSuccess === true) {
+                    if (result.isWithdrawSuccess === true) {
                         popUpOpen("회원 탈퇴가 완료되었습니다.");
                         $(".popup_close_btn").attr("onclick", null).on('click', function () {
                             popUpClose("/forward/main/main.trip");

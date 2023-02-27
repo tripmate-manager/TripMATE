@@ -41,7 +41,7 @@
         <div class="createplan_title">My Plan</div>
     </div>
     <div class="createplan_divi_line"></div>
-    <form name="createPlanForm" id="createPlanForm" method="post">
+    <form name="createPlanForm" id="createPlanForm" method="get">
         <div class="createplan_input_wrap">
             <div class="createplan_input_default_wrap">
                 <div class="input_checkbox_public_wrap">
