@@ -224,9 +224,12 @@ public class MemberController {
                 throw new IOException("session is Empty");
             }
 
+            if (updatePasswordDTO.getNewMemberPassword().equals(memberInfoSession.getMemberPassword())) {
+                throw new IOException("current session password is the same as new password");
+            }
+
             UpdatePasswordDTO changePasswordRequestDTO = UpdatePasswordDTO.builder()
                     .memberNo(memberInfoSession.getMemberNo())
-                    .memberId(memberInfoSession.getMemberId())
                     .memberPassword(updatePasswordDTO.getMemberPassword())
                     .newMemberPassword(updatePasswordDTO.getNewMemberPassword())
                     .build();
@@ -275,7 +278,6 @@ public class MemberController {
             if (sessionDTO == null) {
                 throw new IOException("session is Empty");
             }
-
             boolean isWithdrawSuccess = memberApiService.withdraw(sessionDTO.getMemberNo());
 
             request.getSession().invalidate();
@@ -300,6 +302,10 @@ public class MemberController {
         try {
             if (memberInfoSession == null) {
                 throw new IOException("session is Empty");
+            }
+
+            if (mypageDTO.getMemberNo() == memberInfoSession.getMemberNo()) {
+                throw new IOException("mypageDTO's member number is different from the current session's member number");
             }
 
             MypageDTO requestMypageInfo = MypageDTO.builder()
