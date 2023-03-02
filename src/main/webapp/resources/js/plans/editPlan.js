@@ -25,8 +25,9 @@ function address_option(option) {
             for (i = 0; i < result.addressOptionList.length; i++) {
                 const jsonOptionObject = JSON.parse(JSON.stringify(result.addressOptionList[i]));
 
-                fragment.append('<option value="jsonOptionObject.addressNo" disabled="false">jsonOptionObject.sigunguName</option>');
+                fragment.append('<option value="' + jsonOptionObject.addressNo + '">' + jsonOptionObject.sigunguName + '</option>');
             }
+            selectOptionSigungu.attr("disabled", false);
             selectOptionSigungu.append(fragment);
         },
         error: function (error) {
@@ -155,7 +156,7 @@ $(function () {
         })
 
         if (!isHashtagDuplicate) {
-            let optionItem = $('<div class="hashtag_item_text">inputHashtag.val().trim()</div>');
+            let optionItem = $('<div class="hashtag_item_text">' + inputHashtag.val().trim() + '</div>');
             $(".createplan_hashtag_list").append(optionItem);
         }
 
@@ -193,7 +194,7 @@ $(function () {
         });
 
         if (!isAddressDuplicate) {
-            let optionItem = $('<div class="address_item_text" value="inputAddressNo">inputSido inputSigungu</div>');
+            let optionItem = $('<div class="address_item_text" value="' + inputAddressNo + '">' + inputSido + " " + inputSigungu + '</div>');
             $(".createplan_address_list").append(optionItem);
             $("#planAddress").text(inputSido + " " + inputSigungu);
 
