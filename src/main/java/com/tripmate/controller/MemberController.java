@@ -228,13 +228,13 @@ public class MemberController {
                 throw new IOException("current session password is the same as new password");
             }
 
-            UpdatePasswordDTO changePasswordRequestDTO = UpdatePasswordDTO.builder()
+            UpdatePasswordDTO updatePasswordRequestDTO = UpdatePasswordDTO.builder()
                     .memberNo(memberInfoSession.getMemberNo())
                     .memberPassword(updatePasswordDTO.getMemberPassword())
                     .newMemberPassword(updatePasswordDTO.getNewMemberPassword())
                     .build();
 
-            boolean isChangePasswordSuccess = memberApiService.updatePassword(changePasswordRequestDTO);
+            boolean isUpdatePasswordSuccess = memberApiService.updatePassword(updatePasswordRequestDTO);
 
             MemberDTO memberDTO = MemberDTO.builder()
                     .memberNo(memberInfoSession.getMemberNo())
@@ -251,7 +251,7 @@ public class MemberController {
             request.getSession().setAttribute(Const.MEMBER_INFO_SESSION, memberDTO);
 
             result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
-            result.put("isChangePasswordSuccess", isChangePasswordSuccess);
+            result.put("isUpdatePasswordSuccess", isUpdatePasswordSuccess);
         } catch (ApiCommonException e) {
             result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
         } catch (Exception e) {

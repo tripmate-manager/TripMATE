@@ -265,7 +265,7 @@ $(function () {
             success: function (result) {
                 isAjaxProcessing = false;
                 if (result.code === constCode.global.resultCodeSuccess) {
-                    if (result.createPlanSuccess == true) {
+                    if (result.createPlanSuccess === true) {
                         $("#createPlanForm").attr("action", "/plans/myPlan.trip").submit();
                     }
                 } else {

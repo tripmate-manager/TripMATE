@@ -44,7 +44,7 @@ public interface MemberService {
     Call<ResponseWrapper<Boolean>> sendPasswordMail(@Body MemberMailDTO memberMailDTO);
 
     @PUT("v1/members/update-password")
-    Call<ResponseWrapper<Boolean>> changePassword(@Body UpdatePasswordDTO updatePasswordDTO);
+    Call<ResponseWrapper<Boolean>> updatePassword(@Body UpdatePasswordDTO updatePasswordDTO);
 
     @DELETE("v1/members/{memberNo}")
     Call<ResponseWrapper<Boolean>> withdraw(@Path("memberNo") int memberNo);

@@ -68,7 +68,7 @@ $(function () {
                 isAjaxProcessing = false;
 
                 if (result.code === constCode.global.resultCodeSuccess) {
-                    if (result.isChangePasswordSuccess === true) {
+                    if (result.isUpdatePasswordSuccess === true) {
                         popUpOpen("비밀번호 변경이 완료되었습니다.");
                         $(".popup_close_btn").attr("onclick", null).on('click', function () {
                             popUpClose("/forward/main/main.trip");

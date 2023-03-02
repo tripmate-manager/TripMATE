@@ -13,7 +13,7 @@ public interface MemberApiService {
     MemberDTO signIn(SignInDTO signInDTO) throws Exception;
     String findId(String memberName, String email) throws Exception;
     boolean isSendMailSuccess(String type, MemberMailDTO memberMailDTO) throws Exception;
-    boolean updatePassword(UpdatePasswordDTO changePasswordDTO) throws Exception;
+    boolean updatePassword(UpdatePasswordDTO updatePasswordDTO) throws Exception;
     boolean withdraw(int memberNo) throws Exception;
     MypageDTO editMypageMemberInfo(int memberNo, MypageDTO mypageDTO) throws Exception;
 }

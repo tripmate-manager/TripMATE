@@ -210,8 +210,8 @@ public class MemberApiServiceImpl implements MemberApiService {
     }
 
     @Override
-    public boolean updatePassword(UpdatePasswordDTO changePasswordDTO) throws Exception {
-        Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(MemberService.class).changePassword(changePasswordDTO);
+    public boolean updatePassword(UpdatePasswordDTO updatePasswordDTO) throws Exception {
+        Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(MemberService.class).updatePassword(updatePasswordDTO);
         boolean result;
 
         ResponseWrapper<Boolean> response = data.clone().execute().body();
