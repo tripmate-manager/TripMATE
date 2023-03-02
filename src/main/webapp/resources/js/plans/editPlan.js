@@ -4,7 +4,7 @@ function address_option(option) {
     if(option === 'default') {
         selectOptionSigungu.empty().attr("disabled", true);
 
-        let optionItem = $("<option value=\"default\">--시군구 선택--</option>");
+        let optionItem = $('<option value="default">--시군구 선택--</option>');
         selectOptionSigungu.append(optionItem);
         return false;
     }
@@ -20,12 +20,14 @@ function address_option(option) {
             isAjaxProcessing = false;
             selectOptionSigungu.empty();
 
+            const fragment = $(document.createDocumentFragment());
+
             for (i = 0; i < result.addressOptionList.length; i++) {
                 const jsonOptionObject = JSON.parse(JSON.stringify(result.addressOptionList[i]));
 
-                let optionItem = $("<option value=" + jsonOptionObject.addressNo + ">" + jsonOptionObject.sigunguName + "</option>");
-                selectOptionSigungu.append(optionItem).attr("disabled", false);
+                fragment.append('<option value="jsonOptionObject.addressNo" disabled="false">jsonOptionObject.sigunguName</option>');
             }
+            selectOptionSigungu.append(fragment);
         },
         error: function (error) {
             isAjaxProcessing = false;
@@ -153,7 +155,7 @@ $(function () {
         })
 
         if (!isHashtagDuplicate) {
-            let optionItem = $("<div class=\"hashtag_item_text\">" + inputHashtag.val().trim() + "</div>");
+            let optionItem = $('<div class="hashtag_item_text">inputHashtag.val().trim()</div>');
             $(".createplan_hashtag_list").append(optionItem);
         }
 
@@ -191,7 +193,7 @@ $(function () {
         });
 
         if (!isAddressDuplicate) {
-            let optionItem = $("<div class=\"address_item_text\" value=" + inputAddressNo + ">" + inputSido + " " + inputSigungu + "</div>");
+            let optionItem = $('<div class="address_item_text" value="inputAddressNo">inputSido inputSigungu</div>');
             $(".createplan_address_list").append(optionItem);
             $("#planAddress").text(inputSido + " " + inputSigungu);
 
