@@ -304,7 +304,7 @@ public class MemberController {
                 throw new IOException("session is Empty");
             }
 
-            if (mypageDTO.getMemberNo() == memberInfoSession.getMemberNo()) {
+            if (mypageDTO.getMemberNo() != memberInfoSession.getMemberNo()) {
                 throw new IOException("mypageDTO's member number is different from the current session's member number");
             }
 
