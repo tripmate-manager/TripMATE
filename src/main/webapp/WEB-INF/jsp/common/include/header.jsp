@@ -28,6 +28,13 @@
             memberGenderCodeMale: "<%= ConstCode.GENDER_CODE_MALE %>",
             memberGenderCodeFemale: "<%= ConstCode.GENDER_CODE_FEMALE %>",
 
+            memberSearchDiviCodeId:"<%=ConstCode.MEMBER_SEARCH_DIVI_CODE_ID%>",
+            memberSearchDiviCodeNickName:"<%=ConstCode.MEMBER_SEARCH_DIVI_CODE_NICK_NAME%>",
+            memberSearchDiviCodeEmail:"<%=ConstCode.MEMBER_SEARCH_DIVI_CODE_EMAIL%>",
+
+            inviteTypeCodeMember: "<%=ConstCode.INVITE_TYPE_CODE_MEMBER%>",
+            inviteTypeCodeNonMember: "<%=ConstCode.INVITE_TYPE_CODE_NONMEMBER%>",
+
             Y: "<%= Const.Y %>",
             N: "<%= Const.N %>",
         }
