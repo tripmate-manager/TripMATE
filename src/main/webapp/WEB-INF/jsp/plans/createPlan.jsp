@@ -13,11 +13,13 @@
     </jsp:include>
     <jsp:include page="/WEB-INF/jsp/common/messagePopUp.jsp"/>
     <jsp:include page="/WEB-INF/jsp/common/checkPopUp.jsp"/>
+    <jsp:include page="/WEB-INF/jsp/plans/inviteMatePopUp.jsp"/>
     <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/plans/createPlan.css"/>
     <script src="<%=Const.STATIC_JS_PATH%>/plans/createPlan.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/plans/planValidationCheck.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/common/popUp.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/common/checkPopUp.js"></script>
+    <script src="<%=Const.STATIC_JS_PATH%>/plans/inviteMatePopUp.js"></script>
 </head>
 <body>
 <%

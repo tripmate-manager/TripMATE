@@ -17,4 +17,6 @@ public interface PlanApiService {
     PlanVO getPlanInfo(String memberNo) throws Exception;
     List<PlanMateVO> searchPlanMateList(String planNo) throws Exception;
     boolean updatePlan(String planNo, PlanDTO planDTO) throws Exception;
+    List<PlanMateVO> searchMemberList(String searchDiviCode, String searchKeyword) throws Exception;
+    String createInviteAuthCode(String planNo, String inviteTypeCode) throws Exception;
 }

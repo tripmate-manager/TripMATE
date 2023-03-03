@@ -169,4 +169,42 @@ public class PlanController {
 
         return result.toJson();
     }
+
+    @PostMapping("/searchMember")
+    public @ResponseBody String searchMember(@RequestParam(value = "searchDiviCode") String searchDiviCode, @RequestParam(value = "searchKeyword") String searchKeyword) {
+        ApiResult result;
+
+        try {
+            List<PlanMateVO> memberSearchResultList = planApiService.searchMemberList(searchDiviCode, searchKeyword);
+
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            result.put("memberSearchResultList", memberSearchResultList);
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
+    }
+
+    @PostMapping("/createInviteCode")
+    public @ResponseBody String createInviteCode (@RequestParam(value = "planNo") String planNo, @RequestParam(value = "inviteTypeCode") String inviteTypeCode) {
+        ApiResult result;
+
+        try {
+            String inviteCode = planApiService.createInviteAuthCode(planNo, inviteTypeCode);
+
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            result.put("inviteCode", inviteCode);
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
+    }
 }

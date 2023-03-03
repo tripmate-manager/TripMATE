@@ -209,4 +209,53 @@ public class PlanApiServiceImpl implements PlanApiService {
 
         return result;
     }
+
+    @Override
+    public List<PlanMateVO> searchMemberList(String searchDiviCode, String searchKeyword) throws Exception {
+        Call<ResponseWrapper<PlanMateVO>> data = RetrofitClient.getApiService(PlanService.class).searchMemberList(searchDiviCode, searchKeyword);
+        List<PlanMateVO> result;
+
+        ResponseWrapper<PlanMateVO> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
+        }
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData() == null) {
+                throw new IOException("response's data is Empty");
+            }
+
+            result = response.getData();
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new ApiCommonException(response.getCode(), response.getMessage());
+        }
+
+        return result;
+    }
+
+    @Override
+    public String createInviteAuthCode(String planNo, String inviteTypeCode) throws Exception {
+        Call<ResponseWrapper<String>> data = RetrofitClient.getApiService(PlanService.class).createInviteAuthCode(planNo, inviteTypeCode);
+        String result;
+
+        ResponseWrapper<String> response = data.clone().execute().body();
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData().size() != 1) {
+                throw new IOException("response's data size is not 1");
+            }
+            if (response.getData().get(0) == null) {
+                throw new IOException("response's data is Empty");
+            }
+
+            result = response.getData().get(0);
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new ApiCommonException(response.getCode(), response.getMessage());
+        }
+
+        return result;
+    }
 }

@@ -1,7 +1,7 @@
 function address_option(option) {
     const selectOptionSigungu = $('#select_option_sigungu');
 
-    if(option === 'default') {
+    if (option === 'default') {
         selectOptionSigungu.empty().attr("disabled", true);
 
         let optionItem = $('<option value="default">--시군구 선택--</option>');
@@ -184,7 +184,8 @@ $(function () {
             if (inputAddressNo === $(this).attr("value")) {
                 popUpOpen("이미 입력된 여행지입니다.");
                 isAddressDuplicate = true;
-            };
+            }
+            ;
         });
 
         if (!isAddressDuplicate) {
@@ -268,8 +269,15 @@ $(function () {
             success: function (result) {
                 isAjaxProcessing = false;
                 if (result.code === constCode.global.resultCodeSuccess) {
-                    if (result.createPlanSuccess === true) {
-                        $("#createPlanForm").attr("action", "/plans/myPlan.trip").submit();
+                    if (result.createPlanNo > 0) {
+                        checkPopUpOpen("플랜이 생성되었습니다. \n" + "플랜메이트를 추가하시겠습니까?");
+                        $(".check_popup_btn_ok").attr("onclick", null).on('click', function () {
+                            popUpCancel();
+                            inviteMatePopUpOpen(result.createPlanNo);
+                        });
+                        $(".check_popup_btn_cancel").attr("onclick", null).on('click', function () {
+                            $("#createPlanForm").attr("action", "/plans/myPlan.trip").submit();
+                        });
                     }
                 } else {
                     popUpOpen(result.message);
