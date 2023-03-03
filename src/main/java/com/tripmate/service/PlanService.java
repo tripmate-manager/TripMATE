@@ -22,7 +22,7 @@ public interface PlanService {
     @GET("v1/plans/trip-address/{sidoName}")
     Call<ResponseWrapper<PlanAddressVO>> selectAddressList(@Path("sidoName") String sidoName);
     @POST("v1/plans/create-plan")
-    Call<ResponseWrapper<Boolean>> createPlan(@Body PlanDTO planDTO);
+    Call<ResponseWrapper<Integer>> createPlan(@Body PlanDTO planDTO);
     @GET("v1/plans/{memberNo}")
     Call<ResponseWrapper<PlanVO>> searchMemberPlanList(@Path("memberNo") String memberNo);
     @GET("v1/plans/plan-detail/{planNo}")

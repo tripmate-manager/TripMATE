@@ -85,10 +85,10 @@ public class PlanController {
         ApiResult result;
 
         try {
-            boolean isCreatePlanSuccess = planApiService.createPlan(planDTO);
+            int createPlanNo = planApiService.createPlan(planDTO);
 
             result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
-            result.put("createPlanSuccess", isCreatePlanSuccess);
+            result.put("createPlanNo", createPlanNo);
         } catch (ApiCommonException e) {
             result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
         } catch (Exception e) {

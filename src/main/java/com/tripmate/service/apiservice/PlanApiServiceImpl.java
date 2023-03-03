@@ -87,11 +87,11 @@ public class PlanApiServiceImpl implements PlanApiService {
     }
 
     @Override
-    public boolean createPlan(PlanDTO planDTO) throws Exception {
-        Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(PlanService.class).createPlan(planDTO);
-        boolean result;
+    public int createPlan(PlanDTO planDTO) throws Exception {
+        Call<ResponseWrapper<Integer>> data = RetrofitClient.getApiService(PlanService.class).createPlan(planDTO);
+        int result;
 
-        ResponseWrapper<Boolean> response = data.clone().execute().body();
+        ResponseWrapper<Integer> response = data.clone().execute().body();
 
         if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
             if (response.getData().size() != 1) {
@@ -99,6 +99,10 @@ public class PlanApiServiceImpl implements PlanApiService {
             }
             if (response.getData().get(0) == null) {
                 throw new IOException("response's data is Empty");
+            }
+
+            if (response.getData().get(0) == 0) {
+                throw new IOException("response's data is not valid");
             }
 
             result = response.getData().get(0);

@@ -23,6 +23,8 @@ public class PlanMateVO {
     @Pattern(regexp = "^[YN]$", message = "플랜 리더(생성자) 여부는 Y, N만 입력 가능합니다.")
     private String leadYn;
 
+    private String memberId;
+
     private String memberName;
 
     private String nickName;
