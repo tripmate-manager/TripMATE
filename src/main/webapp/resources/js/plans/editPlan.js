@@ -54,6 +54,12 @@ $(function () {
     const hashtagArrowUpBtn = $("#hashtag_arrow_up_btn");
     const themeChoiceWrap = $(".plan_theme_choice_wrap");
     const hashtagChoiceWrap = $(".plan_hashtag_choice_wrap");
+    const planPublicYn = $("#publicYn");
+    const planNo = $("#planNo");
+
+    if (planPublicYn.val() === constCode.global.Y) {
+        $("input:checkbox[name='publicYn']").prop("checked", true);
+    }
 
     themeArrowDownBtn.on('click', function () {
         themeArrowDownBtn.hide();
@@ -250,11 +256,12 @@ $(function () {
         }
 
         $.ajax({
-            url: "/plans/createPlan.trip",
-            type: "post",
+            url: '/plans/editPlan/callApi.trip',
+            type: 'post',
             traditional: true,
             dataType: 'json',
             data: {
+                planNo: planNo.val(),
                 memberNo: sessionMemberNo.val(),
                 planTitle: inputPlanTitle.val().trim(),
                 planDescription: inputPlanDescription.val().trim(),
@@ -268,8 +275,8 @@ $(function () {
             success: function (result) {
                 isAjaxProcessing = false;
                 if (result.code === constCode.global.resultCodeSuccess) {
-                    if (result.createPlanSuccess === true) {
-                        $("#createPlanForm").attr("action", "/plans/myPlan.trip").submit();
+                    if (result.isUpdatePlanSuccess === true) {
+                        popUpOpen("플랜 수정이 완료되었습니다.");
                     }
                 } else {
                     popUpOpen(result.message);

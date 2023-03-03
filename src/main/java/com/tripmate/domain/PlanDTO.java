@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CreatePlanDTO {
+public class PlanDTO {
     private int memberNo;
 
     private int planNo;

@@ -1,7 +1,7 @@
 package com.tripmate.controller;
 
 import com.tripmate.common.exception.ApiCommonException;
-import com.tripmate.domain.ChangePasswordDTO;
+import com.tripmate.domain.UpdatePasswordDTO;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.MemberMailDTO;
 import com.tripmate.domain.MypageDTO;
@@ -215,7 +215,7 @@ public class MemberController {
     }
 
     @PostMapping("/changePassword")
-    public @ResponseBody String changePassword(HttpServletRequest request, @Valid ChangePasswordDTO changePasswordDTO) {
+    public @ResponseBody String changePassword(HttpServletRequest request, @Valid UpdatePasswordDTO updatePasswordDTO) {
         ApiResult result;
         MemberDTO memberInfoSession = (MemberDTO) request.getSession().getAttribute(Const.MEMBER_INFO_SESSION);
 
@@ -224,19 +224,22 @@ public class MemberController {
                 throw new IOException("session is Empty");
             }
 
-            ChangePasswordDTO changePasswordRequestDTO = ChangePasswordDTO.builder()
+            if (updatePasswordDTO.getNewMemberPassword().equals(memberInfoSession.getMemberPassword())) {
+                throw new IOException("current session password is the same as new password");
+            }
+
+            UpdatePasswordDTO updatePasswordRequestDTO = UpdatePasswordDTO.builder()
                     .memberNo(memberInfoSession.getMemberNo())
-                    .memberId(memberInfoSession.getMemberId())
-                    .memberPassword(changePasswordDTO.getMemberPassword())
-                    .newMemberPassword(changePasswordDTO.getNewMemberPassword())
+                    .memberPassword(updatePasswordDTO.getMemberPassword())
+                    .newMemberPassword(updatePasswordDTO.getNewMemberPassword())
                     .build();
 
-            boolean isChangePasswordSuccess = memberApiService.changePassword(changePasswordRequestDTO);
+            boolean isUpdatePasswordSuccess = memberApiService.updatePassword(updatePasswordRequestDTO);
 
             MemberDTO memberDTO = MemberDTO.builder()
                     .memberNo(memberInfoSession.getMemberNo())
                     .memberId(memberInfoSession.getMemberId())
-                    .memberPassword(changePasswordDTO.getNewMemberPassword())
+                    .memberPassword(updatePasswordDTO.getNewMemberPassword())
                     .memberName(memberInfoSession.getMemberName())
                     .nickName(memberInfoSession.getNickName())
                     .email(memberInfoSession.getEmail())
@@ -248,7 +251,7 @@ public class MemberController {
             request.getSession().setAttribute(Const.MEMBER_INFO_SESSION, memberDTO);
 
             result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
-            result.put("isChangePasswordSuccess", isChangePasswordSuccess);
+            result.put("isUpdatePasswordSuccess", isUpdatePasswordSuccess);
         } catch (ApiCommonException e) {
             result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
         } catch (Exception e) {
@@ -275,7 +278,6 @@ public class MemberController {
             if (sessionDTO == null) {
                 throw new IOException("session is Empty");
             }
-
             boolean isWithdrawSuccess = memberApiService.withdraw(sessionDTO.getMemberNo());
 
             request.getSession().invalidate();
@@ -300,6 +302,10 @@ public class MemberController {
         try {
             if (memberInfoSession == null) {
                 throw new IOException("session is Empty");
+            }
+
+            if (mypageDTO.getMemberNo() != memberInfoSession.getMemberNo()) {
+                throw new IOException("mypageDTO's member number is different from the current session's member number");
             }
 
             MypageDTO requestMypageInfo = MypageDTO.builder()

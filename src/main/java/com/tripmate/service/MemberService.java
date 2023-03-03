@@ -1,6 +1,6 @@
 package com.tripmate.service;
 
-import com.tripmate.domain.ChangePasswordDTO;
+import com.tripmate.domain.UpdatePasswordDTO;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.MemberMailDTO;
 import com.tripmate.domain.MypageDTO;
@@ -43,8 +43,8 @@ public interface MemberService {
     @POST("v1/members/send-mail/password")
     Call<ResponseWrapper<Boolean>> sendPasswordMail(@Body MemberMailDTO memberMailDTO);
 
-    @PUT("v1/members/change-password")
-    Call<ResponseWrapper<Boolean>> changePassword(@Body ChangePasswordDTO changePasswordDTO);
+    @PUT("v1/members/update-password")
+    Call<ResponseWrapper<Boolean>> updatePassword(@Body UpdatePasswordDTO updatePasswordDTO);
 
     @DELETE("v1/members/{memberNo}")
     Call<ResponseWrapper<Boolean>> withdraw(@Path("memberNo") int memberNo);

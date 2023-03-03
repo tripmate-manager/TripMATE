@@ -2,9 +2,10 @@ package com.tripmate.service.apiservice;
 
 import com.tripmate.client.RetrofitClient;
 import com.tripmate.common.exception.ApiCommonException;
-import com.tripmate.domain.CreatePlanDTO;
+import com.tripmate.domain.PlanDTO;
 import com.tripmate.domain.PlanAddressVO;
 import com.tripmate.domain.PlanAttributeVO;
+import com.tripmate.domain.PlanMateVO;
 import com.tripmate.domain.PlanVO;
 import com.tripmate.domain.ResponseWrapper;
 import com.tripmate.entity.ApiResultEnum;
@@ -86,8 +87,8 @@ public class PlanApiServiceImpl implements PlanApiService {
     }
 
     @Override
-    public boolean createPlan(CreatePlanDTO createPlanDTO) throws Exception {
-        Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(PlanService.class).createPlan(createPlanDTO);
+    public boolean createPlan(PlanDTO planDTO) throws Exception {
+        Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(PlanService.class).createPlan(planDTO);
         boolean result;
 
         ResponseWrapper<Boolean> response = data.clone().execute().body();
@@ -125,6 +126,78 @@ public class PlanApiServiceImpl implements PlanApiService {
                 throw new IOException("response's data is Empty");
             }
             result = response.getData();
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new IOException(response.getMessage());
+        }
+
+        return result;
+    }
+
+    @Override
+    public PlanVO getPlanInfo(String planNo) throws Exception {
+        Call<ResponseWrapper<PlanVO>> data = RetrofitClient.getApiService(PlanService.class).getPlanInfo(planNo);
+        PlanVO result;
+
+        ResponseWrapper<PlanVO> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
+        }
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData() == null) {
+                throw new IOException("response's data is Empty");
+            }
+            result = response.getData().get(0);
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new IOException(response.getMessage());
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<PlanMateVO> searchPlanMateList(String planNo) throws Exception {
+        Call<ResponseWrapper<PlanMateVO>> data = RetrofitClient.getApiService(PlanService.class).searchPlanMateList(planNo);
+        List<PlanMateVO> result;
+
+        ResponseWrapper<PlanMateVO> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
+        }
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData() == null) {
+                throw new IOException("response's data is Empty");
+            }
+            result = response.getData();
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new IOException(response.getMessage());
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean updatePlan(String planNo, PlanDTO planDTO) throws Exception {
+        Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(PlanService.class).updatePlan(planNo, planDTO);
+        boolean result;
+
+        ResponseWrapper<Boolean> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
+        }
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData() == null) {
+                throw new IOException("response's data is Empty");
+            }
+            result = response.getData().get(0);
         } else {
             log.warn(response.getCode() + " : " + response.getMessage());
             throw new IOException(response.getMessage());

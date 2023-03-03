@@ -14,13 +14,9 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ChangePasswordDTO {
+public class UpdatePasswordDTO {
 
     private int memberNo;
-
-    @Pattern(regexp = "^[0-9a-zA-Z]{5,20}$",
-            message = "영문, 숫자로 이루어진 5자 ~ 20자의 아이디만 입력 가능합니다.")
-    private String memberId;
 
     @NotBlank(message = "비밀번호를 입력해주세요.")
     @Pattern(regexp="(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,20}",
