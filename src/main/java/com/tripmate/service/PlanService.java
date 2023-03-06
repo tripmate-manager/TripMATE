@@ -22,7 +22,7 @@ public interface PlanService {
     @GET("v1/plans/trip-address/{sidoName}")
     Call<ResponseWrapper<PlanAddressVO>> selectAddressList(@Path("sidoName") String sidoName);
     @POST("v1/plans/create-plan")
-    Call<ResponseWrapper<Boolean>> createPlan(@Body PlanDTO planDTO);
+    Call<ResponseWrapper<Integer>> createPlan(@Body PlanDTO planDTO);
     @GET("v1/plans/{memberNo}")
     Call<ResponseWrapper<PlanVO>> searchMemberPlanList(@Path("memberNo") String memberNo);
     @GET("v1/plans/plan-detail/{planNo}")
@@ -31,4 +31,8 @@ public interface PlanService {
     Call <ResponseWrapper<PlanMateVO>> searchPlanMateList(@Path("planNo") String planNo);
     @PUT("v1/plans/{planNo}")
     Call<ResponseWrapper<Boolean>> updatePlan(@Path("planNo") String planNo, @Body PlanDTO planDTO);
+    @GET("v1/plans/search-member")
+    Call<ResponseWrapper<PlanMateVO>> searchMemberList(@Query("searchDiviCode") String searchDiviCode, @Query("searchKeyword") String searchKeyword);
+    @POST("v1/plans/invite-code")
+    Call<ResponseWrapper<String>> createInviteAuthCode(@Query("planNo") String planNo, @Query("inviteTypeCode") String inviteTypeCode);
 }
