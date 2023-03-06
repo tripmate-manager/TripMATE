@@ -185,7 +185,6 @@ $(function () {
                 popUpOpen("이미 입력된 여행지입니다.");
                 isAddressDuplicate = true;
             }
-            ;
         });
 
         if (!isAddressDuplicate) {
