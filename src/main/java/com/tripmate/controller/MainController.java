@@ -87,7 +87,7 @@ public class MainController {
         return new ModelAndView("main/notificationList");
     }
 
-    private static String notificationDateTimeFormat(String dateTime) {
+    private String notificationDateTimeFormat(String dateTime) {
         String result = null;
 
         LocalDateTime nowDateTime = LocalDateTime.now();
