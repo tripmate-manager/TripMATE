@@ -2,6 +2,8 @@ package com.tripmate.service.apiservice;
 
 import com.tripmate.client.RetrofitClient;
 import com.tripmate.common.exception.ApiCommonException;
+import com.tripmate.domain.NotificationDTO;
+import com.tripmate.domain.NotificationVO;
 import com.tripmate.domain.PlanDTO;
 import com.tripmate.domain.PlanAddressVO;
 import com.tripmate.domain.PlanAttributeVO;
@@ -254,6 +256,106 @@ public class PlanApiServiceImpl implements PlanApiService {
         } else {
             log.warn(response.getCode() + " : " + response.getMessage());
             throw new ApiCommonException(response.getCode(), response.getMessage());
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean createNotification(NotificationDTO notificationDTO) throws Exception {
+        Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(PlanService.class).createNotification(notificationDTO);
+        boolean result;
+
+        ResponseWrapper<Boolean> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
+        }
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData() == null) {
+                throw new IOException("response's data is Empty");
+            }
+            result = response.getData().get(0);
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new IOException(response.getMessage());
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<NotificationVO> searchNotificationList(String memberNo) throws Exception {
+        Call<ResponseWrapper<NotificationVO>> data = RetrofitClient.getApiService(PlanService.class).searchNotificationList(memberNo);
+        List<NotificationVO> result;
+
+        ResponseWrapper<NotificationVO> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
+        }
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData() == null) {
+                throw new IOException("response's data is Empty");
+            }
+            result = response.getData();
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new IOException(response.getMessage());
+        }
+
+        return result;
+    }
+
+    @Override
+    public int getUnreadNotificationCnt(String memberNo) throws Exception {
+        Call<ResponseWrapper<Integer>> data = RetrofitClient.getApiService(PlanService.class).getUnreadNotificationCnt(memberNo);
+        int result;
+
+        ResponseWrapper<Integer> response = data.clone().execute().body();
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData().size() != 1) {
+                throw new IOException("response's data size is not 1");
+            }
+            if (response.getData().get(0) == null) {
+                throw new IOException("response's data is Empty");
+            }
+
+            if (response.getData().get(0) == 0) {
+                throw new IOException("response's data is not valid");
+            }
+
+            result = response.getData().get(0);
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new ApiCommonException(response.getCode(), response.getMessage());
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean updateNotificationReadDateTime(String memberNo, String notificationNo) throws Exception {
+        Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(PlanService.class).updateNotificationReadDateTime(memberNo, notificationNo);
+        boolean result;
+
+        ResponseWrapper<Boolean> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
+        }
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData() == null) {
+                throw new IOException("response's data is Empty");
+            }
+            result = response.getData().get(0);
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new IOException(response.getMessage());
         }
 
         return result;

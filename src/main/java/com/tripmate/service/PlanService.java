@@ -1,5 +1,7 @@
 package com.tripmate.service;
 
+import com.tripmate.domain.NotificationDTO;
+import com.tripmate.domain.NotificationVO;
 import com.tripmate.domain.PlanAddressVO;
 import com.tripmate.domain.PlanAttributeVO;
 import com.tripmate.domain.PlanDTO;
@@ -35,4 +37,12 @@ public interface PlanService {
     Call<ResponseWrapper<PlanMateVO>> searchMemberList(@Query("searchDiviCode") String searchDiviCode, @Query("searchKeyword") String searchKeyword);
     @POST("v1/plans/invite-code")
     Call<ResponseWrapper<String>> createInviteAuthCode(@Query("planNo") String planNo, @Query("inviteTypeCode") String inviteTypeCode);
+    @POST("v1/plans/notification")
+    Call <ResponseWrapper<Boolean>> createNotification(@Body NotificationDTO notificationDTO);
+    @GET("v1/plans/notification")
+    Call <ResponseWrapper<NotificationVO>> searchNotificationList(@Query("memberNo") String memberNo);
+    @GET("v1/plans/notification/unread")
+    Call <ResponseWrapper<Integer>> getUnreadNotificationCnt(@Query("memberNo") String memberNo);
+    @PUT("v1/plans/notification")
+    Call <ResponseWrapper<Boolean>> updateNotificationReadDateTime(@Query("memberNo") String memberNo, @Query("notificationNo") String notificationNo);
 }
