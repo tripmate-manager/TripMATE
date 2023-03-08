@@ -6,7 +6,11 @@ window.onhashchange = function () {
 
 $(function () {
     $(".icon_arrow_left").on('click', function () {
-        $("#planMainForm").attr("action", "/plans/myPlan.trip").submit();
+        if (document.referrer === '') {
+            history.back();
+        } else {
+            location.replace(document.referrer);
+        }
     });
 
     $(".plan_main_plan_edit").on('click', function () {
