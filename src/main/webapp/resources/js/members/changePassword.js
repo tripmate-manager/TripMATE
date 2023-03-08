@@ -71,7 +71,7 @@ $(function () {
                     if (result.isUpdatePasswordSuccess === true) {
                         popUpOpen("비밀번호 변경이 완료되었습니다.");
                         $(".popup_close_btn").attr("onclick", null).on('click', function () {
-                            popUpClose("/forward/main/main.trip");
+                            popUpClose("/main/main.trip");
                         });
                     } else {
                         popUpOpen("처리 중 오류가 발생하였습니다.");
@@ -88,6 +88,6 @@ $(function () {
     });
 
     $(".change_password_next").on('click', function () {
-        pageLink("/forward/main/main.trip");
+        pageLink("/main/main.trip");
     });
 });

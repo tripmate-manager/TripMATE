@@ -266,7 +266,7 @@ public class MemberController {
     public String signOut(HttpServletRequest request) {
         request.getSession().invalidate();
 
-        return "redirect:/forward/main/main.trip";
+        return "redirect:/main/main.trip";
     }
 
     @PostMapping("/withdraw")
