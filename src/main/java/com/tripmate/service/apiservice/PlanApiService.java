@@ -1,5 +1,7 @@
 package com.tripmate.service.apiservice;
 
+import com.tripmate.domain.NotificationDTO;
+import com.tripmate.domain.NotificationVO;
 import com.tripmate.domain.PlanAddressVO;
 import com.tripmate.domain.PlanAttributeVO;
 import com.tripmate.domain.PlanDTO;
@@ -19,4 +21,8 @@ public interface PlanApiService {
     boolean updatePlan(String planNo, PlanDTO planDTO) throws Exception;
     List<PlanMateVO> searchMemberList(String searchDiviCode, String searchKeyword) throws Exception;
     String createInviteAuthCode(String planNo, String inviteTypeCode) throws Exception;
+    boolean createNotification(NotificationDTO notificationDTO) throws Exception;
+    List<NotificationVO> searchNotificationList(String memberNo) throws Exception;
+    int getUnreadNotificationCnt(String memberNo) throws Exception;
+    boolean updateNotificationReadDateTime(String memberNo, String notificationNo) throws Exception;
 }

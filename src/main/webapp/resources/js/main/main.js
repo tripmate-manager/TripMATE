@@ -20,4 +20,8 @@ $(function () {
     $("#menu ul.nav li").click(function () {
         $("ul", this).slideToggle("fast");
     })
+
+    $(".icon_alarm").on('click', function () {
+        $("#mainForm").attr("action", "/main/notificationList.trip").submit();
+    });
 });

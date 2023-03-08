@@ -35,6 +35,10 @@
             inviteTypeCodeMember: "<%=ConstCode.INVITE_TYPE_CODE_MEMBER%>",
             inviteTypeCodeNonMember: "<%=ConstCode.INVITE_TYPE_CODE_NONMEMBER%>",
 
+            notificationTypeCodeTripSchedule: "<%=ConstCode.NOTIFICATION_TYPE_CODE_TRIP_SCHEDULE%>",
+            notificationTypeCodeChangeLeader: "<%=ConstCode.NOTIFICATION_TYPE_CODE_CHANGE_LEADER%>",
+            notificationTypeCodeInvitation: "<%=ConstCode.NOTIFICATION_TYPE_CODE_INVITATION%>",
+
             Y: "<%= Const.Y %>",
             N: "<%= Const.N %>",
         }

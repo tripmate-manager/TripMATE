@@ -8,7 +8,7 @@ function itemMenuExit(planNo) {
 
 $(function () {
     $(".icon_arrow_left").on('click', function () {
-        $("#myPlanForm").attr("action", "/forward/main/main.trip").submit();
+        $("#myPlanForm").attr("action", "/main/main.trip").submit();
     });
 
     $(".icon_plus_rectangle, .myplanlist_empty_item_wrap").on('click', function () {
