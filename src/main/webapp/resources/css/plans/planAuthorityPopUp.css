@@ -1,4 +1,3 @@
-
 html {
     font-size:62.5%;
 }
@@ -14,7 +13,8 @@ input {
 }
 body {
     width: 25rem;
-}.check_popup_wrap {
+}.authority_popup_wrap {
+     height: 19.5rem;
      display: none;
      z-index: 1000;
      box-sizing: border-box;
@@ -27,8 +27,8 @@ body {
      border: solid 0.1rem #000000;
      background-color: #ffffff;
  }
-.check_popup_wrap .check_popup_message {
-    padding: 4.5rem 3.0rem 4.5rem 3.0rem;
+.authority_popup_wrap .authority_popup_message {
+    padding: 4.5rem 2.0rem 2rem 2.0rem;
     align-items: center;
     justify-content: center;
     display: flex;
@@ -40,14 +40,20 @@ body {
     white-space: normal;
     flex-shrink: 0;
 }
-.check_popup_wrap .check_popup_btn {
+.authority_popup_wrap #authorityPopUpForm .select_wrap {
+    position: static;
+    margin-bottom: 2rem;
+    padding: 0 2rem 0 2rem;
+}
+.authority_popup_wrap #authorityPopUpForm .authority_popup_btn {
     width: 100%;
     height: 4.5rem;
     display: flex;
     align-items: center;
     flex-shrink: 0;
 }
-.check_popup_wrap .check_popup_btn .check_popup_btn_cancel {
+.authority_popup_wrap #authorityPopUpForm .authority_popup_btn .authority_popup_btn_cancel {
+    position: static;
     width: 50%;
     height: 100%;
     display: flex;
@@ -62,7 +68,8 @@ body {
     background-color: #dadada;
     flex-shrink: 0;
 }
-.check_popup_wrap .check_popup_btn .check_popup_btn_ok {
+.authority_popup_wrap #authorityPopUpForm .authority_popup_btn .authority_popup_btn_ok {
+    position: static;
     width: 50%;
     height: 100%;
     display: flex;
@@ -77,7 +84,24 @@ body {
     background-color: #393c88;
     flex-shrink: 0;
 }
-.check_popup_wrap #checkPopUpForm {
+.authority_popup_wrap #authorityPopUpForm {
     width: 100%;
     height: 4.5rem;
+}
+.select_option {
+    font-size: 1.5rem;
+    margin: 0.25rem 0.6rem;
+}
+.authority_popup_wrap #authorityPopUpForm .select_wrap .label_selectbox_title {
+    box-sizing: border-box;
+    padding: 0.25rem 0.6rem;
+    display: flex;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+    float: left;
 }
