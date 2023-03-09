@@ -33,15 +33,17 @@
         <div class="alertlist_title">알림</div>
     </div>
     <form name="notificationForm" id="notificationForm" method="post">
+        <input type=hidden id="formPlanNo" name="planNo">
         <div class="alertlist_list_wrap">
             <% if (notificationList != null) {
-                for (NotificationVO notification : notificationList) { %>
+            for (NotificationVO notification : notificationList) { %>
             <div class="alertlist_item_wrap" <% if (notification.getReadDateTime() == null) { %> id="unread_item" <% } %>>
                 <input type=hidden id="notificationNo"name="notificationNo" value="<%=notification.getNotificationNo()%>">
                 <input type=hidden id="notificationTypeCode" name="notificationTypeCode" value="<%=notification.getNotificationTypeCode()%>">
-                <input type=hidden id="planNo" name="planNo" value="<%=notification.getPlanNo()%>">
                 <input type=hidden id="postNo" name="postNo" value="<%=notification.getPostNo()%>">
                 <input type=hidden id="memberNo" name="memberNo" value="<%=memberInfo.getMemberNo()%>">
+                <input type=hidden id="planNo" value="<%=notification.getPlanNo()%>">
+                <input type=hidden id="useYn" value="<%=notification.getUseYn()%>">
                 <div class="alertlist_list_item_time"><%=notification.getNotificationDateTime()%>
                 </div>
 

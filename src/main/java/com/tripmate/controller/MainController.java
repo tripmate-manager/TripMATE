@@ -74,6 +74,7 @@ public class MainController {
                         .receiverNo(notificationApiResultVO.getReceiverNo())
                         .readDateTime(notificationApiResultVO.getReadDateTime())
                         .notificationDateTime(notificationDateTimeFormat(notificationApiResultVO.getNotificationDateTime()))
+                        .useYn(notificationApiResultVO.getUseYn())
                         .build();
 
                 notificationList.add(notificationVO);

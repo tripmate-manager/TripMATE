@@ -1,11 +1,15 @@
 $(function () {
     let isAjaxProcessing = false;
+    let notificationTypeCode = $(this).find("#notificationTypeCode").val();
+    let notificationNo = $(this).find("#notificationNo").val();
+    let memberNo = $(this).find("#memberNo").val();
+    let useYn = $(this).find("#useYn").val();
 
     $(".icon_arrow_left").on('click', function () {
         $("#notificationForm").attr("method", "get").attr("action", "/main/main.trip").submit();
     });
 
-    function updateReadTimeAjax(notificationTypeCode, notificationNo, memberNo) {
+    function updateReadTimeAjax() {
         if (isAjaxProcessing) {
             popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
             return;
@@ -29,7 +33,14 @@ $(function () {
                         const postNo = $(this).find("#planNo").val();
                         // todo: 추후 해당 게시글로 이동하도록 수정
                     } else {
-                        $("#notificationForm").attr("action", "/plans/planMain.trip").submit();
+                        if(useYn === 'N') {
+                            popUpOpen("존재하지 않는 플랜입니다.");
+                            $(".popup_close_btn").attr("onclick", null).on('click', function () {
+                                location.reload();
+                            });
+                        } else {
+                            $("#notificationForm").attr("action", "/plans/planMain.trip").submit();
+                        }
                     }
                 } else {
                     popUpOpen(result.message);
@@ -43,20 +54,31 @@ $(function () {
     }
 
     $(".alertlist_item_wrap").on('click', function () {
-        const notificationTypeCode = $(this).find("#notificationTypeCode").val();
-        const notificationNo = $(this).find("#notificationNo").val();
-        const memberNo = $(this).find("#memberNo").val();
+        notificationTypeCode = $(this).find("#notificationTypeCode").val();
+        notificationNo = $(this).find("#notificationNo").val();
+        memberNo = $(this).find("#memberNo").val();
+        useYn = $(this).find("#useYn").val();
+
+        $("#formPlanNo").val($(this).find("#planNo").val());
 
         if ($(this).attr('id') !== undefined) {
             if (notificationTypeCode === constCode.global.notificationTypeCodeInvitation) {
-                checkPopUpOpen("초대를 수락하시겠습니까?");
-                $(".check_popup_btn_ok").attr("onclick", null).on('click', function () {
-                    updateReadTimeAjax(notificationTypeCode, notificationNo, memberNo);
-                })
+                if(useYn === 'N') {
+                    updateReadTimeAjax();
+                } else {
+                    checkPopUpOpen("초대를 수락하시겠습니까?");
+                    $(".check_popup_btn_ok").attr("onclick", null).on('click', function () {
+                        updateReadTimeAjax();
+                    })
+                }
             } else {
-                updateReadTimeAjax(notificationTypeCode, notificationNo, memberNo);
+                updateReadTimeAjax();
             }
         } else {
+            if(useYn === 'N') {
+                popUpOpen("존재하지 않는 플랜입니다.");
+                return;
+            }
             if (notificationTypeCode === constCode.global.notificationTypeCodeTripSchedule) {
                 const postNo = $(this).find("#planNo").val();
                 // todo: 추후 해당 게시글로 이동하도록 수정
