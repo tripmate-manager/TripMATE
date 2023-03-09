@@ -82,7 +82,7 @@ body {
 }
 .myplanlist_wrap .myplanlist_list_wrap {
     box-sizing: border-box;
-    padding: 1.9rem 1.8rem 48.5rem 1.4rem;
+    padding: 1.9rem 1.8rem 1.0rem 1.4rem;
     width: 100%;
     align-items: center;
     display: flex;

@@ -101,7 +101,7 @@ body {
     flex-shrink: 0;
 }
 .planmate_menu_wrap .planmate_menu_contents_wrap .planmate_menu_mate_wrap .planmate_menu_nickname {
-    margin-right: 2.1667rem;
+    margin-right: 1rem;
     display: flex;
     font-size: 1.8rem;
     font-weight: 600;
@@ -112,13 +112,11 @@ body {
     flex-shrink: 0;
 }
 .planmate_menu_wrap .planmate_menu_contents_wrap .planmate_menu_mate_wrap .icon_check_circle {
-    margin-left: 6rem;
     width: 1.6667rem;
     height: 1.6667rem;
     object-fit: contain;
     vertical-align: top;
     flex-shrink: 0;
-    position: fixed;
 }
 .planmate_menu_wrap .planmate_menu_contents_wrap .planmate_menu_mate_wrap .planmate_menu_name {
     margin: 0 0 0.3rem 15rem;
