@@ -1,5 +1,6 @@
 package com.tripmate.service;
 
+import com.tripmate.domain.ExitPlanDTO;
 import com.tripmate.domain.NotificationDTO;
 import com.tripmate.domain.NotificationVO;
 import com.tripmate.domain.PlanAddressVO;
@@ -45,4 +46,6 @@ public interface PlanService {
     Call <ResponseWrapper<Integer>> getUnreadNotificationCnt(@Query("memberNo") String memberNo);
     @PUT("v1/plans/notification")
     Call <ResponseWrapper<Boolean>> updateNotificationReadDateTime(@Query("memberNo") String memberNo, @Query("notificationNo") String notificationNo);
+    @POST("v1/plans/exit-plan")
+    Call <ResponseWrapper<Boolean>> exitPlan(@Body ExitPlanDTO exitPlanDTO);
 }

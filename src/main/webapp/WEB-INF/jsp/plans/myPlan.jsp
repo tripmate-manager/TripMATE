@@ -1,5 +1,6 @@
 <%@ page import="com.tripmate.domain.PlanVO" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.tripmate.domain.MemberDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/jsp/common/include/commonImport.jsp" %>
 
@@ -9,16 +10,26 @@
         <jsp:param name="title" value="MyPlan"/>
     </jsp:include>
     <jsp:include page="/WEB-INF/jsp/common/messagePopUp.jsp"/>
+    <jsp:include page="/WEB-INF/jsp/common/checkPopUp.jsp"/>
+    <jsp:include page="/WEB-INF/jsp/plans/planAuthorityPopUp.jsp"/>
     <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/plans/myPlan.css"/>
     <script src="<%=Const.STATIC_JS_PATH%>/plans/myPlan.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/plans/planValidationCheck.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/common/popUp.js"></script>
+    <script src="<%=Const.STATIC_JS_PATH%>/common/checkPopUp.js"></script>
+    <script src="<%=Const.STATIC_JS_PATH%>/plans/planAuthorityPopUp.js"></script>
 </head>
 <body>
 <%
     List<PlanVO> planList = (List<PlanVO>) request.getAttribute("planList");
+    MemberDTO memberInfo = null;
+    session = request.getSession();
+    if (session != null) {
+        memberInfo = (MemberDTO) session.getAttribute(Const.MEMBER_INFO_SESSION);
+    }
 %>
 
+<input type=hidden id="memberNo" value=<%=memberInfo.getMemberNo()%>>
 <div class="myplanlist_wrap">
     <form id="myPlanForm">
         <div class="myplanlist_title_wrap">
@@ -66,7 +77,7 @@
                     <summary class="ellipsis"></summary>
                     <div class="report">
                         <p id="myplanlist_item_menu_edit" onclick="itemMenuEdit(<%=planVO.getPlanNo()%>)">플랜 수정하기</p>
-                        <p id="myplanlist_item_menu_exit" onclick="itemMenuExit(<%=planVO.getPlanNo()%>)">플랜 나가기</p>
+                        <p id="myplanlist_item_menu_exit" onclick='itemMenuExit(<%=planVO.getPlanNo()%>, "<%=planVO.getLeadYn()%>")'>플랜 나가기</p>
                     </div>
                 </details>
             </div>

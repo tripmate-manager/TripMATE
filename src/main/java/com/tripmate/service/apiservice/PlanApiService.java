@@ -1,5 +1,6 @@
 package com.tripmate.service.apiservice;
 
+import com.tripmate.domain.ExitPlanDTO;
 import com.tripmate.domain.NotificationDTO;
 import com.tripmate.domain.NotificationVO;
 import com.tripmate.domain.PlanAddressVO;
@@ -25,4 +26,5 @@ public interface PlanApiService {
     List<NotificationVO> searchNotificationList(String memberNo) throws Exception;
     int getUnreadNotificationCnt(String memberNo) throws Exception;
     boolean updateNotificationReadDateTime(String memberNo, String notificationNo) throws Exception;
+    boolean exitPlan(ExitPlanDTO exitPlanDTO) throws Exception;
 }
