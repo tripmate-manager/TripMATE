@@ -1,30 +1,46 @@
+let isItemMenuExitProcessing = false;
+
 function itemMenuEdit(planNo) {
+    if (isItemMenuExitProcessing) {
+        return;
+    }
+
     $(".myplanlist_item_plan_no").val(planNo);
     $("#myPlanForm").attr("method", "post").attr("action", "/plans/editPlan.trip").submit();
 }
 
 function itemMenuExit(planNo, leadYn) {
-    let planMateListLength;
-    $.ajax({
-        type: 'get',
-        url: '/plans/planMate.trip',
-        dataType: 'json',
-        data: {
-            planNo: planNo
-        },
-        success: function (result) {
-            planMateListLength = result.planMateList.length;
-        },
-        error: function (error) {
-            popUpOpen("처리 중 오류가 발생하였습니다.");
-        }
-    })
+    if (isItemMenuExitProcessing) {
+        return;
+    }
+    isItemMenuExitProcessing = true;
 
     checkPopUpOpen("플랜을 나가시겠습니까?");
+
     $(".check_popup_btn_cancel").attr("onclick", null).on('click', function () {
         $(".check_popup_wrap").hide();
+        isItemMenuExitProcessing = false;
     });
+
     $(".check_popup_btn_ok").attr("onclick", null).on('click', function () {
+        let planMateListLength;
+
+        $.ajax({
+            type: 'get',
+            url: '/plans/planMate.trip',
+            dataType: 'json',
+            async: false,
+            data: {
+                planNo: planNo
+            },
+            success: function (result) {
+                planMateListLength = result.planMateList.length;
+            },
+            error: function (error) {
+                popUpOpen("처리 중 오류가 발생하였습니다.");
+            }
+        })
+
         $(".check_popup_wrap").hide();
 
         if (leadYn === 'Y' && planMateListLength > 1) {
@@ -34,6 +50,7 @@ function itemMenuExit(planNo, leadYn) {
                 type: 'post',
                 url: '/plans/exitPlan.trip',
                 dataType: 'json',
+                async: false,
                 data: {
                     planNo: planNo,
                     memberNo: $("#memberNo").val()
@@ -48,6 +65,8 @@ function itemMenuExit(planNo, leadYn) {
                 }
             })
         }
+
+        isItemMenuExitProcessing = false;
     });
 }
 
