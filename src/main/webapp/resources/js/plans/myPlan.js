@@ -13,7 +13,6 @@ function itemMenuExit(planNo, leadYn) {
             planNo: planNo
         },
         success: function (result) {
-            console.log(result.planMateList.length);
             planMateListLength = result.planMateList.length;
         },
         error: function (error) {
