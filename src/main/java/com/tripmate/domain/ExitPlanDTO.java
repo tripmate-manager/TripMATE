@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 @Builder
 @NoArgsConstructor
@@ -16,10 +16,10 @@ import javax.validation.constraints.Min;
 public class ExitPlanDTO {
     private String mateNo;
 
-    @Min(value = 1, message = "회원 번호는 필수이며, 양수만 입력 가능합니다.")
+    @NotBlank(message = "회원 번호는 필수이며, 양수만 입력 가능합니다.")
     private String memberNo;
 
-    @Min(value = 1, message = "플랜 번호는 필수이며, 양수만 입력 가능합니다.")
+    @NotBlank(message = "플랜 번호는 필수이며, 양수만 입력 가능합니다.")
     private String planNo;
 }
 
