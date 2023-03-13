@@ -16,10 +16,10 @@ import javax.validation.constraints.NotBlank;
 public class ExitPlanDTO {
     private String mateNo;
 
-    @NotBlank(message = "회원 번호는 필수이며, 양수만 입력 가능합니다.")
+    @NotBlank(message = "회원 번호를 입력해주세요.")
     private String memberNo;
 
-    @NotBlank(message = "플랜 번호는 필수이며, 양수만 입력 가능합니다.")
+    @NotBlank(message = "플랜 번호를 입력해주세요.")
     private String planNo;
 }
 
