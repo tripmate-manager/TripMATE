@@ -74,7 +74,7 @@ $(function () {
                     }
 
                     if (result.memberStatusCode === constCode.global.memberStatusCodeComplete) {
-                        pageReplace("/main/main.trip");
+                        $("#signinForm").attr("method", "get").attr("action", "/main/main.trip").submit();
                         $("#signinForm")[0].reset();
                     } else if (result.memberStatusCode === constCode.global.memberStatusCodeTemporary) {
                         $("#email").val(result.email);

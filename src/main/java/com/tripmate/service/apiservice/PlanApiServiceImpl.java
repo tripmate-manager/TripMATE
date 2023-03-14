@@ -3,11 +3,13 @@ package com.tripmate.service.apiservice;
 import com.tripmate.client.RetrofitClient;
 import com.tripmate.common.exception.ApiCommonException;
 import com.tripmate.domain.ExitPlanDTO;
+import com.tripmate.domain.InviteCodeVO;
 import com.tripmate.domain.NotificationDTO;
 import com.tripmate.domain.NotificationVO;
 import com.tripmate.domain.PlanDTO;
 import com.tripmate.domain.PlanAddressVO;
 import com.tripmate.domain.PlanAttributeVO;
+import com.tripmate.domain.PlanMateDTO;
 import com.tripmate.domain.PlanMateVO;
 import com.tripmate.domain.PlanVO;
 import com.tripmate.domain.ResponseWrapper;
@@ -153,7 +155,7 @@ public class PlanApiServiceImpl implements PlanApiService {
         }
 
         if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
-            if (response.getData() == null) {
+            if (response.getData() == null || response.getData().get(0) == null) {
                 throw new IOException("response's data is Empty");
             }
             result = response.getData().get(0);
@@ -239,11 +241,11 @@ public class PlanApiServiceImpl implements PlanApiService {
     }
 
     @Override
-    public String createInviteAuthCode(String planNo, String inviteTypeCode) throws Exception {
-        Call<ResponseWrapper<String>> data = RetrofitClient.getApiService(PlanService.class).createInviteAuthCode(planNo, inviteTypeCode);
-        String result;
+    public InviteCodeVO createInviteAuthCode(String planNo, String inviteTypeCode) throws Exception {
+        Call<ResponseWrapper<InviteCodeVO>> data = RetrofitClient.getApiService(PlanService.class).createInviteAuthCode(planNo, inviteTypeCode);
+        InviteCodeVO result;
 
-        ResponseWrapper<String> response = data.clone().execute().body();
+        ResponseWrapper<InviteCodeVO> response = data.clone().execute().body();
 
         if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
             if (response.getData().size() != 1) {
@@ -325,10 +327,6 @@ public class PlanApiServiceImpl implements PlanApiService {
                 throw new IOException("response's data is Empty");
             }
 
-            if (response.getData().get(0) == 0) {
-                throw new IOException("response's data is not valid");
-            }
-
             result = response.getData().get(0);
         } else {
             log.warn(response.getCode() + " : " + response.getMessage());
@@ -365,6 +363,54 @@ public class PlanApiServiceImpl implements PlanApiService {
     @Override
     public boolean exitPlan(ExitPlanDTO exitPlanDTO) throws Exception {
         Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(PlanService.class).exitPlan(exitPlanDTO);
+        boolean result;
+
+        ResponseWrapper<Boolean> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
+        }
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData() == null) {
+                throw new IOException("response's data is Empty");
+            }
+            result = response.getData().get(0);
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new IOException(response.getMessage());
+        }
+
+        return result;
+    }
+
+    @Override
+    public InviteCodeVO getInviteCodeInfo(String inviteCodeNo) throws Exception {
+        Call<ResponseWrapper<InviteCodeVO>> data = RetrofitClient.getApiService(PlanService.class).getInviteCodeInfo(inviteCodeNo);
+        InviteCodeVO result;
+
+        ResponseWrapper<InviteCodeVO> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
+        }
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData() == null) {
+                throw new IOException("response's data is Empty");
+            }
+            result = response.getData().get(0);
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new IOException(response.getMessage());
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean insertPlanMate(PlanMateDTO planMateDTO) throws Exception {
+        Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(PlanService.class).insertPlanMate(planMateDTO);
         boolean result;
 
         ResponseWrapper<Boolean> response = data.clone().execute().body();

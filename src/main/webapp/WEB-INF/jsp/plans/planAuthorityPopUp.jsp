@@ -24,7 +24,6 @@
     <div class="select_wrap">
       <label class="label_selectbox_title">MATE</label>
       <select name="select_option_mate" class="select_option" id="select_option_mate">
-        <option value="example1">example1</option>
       </select>
     </div>
 
