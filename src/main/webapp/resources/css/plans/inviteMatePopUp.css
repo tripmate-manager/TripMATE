@@ -246,7 +246,7 @@ body {
     white-space: nowrap;
     flex-shrink: 0;
 }
-.invite_mate_popup_wrap .invite_planmate_tab_wrap .invite_nonmember_contents_wrap .invite_nonmember_auth_code_wrap .invite_nonmember_auth_code_text_wrap .icon_paste {
+.invite_mate_popup_wrap .invite_planmate_tab_wrap .invite_nonmember_contents_wrap .invite_nonmember_auth_code_wrap .invite_nonmember_auth_code_text_wrap .icon_copy {
     margin-bottom: 1.05rem;
     width: 1.75rem;
     height: 2.3333rem;
