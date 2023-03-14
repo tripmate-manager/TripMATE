@@ -72,10 +72,6 @@ $(function () {
         }
     });
 
-    $(".icon_paste").on('click', function () {
-        document.exec
-    });
-
     searchBtn.off('click').on('click', function () {
         let searchDiviCode;
         const searchKeyword = $(".input_search_keyword").val();
