@@ -3,7 +3,7 @@ function inviteMatePopUpOpen(planNO) {
 
     $("#planNo").val(planNO);
     popupWrap.css("position", "absolute");
-    popupWrap.css("top", (($(window).height() - popupWrap.outerHeight()) / 2));
+    popupWrap.css("top", (($(window).height() - popupWrap.outerHeight()) / 3) + $(window).scrollLeft());
     popupWrap.css("left", (($(window).width() - popupWrap.outerWidth()) / 2) + $(window).scrollLeft());
     popupWrap.show();
 }
@@ -70,10 +70,6 @@ $(function () {
                 }
             })
         }
-    });
-
-    $(".icon_paste").on('click', function () {
-        document.exec
     });
 
     searchBtn.off('click').on('click', function () {

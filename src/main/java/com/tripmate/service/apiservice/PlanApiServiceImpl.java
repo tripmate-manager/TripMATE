@@ -2,6 +2,7 @@ package com.tripmate.service.apiservice;
 
 import com.tripmate.client.RetrofitClient;
 import com.tripmate.common.exception.ApiCommonException;
+import com.tripmate.domain.ExitPlanDTO;
 import com.tripmate.domain.NotificationDTO;
 import com.tripmate.domain.NotificationVO;
 import com.tripmate.domain.PlanDTO;
@@ -340,6 +341,30 @@ public class PlanApiServiceImpl implements PlanApiService {
     @Override
     public boolean updateNotificationReadDateTime(String memberNo, String notificationNo) throws Exception {
         Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(PlanService.class).updateNotificationReadDateTime(memberNo, notificationNo);
+        boolean result;
+
+        ResponseWrapper<Boolean> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
+        }
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData() == null) {
+                throw new IOException("response's data is Empty");
+            }
+            result = response.getData().get(0);
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new IOException(response.getMessage());
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean exitPlan(ExitPlanDTO exitPlanDTO) throws Exception {
+        Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(PlanService.class).exitPlan(exitPlanDTO);
         boolean result;
 
         ResponseWrapper<Boolean> response = data.clone().execute().body();

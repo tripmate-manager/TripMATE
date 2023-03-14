@@ -13,6 +13,8 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @Getter
 public class PlanMateVO {
+    private int mateNo;
+
     @NotBlank(message = "플랜번호를 입력해주세요.")
     private int planNo;
 

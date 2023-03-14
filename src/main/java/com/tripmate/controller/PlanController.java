@@ -1,6 +1,7 @@
 package com.tripmate.controller;
 
 import com.tripmate.common.exception.ApiCommonException;
+import com.tripmate.domain.ExitPlanDTO;
 import com.tripmate.domain.PlanDTO;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.PlanAddressVO;
@@ -198,6 +199,44 @@ public class PlanController {
 
             result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
             result.put("inviteCode", inviteCode);
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
+    }
+
+    @GetMapping("/planMate")
+    public @ResponseBody String searchPlanMateList(@RequestParam(value = "planNo") @NotBlank String planNo) {
+        ApiResult result;
+
+        try {
+            List<PlanMateVO> planMateList = planApiService.searchPlanMateList(planNo);
+
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            result.put("planMateList", planMateList);
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
+    }
+
+    @PostMapping("/exitPlan")
+    public @ResponseBody String exitPlan(@Valid ExitPlanDTO exitPlanDTO) {
+        ApiResult result;
+
+        try {
+            boolean isExitPlanMate = planApiService.exitPlan(exitPlanDTO);
+
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            result.put("isExitPlanMate", isExitPlanMate);
         } catch (ApiCommonException e) {
             result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
         } catch (Exception e) {
