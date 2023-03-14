@@ -2,6 +2,7 @@ package com.tripmate.controller;
 
 import com.tripmate.common.exception.ApiCommonException;
 import com.tripmate.domain.ExitPlanDTO;
+import com.tripmate.domain.NotificationDTO;
 import com.tripmate.domain.PlanDTO;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.PlanAddressVO;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -234,6 +236,17 @@ public class PlanController {
 
         try {
             boolean isExitPlanMate = planApiService.exitPlan(exitPlanDTO);
+            
+            if (exitPlanDTO.getMateNo() != null) {
+                NotificationDTO notificationDTO = NotificationDTO.builder()
+                        .planNo(exitPlanDTO.getPlanNo())
+                        .notificationTypeCode(ConstCode.NOTIFICATION_TYPE_CODE_CHANGE_LEADER)
+                        .senderNo(exitPlanDTO.getMemberNo())
+                        .receiverNoList(Collections.singletonList(exitPlanDTO.getMateNo()))
+                        .build();
+
+                planApiService.createNotification(notificationDTO);
+            }
 
             result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
             result.put("isExitPlanMate", isExitPlanMate);
