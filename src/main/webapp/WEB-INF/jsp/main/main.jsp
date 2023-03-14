@@ -1,3 +1,4 @@
+<%@ page import="com.tripmate.domain.InviteCodeVO" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/jsp/common/include/commonImport.jsp" %>
 <%@ include file="/WEB-INF/jsp/main/mainNavigationMenu.jsp" %>
@@ -9,18 +10,31 @@
     </jsp:include>
     <jsp:include page="/WEB-INF/jsp/common/messagePopUp.jsp"/>
     <jsp:include page="/WEB-INF/jsp/common/checkPopUp.jsp"/>
+    <jsp:include page="/WEB-INF/jsp/plans/planInviteCodePopUp.jsp"/>
     <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/main/main.css"/>
     <script src="<%=Const.STATIC_JS_PATH%>/main/main.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/common/popUp.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/common/checkPopUp.js"></script>
+    <script src="<%=Const.STATIC_JS_PATH%>/plans/planInviteCodePopUp.js"></script>
 </head>
 <body>
 <%
     int unreadNotificationCnt = 0;
+    InviteCodeVO inviteCodeVO = null;
     if (request.getAttribute("unreadNotificationCnt") != null) {
         unreadNotificationCnt = (int) request.getAttribute("unreadNotificationCnt");
     }
+    if (request.getAttribute("inviteCodeInfo") != null) {
+        inviteCodeVO = (InviteCodeVO) request.getAttribute("inviteCodeInfo");
+    }
 %>
+
+<% if (inviteCodeVO != null) { %>
+<input type=hidden id="invitePlanNo" value=<%=inviteCodeVO.getPlanNo()%>>
+<input type=hidden id="inviteCode" value=<%=inviteCodeVO.getInviteCode()%>>
+<input type=hidden id="inviteCodeExpireDateTime" value=<%=inviteCodeVO.getInviteCodeExpireDateTime()%>>
+<% } %>
+
 <div class="main_wrap">
     <form name="mainForm" id="mainForm">
         <div class="main_title_wrap">

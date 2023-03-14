@@ -12,9 +12,11 @@
         <jsp:param name="title" value="PlanMain"/>
     </jsp:include>
     <jsp:include page="/WEB-INF/jsp/common/messagePopUp.jsp"/>
+    <jsp:include page="/WEB-INF/jsp/plans/inviteMatePopUp.jsp"/>
     <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/plans/planMain.css"/>
     <script src="<%=Const.STATIC_JS_PATH%>/plans/planMain.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/common/popUp.js"></script>
+    <script src="<%=Const.STATIC_JS_PATH%>/plans/inviteMatePopUp.js"></script>
 </head>
 <body>
 <%
