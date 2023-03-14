@@ -1,11 +1,13 @@
 package com.tripmate.service.apiservice;
 
 import com.tripmate.domain.ExitPlanDTO;
+import com.tripmate.domain.InviteCodeVO;
 import com.tripmate.domain.NotificationDTO;
 import com.tripmate.domain.NotificationVO;
 import com.tripmate.domain.PlanAddressVO;
 import com.tripmate.domain.PlanAttributeVO;
 import com.tripmate.domain.PlanDTO;
+import com.tripmate.domain.PlanMateDTO;
 import com.tripmate.domain.PlanMateVO;
 import com.tripmate.domain.PlanVO;
 
@@ -21,10 +23,12 @@ public interface PlanApiService {
     List<PlanMateVO> searchPlanMateList(String planNo) throws Exception;
     boolean updatePlan(String planNo, PlanDTO planDTO) throws Exception;
     List<PlanMateVO> searchMemberList(String searchDiviCode, String searchKeyword) throws Exception;
-    String createInviteAuthCode(String planNo, String inviteTypeCode) throws Exception;
+    InviteCodeVO createInviteAuthCode(String planNo, String inviteTypeCode) throws Exception;
     boolean createNotification(NotificationDTO notificationDTO) throws Exception;
     List<NotificationVO> searchNotificationList(String memberNo) throws Exception;
     int getUnreadNotificationCnt(String memberNo) throws Exception;
     boolean updateNotificationReadDateTime(String memberNo, String notificationNo) throws Exception;
     boolean exitPlan(ExitPlanDTO exitPlanDTO) throws Exception;
+    InviteCodeVO getInviteCodeInfo(String inviteCodeNo) throws Exception;
+    boolean insertPlanMate(PlanMateDTO planMateDTO) throws Exception;
 }

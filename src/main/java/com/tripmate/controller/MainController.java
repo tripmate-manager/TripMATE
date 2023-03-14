@@ -2,6 +2,7 @@ package com.tripmate.controller;
 
 
 import com.tripmate.common.exception.ApiCommonException;
+import com.tripmate.domain.InviteCodeVO;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.NotificationVO;
 import com.tripmate.entity.ApiResult;
@@ -39,11 +40,19 @@ public class MainController {
     @GetMapping("/main")
     public ModelAndView viewMain(HttpServletRequest request) {
         MemberDTO memberInfoSession = (MemberDTO) request.getSession().getAttribute(Const.MEMBER_INFO_SESSION);
+        InviteCodeVO inviteCodeSession = (InviteCodeVO) request.getSession().getAttribute(Const.INVITE_CODE_SESSION);
+        String inviteMemberIdSession = (String) request.getSession().getAttribute(Const.INVITE_MEMBER_ID_SESSION);
 
         try {
             if (memberInfoSession != null) {
                 int unreadNotificationCnt = planApiService.getUnreadNotificationCnt(String.valueOf(memberInfoSession.getMemberNo()));
                 request.setAttribute("unreadNotificationCnt", unreadNotificationCnt);
+            }
+
+            if (inviteCodeSession != null && inviteMemberIdSession != null) {
+                if (inviteMemberIdSession.equals(memberInfoSession.getMemberId())) {
+                    request.setAttribute("inviteCodeInfo", inviteCodeSession);
+                }
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);

@@ -1,11 +1,13 @@
 package com.tripmate.service;
 
 import com.tripmate.domain.ExitPlanDTO;
+import com.tripmate.domain.InviteCodeVO;
 import com.tripmate.domain.NotificationDTO;
 import com.tripmate.domain.NotificationVO;
 import com.tripmate.domain.PlanAddressVO;
 import com.tripmate.domain.PlanAttributeVO;
 import com.tripmate.domain.PlanDTO;
+import com.tripmate.domain.PlanMateDTO;
 import com.tripmate.domain.PlanMateVO;
 import com.tripmate.domain.PlanVO;
 import com.tripmate.domain.ResponseWrapper;
@@ -37,7 +39,7 @@ public interface PlanService {
     @GET("v1/plans/search-member")
     Call<ResponseWrapper<PlanMateVO>> searchMemberList(@Query("searchDiviCode") String searchDiviCode, @Query("searchKeyword") String searchKeyword);
     @POST("v1/plans/invite-code")
-    Call<ResponseWrapper<String>> createInviteAuthCode(@Query("planNo") String planNo, @Query("inviteTypeCode") String inviteTypeCode);
+    Call<ResponseWrapper<InviteCodeVO>> createInviteAuthCode(@Query("planNo") String planNo, @Query("inviteTypeCode") String inviteTypeCode);
     @POST("v1/plans/notification")
     Call <ResponseWrapper<Boolean>> createNotification(@Body NotificationDTO notificationDTO);
     @GET("v1/plans/notification")
@@ -48,4 +50,8 @@ public interface PlanService {
     Call <ResponseWrapper<Boolean>> updateNotificationReadDateTime(@Query("memberNo") String memberNo, @Query("notificationNo") String notificationNo);
     @POST("v1/plans/exit-plan")
     Call <ResponseWrapper<Boolean>> exitPlan(@Body ExitPlanDTO exitPlanDTO);
+    @GET("v1/plans/invite-code")
+    Call<ResponseWrapper<InviteCodeVO>> getInviteCodeInfo(@Query("inviteCodeNo") String inviteCodeNo);
+    @POST("v1/plans/plan-mate")
+    Call <ResponseWrapper<Boolean>> insertPlanMate(@Body PlanMateDTO planMateDTO);
 }
