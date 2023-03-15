@@ -183,7 +183,7 @@ $(function () {
     });
 
     $(".invite_nonmember_menu_url").on('click', function () {
-        copyToClipboard("http://localhost:8080/plans/nonmemberInvitation.trip?inviteCodeNo=" + $("#inviteCodeNo").val());
+        copyToClipboard(constCode.global.nonmemberInvitationUrl + $("#inviteCodeNo").val());
     });
 
     $(".icon_copy").on('click', function () {

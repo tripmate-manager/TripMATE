@@ -38,4 +38,6 @@ public interface Const {
 
     String Y = "Y";
     String N = "N";
+
+    String NONMEMBER_INVITATION_URL = SERVICE_URL + "plans/nonmemberInvitation.trip?inviteCodeNo=";
 }
