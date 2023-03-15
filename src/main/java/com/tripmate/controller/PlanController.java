@@ -298,10 +298,7 @@ public class PlanController {
     }
 
     @PostMapping("/removeInviteCodeSession")
-    public @ResponseBody String removeInviteCodeSession(HttpServletRequest request) {
-        //todo: 수정
-        JSONObject result = new JSONObject();
-
+    public @ResponseBody boolean removeInviteCodeSession(HttpServletRequest request) {
         if (request.getSession().getAttribute(Const.INVITE_CODE_SESSION) != null) {
             request.getSession().removeAttribute(Const.INVITE_CODE_SESSION);
         }
@@ -310,7 +307,7 @@ public class PlanController {
             request.getSession().removeAttribute(Const.INVITE_MEMBER_ID_SESSION);
         }
 
-        return result.put("isRemoveInviteCodeSession", true).toString();
+        return true;
     }
 
     @PostMapping("/insertPlanMate")

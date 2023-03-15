@@ -26,7 +26,9 @@
 <input type=hidden id="inviteCodeExpireDateTime" value=<%=inviteCodeVO.getInviteCodeExpireDateTime()%>>
 <% } %>
 
+<% if (memberInfo != null) { %>
 <input type=hidden id="memberNo" value=<%=memberInfo.getMemberNo()%>>
+<% } %>
 <input type=hidden id="memberNo">
 <div class="invitecode_popup_wrap" style="display: none">
     <div class="invitecode_popup_message">초대를 수락하시려면 인증 코드를 입력해 주세요.</div>
@@ -37,7 +39,7 @@
         <input type="text" name="inviteCode" id="inputInviteCode" class="inviteCode">
     </form>
     <div class="invitecode_popup_btn">
-        <div class="invitecode_popup_btn_cancel" onclick="inviteCodePopUpCancel()">취소</div>
+        <div class="invitecode_popup_btn_cancel" onclick="removeInviteCodeSession()">취소</div>
         <div class="invitecode_popup_btn_ok" onclick="inviteCodePopUpOk()">확인</div>
     </div>
 </div>

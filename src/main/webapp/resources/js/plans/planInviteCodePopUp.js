@@ -7,15 +7,13 @@ function inviteCodePopUpOpen() {
     popupWrap.show();
 }
 
-function inviteCodePopUpCancel() {
+function removeInviteCodeSession() {
     $.ajax({
         url: "/plans/removeInviteCodeSession.trip",
         type: "post",
         dataType: 'json',
         success: function (result) {
-            if (result.isRemoveInviteCodeSession === true) {
-                $(".check_popup_wrap").hide();
-            }
+            $(".invitecode_popup_wrap").hide();
         },
         error: function (error) {
             popUpOpen("처리 중 오류가 발생하였습니다.");
@@ -53,6 +51,7 @@ function inviteCodePopUpOk() {
         },
         async: false,
         success: function (result) {
+            $("#inviteCodePopUpForm").attr("action", "/plans/planMain.trip").submit();
             $(".check_popup_wrap").hide();
         },
         error: function (error) {
@@ -60,15 +59,5 @@ function inviteCodePopUpOk() {
         }
     })
 
-    $.ajax({
-        url: "/plans/removeInviteCodeSession.trip",
-        type: "post",
-        dataType: 'json',
-        success: function (result) {
-            $("#inviteCodePopUpForm").attr("action", "/plans/planMain.trip").submit();
-        },
-        error: function (error) {
-            popUpOpen("처리 중 오류가 발생하였습니다.");
-        }
-    })
+    removeInviteCodeSession();
 }
