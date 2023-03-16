@@ -1,3 +1,4 @@
+<%@ page import="com.tripmate.domain.MemberDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/jsp/common/include/commonImport.jsp" %>
 
@@ -7,9 +8,23 @@
     <script src="<%=Const.STATIC_JS_PATH%>/plans/inviteMatePopUp.js"></script>
 </head>
 <body>
-<input type=hidden id="planNo">
+<%
+    MemberDTO memberInfo = null;
+    session = request.getSession();
+    if (session != null) {
+        memberInfo = (MemberDTO) session.getAttribute(Const.MEMBER_INFO_SESSION);
+    }
+%>
+
+<% if (memberInfo != null) { %>
+<input type=hidden id="memberNo" value=<%=memberInfo.getMemberNo()%>>
+<% } %>
+<input type=hidden id="inviteCodeNo">
 
 <div class="invite_mate_popup_wrap" style="display:none">
+    <form name="inviteMatePopUpForm" id="inviteMatePopUpForm" method="post">
+        <input type="hidden" name="planNo" id="planNo">
+    </form>
     <div class="invite_planmate_tab_wrap">
         <div class="invite_planmate_tab_menu">
             <div id="tab_menu_member" class="tab_select">회원</div>
@@ -33,7 +48,7 @@
                 <div class="invite_nonmember_auth_code_wrap">
                     <div class="invite_nonmember_auth_code_text_wrap">
                         <div class="invite_nonmember_auth_code_text">인증 코드</div>
-                        <img class="icon_paste" src="<%=Const.STATIC_IMG_PATH%>/plans/icon_paste.png"/>
+                        <img class="icon_copy" src="<%=Const.STATIC_IMG_PATH%>/plans/icon_copy.png"/>
                     </div>
                     <div class="invite_nonmember_auth_code"></div>
                 </div>
@@ -43,6 +58,7 @@
             </div>
         </div>
     </div>
+    <div class="invite_complete" onclick="inviteMatePopUpClose()">완료</div>
 </div>
 </body>
 </html>

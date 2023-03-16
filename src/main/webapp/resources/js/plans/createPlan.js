@@ -273,6 +273,10 @@ $(function () {
                         $(".check_popup_btn_ok").attr("onclick", null).on('click', function () {
                             popUpCancel();
                             inviteMatePopUpOpen(result.createPlanNo);
+
+                            $(".invite_complete").attr("onclick", null).on('click', function () {
+                                $("#inviteMatePopUpForm").attr("action", "/plans/planMain.trip").submit();
+                            });
                         });
                         $(".check_popup_btn_cancel").attr("onclick", null).on('click', function () {
                             $("#createPlanForm").attr("action", "/plans/myPlan.trip").submit();

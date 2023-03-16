@@ -16,6 +16,8 @@ public interface Const {
     String API_URL              = "http://" + API_DOMAIN + API_CONTEXT_PATH;
 
     String MEMBER_INFO_SESSION  = "memberInfo";
+    String INVITE_CODE_SESSION  = "inviteCodeNo";
+    String INVITE_MEMBER_ID_SESSION  = "inviteMemberId";
 
     static String getProperty(final String key) {
         return getProperty(key, "");
@@ -36,4 +38,6 @@ public interface Const {
 
     String Y = "Y";
     String N = "N";
+
+    String NONMEMBER_INVITATION_URL = SERVICE_URL + "plans/nonmemberInvitation.trip?inviteCodeNo=";
 }

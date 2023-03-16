@@ -1,11 +1,21 @@
-function inviteMatePopUpOpen(planNO) {
+function inviteMatePopUpOpen(planNo) {
     const popupWrap = $(".invite_mate_popup_wrap");
 
-    $("#planNo").val(planNO);
+    $("#planNo").val(planNo);
     popupWrap.css("position", "absolute");
     popupWrap.css("top", (($(window).height() - popupWrap.outerHeight()) / 3) + $(window).scrollLeft());
     popupWrap.css("left", (($(window).width() - popupWrap.outerWidth()) / 2) + $(window).scrollLeft());
     popupWrap.show();
+}
+
+function inviteMatePopUpClose() {
+    $(".invite_mate_popup_wrap").hide();
+}
+
+function copyToClipboard(text) {
+    window.navigator.clipboard.writeText(text).then(() => {
+        popUpOpen("클립보드에 저장되었습니다.");
+    });
 }
 
 $(function () {
@@ -17,6 +27,7 @@ $(function () {
     const memberContents = $(".invite_planmate_member_wrap");
     const nonMemberContents = $(".invite_planmate_nonmember_wrap");
     const searchBtn = $(".icon_search");
+    const memberNo = $("#memberNo").val();
 
     memberMenu.on('click', function () {
         if(memberMenu.hasClass("tab_select") === false) {
@@ -60,6 +71,7 @@ $(function () {
                     if (result.code === constCode.global.resultCodeSuccess) {
                         isNonMemberMemnuClicked = true;
                         $(".invite_nonmember_auth_code").text(result.inviteCode);
+                        $("#inviteCodeNo").val(result.inviteCodeNo);
                     } else {
                         popUpOpen(result.message);
                     }
@@ -126,7 +138,7 @@ $(function () {
                                 '<div class="result_item_id">' + jsonSearchResultObject.memberId + '</div>' +
                                 '<div class="result_item_nickname">' + jsonSearchResultObject.nickName + '</div>' +
                                 '<div class="result_item_invite_btn">초대하기</div>' +
-                                '</div> ' +
+                                '</div>' +
                                 '</div>'
                             );
                         }
@@ -141,5 +153,44 @@ $(function () {
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })
+    });
+
+    $(".search_member_result_wrap").off('click').on('click','.result_item_invite_btn', function () {
+        const planNo = $("#planNo").val();
+        let receiverNoList = [];
+        receiverNoList.push($(this).parent().find(".result_item_member_no").attr("value"));
+
+        $.ajax({
+            url: "/plans/createNotification.trip",
+            type: "post",
+            traditional: true,
+            dataType: 'json',
+            data: {
+                planNo: planNo,
+                notificationTypeCode: constCode.global.notificationTypeCodeInvitation,
+                senderNo: memberNo,
+                receiverNoList: receiverNoList,
+            },
+            success: function (result) {
+                isAjaxProcessing = false;
+                if (result.code === constCode.global.resultCodeSuccess) {
+                    popUpOpen("초대 메시지를 전송하였습니다.");
+                } else {
+                    popUpOpen(result.message);
+                }
+            },
+            error: function (error) {
+                isAjaxProcessing = false;
+                popUpOpen("처리 중 오류가 발생하였습니다.");
+            }
+        })
+    });
+
+    $(".invite_nonmember_menu_url").on('click', function () {
+        copyToClipboard(constCode.global.nonmemberInvitationUrl + $("#inviteCodeNo").val());
+    });
+
+    $(".icon_copy").on('click', function () {
+        copyToClipboard($(".invite_nonmember_auth_code").text());
     });
 });

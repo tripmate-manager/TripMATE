@@ -1,11 +1,11 @@
 package com.tripmate.controller;
 
 import com.tripmate.common.exception.ApiCommonException;
-import com.tripmate.domain.UpdatePasswordDTO;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.MemberMailDTO;
 import com.tripmate.domain.MypageDTO;
 import com.tripmate.domain.SignInDTO;
+import com.tripmate.domain.UpdatePasswordDTO;
 import com.tripmate.entity.ApiResult;
 import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.entity.Const;
@@ -42,12 +42,16 @@ public class MemberController {
     }
 
     @PostMapping("/signUp")
-    public @ResponseBody String signUp(@Valid MemberDTO memberDTO) {
+    public @ResponseBody String signUp(HttpServletRequest request, @Valid MemberDTO memberDTO) {
         ApiResult result;
 
         try {
             memberDTO.setMemberStatusCode(ConstCode.MEMBER_STATUS_CODE_TEMPORARY);
             memberApiService.signUp(memberDTO);
+
+            if (request.getSession().getAttribute(Const.INVITE_CODE_SESSION) != null) {
+                request.getSession().setAttribute(Const.INVITE_MEMBER_ID_SESSION, memberDTO.getMemberId());
+            }
 
             result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
         } catch (ApiCommonException e) {

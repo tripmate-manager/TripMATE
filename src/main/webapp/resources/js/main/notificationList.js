@@ -4,6 +4,7 @@ $(function () {
     let notificationNo = $(this).find("#notificationNo").val();
     let memberNo = $(this).find("#memberNo").val();
     let useYn = $(this).find("#useYn").val();
+    let planNo =  $("#formPlanNo").val();
 
     $(".icon_arrow_left").on('click', function () {
         $("#notificationForm").attr("method", "get").attr("action", "/main/main.trip").submit();
@@ -18,36 +19,59 @@ $(function () {
         }
 
         $.ajax({
-            type: 'post',
-            url: '/main/notification.trip',
-            dataType: 'json',
-            data: {
-                notificationNo: notificationNo,
-                memberNo: memberNo
-            },
-            success: function (result) {
-                isAjaxProcessing = false;
+                type: 'post',
+                url: '/main/notification.trip',
+                dataType: 'json',
+                data: {
+                    notificationNo: notificationNo,
+                    memberNo: memberNo
+                },
+                success: function (result) {
+                    isAjaxProcessing = false;
 
-                if (result.isUpdateReadDateTime === true) {
-                    if (notificationTypeCode === constCode.global.notificationTypeCodeTripSchedule) {
-                        const postNo = $(this).find("#planNo").val();
-                        // todo: 추후 해당 게시글로 이동하도록 수정
-                    } else {
-                        if(useYn === 'N') {
-                            popUpOpen("존재하지 않는 플랜입니다.");
-                            $(".popup_close_btn").attr("onclick", null).on('click', function () {
-                                location.reload();
-                            });
+                    if (result.isUpdateReadDateTime === true) {
+                        if (notificationTypeCode === constCode.global.notificationTypeCodeTripSchedule) {
+                            const postNo = $(this).find("#planNo").val();
+                            // todo: 추후 해당 게시글로 이동하도록 수정
+                        } else if (notificationTypeCode === constCode.global.notificationTypeCodeInvitation) {
+                            if (useYn === 'N') {
+                                popUpOpen("존재하지 않는 플랜입니다.");
+                                $(".popup_close_btn").attr("onclick", null).on('click', function () {
+                                    location.reload();
+                                });
+                            } else {
+                                insertPlanMateAjax();
+                            }
                         } else {
                             $("#notificationForm").attr("action", "/plans/planMain.trip").submit();
                         }
+                    } else {
+                        popUpOpen(result.message);
                     }
-                } else {
-                    popUpOpen(result.message);
+                },
+                error: function (error) {
+                    isAjaxProcessing = false;
+                    popUpOpen("처리 중 오류가 발생하였습니다.");
                 }
+            }
+        )
+    }
+
+    function insertPlanMateAjax() {
+        $.ajax({
+            url: "/plans/insertPlanMate.trip",
+            type: "post",
+            dataType: 'json',
+            data: {
+                planNo: planNo,
+                memberNo: memberNo,
+                leadYn: constCode.global.N
+            },
+            async: false,
+            success: function (result) {
+                $("#notificationForm").attr("action", "/plans/planMain.trip").submit();
             },
             error: function (error) {
-                isAjaxProcessing = false;
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })
@@ -58,12 +82,13 @@ $(function () {
         notificationNo = $(this).find("#notificationNo").val();
         memberNo = $(this).find("#memberNo").val();
         useYn = $(this).find("#useYn").val();
+        planNo = $(this).find("#planNo").val();
 
-        $("#formPlanNo").val($(this).find("#planNo").val());
+        $("#formPlanNo").val(planNo);
 
         if ($(this).attr('id') !== undefined) {
             if (notificationTypeCode === constCode.global.notificationTypeCodeInvitation) {
-                if(useYn === 'N') {
+                if (useYn === 'N') {
                     updateReadTimeAjax();
                 } else {
                     checkPopUpOpen("초대를 수락하시겠습니까?");
@@ -75,7 +100,7 @@ $(function () {
                 updateReadTimeAjax();
             }
         } else {
-            if(useYn === 'N') {
+            if (useYn === 'N') {
                 popUpOpen("존재하지 않는 플랜입니다.");
                 return;
             }
@@ -89,4 +114,5 @@ $(function () {
             }
         }
     });
-});
+})
+;

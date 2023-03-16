@@ -41,6 +41,8 @@
 
             Y: "<%= Const.Y %>",
             N: "<%= Const.N %>",
+
+            nonmemberInvitationUrl: "<%=Const.NONMEMBER_INVITATION_URL%>",
         }
     }());
 </script>
