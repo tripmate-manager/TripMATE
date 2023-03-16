@@ -170,7 +170,7 @@ $(function () {
             success: function (result) {
                 isAjaxProcessing = false;
                 if (result.code === constCode.global.resultCodeSuccess) {
-
+                    popUpOpen("초대 메시지를 전송하였습니다.");
                 } else {
                     popUpOpen(result.message);
                 }
