@@ -8,6 +8,10 @@ function inviteMatePopUpOpen(planNo) {
     popupWrap.show();
 }
 
+function inviteMatePopUpClose() {
+    $(".invite_mate_popup_wrap").hide();
+}
+
 function copyToClipboard(text) {
     window.navigator.clipboard.writeText(text).then(() => {
         popUpOpen("클립보드에 저장되었습니다.");

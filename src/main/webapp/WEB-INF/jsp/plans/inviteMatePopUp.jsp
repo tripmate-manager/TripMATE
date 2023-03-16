@@ -19,10 +19,12 @@
 <% if (memberInfo != null) { %>
 <input type=hidden id="memberNo" value=<%=memberInfo.getMemberNo()%>>
 <% } %>
-<input type=hidden id="planNo">
 <input type=hidden id="inviteCodeNo">
 
 <div class="invite_mate_popup_wrap" style="display:none">
+    <form name="inviteMatePopUpForm" id="inviteMatePopUpForm" method="post">
+        <input type="hidden" name="planNo" id="planNo">
+    </form>
     <div class="invite_planmate_tab_wrap">
         <div class="invite_planmate_tab_menu">
             <div id="tab_menu_member" class="tab_select">회원</div>
@@ -56,6 +58,7 @@
             </div>
         </div>
     </div>
+    <div class="invite_complete" onclick="inviteMatePopUpClose()">완료</div>
 </div>
 </body>
 </html>
