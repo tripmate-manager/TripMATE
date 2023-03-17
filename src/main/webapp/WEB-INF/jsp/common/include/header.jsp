@@ -43,6 +43,11 @@
             N: "<%= Const.N %>",
 
             nonmemberInvitationUrl: "<%=Const.NONMEMBER_INVITATION_URL%>",
+
+            postTypeCodeLodging: "<%=ConstCode.POST_TYPE_CODE_LODGING%>",
+            postTypeCodeTour: "<%=ConstCode.POST_TYPE_CODE_TOUR%>",
+            postTypeCodeRestaurant: "<%=ConstCode.POST_TYPE_CODE_RESTAURANT%>",
+            postTypeCodeEtc: "<%=ConstCode.POST_TYPE_CODE_ETC%>",
         }
     }());
 </script>

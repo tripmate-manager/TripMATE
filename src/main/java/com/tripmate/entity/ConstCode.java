@@ -26,9 +26,6 @@ public interface ConstCode {
     String DUPLICATION_CHECK_NICK_NAME = "20";
     String DUPLICATION_CHECK_EMAIL = "30";
 
-    String POST_TYPE_CODE = "CT001";
-    String POST_TYPE_CODE_LODGING = "10";
-
     String ATTRIBUTE_TYPE_CODE = "CT003";
     String ATTRIBUTE_TYPE_CODE_HASHTAG = "10";
     String ATTRIBUTE_TYPE_CODE_TRIP_THEME = "20";
@@ -46,4 +43,10 @@ public interface ConstCode {
     String NOTIFICATION_TYPE_CODE_TRIP_SCHEDULE = "10";
     String NOTIFICATION_TYPE_CODE_CHANGE_LEADER = "20";
     String NOTIFICATION_TYPE_CODE_INVITATION = "30";
+
+    String POST_TYPE_CODE = "CT001";
+    String POST_TYPE_CODE_LODGING = "10";
+    String POST_TYPE_CODE_TOUR = "20";
+    String POST_TYPE_CODE_RESTAURANT = "30";
+    String POST_TYPE_CODE_ETC = "90";
 }
