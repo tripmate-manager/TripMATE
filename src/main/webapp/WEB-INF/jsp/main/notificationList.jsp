@@ -1,6 +1,7 @@
 <%@ page import="com.tripmate.domain.NotificationVO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.tripmate.domain.MemberDTO" %>
+<%@ page import="com.tripmate.common.util.DateUtil" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/jsp/common/include/commonImport.jsp" %>
@@ -44,7 +45,7 @@
                 <input type=hidden id="memberNo" name="memberNo" value="<%=memberInfo.getMemberNo()%>">
                 <input type=hidden id="planNo" value="<%=notification.getPlanNo()%>">
                 <input type=hidden id="useYn" value="<%=notification.getUseYn()%>">
-                <div class="alertlist_list_item_time"><%=notification.getNotificationDateTime()%>
+                <div class="alertlist_list_item_time"><%=DateUtil.dateTimeFormat(notification.getNotificationDateTime())%>
                 </div>
 
                 <% if (ConstCode.NOTIFICATION_TYPE_CODE_TRIP_SCHEDULE.equals(notification.getNotificationTypeCode())) { %>

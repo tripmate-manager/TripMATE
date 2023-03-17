@@ -5,6 +5,9 @@ window.onhashchange = function () {
 };
 
 $(function () {
+    $("#icon_menu_home").hide();
+    $("#icon_menu_home_choice").show();
+
     $(".icon_arrow_left").on('click', function () {
         if (document.referrer === '') {
             history.back();
@@ -26,4 +29,8 @@ $(function () {
     $("#menu ul.nav li").click(function () {
         $("ul", this).slideToggle("fast");
     })
+
+    $("#bottom_menu_wishlist").on('click', function () {
+        $("#planMainForm").attr("action", "/wishlist/wishlist.trip").submit();
+    });
 });
