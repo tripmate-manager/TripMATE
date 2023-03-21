@@ -61,7 +61,7 @@ $(function () {
                     return false;
                 }
 
-                if ($("#postTitle").val().length >= 100) {
+                if ($("#postTitle").val().length > 100) {
                     popUpOpen("제목은 최대 100자까지 입력가능합니다.");
                     return false;
                 }
