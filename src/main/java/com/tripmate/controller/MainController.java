@@ -2,6 +2,7 @@ package com.tripmate.controller;
 
 
 import com.tripmate.common.exception.ApiCommonException;
+import com.tripmate.common.util.DateUtil;
 import com.tripmate.domain.InviteCodeVO;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.NotificationVO;
@@ -66,28 +67,7 @@ public class MainController {
         MemberDTO memberInfoSession = (MemberDTO) request.getSession().getAttribute(Const.MEMBER_INFO_SESSION);
 
         try {
-            List<NotificationVO> notificationApiResult = planApiService.searchNotificationList(String.valueOf(memberInfoSession.getMemberNo()));
-            List<NotificationVO> notificationList = new ArrayList<>();
-
-            for (NotificationVO notificationApiResultVO : notificationApiResult) {
-                NotificationVO notificationVO = NotificationVO.builder()
-                        .notificationNo(notificationApiResultVO.getNotificationNo())
-                        .planNo(notificationApiResultVO.getPlanNo())
-                        .planTitle(notificationApiResultVO.getPlanTitle())
-                        .leaderName(notificationApiResultVO.getLeaderName())
-                        .postNo(notificationApiResultVO.getPostNo())
-                        .postTitle(notificationApiResultVO.getPostTitle())
-                        .notificationTypeCode(notificationApiResultVO.getNotificationTypeCode())
-                        .senderNo(notificationApiResultVO.getSenderNo())
-                        .senderName(notificationApiResultVO.getSenderName())
-                        .receiverNo(notificationApiResultVO.getReceiverNo())
-                        .readDateTime(notificationApiResultVO.getReadDateTime())
-                        .notificationDateTime(notificationDateTimeFormat(notificationApiResultVO.getNotificationDateTime()))
-                        .useYn(notificationApiResultVO.getUseYn())
-                        .build();
-
-                notificationList.add(notificationVO);
-            }
+            List<NotificationVO> notificationList = planApiService.searchNotificationList(String.valueOf(memberInfoSession.getMemberNo()));
 
             request.setAttribute("notificationList", notificationList);
         } catch (Exception e) {
@@ -95,32 +75,6 @@ public class MainController {
         }
 
         return new ModelAndView("main/notificationList");
-    }
-
-    private String notificationDateTimeFormat(String dateTime) {
-        String result = null;
-
-        LocalDateTime nowDateTime = LocalDateTime.now();
-
-        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
-        LocalDateTime inputDateTime = LocalDateTime.parse(dateTime, inputFormatter);
-
-        Duration duration = Duration.between(inputDateTime, nowDateTime);
-        long diffDay = duration.getSeconds()/86400;
-        long diffHour = (duration.getSeconds()%86400)/3600;
-        long diffMinute = (duration.getSeconds() % 3600)/60;
-
-        if (diffDay > 1) {
-            result = dateTime.substring(0, 10).replaceAll("-", ".");
-        } else if (diffDay > 0) {
-            result = "어제";
-        } else if (diffHour > 0) {
-            result = diffHour + "시간 전";
-        } else if (diffHour == 0) {
-            result = diffMinute + "분 전";
-        }
-
-        return result;
     }
 
     @PostMapping("/notification")

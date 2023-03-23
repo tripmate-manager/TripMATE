@@ -4,6 +4,7 @@
 <%@ page import="com.tripmate.domain.MemberDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/jsp/common/include/commonImport.jsp" %>
+<%@ include file="/WEB-INF/jsp/common/bottomNavigationMenu.jsp" %>
 <%@ include file="/WEB-INF/jsp/plans/planMateNavigationMenu.jsp" %>
 
 <html>
@@ -29,8 +30,10 @@
 %>
 
 <div class="plan_main_wrap">
-    <form id="planMainForm">
+    <form id="planMainForm" method="post">
+        <% if (planVO != null) { %>
         <input type="hidden" class="plan_main_plan_no" name="planNo" value="<%=planVO.getPlanNo()%>">
+        <% } %>
         <div onclick="history.back();" class="page_cover"></div>
         <div class="plan_main_title_wrap">
             <div class="plan_main_title">
@@ -101,25 +104,6 @@
                 <img class="icon_arrow_right" src="<%=Const.STATIC_IMG_PATH%>/plans/icon_arrow_right_green.png"/>
             </div>
             <% } %>
-        </div>
-
-        <div class="bottom_navigation_wrap">
-            <div class="bottom_navigation_home_wrap">
-                <img class="icon_menu_home" src="<%=Const.STATIC_IMG_PATH%>/common/icon_menu_home_choice.png"/>
-                <div class="bottom_navigation_home">home</div>
-            </div>
-            <div class="bottom_navigation_wishlist_wrap">
-                <img class="icon_menu_wishlist" src="<%=Const.STATIC_IMG_PATH%>/common/icon_menu_wishlist.png"/>
-                <div class="bottom_navigation_wishlist">wishList</div>
-            </div>
-            <div class="bottom_navigation_checklist_wrap">
-                <img class="icon_menu_checklist" src="<%=Const.STATIC_IMG_PATH%>/common/icon_menu_checklist.png"/>
-                <div class="bottom_navigation_checklist">checkList</div>
-            </div>
-            <div class="bottom_navigation_account_wrap">
-                <img class="icon_menu_account" src="<%=Const.STATIC_IMG_PATH%>/common/icon_menu_account.png"/>
-                <div class="bottom_navigation_account">account</div>
-            </div>
         </div>
     </form>
 </div>
