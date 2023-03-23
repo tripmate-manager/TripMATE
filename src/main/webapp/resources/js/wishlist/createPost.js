@@ -93,7 +93,7 @@ $(function () {
             success: function (result) {
                 isAjaxProcessing = false;
                 if (result.code === constCode.global.resultCodeSuccess) {
-                    if (result.createPostNo != null && result.createPostNo !== "0") {
+                    if (result.createPostNo && result.createPostNo !== "0") {
                         popUpOpen("게시글이 위시리스트에 저장되었습니다.");
                         //todo: 추후 게시글 메인 페이지로 이동하도록 수정
                     }
