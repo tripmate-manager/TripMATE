@@ -22,7 +22,7 @@ public class PostDTO {
     private String memberNo;
 
     @NotBlank(message = "위시리스트 게시글 타입을 입력해주세요.")
-    @Pattern(regexp = "^[1239]0$", message = "게시글 타입코드는 10, 20, 30, 40만 입력 가능합니다.")
+    @Pattern(regexp = "^[1239]0$", message = "게시글 타입코드는 10, 20, 30, 90만 입력 가능합니다.")
     private String postTypeCode;
 
     @NotBlank(message = "플랜 본문 내용을 입력해주세요.")
