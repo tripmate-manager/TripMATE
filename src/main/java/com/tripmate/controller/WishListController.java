@@ -1,6 +1,9 @@
 package com.tripmate.controller;
 
 import com.tripmate.common.exception.ApiCommonException;
+import com.tripmate.domain.CommentDTO;
+import com.tripmate.domain.CommentVO;
+import com.tripmate.domain.DeleteCommentDTO;
 import com.tripmate.domain.PostDTO;
 import com.tripmate.domain.PostVO;
 import com.tripmate.entity.ApiResult;
@@ -9,8 +12,7 @@ import com.tripmate.service.apiservice.WishListApiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -74,4 +76,56 @@ public class WishListController {
         return result.toJson();
     }
 
+    @PostMapping("/postMain")
+    public ModelAndView viewPostMain(HttpServletRequest request, @RequestParam(value = "postNo") String postNo) {
+        try {
+            PostVO postInfo = wishListApiService.getPostInfo(postNo);
+            List<CommentVO> commentList = wishListApiService.searchCommentList(postNo);
+
+            request.setAttribute("postInfo", postInfo);
+            request.setAttribute("commentList", commentList);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+
+        return new ModelAndView("wishlist/postMain");
+    }
+
+    @PostMapping("/createComment")
+    public @ResponseBody String createComment(@Valid CommentDTO commentDTO) {
+        ApiResult result;
+
+        try {
+            String createCommentNo = wishListApiService.createComment(commentDTO);
+
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            result.put("createCommentNo", createCommentNo);
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
+    }
+
+    @PostMapping("/deleteComment")
+    public @ResponseBody String deleteComment(@Valid DeleteCommentDTO deleteCommentDTO) {
+        ApiResult result;
+
+        try {
+            boolean isDeleteCommentSuccess = wishListApiService.deleteComment(deleteCommentDTO);
+
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            result.put("isDeleteCommentSuccess", isDeleteCommentSuccess);
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
+    }
 }
