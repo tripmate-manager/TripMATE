@@ -29,7 +29,7 @@
         <% if (planNo != null) { %>
         <input type="hidden" name="planNo" value="<%=planNo%>">
         <% } %>
-        <input type="hidden" name="postNo" class="wishlist_post_no">
+        <input type="hidden" name="postNo" class="wishlist_post_no" id="wishlist_post_no">
 
         <img class="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png"
              onclick="history.back()"/>

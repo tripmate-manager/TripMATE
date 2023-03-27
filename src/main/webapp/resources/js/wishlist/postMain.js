@@ -35,9 +35,9 @@ function deleteComment(commentNo, commenterNo) {
 }
 
 $(function () {
-    const postNo = $(".postNo").val();
+    const postNo = $("#postNo").val();
     const commenterNo = $("#sessionMemberNo").val();
-    const commentText = $(".commentText");
+    const commentText = $("#commentText");
 
     let commentDepth = 1;
     let commentGroupNo = 0;

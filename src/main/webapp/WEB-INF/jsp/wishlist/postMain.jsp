@@ -92,7 +92,7 @@
 
     <form name="commentForm" id="commentForm" method="post">
         <% if (postInfo != null) { %>
-        <input type=hidden class="postNo" name="postNo" value=<%=postInfo.getPostNo()%>>
+        <input type=hidden class="postNo" id="postNo" name="postNo" value=<%=postInfo.getPostNo()%>>
         <% } %>
 
         <div class="wishlist_detail_comment_wrap">
@@ -128,9 +128,11 @@
                 <input type=hidden class="commentGroupNo2" name="commentGroupNo2" value=<%=commentVO.getCommentGroupNo2()%>>
                 <input type=hidden class="commentDepth" name="commentDepth" value=<%=commentVO.getCommentDepth()%>>
                 <img class="icon_arrow_comment" src="<%=Const.STATIC_IMG_PATH%>/wishlist/icon_arrow_comment.png"/>
-                <div class="comment_reply_contents_wrap"
-                        <% if (COMMENT_DEPTH_3.equals(commentVO.getCommentDepth())) { %>
-                     id="comment_reply" style='background-color: #EFF5F4'<% } %>>
+                <% if (COMMENT_DEPTH_3.equals(commentVO.getCommentDepth())) { %>
+                <div class="depth3_comment_reply_contents_wrap" name="comment_reply_contents_wrap" id="comment_reply">
+                <% } else { %>
+                <div class="comment_reply_contents_wrap" name="comment_reply_contents_wrap">
+                <% } %>
                     <div class="comment_reply_title_wrap">
                         <img class="icon_comment_rectangle"
                              src="<%=Const.STATIC_IMG_PATH%>/wishlist/icon_comment_rectangle.png"/>
@@ -151,7 +153,7 @@
         } %>
         </div>
         <div class="wishlist_detail_comment_input_wrap">
-            <input type="text" class="commentText" name="commentText" placeholder="댓글을 입력하세요">
+            <input type="text" class="commentText" id="commentText" name="commentText" placeholder="댓글을 입력하세요">
             <img class="icon_send" src="<%=Const.STATIC_IMG_PATH%>/wishlist/icon_send.png"/>
         </div>
     </form>

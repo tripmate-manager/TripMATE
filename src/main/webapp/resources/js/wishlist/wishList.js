@@ -12,7 +12,7 @@ $(function () {
 
     $(".wishlist_item_wrap").on('click', function () {
         const planNo = $(this).find("#wishlist_item_post_no").attr("value").toString();
-        $(".wishlist_post_no").val(planNo);
+        $("#wishlist_post_no").val(planNo);
         $("#wishListForm").attr("action", "/wishlist/postMain.trip").submit();
     });
 });
