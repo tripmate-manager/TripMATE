@@ -44,13 +44,17 @@
         <img class="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png"
              onclick="history.back()"/>
         <div class="wishlist_detail_title">WishList</div>
-        <details class="flag">
-            <summary class="ellipsis"></summary>
-            <div class="report">
-                <p class="post_menu_delete" onclick="">게시글 수정하기</p>
-                <p class="post_menu_delete" onclick="">게시글 삭제하기</p>
-            </div>
-        </details>
+        <% if (postInfo != null && memberInfo != null) {
+            if (postInfo.getRegistrationNo().equals(String.valueOf(memberInfo.getMemberNo()))) { %>
+            <details class="flag">
+                <summary class="ellipsis"></summary>
+                <div class="report">
+                    <p class="post_menu_delete" onclick="editPost()">수정하기</p>
+                    <p class="post_menu_delete" onclick="deletePost()">삭제하기</p>
+                </div>
+            </details>
+        <% }
+        }%>
     </div>
     <div class="wishlist_detail_contents_wrap">
         <% if (postInfo != null) { %>
