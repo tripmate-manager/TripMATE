@@ -30,12 +30,13 @@ $(function () {
                 case constCode.global.postTypeCodeTour:
                     $(".create_post_spot_info_wrap").show();
                     $("#input_amount_wrap").show();
-                    $("#input_tour_business_hours_wrap").show();
+                    $("#input_business_hours_wrap").show();
                     break;
                 case constCode.global.postTypeCodeRestaurant:
                     $(".create_post_spot_info_wrap").show();
                     $("#input_main_menu_wrap").show();
-                    $("#input_restaurant_business_hours_wrap").show();
+                    $("#input_business_hours_wrap").show();
+                    $("#businessHours_title").title("영업 시간");
                     break;
                 case constCode.global.postTypeCodeEtc:
                     $("#input_title_wrap").show();

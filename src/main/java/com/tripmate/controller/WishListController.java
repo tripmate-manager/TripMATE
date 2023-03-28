@@ -128,4 +128,55 @@ public class WishListController {
 
         return result.toJson();
     }
+
+    @PostMapping("/editPost")
+    public ModelAndView viewEditPost(HttpServletRequest request, @RequestParam(value = "postNo") String postNo) {
+        try {
+            PostVO postInfo = wishListApiService.getPostInfo(postNo);
+
+            request.setAttribute("postInfo", postInfo);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+
+        return new ModelAndView("wishlist/editPost");
+    }
+
+    @PostMapping("/editPost/callApi")
+    public @ResponseBody String editPost(HttpServletRequest request, @Valid PostDTO postDTO) {
+        ApiResult result;
+
+        try {
+            boolean isUpdatePostSuccess = wishListApiService.updatePost(postDTO);
+
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            result.put("isUpdatePostSuccess", isUpdatePostSuccess);
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
+    }
+
+    @PostMapping("/deletePost")
+    public @ResponseBody String deletePost(@RequestParam(value = "postNo") String postNo) {
+        ApiResult result;
+
+        try {
+            boolean isDeletePostSuccess = wishListApiService.deletePost(postNo);
+
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            result.put("isDeletePostSuccess", isDeletePostSuccess);
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
+    }
 }

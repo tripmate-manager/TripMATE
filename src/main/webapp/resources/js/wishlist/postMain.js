@@ -1,5 +1,46 @@
 let isAjaxProcessing = false;
 
+function editPost() {
+    $("#commentForm").attr("action", "/wishlist/editPost.trip").submit();
+}
+
+function deletePost() {
+    checkPopUpOpen("현재 게시글을 삭제하시겠습니까?");
+    document.querySelector(".check_popup_btn_ok").setAttribute('onClick', null);
+    document.querySelector(".check_popup_btn_ok").addEventListener('click', () => {
+        if (isAjaxProcessing) {
+            popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
+            return;
+        } else {
+            isAjaxProcessing = true;
+        }
+
+        $.ajax({
+            url: "/wishlist/deletePost.trip",
+            type: "post",
+            dataType: 'json',
+            data: {
+                postNo: document.getElementById("postNo").value
+            },
+            success: function (result) {
+                isAjaxProcessing = false;
+
+                if (result.code === constCode.global.resultCodeSuccess) {
+                    if (result.isDeletePostSuccess === true) {
+                        $("#commentForm").attr("action", "/wishlist/wishlist.trip").submit();
+                    }
+                } else {
+                    popUpOpen(result.message);
+                }
+            },
+            error: function (error) {
+                isAjaxProcessing = false;
+                popUpOpen("처리 중 오류가 발생하였습니다.");
+            }
+        })
+    })
+}
+
 function deleteComment(commentNo, commenterNo) {
     if (isAjaxProcessing) {
         popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
@@ -54,7 +95,7 @@ $(function () {
         commentDepth = Number($(this).find(".commentDepth").val()) + 1;
     })
 
-    $(".comment_reply_contents_wrap").on('click', function () {
+    $("div[name=comment_reply_contents_wrap]").on('click', function () {
         if ($(this).parent().find("#comment_reply").length > 0) {
             return;
         }
@@ -67,20 +108,20 @@ $(function () {
 
     commentText.focus(function () {
         if (commentSelected) {
-            commentSelected.css('border','solid 0.5rem #DAF2F0');
+            commentSelected.css('border', 'solid 0.5rem #DAF2F0');
         }
     });
 
     commentText.blur(function (element) {
         if (commentSelected) {
-            commentSelected.css('border','');
+            commentSelected.css('border', '');
         }
         commentSelected = null;
     });
 
     commentText.on('click', function () {
         if (commentSelected) {
-            commentSelected.css('border','');
+            commentSelected.css('border', '');
         }
         commentSelected = null;
         commentDepth = 1;

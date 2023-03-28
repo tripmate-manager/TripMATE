@@ -58,6 +58,7 @@
     </div>
     <div class="wishlist_detail_contents_wrap">
         <% if (postInfo != null) { %>
+        <div id="postTypeCode" value="<%=postInfo.getPostTypeCode()%>" hidden></div>
         <div class="contents_wrap">
             <div class="post_title"><%=postInfo.getPostTitle()%>
             </div>
@@ -92,6 +93,7 @@
 
     <form name="commentForm" id="commentForm" method="post">
         <% if (postInfo != null) { %>
+        <input type=hidden class="planNo" id="planNo" name="planNo" value=<%=postInfo.getPlanNo()%>>
         <input type=hidden class="postNo" id="postNo" name="postNo" value=<%=postInfo.getPostNo()%>>
         <% } %>
 
@@ -128,6 +130,7 @@
                 <input type=hidden class="commentGroupNo2" name="commentGroupNo2" value=<%=commentVO.getCommentGroupNo2()%>>
                 <input type=hidden class="commentDepth" name="commentDepth" value=<%=commentVO.getCommentDepth()%>>
                 <img class="icon_arrow_comment" src="<%=Const.STATIC_IMG_PATH%>/wishlist/icon_arrow_comment.png"/>
+
                 <% if (COMMENT_DEPTH_3.equals(commentVO.getCommentDepth())) { %>
                 <div class="depth3_comment_reply_contents_wrap" name="comment_reply_contents_wrap" id="comment_reply">
                 <% } else { %>
@@ -144,8 +147,7 @@
                             </div>
                         </details>
                     </div>
-                    <div class="wishlist_comment_contents"><%=commentText%>
-                    </div>
+                    <div class="wishlist_comment_contents"><%=commentText%></div>
                 </div>
             </div>
             <% }
