@@ -13,7 +13,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface WishListService {
-    @POST("v1/wishlist/create-post")
+    @POST("v1/wishlist/post")
     Call<ResponseWrapper<String>> createPost(@Body PostDTO postDTO);
     @GET("v1/wishlist/{planNo}")
     Call<ResponseWrapper<PostVO>> searchWishList(@Path("planNo") String planNo);
