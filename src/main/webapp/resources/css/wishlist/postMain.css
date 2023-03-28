@@ -224,7 +224,15 @@ body {
     background-color: #f1f1f1;
     border-radius: 0.5rem;
 }
-.wishlist_detail_wrap .wishlist_detail_comment_wrap .comment_reply_wrap .comment_reply_contents_wrap .comment_reply_title_wrap {
+.wishlist_detail_wrap .wishlist_detail_comment_wrap .comment_reply_wrap .depth3_comment_reply_contents_wrap {
+    box-sizing: border-box;
+    padding: 1rem;
+    width: 94%;
+    height: 100%;
+    background-color: #EFF5F4;
+    border-radius: 0.5rem;
+}
+.wishlist_detail_wrap .wishlist_detail_comment_wrap .comment_reply_wrap .comment_reply_title_wrap {
     margin-bottom: 0.85rem;
     display: flex;
     align-items: flex-start;

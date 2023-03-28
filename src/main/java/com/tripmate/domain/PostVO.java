@@ -48,6 +48,8 @@ public class PostVO {
 
     private String remark;
 
+    private String registrationNo;
+
     private String registrationDateTime;
 
     private int commentCnt;
