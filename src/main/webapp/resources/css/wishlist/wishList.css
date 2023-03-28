@@ -28,7 +28,7 @@ body {
 .wishlist_wrap #wishListForm {
     width: 100%;
 }
-.wishlist_wrap #wishListForm .wishlist_title_wrap {
+.wishlist_wrap .wishlist_title_wrap {
     margin: 0rem 0.9rem 1.2rem 1.975rem;
     width: 100%;
     height: 3.5rem;
@@ -38,7 +38,7 @@ body {
     position: static;
     justify-content: center;
 }
-.wishlist_wrap #wishListForm .icon_arrow_left {
+.wishlist_wrap .icon_arrow_left {
     width: 1.7165rem;
     height: 2.9167rem;
     object-fit: contain;
@@ -47,7 +47,7 @@ body {
     position: fixed;
     left: 2rem;
 }
-.wishlist_wrap #wishListForm .wishlist_title_wrap .wishlist_title {
+.wishlist_wrap .wishlist_title_wrap .wishlist_title {
     margin-bottom: 0.3rem;
     align-items: center;
     justify-items: center;
@@ -60,7 +60,7 @@ body {
     white-space: nowrap;
     flex-shrink: 0;
 }
-.wishlist_wrap #wishListForm .wishlist_title_wrap .icon_write {
+.wishlist_wrap .wishlist_title_wrap .icon_write {
     margin-right: 0.2917rem;
     width: 2.9167rem;
     height: 2.9168rem;
@@ -70,7 +70,7 @@ body {
     position: fixed;
     right: 1rem
 }
-.wishlist_wrap #wishListForm .wishlist_divi_line {
+.wishlist_wrap .wishlist_divi_line {
     width: 100%;
     height: 0.1rem;
     background-color: #646464;
@@ -78,7 +78,7 @@ body {
 }
 .wishlist_wrap #wishListForm .wishlist_item_list_wrap {
     box-sizing: border-box;
-    padding: 0.7rem 0.7rem 16.6rem 0.8rem;
+    padding: 0.7rem;
     width: 100%;
     align-items: center;
     display: flex;
@@ -86,7 +86,6 @@ body {
     flex-shrink: 0;
 }
 .wishlist_wrap #wishListForm .wishlist_item_list_wrap .wishlist_item_wrap {
-    margin-bottom: 1.5rem;
     box-sizing: border-box;
     padding: 0rem 1rem 1rem 0.9rem;
     width: calc(100% - 2rem);
@@ -144,14 +143,17 @@ body {
     flex-shrink: 0;
 }
 .wishlist_wrap #wishListForm .wishlist_item_list_wrap .wishlist_item_wrap .wishlist_post_contents {
+    width: 100%;
+    height: 1.4rem;
+    overflow: hidden;
     display: flex;
     font-size: 1.2rem;
     font-weight: 500;
     line-height: 1.3625;
     color: #1e1e1e;
     font-family: Noto Sans, 'Source Sans Pro';
-    white-space: nowrap;
     flex-shrink: 0;
+    text-overflow: ellipsis;
 }
 .wishlist_wrap #wishListForm .wishlist_item_list_wrap .wishlist_item_wrap .wishlist_item_info_wrap {
     width: 100%;
