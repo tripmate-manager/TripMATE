@@ -2,7 +2,6 @@ package com.tripmate.controller;
 
 
 import com.tripmate.common.exception.ApiCommonException;
-import com.tripmate.common.util.DateUtil;
 import com.tripmate.domain.InviteCodeVO;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.NotificationVO;
@@ -21,10 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
