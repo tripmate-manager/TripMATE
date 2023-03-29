@@ -52,7 +52,7 @@ $(function () {
                     return false;
                 }
 
-                if ($("#remark").val().length >= 200) {
+                if ($("#remark").val().length > 200) {
                     popUpOpen("특이사항은 최대 200자까지 입력가능합니다.");
                     return false;
                 }
