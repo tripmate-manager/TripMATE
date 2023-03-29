@@ -81,12 +81,14 @@
         </div>
         <% } %>
 
+        <% if (postInfo.getInformationUrl() != null && postInfo.getInformationUrl().trim().length() != 0) { %>
         <div class="contents_wrap">
             <img class="icon_chain" src="<%=Const.STATIC_IMG_PATH%>/wishlist/icon_chain.png"/>
             <div class="post_info_url"><%=postInfo.getInformationUrl()%>
             </div>
         </div>
-        <% } %>
+        <% }
+        }%>
     </div>
 
     <div class="wishlist_detail_divi_line"></div>
