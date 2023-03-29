@@ -23,17 +23,18 @@ $(function () {
             $("div[class='create_post_input_item_wrap']").hide();
             $("#input_information_url_wrap").show();
 
+            if (constCode.global.postTypeCodeEtc !== postTypeCodeSelected) {
+                $(".create_post_spot_info_wrap").show();
+                $("#spotName").attr("disabled", false);
+                $("#postTitle").attr("disabled", true);
+            }
+
             switch (postTypeCodeSelected) {
-                case constCode.global.postTypeCodeLodging:
-                    $(".create_post_spot_info_wrap").show();
-                    break;
                 case constCode.global.postTypeCodeTour:
-                    $(".create_post_spot_info_wrap").show();
                     $("#input_amount_wrap").show();
                     $("#input_business_hours_wrap").show();
                     break;
                 case constCode.global.postTypeCodeRestaurant:
-                    $(".create_post_spot_info_wrap").show();
                     $("#input_main_menu_wrap").show();
                     $("#input_business_hours_wrap").show();
                     $("#businessHours_title").title("영업 시간");
@@ -41,6 +42,8 @@ $(function () {
                 case constCode.global.postTypeCodeEtc:
                     $("#input_title_wrap").show();
                     $("#input_remark_wrap").show();
+                    $("#postTitle").attr("disabled", false);
+                    $("#spotName").attr("disabled", true);
                     break;
             }
         }
