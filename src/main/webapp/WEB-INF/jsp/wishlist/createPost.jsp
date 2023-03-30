@@ -43,6 +43,8 @@
             </select>
         </div>
         <form name="createPostForm" id="createPostForm" method="post">
+            <input type=hidden name="postNo" id="postNo">
+
             <% if (memberInfo != null) { %>
             <input type=hidden name="memberNo" value=<%=memberInfo.getMemberNo()%>>
             <% } %>
@@ -53,10 +55,10 @@
             <div class="create_post_spot_info_wrap" id="input_spot_info_wrap">
                 <div class="create_post_sub_title">장소 정보*</div>
                 <div class="create_post_spot_title_wrap">
-                    <input type="text" name="postTitle" id="spotName" class="input_post_spot_name" placeholder="장소명" disabled>
+                    <input type="text" name="postTitle" id="spotName" class="input_post_spot_name" placeholder="장소명">
                     <div class="create_post_search">검색</div>
                 </div>
-                <input type="text" name="spotAddress" id="spotAddress" class="input_create_post_text" placeholder="위치" disabled>
+                <input type="text" name="spotAddress" id="spotAddress" class="input_create_post_text" placeholder="위치">
             </div>
 
             <div class="create_post_input_item_wrap" id="input_title_wrap" style="display: none">
@@ -72,18 +74,14 @@
                 <div class="create_post_sub_title">이용요금</div>
                 <input type="text" name="amount" id="amount" class="input_create_post_text">
             </div>
-            <div class="create_post_input_item_wrap" id="input_tour_business_hours_wrap" style="display: none">
-                <div class="create_post_sub_title">이용 가능 시간</div>
-                <input type="text" name="businessHours" id="tourBusinessHours" class="input_create_post_text">
+            <div class="create_post_input_item_wrap" id="input_business_hours_wrap" style="display: none">
+                <div class="create_post_sub_title" id="businessHours_title">이용 가능 시간</div>
+                <input type="text" name="businessHours" id="businessHours" class="input_create_post_text">
             </div>
 
             <div class="create_post_input_item_wrap" id="input_main_menu_wrap" style="display: none">
                 <div class="create_post_sub_title">대표 메뉴</div>
-                <input type="text" name="mainMenu" id="businessHours" class="input_create_post_text">
-            </div>
-            <div class="create_post_input_item_wrap" id="input_restaurant_business_hours_wrap" style="display: none">
-                <div class="create_post_sub_title">영업 시간</div>
-                <input type="text" name="businessHours" id="restaurantBusinessHours" class="input_create_post_text">
+                <input type="text" name="mainMenu" id="mainMenu" class="input_create_post_text">
             </div>
 
             <div class="create_post_input_item_wrap" id="input_information_url_wrap">

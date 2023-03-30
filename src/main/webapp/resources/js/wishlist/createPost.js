@@ -23,23 +23,27 @@ $(function () {
             $("div[class='create_post_input_item_wrap']").hide();
             $("#input_information_url_wrap").show();
 
+            if (constCode.global.postTypeCodeEtc !== postTypeCodeSelected) {
+                $(".create_post_spot_info_wrap").show();
+                $("#spotName").attr("disabled", false);
+                $("#postTitle").attr("disabled", true);
+            }
+
             switch (postTypeCodeSelected) {
-                case constCode.global.postTypeCodeLodging:
-                    $(".create_post_spot_info_wrap").show();
-                    break;
                 case constCode.global.postTypeCodeTour:
-                    $(".create_post_spot_info_wrap").show();
                     $("#input_amount_wrap").show();
-                    $("#input_tour_business_hours_wrap").show();
+                    $("#input_business_hours_wrap").show();
                     break;
                 case constCode.global.postTypeCodeRestaurant:
-                    $(".create_post_spot_info_wrap").show();
                     $("#input_main_menu_wrap").show();
-                    $("#input_restaurant_business_hours_wrap").show();
+                    $("#input_business_hours_wrap").show();
+                    $("#businessHours_title").title("영업 시간");
                     break;
                 case constCode.global.postTypeCodeEtc:
                     $("#input_title_wrap").show();
                     $("#input_remark_wrap").show();
+                    $("#postTitle").attr("disabled", false);
+                    $("#spotName").attr("disabled", true);
                     break;
             }
         }
@@ -66,7 +70,7 @@ $(function () {
                     return false;
                 }
 
-                if ($("#remark").val().length >= 200) {
+                if ($("#remark").val().length > 200) {
                     popUpOpen("특이사항은 최대 200자까지 입력가능합니다.");
                     return false;
                 }
@@ -95,7 +99,10 @@ $(function () {
                 if (result.code === constCode.global.resultCodeSuccess) {
                     if (result.createPostNo && result.createPostNo !== "0") {
                         popUpOpen("게시글이 위시리스트에 저장되었습니다.");
-                        //todo: 추후 게시글 메인 페이지로 이동하도록 수정
+                        $(".popup_close_btn").attr("onclick", null).on('click', function () {
+                            $("#postNo").val(result.createPostNo);
+                            $("#createPostForm").attr("action", "/wishlist/postMain.trip").submit();
+                        });
                     }
                 } else {
                     popUpOpen(result.message);

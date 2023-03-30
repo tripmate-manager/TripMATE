@@ -166,4 +166,52 @@ public class WishListApiServiceImpl implements WishListApiService {
 
         return result;
     }
+
+    @Override
+    public boolean updatePost(PostDTO postDTO) throws Exception {
+        Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(WishListService.class).updatePost(postDTO.getPostNo(), postDTO);
+        boolean result;
+
+        ResponseWrapper<Boolean> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
+        }
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData() == null) {
+                throw new IOException("response's data is Empty");
+            }
+            result = response.getData().get(0);
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new IOException(response.getMessage());
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean deletePost(String postNo) throws Exception {
+        Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(WishListService.class).deletePost(postNo);
+        boolean result;
+
+        ResponseWrapper<Boolean> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
+        }
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData() == null) {
+                throw new IOException("response's data is Empty");
+            }
+            result = response.getData().get(0);
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new IOException(response.getMessage());
+        }
+
+        return result;
+    }
 }

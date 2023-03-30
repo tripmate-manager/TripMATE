@@ -15,4 +15,6 @@ public interface WishListApiService {
     String createComment(CommentDTO commentDTO) throws Exception;
     List<CommentVO> searchCommentList(String postNo) throws Exception;
     boolean deleteComment(DeleteCommentDTO deleteCommentDTO) throws Exception;
+    boolean updatePost(PostDTO postDTO) throws Exception;
+    boolean deletePost(String postNo) throws Exception;
 }

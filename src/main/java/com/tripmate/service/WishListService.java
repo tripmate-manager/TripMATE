@@ -8,8 +8,10 @@ import com.tripmate.domain.PostVO;
 import com.tripmate.domain.ResponseWrapper;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface WishListService {
@@ -25,4 +27,8 @@ public interface WishListService {
     Call<ResponseWrapper<CommentVO>> searchCommentList(@Path("postNo") String postNo);
     @POST("v1/wishlist/comment/{commentNo}")
     Call<ResponseWrapper<Boolean>> deleteComment(@Path("commentNo") String commentNo, @Body DeleteCommentDTO deleteCommentDTO);
+    @PUT("v1/wishlist/post/{postNo}")
+    Call<ResponseWrapper<Boolean>> updatePost(@Path("postNo") String postNo, @Body PostDTO postDTO);
+    @DELETE("v1/wishlist/post/{postNo}")
+    Call<ResponseWrapper<Boolean>> deletePost(@Path("postNo") String postNo);
 }

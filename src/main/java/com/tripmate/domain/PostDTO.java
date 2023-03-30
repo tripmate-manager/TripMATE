@@ -15,6 +15,8 @@ import javax.validation.constraints.Pattern;
 @Getter
 @Setter
 public class PostDTO {
+    private String postNo;
+
     @NotBlank(message = "플랜 번호를 입력해주세요.")
     private String planNo;
 
