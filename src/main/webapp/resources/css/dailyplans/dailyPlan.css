@@ -1,0 +1,370 @@
+
+html {
+    font-size:62.5%;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+ul, li {
+    list-style: none;
+}
+input {
+    border: none;
+}
+body {
+    width: 100%;
+}.dailyplan_wrap {
+     box-sizing: border-box;
+     padding-top: 1.2rem;
+     width: 100%;
+     overflow: hidden;
+     position: relative;
+     align-items: center;
+     display: flex;
+     flex-direction: column;
+     background-color: #ffffff;
+ }
+.dailyplan_wrap #dailyplanForm {
+    width: 100%;
+}
+.dailyplan_wrap .dailyplan_title_wrap {
+    margin: 0rem 0.9rem 1.2rem 1.975rem;
+    width: 100%;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    position: static;
+    justify-content: center;
+}
+.dailyplan_wrap .icon_arrow_left {
+    width: 1.7165rem;
+    height: 2.9167rem;
+    object-fit: contain;
+    vertical-align: top;
+    flex-shrink: 0;
+    position: fixed;
+    left: 2rem;
+}
+.dailyplan_wrap .dailyplan_title_wrap .dailyplan_title {
+    margin-bottom: 0.3rem;
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.dailyplan_wrap .dailyplan_divi_line {
+    width: 100%;
+    height: 0.1rem;
+    background-color: #646464;
+    flex-shrink: 0;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap {
+    box-sizing: border-box;
+    padding: 0.7rem;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_item_sub_info_wrap {
+    margin: 0rem 0.525rem 0.75rem 0rem;
+    display: flex;
+    align-items: flex-end;
+    flex-shrink: 0;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_item_sub_info_wrap .dailyplan_item_noti_time {
+    margin: 0rem 25.4rem 0.05rem 0rem;
+    display: flex;
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #393c88;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_item_sub_info_wrap .dailyplan_item_distance {
+    margin-right: 0.325rem;
+    display: flex;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #1e1e1e;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_item_sub_info_wrap .icon_bell {
+    margin: 0 0 0.1rem 1rem;
+    width: 1.5rem;
+    height: 1.6671rem;
+    left: 5.6rem;
+    object-fit: contain;
+    vertical-align: top;
+    position: fixed;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_item_sub_info_wrap .icon_spot {
+    margin-bottom: 0.1001rem;
+    width: 1.25rem;
+    height: 1.9988rem;
+    object-fit: contain;
+    vertical-align: top;
+    flex-shrink: 0;
+    margin-right: 0.6rem;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_item_wrap {
+    box-sizing: border-box;
+    padding: 0rem 1rem 1rem 0.9rem;
+    width: calc(100% - 2rem);
+    height: 11.3rem;
+    display: flex;
+    flex-direction: column;
+    border: solid 0.1rem #393c88;
+    background-color: #ffffff;
+    flex-shrink: 0;
+    position: static;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_item_wrap .dailyplan_item_title_wrap {
+    margin-bottom: 0.55rem;
+    height: 3.2rem;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_item_wrap .dailyplan_item_title_wrap .dailyplan_post_title {
+    display: flex;
+    width: calc(100% - 8rem);
+    font-size: 1.8rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.dailyplan_wrap .dailyplan_title_wrap .dailyplan_rate_wrap {
+    width: 5.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    position: fixed;
+    right: 1rem;
+}
+.dailyplan_wrap .dailyplan_title_wrap .dailyplan_rate_wrap .dailyplan_rate_box {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0.05rem;
+    background-color: #eeeded;
+    border-radius: 0.5rem;
+}
+.dailyplan_wrap .dailyplan_title_wrap .dailyplan_rate_wrap .dailyplan_rate_box .dailyplan_rate_number {
+    width: 2rem;
+    height: 2.4rem;
+    position: absolute;
+    left: 0.8rem;
+    top: 0;
+    display: flex;
+    font-size: 1.7rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #646464;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+}
+.dailyplan_wrap .dailyplan_title_wrap .dailyplan_rate_wrap .dailyplan_rate_box .dailyplan_rate_percent {
+    width: 1.5rem;
+    height: 2.4rem;
+    position: absolute;
+    left: 3.3rem;
+    top: 0;
+    display: flex;
+    font-size: 1.7rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #609690;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_item_wrap .dailyplan_item_title_wrap .dailyplan_post_type {
+    width: 5rem;
+    margin-right: 1rem;
+    height: calc(100% - 0.9rem);
+    display: flex;
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #96608a;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    align-items: center;
+    justify-content: center;
+    border: solid 0.1rem #96608a;
+    box-sizing: border-box;
+    background-color: #ffe6f9;
+    border-radius: 1rem;
+    flex-shrink: 0;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_item_wrap .dailyplan_item_title_wrap .icon_bookmark_unfilled {
+    margin-bottom: 0.7rem;
+    width: 1.875rem;
+    height: 2.5rem;
+    object-fit: contain;
+    vertical-align: top;
+    flex-shrink: 0;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_item_wrap .dailyplan_post_contents {
+    width: 100%;
+    height: 1.4rem;
+    overflow: hidden;
+    display: flex;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #1e1e1e;
+    font-family: Noto Sans, 'Source Sans Pro';
+    flex-shrink: 0;
+    text-overflow: ellipsis;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_item_wrap .dailyplan_item_info_wrap {
+    width: 100%;
+    display: flex;
+    flex-shrink: 0;
+    bottom: 1rem;
+    position: static;
+    margin-top: 3rem;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_item_wrap .dailyplan_item_info_wrap .icon_location {
+    margin: 0rem 0.4rem 0.1rem 0rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    object-fit: contain;
+    vertical-align: top;
+    flex-shrink: 0;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_item_wrap .dailyplan_item_info_wrap .dailyplan_post_address {
+    margin-right: 17.2rem;
+    width: calc(100% - 27rem);
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #1e1e1e;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_item_wrap .dailyplan_item_info_wrap .dailyplan_post_date {
+    margin: 0.2rem 0.7rem 0rem 0rem;
+    display: flex;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #1e1e1e;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_item_wrap .dailyplan_item_info_wrap .icon_comment {
+    margin: 0.1rem 0.2rem 0rem 0rem;
+    width: 1.5002rem;
+    height: 1.3125rem;
+    object-fit: contain;
+    vertical-align: top;
+    flex-shrink: 0;
+    position: absolute;
+    right: 4rem;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_item_wrap .dailyplan_item_info_wrap .dailyplan_post_comment_count {
+    display: flex;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #646464;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+    position: absolute;
+    right: 3rem;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_leader_wrap {
+    margin: 1rem 26.7rem 0 0.318rem;
+    width: calc(100% - 27.0177rem);
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_leader_wrap .icon_person_check {
+    margin: 0rem 0.733rem 0rem 0rem;
+    width: 1.249rem;
+    height: 1.3333rem;
+    object-fit: contain;
+    vertical-align: top;
+    flex-shrink: 0;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_leader_wrap .dailyplan_leader_nickname {
+    display: flex;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #393c88;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_item_review_wrap {
+    margin-right: 0.1rem;
+    box-sizing: border-box;
+    padding: 0.85rem 0.975rem 1.15rem 0.8rem;
+    width: calc(100% - 2rem);
+    display: flex;
+    align-items: center;
+    background-color: #f3f3f3;
+    flex-shrink: 0;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_item_review_wrap .dailyplan_item_review {
+    width: 5rem;
+    margin-right: 24.5894rem;
+    display: flex;
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.dailyplan_wrap #dailyplanForm .dailyplan_item_list_wrap .dailyplan_item_review_wrap .icon_arrow_right {
+    margin-bottom: 0.4rem;
+    width: 2rem;
+    height: 1.5rem;
+    object-fit: contain;
+    vertical-align: top;
+    flex-shrink: 0;
+    right: 0rem;
+    position: absolute;
+    margin-right: 2.5rem;
+}
+input[class="checkboxBookmark"]+label {
+    display: block;
+    margin-bottom: 0.7rem;
+    width: 1.875rem;
+    height: 2.5rem;
+    background: url('/resources/images/wishlist/icon_bookmark_filled.png') no-repeat 0 0px / contain;
+}
+
+input[class='checkboxBookmark']:checked+label {
+    background: url('/resources/images/wishlist/icon_bookmark_unfilled.png') no-repeat 0 1px / contain;
+}
+
+input[class="checkboxBookmark"] {
+    display: none;
+}
