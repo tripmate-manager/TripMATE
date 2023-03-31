@@ -13,14 +13,18 @@
     </jsp:include>
     <jsp:include page="/WEB-INF/jsp/common/messagePopUp.jsp"/>
     <jsp:include page="/WEB-INF/jsp/common/checkPopUp.jsp"/>
+    <jsp:include page="/WEB-INF/jsp/dailyplans/addDailyPlanPopUp.jsp"/>
     <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/wishlist/wishList.css"/>
     <script src="<%=Const.STATIC_JS_PATH%>/wishlist/wishList.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/common/popUp.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/common/checkPopUp.js"></script>
+    <script src="<%=Const.STATIC_JS_PATH%>/plans/addDailyPlanPopUp.js"></script>
 </head>
 <body>
 <%
     String planNo = (String) request.getAttribute("planNo");
+    String tripStartDate = (String) request.getAttribute("tripStartDate");
+    String tripTerm = (String) request.getAttribute("tripTerm");
     List<PostVO> wishList = (List<PostVO>) request.getAttribute("wishList");
 %>
 
@@ -35,8 +39,10 @@
 
     <% if (wishList != null) { %>
     <form name="wishListForm" id="wishListForm" method="post">
-        <% if (planNo != null) { %>
-        <input type="hidden" name="planNo" value="<%=planNo%>">
+        <% if (planNo != null && tripStartDate != null && tripTerm != null) { %>
+        <input type="hidden" name="planNo" id="wishlist_plan_no" value="<%=planNo%>">
+        <input type="hidden" name="tripStartDate" id="wishlist_trip_start_date" value="<%=tripStartDate%>">
+        <input type="hidden" name="tripTerm" id="wishlist_trip_term" value="<%=tripTerm%>">
         <% } %>
         <input type="hidden" name="postNo" class="wishlist_post_no" id="wishlist_post_no">
 
@@ -53,9 +59,6 @@
                         <% } else if (ConstCode.POST_TYPE_CODE_RESTAURANT.equals(postVO.getPostTypeCode())) { %>식당
                         <% } else { %>기타<% } %>
                     </div>
-                    <input type="checkbox" name="bookmarkYn" id="checkboxBookmark" class="checkboxBookmark"
-                        <% if (postVO.getMappingYn().equals(Const.Y)) { %> checked <% } %>>
-                    <label for="checkboxBookmark"></label>
                 </div>
                 <div class="wishlist_post_contents"><%=postVO.getPostContents()%>
                 </div>
@@ -72,6 +75,10 @@
                     </div>
                 </div>
             </div>
+            <input type="checkbox" name="bookmarkYn" id="checkboxBookmark<%=postVO.getPostNo()%>" class="checkboxBookmark"
+                   value="<%=postVO.getPostNo()%>" onclick='bookMark("<%=postVO.getPostNo()%>")'
+                <% if (postVO.getMappingYn().equals(Const.Y)) { %> checked <% } %> >
+            <label for="checkboxBookmark<%=postVO.getPostNo()%>"></label>
         </div>
         <% } %>
     </form>

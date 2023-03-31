@@ -33,6 +33,8 @@
     <form id="planMainForm" method="post">
         <% if (planVO != null) { %>
         <input type="hidden" class="plan_main_plan_no" name="planNo" value="<%=planVO.getPlanNo()%>">
+        <input type="hidden" class="plan_main_start_date" name="tripStartDate" value="<%=planVO.getTripStartDate()%>">
+        <input type="hidden" class="plan_main_trip_term" name="tripTerm" value="<%=planVO.getTripTerm()%>">
         <% } %>
         <div onclick="history.back();" class="page_cover"></div>
         <div class="plan_main_title_wrap">
@@ -98,7 +100,7 @@
         <div class="dailyplan_list_wrap">
             <% for (int i = 1; i <= planVO.getTripTerm() + 1; i++) { %>
             <div class="dailyplan_list_item_wrap">
-                <div class="dailyplan_item_day">Day<%=i%>
+                <div class="dailyplan_item_day">Day <%=i%>
                 </div>
                 <div class="dailyplan_item_qty">N</div>
                 <img class="icon_arrow_right" src="<%=Const.STATIC_IMG_PATH%>/plans/icon_arrow_right_green.png"/>

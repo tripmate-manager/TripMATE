@@ -31,9 +31,13 @@ public class WishListController {
     }
 
     @PostMapping("/wishlist")
-    public ModelAndView wishList(HttpServletRequest request, @RequestParam(value = "planNo") String planNo) {
+    public ModelAndView wishList(HttpServletRequest request, @RequestParam(value = "planNo") String planNo
+            , @RequestParam(value = "tripTerm") String tripTerm
+            , @RequestParam(value = "tripStartDate") String tripStartDate) {
         try {
             request.setAttribute("planNo", planNo);
+            request.setAttribute("tripStartDate", tripStartDate);
+            request.setAttribute("tripTerm", tripTerm);
             request.setAttribute("wishList", wishListApiService.searchWishList(planNo));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
