@@ -134,14 +134,6 @@ body {
     border-radius: 1rem;
     flex-shrink: 0;
 }
-.wishlist_wrap #wishListForm .wishlist_item_list_wrap .wishlist_item_wrap .wishlist_item_title_wrap .icon_bookmark_unfilled {
-    margin-bottom: 0.7rem;
-    width: 1.875rem;
-    height: 2.5rem;
-    object-fit: contain;
-    vertical-align: top;
-    flex-shrink: 0;
-}
 .wishlist_wrap #wishListForm .wishlist_item_list_wrap .wishlist_item_wrap .wishlist_post_contents {
     width: 100%;
     height: 1.4rem;
@@ -237,15 +229,17 @@ body {
     flex-shrink: 0;
 }
 input[class="checkboxBookmark"]+label {
+    position: absolute;
+    right: 3.5rem;
     display: block;
     margin-bottom: 0.7rem;
     width: 1.875rem;
     height: 2.5rem;
-    background: url('/resources/images/wishlist/icon_bookmark_filled.png') no-repeat 0 0px / contain;
+    background: url('/resources/images/wishlist/icon_bookmark_unfilled.png') no-repeat 0 0px / contain;
 }
 
 input[class='checkboxBookmark']:checked+label {
-    background: url('/resources/images/wishlist/icon_bookmark_unfilled.png') no-repeat 0 1px / contain;
+    background: url('/resources/images/wishlist/icon_bookmark_filled.png') no-repeat 0 1px / contain;
 }
 
 input[class="checkboxBookmark"] {

@@ -90,8 +90,10 @@ body {
     flex-shrink: 0;
 }
 .create_post_wrap .create_post_input_wrap .create_post_spot_info_wrap .create_post_spot_title_wrap {
+    margin: 0 0 1rem 0.1rem;
     height: 100%;
     flex-shrink: 0;
+    display: flex;
 }
 .create_post_wrap .create_post_sub_title {
     margin-bottom: 0.05rem;
@@ -105,7 +107,7 @@ body {
 .create_post_wrap .create_post_input_wrap .create_post_spot_info_wrap .create_post_spot_title_wrap .input_post_spot_name {
     box-sizing: border-box;
     padding: 0.95rem 0.8rem 0.85rem 0.8rem;
-    width: calc(100% - 10rem);
+    width: 100%;
     font-size: 1.2rem;
     font-weight: 500;
     line-height: 1.3625;
@@ -114,6 +116,8 @@ body {
     white-space: nowrap;
     border: solid 0.1rem #646464;
     background-color: #ffffff;
+    margin-right: 1rem;
+
 }
 .create_post_wrap .create_post_input_wrap .create_post_spot_info_wrap .create_post_search {
     margin-bottom: 0.1rem;
