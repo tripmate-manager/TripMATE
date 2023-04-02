@@ -1,6 +1,7 @@
 <%@ page import="com.tripmate.domain.PostVO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.tripmate.common.util.DateUtil" %>
+<%@ page import="com.tripmate.domain.MemberDTO" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/jsp/common/include/commonImport.jsp" %>
@@ -18,7 +19,7 @@
     <script src="<%=Const.STATIC_JS_PATH%>/wishlist/wishList.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/common/popUp.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/common/checkPopUp.js"></script>
-    <script src="<%=Const.STATIC_JS_PATH%>/plans/addDailyPlanPopUp.js"></script>
+    <script src="<%=Const.STATIC_JS_PATH%>/dailyplans/addDailyPlanPopUp.js"></script>
 </head>
 <body>
 <%
@@ -75,10 +76,11 @@
                     </div>
                 </div>
             </div>
-            <input type="checkbox" name="bookmarkYn" id="checkboxBookmark<%=postVO.getPostNo()%>" class="checkboxBookmark"
-                   value="<%=postVO.getPostNo()%>" onclick='bookMark("<%=postVO.getPostNo()%>")'
-                <% if (postVO.getMappingYn().equals(Const.Y)) { %> checked <% } %> >
-            <label for="checkboxBookmark<%=postVO.getPostNo()%>"></label>
+            <% if (postVO.getMappingYn().equals(Const.Y)) { %>
+                <img class="checkboxBookmark" id="dailyPlanBookmark<%=postVO.getPostNo()%>" onclick='bookMark("<%=postVO.getPostNo()%>")' src="<%=Const.STATIC_IMG_PATH%>/wishlist/icon_bookmark_filled.png"/>
+            <% } else { %>
+                <img class="checkboxBookmark" id="dailyPlanBookmark<%=postVO.getPostNo()%>" onclick='bookMark("<%=postVO.getPostNo()%>")' src="<%=Const.STATIC_IMG_PATH%>/wishlist/icon_bookmark_unfilled.png"/>
+            <% } %>
         </div>
         <% } %>
     </form>

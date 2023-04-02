@@ -1,16 +1,8 @@
 function bookMark(postNo) {
-    let bookmarkCheckbox = document.getElementById("checkboxBookmark" + postNo);
-
-    if (bookmarkCheckbox.hasAttribute('checked')) {
-        bookmarkCheckbox.removeAttribute('checked');
-    } else {
-        addDailyPlanPopUpOpen(document.getElementById("wishlist_plan_no").value
-            , postNo
-            , document.getElementById("wishlist_trip_term").value
-            , document.getElementById("wishlist_trip_start_date").value);
-
-        bookmarkCheckbox.setAttribute('checked', '');
-    }
+    addDailyPlanPopUpOpen(document.getElementById("wishlist_plan_no").value
+        , postNo
+        , document.getElementById("wishlist_trip_term").value
+        , document.getElementById("wishlist_trip_start_date").value);
 }
 
 $(function () {
@@ -33,8 +25,8 @@ $(function () {
     });
 
     $(".wishlist_item_wrap").on('click', function () {
-        const planNo = $(this).find("#wishlist_item_post_no").attr("value").toString();
-        $("#wishlist_post_no").val(planNo);
+        const postNo = $(this).find("#wishlist_item_post_no").attr("value").toString();
+        $("#wishlist_post_no").val(postNo);
         $("#wishListForm").attr("action", "/wishlist/postMain.trip").submit();
     });
 });
