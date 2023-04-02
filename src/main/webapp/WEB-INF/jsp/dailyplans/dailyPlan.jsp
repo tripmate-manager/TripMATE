@@ -47,8 +47,13 @@
                     <div class="dailyplan_post_title">제목
                     </div>
                     <div class="dailyplan_post_type">숙소</div>
-                    <input type="checkbox" name="bookmarkYn" id="checkboxBookmark" class="checkboxBookmark">
-                    <label for="checkboxBookmark"></label>
+                    <details class="flag">
+                        <summary class="ellipsis"></summary>
+                        <div class="report">
+                            <p id="dailyplan_item_menu_noti" onclick="">알림 설정하기</p>
+                            <p id="dailyplan_item_menu_delete" onclick="">삭제하기</p>
+                        </div>
+                    </details>
                 </div>
                 <div class="dailyplan_post_contents">본문
                 </div>

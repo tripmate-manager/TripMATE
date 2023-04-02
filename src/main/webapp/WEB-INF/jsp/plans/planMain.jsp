@@ -2,6 +2,7 @@
 <%@ page import="com.tripmate.domain.PlanAddressVO" %>
 <%@ page import="com.tripmate.domain.PlanAttributeVO" %>
 <%@ page import="com.tripmate.domain.MemberDTO" %>
+<%@ page import="com.tripmate.domain.DailyPlanCntVO" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/jsp/common/include/commonImport.jsp" %>
 <%@ include file="/WEB-INF/jsp/common/bottomNavigationMenu.jsp" %>
@@ -27,6 +28,7 @@
         memberInfo = (MemberDTO) session.getAttribute(Const.MEMBER_INFO_SESSION);
     }
     PlanVO planVO = (PlanVO) request.getAttribute("planVO");
+    List<DailyPlanCntVO> dailyPlanCntList = (List<DailyPlanCntVO>) request.getAttribute("dailyPlanCntList");
 %>
 
 <div class="plan_main_wrap">
@@ -98,11 +100,18 @@
         <div class="plan_main_divi_line"></div>
 
         <div class="dailyplan_list_wrap">
-            <% for (int i = 1; i <= planVO.getTripTerm() + 1; i++) { %>
+            <% for (int i = 1; i <= planVO.getTripTerm() + 1; i++) {
+                String dailyPlanCnt = "";
+            %>
             <div class="dailyplan_list_item_wrap">
                 <div class="dailyplan_item_day">Day <%=i%>
                 </div>
-                <div class="dailyplan_item_qty">N</div>
+                <% for (DailyPlanCntVO dailyPlanCntVO : dailyPlanCntList) {
+                    if (dailyPlanCntVO.getDayGroup().equals(String.valueOf(i))) {
+                        dailyPlanCnt = dailyPlanCntVO.getDailyPlanCnt();
+                    }
+                } %>
+                <div class="dailyplan_item_qty"><%=dailyPlanCnt%></div>
                 <img class="icon_arrow_right" src="<%=Const.STATIC_IMG_PATH%>/plans/icon_arrow_right_green.png"/>
             </div>
             <% } %>
