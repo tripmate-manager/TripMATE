@@ -2,6 +2,7 @@ package com.tripmate.controller;
 
 import com.tripmate.common.exception.ApiCommonException;
 import com.tripmate.domain.DailyPlanDTO;
+import com.tripmate.domain.DeleteDailyPlanDTO;
 import com.tripmate.entity.ApiResult;
 import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.service.apiservice.DailyPlanApiService;
@@ -43,12 +44,12 @@ public class DailyPlanController {
     }
 
     @PostMapping("/deleteDailyPlan")
-    public @ResponseBody String deleteDailyPlan(@Valid DailyPlanDTO dailyPlanDTO) {
+    public @ResponseBody String deleteDailyPlan(@Valid DeleteDailyPlanDTO deleteDailyPlanDTO) {
         ApiResult result;
 
         try {
             result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
-            result.put("isInsertDailyPlanSuccess", dailyPlanApiService.insertDailyPlan(dailyPlanDTO));
+            result.put("isDeleteDailyPlanSuccess", dailyPlanApiService.deleteDailyPlan(deleteDailyPlanDTO));
         } catch (ApiCommonException e) {
             result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
         } catch (Exception e) {
