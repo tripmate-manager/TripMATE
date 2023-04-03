@@ -11,9 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 
 @Slf4j
 @Controller
@@ -58,5 +62,17 @@ public class DailyPlanController {
         }
 
         return result.toJson();
+    }
+
+    @PostMapping("/dailyPlan")
+    public @ResponseBody ModelAndView viewDailyPlan(HttpServletRequest request,
+                               @RequestParam(value = "planNo") @NotBlank String planNo,
+                               @RequestParam(value = "dayGroup") @NotBlank String dayGroup) {
+        try {
+            request.setAttribute("dailyPlanList", dailyPlanApiService.searchDailyPlanListByDay(planNo, dayGroup));
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        return new ModelAndView("dailyplans/dailyPlan");
     }
 }

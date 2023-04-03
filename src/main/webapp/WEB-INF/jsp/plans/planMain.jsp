@@ -100,14 +100,14 @@
         <div class="plan_main_divi_line"></div>
 
         <div class="dailyplan_list_wrap">
-            <% for (int i = 1; i <= planVO.getTripTerm() + 1; i++) {
+            <input type="hidden" id="dailyplan_day" name="dayGroup">
+            <% for (int day = 1; day <= planVO.getTripTerm() + 1; day++) {
                 String dailyPlanCnt = "";
             %>
             <div class="dailyplan_list_item_wrap">
-                <div class="dailyplan_item_day">Day <%=i%>
-                </div>
+                <div class="dailyplan_item_day" value="<%=day%>">Day <%=day%></div>
                 <% for (DailyPlanCntVO dailyPlanCntVO : dailyPlanCntList) {
-                    if (dailyPlanCntVO.getDayGroup().equals(String.valueOf(i))) {
+                    if (dailyPlanCntVO.getDayGroup().equals(String.valueOf(day))) {
                         dailyPlanCnt = dailyPlanCntVO.getDailyPlanCnt();
                     }
                 } %>
