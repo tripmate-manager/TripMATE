@@ -83,7 +83,7 @@
                             <% } else { %>
                             <p id="dailyplan_item_menu_review" onclick="">리뷰 작성하기</p>
                             <% } %>
-                            <p id="dailyplan_item_menu_delete" onclick="">삭제하기</p>
+                            <p id="dailyplan_item_menu_delete" onclick='deleteDailyPlan("<%=dailyPlanVO.getDailyPlanNo()%>")'>삭제하기</p>
                         </div>
                     </details>
                 </div>
