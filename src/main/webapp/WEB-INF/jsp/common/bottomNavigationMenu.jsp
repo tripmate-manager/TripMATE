@@ -4,7 +4,6 @@
 <html>
 <head>
     <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/common/bottomNavigationMenu.css"/>
-    <script src="<%=Const.STATIC_JS_PATH%>/common/bottomNavigationMenu.js"></script>
 </head>
 <body>
 <div class="bottom_navigation_wrap">
