@@ -1,6 +1,7 @@
 package com.tripmate.controller;
 
 import com.tripmate.common.exception.ApiCommonException;
+import com.tripmate.domain.DailyPlanCntVO;
 import com.tripmate.domain.ExitPlanDTO;
 import com.tripmate.domain.InviteCodeVO;
 import com.tripmate.domain.MemberDTO;
@@ -15,6 +16,7 @@ import com.tripmate.entity.ApiResult;
 import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.entity.Const;
 import com.tripmate.entity.ConstCode;
+import com.tripmate.service.apiservice.DailyPlanApiService;
 import com.tripmate.service.apiservice.PlanApiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +42,12 @@ import java.util.Set;
 @RequestMapping(value = "/plans", produces = "application/json; charset=utf8")
 public class PlanController {
     private final PlanApiService planApiService;
+    private final DailyPlanApiService dailyPlanApiService;
 
     @Autowired
-    public PlanController(PlanApiService planApiService) {
+    public PlanController(PlanApiService planApiService, DailyPlanApiService dailyPlanApiService) {
         this.planApiService = planApiService;
+        this.dailyPlanApiService = dailyPlanApiService;
     }
 
     @GetMapping("/createPlan")
@@ -124,9 +128,11 @@ public class PlanController {
         try {
             PlanVO planVO = planApiService.getPlanInfo(planNo);
             List<PlanMateVO> planMateList = planApiService.searchPlanMateList(planNo);
+            List<DailyPlanCntVO> dailyPlanCntList = dailyPlanApiService.searchDailyPlanCntByDay(planNo);
 
             request.setAttribute("planVO", planVO);
             request.setAttribute("planMateList", planMateList);
+            request.setAttribute("dailyPlanCntList", dailyPlanCntList);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
