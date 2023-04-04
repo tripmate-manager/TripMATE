@@ -14,10 +14,12 @@
     </jsp:include>
     <jsp:include page="/WEB-INF/jsp/common/messagePopUp.jsp"/>
     <jsp:include page="/WEB-INF/jsp/common/checkPopUp.jsp"/>
+    <jsp:include page="/WEB-INF/jsp/dailyplans/dailyPlanNotificationPopUp.jsp"/>
     <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/dailyplans/dailyPlan.css"/>
     <script src="<%=Const.STATIC_JS_PATH%>/dailyplans/dailyPlan.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/common/popUp.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/common/checkPopUp.js"></script>
+    <script src="<%=Const.STATIC_JS_PATH%>/dailyplans/dailyPlanNotificationPopUp.js"></script>
 </head>
 <body>
 <%
@@ -78,8 +80,12 @@
                         <summary class="ellipsis"></summary>
                         <div class="report">
                             <% if (LocalDateTime.now().isBefore(LocalDateTime.parse(dailyPlanVO.getDailyPlanDateTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S")))) { %>
-                            <p id="dailyplan_item_menu_noti" onclick="">알림 설정하기</p>
-                            <p id="dailyplan_item_menu_noti_edit" onclick="">알림 수정하기</p>
+                                <% if (Const.Y.equals(dailyPlanVO.getNotificationYn())) { %>
+                                <p id="dailyplan_item_menu_noti_edit" onclick="">알림 수정하기</p>
+                                <p id="dailyplan_item_menu_noti_delete" onclick='deleteDailyPlanNotification("<%=dailyPlanVO.getDailyPlanNo()%>")'>알림 삭제하기</p>
+                                <% } else { %>
+                                <p id="dailyplan_item_menu_noti" onclick='createDailyPlanNotification("<%=dailyPlanVO.getPlanNo()%>", "<%=dailyPlanVO.getDailyPlanNo()%>", "<%=dailyPlanVO.getDailyPlanDateTime()%>")'>알림 설정하기</p>
+                                <% } %>
                             <% } else { %>
                             <p id="dailyplan_item_menu_review" onclick="">리뷰 작성하기</p>
                             <% } %>

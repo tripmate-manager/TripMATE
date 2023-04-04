@@ -92,8 +92,8 @@ public class DailyPlanApiServiceImpl implements DailyPlanApiService {
     }
 
     @Override
-    public List<DailyPlanVO> searchDailyPlanListByDay(String planNo, String dayGroup) throws Exception {
-        Call<ResponseWrapper<DailyPlanVO>> data = RetrofitClient.getApiService(DailyPlanService.class).searchDailyPlanListByDay(planNo, dayGroup);
+    public List<DailyPlanVO> searchDailyPlanListByDay(String planNo, String memberNo, String dayGroup) throws Exception {
+        Call<ResponseWrapper<DailyPlanVO>> data = RetrofitClient.getApiService(DailyPlanService.class).searchDailyPlanListByDay(planNo, memberNo, dayGroup);
         List<DailyPlanVO> result;
 
         ResponseWrapper<DailyPlanVO> response = data.clone().execute().body();
@@ -107,6 +107,30 @@ public class DailyPlanApiServiceImpl implements DailyPlanApiService {
                 throw new IOException("response's data is Empty");
             }
             result = response.getData();
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new IOException(response.getMessage());
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean deleteDailyPlanNotification(String dailyPlanNo, String memberNo) throws Exception {
+        Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(DailyPlanService.class).deleteDailyPlanNotification(dailyPlanNo, memberNo);
+        boolean result;
+
+        ResponseWrapper<Boolean> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
+        }
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData() == null) {
+                throw new IOException("response's data is Empty");
+            }
+            result = response.getData().get(0);
         } else {
             log.warn(response.getCode() + " : " + response.getMessage());
             throw new IOException(response.getMessage());

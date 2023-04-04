@@ -7,6 +7,7 @@ import com.tripmate.domain.DeleteDailyPlanDTO;
 import com.tripmate.domain.ResponseWrapper;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -20,5 +21,7 @@ public interface DailyPlanService {
     @GET("v1/dailyplans/dailyplan-count/{planNo}")
     Call<ResponseWrapper<DailyPlanCntVO>> searchDailyPlanCntByDay(@Path("planNo") String planNo);
     @GET("v1/dailyplans/dailyplan/{planNo}")
-    Call<ResponseWrapper<DailyPlanVO>> searchDailyPlanListByDay(@Path("planNo") String planNo, @Query("dayGroup") String dayGroup);
+    Call<ResponseWrapper<DailyPlanVO>> searchDailyPlanListByDay(@Path("planNo") String planNo, @Query("memberNo") String memberNo, @Query("dayGroup") String dayGroup);
+    @DELETE("v1/dailyplans/dailyplan/notification/{dailyPlanNo}")
+    Call<ResponseWrapper<Boolean>> deleteDailyPlanNotification(@Path("dailyPlanNo") String dailyPlanNo, @Query("memberNo") String memberNo);
 }

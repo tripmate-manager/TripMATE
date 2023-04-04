@@ -33,6 +33,9 @@
 
 <div class="plan_main_wrap">
     <form id="planMainForm" method="post">
+        <% if (memberInfo != null) { %>
+        <input type="hidden" class="plan_main_member_no" name="memberNo" value="<%=memberInfo.getMemberNo()%>">
+        <% } %>
         <% if (planVO != null) { %>
         <input type="hidden" class="plan_main_plan_no" name="planNo" value="<%=planVO.getPlanNo()%>">
         <input type="hidden" class="plan_main_start_date" name="tripStartDate" value="<%=planVO.getTripStartDate()%>">
