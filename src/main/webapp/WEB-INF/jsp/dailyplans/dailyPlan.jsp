@@ -81,7 +81,7 @@
                         <div class="report">
                             <% if (LocalDateTime.now().isBefore(LocalDateTime.parse(dailyPlanVO.getDailyPlanDateTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S")))) { %>
                                 <% if (Const.Y.equals(dailyPlanVO.getNotificationYn())) { %>
-                                <p id="dailyplan_item_menu_noti_edit" onclick="">알림 수정하기</p>
+                                <p id="dailyplan_item_menu_noti_edit" onclick='updateDailyPlanNotification("<%=dailyPlanVO.getDailyPlanNo()%>")'>알림 수정하기</p>
                                 <p id="dailyplan_item_menu_noti_delete" onclick='deleteDailyPlanNotification("<%=dailyPlanVO.getDailyPlanNo()%>")'>알림 삭제하기</p>
                                 <% } else { %>
                                 <p id="dailyplan_item_menu_noti" onclick='createDailyPlanNotification("<%=dailyPlanVO.getPlanNo()%>", "<%=dailyPlanVO.getDailyPlanNo()%>", "<%=dailyPlanVO.getDailyPlanDateTime()%>")'>알림 설정하기</p>

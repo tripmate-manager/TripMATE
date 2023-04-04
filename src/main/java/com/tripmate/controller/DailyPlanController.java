@@ -3,6 +3,7 @@ package com.tripmate.controller;
 import com.tripmate.common.exception.ApiCommonException;
 import com.tripmate.domain.DailyPlanDTO;
 import com.tripmate.domain.DeleteDailyPlanDTO;
+import com.tripmate.domain.NotificationDTO;
 import com.tripmate.entity.ApiResult;
 import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.service.apiservice.DailyPlanApiService;
@@ -85,6 +86,23 @@ public class DailyPlanController {
         try {
             result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
             result.put("isDeleteNotificationSuccess", dailyPlanApiService.deleteDailyPlanNotification(dailyPlanNo, memberNo));
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
+    }
+
+    @PostMapping("/updateDailyPlanNotification")
+    public @ResponseBody String updateDailyPlanNotification(@Valid NotificationDTO notificationDTO) {
+        ApiResult result;
+
+        try {
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            result.put("isUpdateNotificationSuccess", dailyPlanApiService.updateDailyPlanNotification(notificationDTO));
         } catch (ApiCommonException e) {
             result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
         } catch (Exception e) {

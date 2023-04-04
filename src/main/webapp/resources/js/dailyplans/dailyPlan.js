@@ -87,3 +87,6 @@ function deleteDailyPlanNotification(dailyPlanNo) {
         $(".check_popup_wrap").hide();
     });
 }
+
+function updateDailyPlanNotification(dailyPlanNo) {
+]}
