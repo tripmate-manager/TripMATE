@@ -41,7 +41,7 @@
             <div class="alertlist_item_wrap" <% if (notification.getReadDateTime() == null) { %> id="unread_item" <% } %>>
                 <input type=hidden id="notificationNo"name="notificationNo" value="<%=notification.getNotificationNo()%>">
                 <input type=hidden id="notificationTypeCode" name="notificationTypeCode" value="<%=notification.getNotificationTypeCode()%>">
-                <input type=hidden id="postNo" name="postNo" value="<%=notification.getPostNo()%>">
+                <input type=hidden id="dailyPlanNo" name="dailyPlanNo" value="<%=notification.getDailyPlanNo()%>">
                 <input type=hidden id="memberNo" name="memberNo" value="<%=memberInfo.getMemberNo()%>">
                 <input type=hidden id="planNo" value="<%=notification.getPlanNo()%>">
                 <input type=hidden id="useYn" value="<%=notification.getUseYn()%>">
