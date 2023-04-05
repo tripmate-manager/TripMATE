@@ -14,6 +14,8 @@ public class NotificationVO {
 
     private int planNo;
 
+    private int postNo;
+
     private String planTitle;
 
     private String leaderName;

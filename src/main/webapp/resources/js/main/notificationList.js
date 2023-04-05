@@ -31,8 +31,8 @@ $(function () {
 
                     if (result.isUpdateReadDateTime === true) {
                         if (notificationTypeCode === constCode.global.notificationTypeCodeTripSchedule) {
-                            const postNo = $(this).find("#planNo").val();
-                            // todo: 추후 해당 게시글로 이동하도록 수정
+                            const postNo = $(this).find("#postNo").val();
+                            $("#notificationForm").attr("action", "/wishlist/postMain.trip").submit();
                         } else if (notificationTypeCode === constCode.global.notificationTypeCodeInvitation) {
                             if (useYn === 'N') {
                                 popUpOpen("존재하지 않는 플랜입니다.");
@@ -105,8 +105,8 @@ $(function () {
                 return;
             }
             if (notificationTypeCode === constCode.global.notificationTypeCodeTripSchedule) {
-                const dailyPlanNo = $(this).find("#dailyPlanNo").val();
-                // todo: 추후 해당 게시글로 이동하도록 수정
+                const postNo = $(this).find("#postNo").val();
+                $("#notificationForm").attr("action", "/wishlist/postMain.trip").submit();
             } else if (notificationTypeCode === constCode.global.notificationTypeCodeChangeLeader) {
                 $("#notificationForm").attr("action", "/plans/planMain.trip").submit();
             } else if (notificationTypeCode === constCode.global.notificationTypeCodeInvitation) {
