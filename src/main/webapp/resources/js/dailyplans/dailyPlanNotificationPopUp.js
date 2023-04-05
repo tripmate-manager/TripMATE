@@ -1,10 +1,11 @@
-let popUpPlanNo, popUpDailyPlanNo, popUpMemberNo, popUpDailyPlanDateTime;
+let popUpPlanNo, popUpDailyPlanNo, popUpMemberNo, popUpDailyPlanDateTime, popUpNotificationYn;
 
-function dailyPlanNotificationPopUpOpen(planNo, dailyPlanNo, memberNo, dailyPlanDateTime) {
+function dailyPlanNotificationPopUpOpen(planNo, dailyPlanNo, memberNo, dailyPlanDateTime, notificationYn) {
     popUpPlanNo = planNo;
     popUpDailyPlanNo = dailyPlanNo;
     popUpMemberNo = memberNo;
     popUpDailyPlanDateTime = new Date(dailyPlanDateTime);
+    popUpNotificationYn = notificationYn;
 
     const popupWrap = $("#notification_popup_wrap");
     popupWrap.css("position", "absolute");
@@ -38,8 +39,13 @@ function popUpOk() {
             break;
     }
 
+    let notificationUrl = "/plans/createNotification.trip";
+    if (constCode.global.Y === popUpNotificationYn) {
+        notificationUrl = "/dailyPlans/updateDailyPlanNotification.trip";
+    }
+
     $.ajax({
-        url: "/plans/createNotification.trip",
+        url: notificationUrl,
         type: "post",
         traditional: true,
         dataType: 'json',
@@ -63,6 +69,9 @@ function popUpOk() {
         error: function (error) {
             isAjaxProcessing = false;
             popUpOpen("처리 중 오류가 발생하였습니다.");
-        }
+        },
+        complete: function () {
+            $("#notification_popup_wrap").hide();
+        },
     })
 }

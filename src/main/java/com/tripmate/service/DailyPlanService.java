@@ -24,8 +24,8 @@ public interface DailyPlanService {
     Call<ResponseWrapper<DailyPlanCntVO>> searchDailyPlanCntByDay(@Path("planNo") String planNo);
     @GET("v1/dailyplans/dailyplan/{planNo}")
     Call<ResponseWrapper<DailyPlanVO>> searchDailyPlanListByDay(@Path("planNo") String planNo, @Query("memberNo") String memberNo, @Query("dayGroup") String dayGroup);
-    @DELETE("v1/dailyplans/dailyplan/notification/{dailyPlanNo}")
+    @DELETE("v1/dailyplans/notification/{dailyPlanNo}")
     Call<ResponseWrapper<Boolean>> deleteDailyPlanNotification(@Path("dailyPlanNo") String dailyPlanNo, @Query("memberNo") String memberNo);
-    @PUT("v1/dailyplans/dailyplan/notification/{dailyPlanNo}")
+    @PUT("v1/dailyplans/notification/{dailyPlanNo}")
     Call<ResponseWrapper<Boolean>> updateDailyPlanNotification(@Path("dailyPlanNo") String dailyPlanNo, @Body NotificationDTO notificationDTO);
 }

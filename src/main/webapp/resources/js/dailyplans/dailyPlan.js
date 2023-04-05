@@ -43,7 +43,7 @@ function deleteDailyPlan(dailyPlanNo) {
 }
 
 function createDailyPlanNotification(planNo, dailyPlanNo, dailyPlanDateTime) {
-    dailyPlanNotificationPopUpOpen(planNo, dailyPlanNo, document.getElementById("memberNo").value, dailyPlanDateTime);
+    dailyPlanNotificationPopUpOpen(planNo, dailyPlanNo, document.getElementById("memberNo").value, dailyPlanDateTime, constCode.global.N);
 }
 
 function deleteDailyPlanNotification(dailyPlanNo) {
@@ -88,5 +88,6 @@ function deleteDailyPlanNotification(dailyPlanNo) {
     });
 }
 
-function updateDailyPlanNotification(dailyPlanNo) {
-]}
+function updateDailyPlanNotification(planNo, dailyPlanNo, dailyPlanDateTime, notificationYn) {
+    dailyPlanNotificationPopUpOpen(planNo, dailyPlanNo, document.getElementById("memberNo").value, dailyPlanDateTime, constCode.global.Y);
+}
