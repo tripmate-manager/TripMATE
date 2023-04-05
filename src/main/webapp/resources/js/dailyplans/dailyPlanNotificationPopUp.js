@@ -39,13 +39,8 @@ function popUpOk() {
             break;
     }
 
-    let notificationUrl = "/plans/createNotification.trip";
-    if (constCode.global.Y === popUpNotificationYn) {
-        notificationUrl = "/dailyPlans/updateDailyPlanNotification.trip";
-    }
-
     $.ajax({
-        url: notificationUrl,
+        url: constCode.global.Y === popUpNotificationYn ? "/dailyPlans/updateDailyPlanNotification.trip" : "/plans/createNotification.trip",
         type: "post",
         traditional: true,
         dataType: 'json',
