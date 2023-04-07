@@ -49,4 +49,10 @@ public interface ConstCode {
     String POST_TYPE_CODE_TOUR = "20";
     String POST_TYPE_CODE_RESTAURANT = "30";
     String POST_TYPE_CODE_ETC = "90";
+
+    String DAILYPLAN_NOTIFICATION_15M = "10";
+    String DAILYPLAN_NOTIFICATION_30M = "20";
+    String DAILYPLAN_NOTIFICATION_1H = "30";
+    String DAILYPLAN_NOTIFICATION_2H = "40";
+    String DAILYPLAN_NOTIFICATION_3H = "50";
 }

@@ -245,17 +245,14 @@ public class PlanController {
 
         try {
             boolean isExitPlanMate = planApiService.exitPlan(exitPlanDTO);
-            
-            if (exitPlanDTO.getMateNo() != null) {
-                NotificationDTO notificationDTO = NotificationDTO.builder()
-                        .planNo(exitPlanDTO.getPlanNo())
-                        .notificationTypeCode(ConstCode.NOTIFICATION_TYPE_CODE_CHANGE_LEADER)
-                        .senderNo(exitPlanDTO.getMemberNo())
-                        .receiverNoList(Collections.singletonList(exitPlanDTO.getMateNo()))
-                        .build();
 
-                planApiService.createNotification(notificationDTO);
-            }
+            NotificationDTO notificationDTO = NotificationDTO.builder()
+                    .planNo(exitPlanDTO.getPlanNo())
+                    .notificationTypeCode(ConstCode.NOTIFICATION_TYPE_CODE_CHANGE_LEADER)
+                    .senderNo(exitPlanDTO.getMemberNo())
+                    .build();
+
+            planApiService.createNotification(notificationDTO);
 
             result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
             result.put("isExitPlanMate", isExitPlanMate);

@@ -48,6 +48,12 @@
             postTypeCodeTour: "<%=ConstCode.POST_TYPE_CODE_TOUR%>",
             postTypeCodeRestaurant: "<%=ConstCode.POST_TYPE_CODE_RESTAURANT%>",
             postTypeCodeEtc: "<%=ConstCode.POST_TYPE_CODE_ETC%>",
+
+            notification15Minutes: "<%=ConstCode.DAILYPLAN_NOTIFICATION_15M%>",
+            notification30Minutes: "<%=ConstCode.DAILYPLAN_NOTIFICATION_30M%>",
+            notification1Hours: "<%=ConstCode.DAILYPLAN_NOTIFICATION_1H%>",
+            notification2Hours: "<%=ConstCode.DAILYPLAN_NOTIFICATION_2H%>",
+            notification3Hours: "<%=ConstCode.DAILYPLAN_NOTIFICATION_3H%>",
         }
     }());
 </script>

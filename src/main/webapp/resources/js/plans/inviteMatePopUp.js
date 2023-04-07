@@ -157,8 +157,6 @@ $(function () {
 
     $(".search_member_result_wrap").off('click').on('click','.result_item_invite_btn', function () {
         const planNo = $("#planNo").val();
-        let receiverNoList = [];
-        receiverNoList.push($(this).parent().find(".result_item_member_no").attr("value"));
 
         $.ajax({
             url: "/plans/createNotification.trip",
@@ -169,7 +167,7 @@ $(function () {
                 planNo: planNo,
                 notificationTypeCode: constCode.global.notificationTypeCodeInvitation,
                 senderNo: memberNo,
-                receiverNoList: receiverNoList,
+                receiverNo: $(this).parent().find(".result_item_member_no").attr("value"),
             },
             success: function (result) {
                 isAjaxProcessing = false;

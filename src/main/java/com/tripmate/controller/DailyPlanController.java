@@ -3,6 +3,7 @@ package com.tripmate.controller;
 import com.tripmate.common.exception.ApiCommonException;
 import com.tripmate.domain.DailyPlanDTO;
 import com.tripmate.domain.DeleteDailyPlanDTO;
+import com.tripmate.domain.NotificationDTO;
 import com.tripmate.entity.ApiResult;
 import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.service.apiservice.DailyPlanApiService;
@@ -67,12 +68,49 @@ public class DailyPlanController {
     @PostMapping("/dailyPlan")
     public @ResponseBody ModelAndView viewDailyPlan(HttpServletRequest request,
                                @RequestParam(value = "planNo") @NotBlank String planNo,
+                               @RequestParam(value = "memberNo") @NotBlank String memberNo,
                                @RequestParam(value = "dayGroup") @NotBlank String dayGroup) {
         try {
-            request.setAttribute("dailyPlanList", dailyPlanApiService.searchDailyPlanListByDay(planNo, dayGroup));
+            request.setAttribute("dayGroup", dayGroup);
+            request.setAttribute("dailyPlanList", dailyPlanApiService.searchDailyPlanListByDay(planNo, memberNo, dayGroup));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
         return new ModelAndView("dailyplans/dailyPlan");
+    }
+
+    @PostMapping("/deleteDailyPlanNotification")
+    public @ResponseBody String deleteDailyPlanNotification(@RequestParam(value = "dailyPlanNo") @NotBlank String dailyPlanNo,
+                                                            @RequestParam(value = "memberNo") @NotBlank String memberNo) {
+        ApiResult result;
+
+        try {
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            result.put("isDeleteNotificationSuccess", dailyPlanApiService.deleteDailyPlanNotification(dailyPlanNo, memberNo));
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
+    }
+
+    @PostMapping("/updateDailyPlanNotification")
+    public @ResponseBody String updateDailyPlanNotification(@Valid NotificationDTO notificationDTO) {
+        ApiResult result;
+
+        try {
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            result.put("isUpdateNotificationSuccess", dailyPlanApiService.updateDailyPlanNotification(notificationDTO));
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
     }
 }
