@@ -1,0 +1,277 @@
+
+html {
+    font-size:62.5%;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+ul, li {
+    list-style: none;
+}
+input {
+    border: none;
+}
+body {
+    width: 100%;
+}.reviewlist_wrap {
+     box-sizing: border-box;
+     padding: 1.3rem 0rem 10.4rem 0rem;
+     width: 100%;
+     position: relative;
+     display: flex;
+     flex-direction: column;
+     background-color: #ffffff;
+ }
+.reviewlist_wrap .reviewlist_title_wrap {
+    margin: 0rem 14.8rem 1.492rem 1.375rem;
+    width: calc(100% - 16.175rem);
+    display: flex;
+    align-items: flex-end;
+    flex-shrink: 0;
+}
+.reviewlist_wrap .reviewlist_title_wrap .icon_arrow_left {
+    margin-right: 11.8085rem;
+    width: 1.7165rem;
+    height: 2.9167rem;
+    object-fit: contain;
+    vertical-align: top;
+    flex-shrink: 0;
+}
+.reviewlist_wrap .reviewlist_title_wrap .reviewlist_title {
+    margin-bottom: 0.1083rem;
+    display: flex;
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.reviewlist_wrap .reviewlist_divi_line {
+    width: 100%;
+    height: 0.1rem;
+    background-color: #646464;
+    flex-shrink: 0;
+}
+.reviewlist_wrap .reviewlist_list_wrap {
+    width: 100%;
+    position: static;
+    align-items: center;
+}
+.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap {
+    width: 100%;
+    border-bottom: solid 0.1rem #646464;
+}
+.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_title_wrap {
+    width: 100%;
+    height: 2.2rem;
+    position: static;
+    display: flex;
+    align-items: center;
+}
+.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_title_wrap .reviewlist_item_ninkname {
+    margin-right: 24rem;
+    display: flex;
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_title_wrap .reviewlist_item_avg_score {
+    margin-right: 1.8125rem;
+    display: flex;
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_title_wrap .icon_dot_menu {
+    width: 0.375rem;
+    height: 1.875rem;
+    object-fit: contain;
+    vertical-align: top;
+    flex-shrink: 0;
+}
+.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_img_wrap {
+    box-sizing: border-box;
+    width: 32.5rem;
+    height: 32.5rem;
+    position: static;
+    display: flex;
+    align-items: center;
+    border: solid 0.1rem #646464;
+    background-color: #ffffff;
+    border-radius: 2rem;
+    overflow: hidden;
+}
+.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_img_wrap .reviewlist_item_img {
+    position: static;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32.5rem;
+    height: 32.5rem;
+}
+.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_img_wrap .icon_arrow_left {
+    margin: 0rem 26.9rem 0.2rem 0rem;
+    width: 2.7rem;
+    height: 2.7rem;
+    object-fit: contain;
+    vertical-align: top;
+    border-radius: 2rem;
+    flex-shrink: 0;
+}
+.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_img_wrap .icon_arrow_right {
+    margin-top: 0.2rem;
+    width: 2.6rem;
+    height: 2.7rem;
+    object-fit: contain;
+    vertical-align: top;
+    border-radius: 2rem;
+    flex-shrink: 0;
+}
+.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_contents {
+    width: 100%;
+    position: static;
+    margin: 1rem 0 1rem 0;
+    font-size: 1.3rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #1e1e1e;
+    font-family: Noto Sans, 'Source Sans Pro';
+}
+.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_score_wrap {
+    width: 17.9rem;
+    height: 1.75rem;
+    position: static;
+    display: flex;
+    align-items: center;
+}
+.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_score_wrap .reviewlist_item_score_title {
+    width: 7rem;
+    display: flex;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_score_wrap .reviewlist_item_score {
+    margin: 0rem 0.2rem 0.05rem 0rem;
+    width: 2rem;
+    height: 1.7rem;
+    object-fit: contain;
+    vertical-align: top;
+    flex-shrink: 0;
+}
+.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap {
+    box-sizing: border-box;
+    padding: 1.6rem 1.1rem 2.7rem 1.1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_title_wrap {
+    margin: 0rem 1.9rem 1.7rem 0rem;
+    width: calc(100% - 1.9rem);
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_title_wrap .reviewlist_item_nickname {
+    margin-right: 27.3rem;
+    display: flex;
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_title_wrap .reviewlist_item_avg_score {
+    display: flex;
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.ellipsis {
+    z-index: 10;
+    list-style: none;
+    font-size: 25px;
+    text-align: right;
+    cursor: pointer;
+}
+
+.ellipsis::after {
+    content: '\22ee'
+}
+
+.report {
+    position: absolute;
+    margin-left: 33rem;
+    width: 10rem;
+    z-index: 999;
+    left: -7.5rem;
+    border: solid 0.1rem #656565;
+    background-color: #fff;
+    color: #000;
+    padding: 5px 0;
+}
+
+.report p {
+    margin: 0;
+    padding: 5px 5px;
+    font-size: 12px;
+    line-height: 1.1;
+    cursor: pointer;
+}
+
+summary:where(::before, ::after, ::marker, :active, :focus, :focus-visible),
+::-moz-focus-inner,
+::-moz-focus-outer {
+    outline: none !important;
+    border: 0 !important;
+    outline-color: transparent !important
+}
+
+.star {
+    position: relative;
+    font-size: 2rem;
+    color: #ddd;
+}
+
+.star input {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.star span {
+    width: 0;
+    position: absolute;
+    left: 0;
+    color: #609690;
+    overflow: hidden;
+    pointer-events: none;
+}

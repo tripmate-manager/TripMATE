@@ -17,7 +17,7 @@ body {
 }.notification_popup_wrap {
      padding-top: 3rem;
      display: none;
-     z-index: 1000;
+     z-index: 1;
      box-sizing: border-box;
      width: 70%;
      overflow: hidden;
