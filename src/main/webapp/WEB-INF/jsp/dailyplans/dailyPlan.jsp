@@ -54,6 +54,8 @@
 
     <form name="dailyplanForm" id="dailyplanForm" method="post">
         <input type="hidden" name="postNo" class="dailyplan_post_no" id="dailyplan_post_no">
+        <input type="hidden" name="dailyPlanNo" class="dailyplan_no" id="dailyplan_no">
+        <input type="hidden" name="postTypeCode" class="postTypeCode" id="dailyplan_post_type_code">
 
         <% if (dailyPlanList != null) {
             for (DailyPlanVO dailyPlanVO : dailyPlanList) { %>
@@ -88,7 +90,7 @@
                                 <p id="dailyplan_item_menu_noti" onclick='createDailyPlanNotification("<%=dailyPlanVO.getPlanNo()%>", "<%=dailyPlanVO.getDailyPlanNo()%>", "<%=dailyPlanVO.getDailyPlanDateTime()%>")'>알림 설정하기</p>
                                 <% } %>
                             <% } else { %>
-                            <p id="dailyplan_item_menu_review" onclick="">리뷰 작성하기</p>
+                            <p id="dailyplan_item_menu_review" onclick='createReview("<%=dailyPlanVO.getDailyPlanNo()%>", "<%=dailyPlanVO.getPostTypeCode()%>")'>리뷰 작성하기</p>
                             <% } %>
                             <p id="dailyplan_item_menu_delete" onclick='deleteDailyPlan("<%=dailyPlanVO.getDailyPlanNo()%>")'>삭제하기</p>
                         </div>
@@ -105,7 +107,7 @@
 
             <div class="dailyplan_item_review_wrap">
                 <div class="dailyplan_item_review">MATE 리뷰 : <% if (dailyPlanVO.getReviewAverageScore() != null) { %><%=dailyPlanVO.getReviewAverageScore()%><% } %></div>
-                <img class="icon_arrow_right" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_right.png"/>
+                <img class="icon_arrow_right" onclick="viewReviewList(<%=dailyPlanVO.getDailyPlanNo()%>)" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_right.png"/>
             </div>
         </div>
         <% }
