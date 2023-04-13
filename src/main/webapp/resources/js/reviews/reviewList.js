@@ -5,7 +5,6 @@ const drawStar = (target) => {
 };
 
 function deleteReview(reviewNo, dailyPlanNo) {
-    console.log(reviewNo + " " + dailyPlanNo);
     if (isAjaxProcessing) {
         popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
         return;
