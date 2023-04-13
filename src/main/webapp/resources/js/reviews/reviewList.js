@@ -67,5 +67,18 @@ $(function () {
                 $(this).find("#review_score_sanitary_wrap").show();
                 break;
         }
+
+        const starScoreRange = $(this).find(".star_score_range");
+        console.log($(this).find("." + starScoreRange.attr("id")));
+        console.log($(this).find("." + starScoreRange.attr("id")).text());
+        const percentage = starScoreRange.val() * 10;
+
+        // $(this).find("." + starScoreRange.attr("id")).style.width = `${starScoreRange.val() * 10}%`;
+        $(this).find("." + starScoreRange.attr("id")).css("width", percentage + '%');
+
+    });
+
+    $("div[class='reviewlist_list_wrap'], [style*='display: none']").each(function (e) {
+
     });
 });

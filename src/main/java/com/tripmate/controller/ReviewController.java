@@ -59,14 +59,13 @@ public class ReviewController {
 
     @PostMapping("/createReview/callApi")
     public @ResponseBody String createReview(@Valid ReviewDTO reviewDTO,
-                               @RequestParam(value = "multipartFile", required = false) List<MultipartFile> multipartFile) {
+                               @RequestParam(value = "multipartFileList", required = false) List<MultipartFile> multipartFileList) {
         ApiResult result;
         List<ReviewImageDTO> reviewImageList = new ArrayList<>();
 
         try {
-            for (MultipartFile file : multipartFile) {
+            for (MultipartFile file : multipartFileList) {
                 if (!file.isEmpty()) {
-                    System.out.println(file.getOriginalFilename() + " / " + file.getName());
                     if (file.getOriginalFilename() != null) {
 
                         String originalName = file.getOriginalFilename();
@@ -109,7 +108,6 @@ public class ReviewController {
             result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
         }
 
-        //todo: 페이지 이동 수정
         return result.toJson();
     }
 
