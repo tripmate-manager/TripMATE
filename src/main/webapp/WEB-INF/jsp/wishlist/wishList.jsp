@@ -1,7 +1,6 @@
 <%@ page import="com.tripmate.domain.PostVO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.tripmate.common.util.DateUtil" %>
-<%@ page import="com.tripmate.domain.MemberDTO" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/jsp/common/include/commonImport.jsp" %>

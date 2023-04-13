@@ -40,4 +40,6 @@ public interface Const {
     String N = "N";
 
     String NONMEMBER_INVITATION_URL = SERVICE_URL + "plans/nonmemberInvitation.trip?inviteCodeNo=";
+
+    String FILE_DIR_PATH = Const.getProperty("resource.path", "");
 }
