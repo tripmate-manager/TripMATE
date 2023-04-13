@@ -50,15 +50,7 @@ $(function () {
         } else {
             isAjaxProcessing = true;
         }
-
         document.getElementById("review_average_score").value = getReviewAverageScore();
-
-        if (isAjaxProcessing) {
-            popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
-            return;
-        } else {
-            isAjaxProcessing = true;
-        }
 
         $.ajax({
             url: '/review/createReview/callApi.trip',
