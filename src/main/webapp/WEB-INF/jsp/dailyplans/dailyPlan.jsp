@@ -107,7 +107,7 @@
 
             <div class="dailyplan_item_review_wrap">
                 <div class="dailyplan_item_review">MATE 리뷰 : <% if (dailyPlanVO.getReviewAverageScore() != null) { %><%=dailyPlanVO.getReviewAverageScore()%><% } %></div>
-                <img class="icon_arrow_right" onclick="viewReviewList(<%=dailyPlanVO.getDailyPlanNo()%>)" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_right.png"/>
+                <img class="icon_arrow_right" onclick="viewReviewList(<%=dailyPlanVO.getDailyPlanNo()%>, <%=dailyPlanVO.getPostTypeCode()%>)" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_right.png"/>
             </div>
         </div>
         <% }

@@ -7,7 +7,7 @@ $(function () {
     const postTypeCode = document.getElementById("post_type_code").value;
 
     let isAjaxProcessing = false;
-    let reviewImageCnt = document.querySelector('.create_review_input_img_list').childElementCount;
+    let reviewImageCnt = document.querySelector('.create_review_input_img_list').childElementCount - 1;
 
     switch (postTypeCode) {
         case constCode.global.postTypeCodeEtc:
@@ -112,24 +112,25 @@ $(function () {
             return false;
         }
 
-        setImageFromFile(this, '#preview');
+        setImageFromFile(this);
+        document.getElementById("review_img_input_count").innerText = reviewImageCnt.toString();
     });
 
     function setImageFromFile(input) {
-        reviewImageCnt = document.querySelector('.create_review_input_img_list').childElementCount;
         const reviewImages = $('.create_review_input_img_list');
 
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
+        for (let i = 0; i < input.files.length; i++) {
+            if (input.files && input.files[i]) {
+                var reader = new FileReader();
 
-            reader.onload = function (e) {
-                let imageItem = $('<div class="create_review_preview_img_wrap">' +
-                    '<img src="' + e.target.result + '" class="review_img_preview" id="preview"/></div>');
-                reviewImages.append(imageItem);
+                reader.onload = function (e) {
+                    let imageItem = $('<div class="create_review_preview_img_wrap">' +
+                        '<img src="' + e.target.result + '" class="review_img_preview" id="preview"/></div>');
+                    reviewImages.append(imageItem);
+                }
+                reader.readAsDataURL(input.files[i]);
+                reviewImageCnt++;
             }
-            reader.readAsDataURL(input.files[0]);
         }
-
-        document.getElementById("review_img_input_count").innerText = reviewImageCnt;
     }
 });

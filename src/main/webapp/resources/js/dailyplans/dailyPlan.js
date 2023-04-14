@@ -46,8 +46,10 @@ function createDailyPlanNotification(planNo, dailyPlanNo, dailyPlanDateTime) {
     dailyPlanNotificationPopUpOpen(planNo, dailyPlanNo, document.getElementById("memberNo").value, dailyPlanDateTime, constCode.global.N);
 }
 
-function viewReviewList(dailyPlanNo) {
+function viewReviewList(dailyPlanNo, postTypeCode) {
     document.getElementById("dailyplan_no").value = dailyPlanNo;
+    document.getElementById("dailyplan_post_type_code").value = postTypeCode;
+
     $("#dailyplanForm").attr("action", "/review/reviewList.trip").submit();
 }
 

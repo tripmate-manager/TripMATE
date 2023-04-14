@@ -1,6 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.tripmate.domain.ReviewVO" %>
 <%@ page import="com.tripmate.domain.MemberDTO" %>
+<%@ page import="com.tripmate.domain.ReviewImageDTO" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/jsp/common/include/commonImport.jsp" %>
@@ -27,10 +28,12 @@
     }
 
     List<ReviewVO> reviewList = (List<ReviewVO>) request.getAttribute("reviewList");
+    String postTypeCode = (String) request.getAttribute("postTypeCode");
 %>
 <% if (memberInfo != null) { %>
-<input type="text" id="memberNo" value=<%=memberInfo.getMemberNo()%> hidden>
+<input type="text" id="memberNo" value="<%=memberInfo.getMemberNo()%>" hidden>
 <% } %>
+<input type="text" id="postTypeCode" value="<%=postTypeCode%>" hidden>
 
 <div class="reviewlist_wrap">
     <div class="reviewlist_title_wrap">
@@ -43,9 +46,9 @@
 
     <form id="reviewListForm" name="reviewListForm" method="post">
         <% if (reviewList != null) {
-            for (ReviewVO reviewVO : reviewList) { %>
+            for (ReviewVO reviewVO : reviewList) {
+        %>
         <div class="reviewlist_list_wrap">
-            <input id="post_type_code" value="<%=reviewVO.getPostTypeCode()%>" hidden>
             <div class="reviewlist_item_wrap">
                 <div class="reviewlist_item_title_wrap">
                     <div class="reviewlist_item_ninkname"><%=reviewVO.getNickName()%>
@@ -64,12 +67,16 @@
                     </details>
                     <% } %>
                 </div>
-                <% if (reviewVO.getReviewImageList().size() > 0) { %>
                 <div class="reviewlist_item_img_wrap">
-                    <img class="reviewlist_item_img"
-                         src="/review/display.trip?filename=<%=reviewVO.getReviewImageList().get(0).getReviewImageName()%>"/>
+                    <% if (reviewVO.getReviewImageList().size() > 0) {
+                        for (ReviewImageDTO reviewImage : reviewVO.getReviewImageList()) { %>
+                        <div class="reviewlist_item_img">
+                            <img class="reviewlist_item_img"
+                                 src="/review/display.trip?filename=<%=reviewImage.getReviewImageName()%>"/>
+                        </div>
+                    <% }
+                    }%>
                 </div>
-                <% } %>
                 <p class="reviewlist_item_contents"><%=reviewVO.getReviewContents()%>
                 </p>
 

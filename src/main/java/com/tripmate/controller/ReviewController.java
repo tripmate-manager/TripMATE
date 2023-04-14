@@ -75,7 +75,7 @@ public class ReviewController {
                 }
 
                 if (!file.isEmpty() && file.getOriginalFilename() != null) {
-                    reviewImageList.add(fileUpload(reviewDTO, saveFiles, file));
+                    reviewImageList.add(fileUpload(saveFiles, file));
                 }
             }
 
@@ -116,7 +116,7 @@ public class ReviewController {
         return result.toJson();
     }
 
-    private ReviewImageDTO fileUpload(ReviewDTO reviewDTO, List<String> saveFiles, MultipartFile file) throws FileUploadException {
+    private ReviewImageDTO fileUpload(List<String> saveFiles, MultipartFile file) throws FileUploadException {
         String originalName = file.getOriginalFilename();
 
         String saveFileName = UUID.randomUUID() + "_" + originalName.substring(originalName.lastIndexOf("\\") + 1);
