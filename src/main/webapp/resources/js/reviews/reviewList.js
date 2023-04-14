@@ -29,7 +29,7 @@ function deleteReview(reviewNo, dailyPlanNo) {
                     popUpOpen('리뷰가 삭제되었습니다.');
 
                     $(".popup_close_btn").attr("onclick", null).on('click', function () {
-                        location.reload();
+                        history.back();
                     });
                 }
             } else {
@@ -43,7 +43,7 @@ function deleteReview(reviewNo, dailyPlanNo) {
 }
 
 $(function () {
-    const postTypeCode = document.getElementById("post_type_code").value;
+    const postTypeCode = document.getElementById("review_list_size").value;
 
     $("div[class='reviewlist_list_wrap']").each(function () {
         switch (postTypeCode) {
