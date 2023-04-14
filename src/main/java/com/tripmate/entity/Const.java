@@ -42,4 +42,5 @@ public interface Const {
     String NONMEMBER_INVITATION_URL = SERVICE_URL + "plans/nonmemberInvitation.trip?inviteCodeNo=";
 
     String FILE_DIR_PATH = Const.getProperty("resource.path", "");
+    long MULTIPART_MAX_UPLOAD_SIZE = 5242880;
 }

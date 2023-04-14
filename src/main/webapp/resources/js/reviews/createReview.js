@@ -66,11 +66,11 @@ $(function () {
 
                 if (result.code === constCode.global.resultCodeSuccess) {
                     if (result.createReviewNo > 0) {
-                        if (document.referrer === '') {
+                        popUpOpen("리뷰가 저장되었습니다.");
+
+                        $(".popup_close_btn").attr("onclick", null).on('click', function () {
                             history.back();
-                        } else {
-                            location.replace(document.referrer);
-                        }
+                        });
                     }
                 } else {
                     popUpOpen(result.message);

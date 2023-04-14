@@ -122,8 +122,8 @@
                 <div class="create_review_input_img_wrap">
                     <img src="<%=Const.STATIC_IMG_PATH%>/reviews/icon_camera.png" class="create_review_input_img"/>
                     <label for="img_select" class="create_review_input_img"></label>
-                    <input id="img_select" type="file" accept="image/png, image/jpeg, image/jpg"
-                           name="multipartFile"/>
+                    <input id="img_select" type="file" accept="image/jpg, image/jpeg, image/pjpeg, image/png, image/gif, image/bmp"
+                           name="multipartFile" multiple/>
                     <div class="create_review_img_count_wrap">
                         <div class="create_review_input_img_count" id="review_img_input_count">0</div>
                         <div class="create_review_input_img_count">/5</div>

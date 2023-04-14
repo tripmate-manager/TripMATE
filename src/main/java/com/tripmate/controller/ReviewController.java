@@ -1,14 +1,17 @@
 package com.tripmate.controller;
 
 import com.tripmate.common.exception.ApiCommonException;
+import com.tripmate.common.exception.FileUploadException;
 import com.tripmate.domain.DeleteReviewDTO;
 import com.tripmate.domain.ReviewDTO;
 import com.tripmate.domain.ReviewImageDTO;
 import com.tripmate.entity.ApiResult;
 import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.entity.Const;
+import com.tripmate.entity.FileUploadEnum;
 import com.tripmate.service.apiservice.ReviewApiService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -59,27 +62,20 @@ public class ReviewController {
 
     @PostMapping("/createReview/callApi")
     public @ResponseBody String createReview(@Valid ReviewDTO reviewDTO,
-                               @RequestParam(value = "multipartFileList", required = false) List<MultipartFile> multipartFileList) {
+                               @RequestParam(value = "multipartFile", required = false) List<MultipartFile> multipartFileList) {
         ApiResult result;
-        List<ReviewImageDTO> reviewImageList = new ArrayList<>();
+        List<String> saveFiles = new ArrayList<>();
 
         try {
+            List<ReviewImageDTO> reviewImageList = new ArrayList<>();
+
             for (MultipartFile file : multipartFileList) {
-                if (!file.isEmpty()) {
-                    if (file.getOriginalFilename() != null) {
+                if (!fileExtensionValidCheck(file)) {
+                    throw new FileUploadException(FileUploadEnum.FILE_EXTENSION_EXCEPTION.getCode(), FileUploadEnum.FILE_EXTENSION_EXCEPTION.getMessage());
+                }
 
-                        String originalName = file.getOriginalFilename();
-                        String saveFileName = UUID.randomUUID() + "_" + originalName.substring(originalName.lastIndexOf("\\") + 1);
-
-                        reviewImageList.add(ReviewImageDTO.builder()
-                                .reviewNo(reviewDTO.getReviewNo())
-                                .reviewImageName(saveFileName)
-                                .reviewImagePath(File.separator + saveFileName)
-                                .reviewImageVolume(String.valueOf(file.getSize()))
-                                .build());
-
-                        file.transferTo(new File(Const.FILE_DIR_PATH, saveFileName));
-                    }
+                if (!file.isEmpty() && file.getOriginalFilename() != null) {
+                    reviewImageList.add(fileUpload(reviewDTO, saveFiles, file));
                 }
             }
 
@@ -101,6 +97,15 @@ public class ReviewController {
 
             result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
             result.put("createReviewNo", reviewApiService.insertReview(reviewRequestDTO));
+        } catch (FileUploadException e) {
+            for (String file : saveFiles) {
+                File existFile = new File(Const.FILE_DIR_PATH, file);
+                if (existFile.exists()) {
+                    existFile.delete();
+                }
+            }
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
         } catch (ApiCommonException e) {
             result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
         } catch (Exception e) {
@@ -109,6 +114,42 @@ public class ReviewController {
         }
 
         return result.toJson();
+    }
+
+    private ReviewImageDTO fileUpload(ReviewDTO reviewDTO, List<String> saveFiles, MultipartFile file) throws FileUploadException {
+        String originalName = file.getOriginalFilename();
+
+        String saveFileName = UUID.randomUUID() + "_" + originalName.substring(originalName.lastIndexOf("\\") + 1);
+        saveFiles.add(saveFileName);
+
+        ReviewImageDTO reviewImageDTO = ReviewImageDTO.builder()
+                        .reviewImageName(saveFileName)
+                        .reviewImagePath(File.separator + saveFileName)
+                        .reviewImageVolume(String.valueOf(file.getSize()))
+                        .build();
+
+        try {
+            file.transferTo(new File(Const.FILE_DIR_PATH, saveFileName));
+        } catch (IOException e) {
+            throw new FileUploadException(FileUploadEnum.FILE_UPLOAD_EXCEPTION.getCode(), FileUploadEnum.FILE_UPLOAD_EXCEPTION.getMessage());
+        }
+
+        return reviewImageDTO;
+    }
+
+    private boolean fileExtensionValidCheck(MultipartFile file) throws FileUploadException{
+        if (file.getSize() > Const.MULTIPART_MAX_UPLOAD_SIZE) {
+            throw new FileUploadException(FileUploadEnum.FILE_SIZE_EXCEPTION.getCode(), FileUploadEnum.FILE_SIZE_EXCEPTION.getMessage());
+        }
+
+        final String[] fileTypeList = {"jpg", "jpeg", "pjpeg", "png", "gif", "bmp"};
+        for (String fileType : fileTypeList) {
+            if (FilenameUtils.getExtension(file.getOriginalFilename()).equals(fileType)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @PostMapping("/reviewList")
@@ -123,12 +164,13 @@ public class ReviewController {
     }
 
     @PostMapping("/deleteReview")
-    public @ResponseBody
-    String deleteReview(@Valid DeleteReviewDTO deleteReviewDTO) {
+    public @ResponseBody String deleteReview(@Valid DeleteReviewDTO deleteReviewDTO) {
         ApiResult result;
 
         try {
             result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            //todo: 삭제 시 로컬 이미지 파일 삭제
+
             result.put("isDeleteReviewSuccess", reviewApiService.deleteReview(deleteReviewDTO));
         } catch (ApiCommonException e) {
             result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
@@ -155,7 +197,7 @@ public class ReviewController {
             filePath = Paths.get(Const.FILE_DIR_PATH + "/" + filename);
             header.add("Content-type", Files.probeContentType(filePath));
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
 
         return new ResponseEntity<>(resource, header, HttpStatus.OK);
