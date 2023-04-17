@@ -8,8 +8,8 @@ import com.tripmate.domain.NotificationDTO;
 import com.tripmate.entity.ApiResult;
 import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.service.apiservice.DailyPlanApiService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,13 +25,10 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequestMapping(value = "/dailyPlans", produces = "application/json; charset=utf8")
+@RequiredArgsConstructor
 public class DailyPlanController {
     private final DailyPlanApiService dailyPlanApiService;
-
-    @Autowired
-    public DailyPlanController(DailyPlanApiService dailyPlanApiService) {
-        this.dailyPlanApiService = dailyPlanApiService;
-    }
+    private final FileUploadUtil fileUploadUtil;
 
     @PostMapping("/addDailyPlan")
     public @ResponseBody String addDailyPlan(@Valid DailyPlanDTO dailyPlanDTO) {
@@ -56,7 +53,7 @@ public class DailyPlanController {
 
         try {
             List<String> reviewImageNameList = dailyPlanApiService.deleteDailyPlan(deleteDailyPlanDTO);
-            FileUploadUtil.deleteFile(reviewImageNameList);
+            fileUploadUtil.deleteFile(reviewImageNameList);
 
             result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
             result.put("isDeleteDailyPlanSuccess", true);

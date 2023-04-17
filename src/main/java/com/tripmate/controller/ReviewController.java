@@ -11,8 +11,8 @@ import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.entity.Const;
 import com.tripmate.entity.FileUploadEnum;
 import com.tripmate.service.apiservice.ReviewApiService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -39,13 +39,10 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequestMapping(value = "/review", produces = "application/json; charset=utf8")
+@RequiredArgsConstructor
 public class ReviewController {
     private final ReviewApiService reviewApiService;
-
-    @Autowired
-    public ReviewController(ReviewApiService reviewApiService) {
-        this.reviewApiService = reviewApiService;
-    }
+    private final FileUploadUtil fileUploadUtil;
 
     @PostMapping("/createReview")
     public String viewCreateReview(Model model, @RequestParam(value = "dailyPlanNo") @NotBlank String dailyPlanNo, @RequestParam(value = "postTypeCode") @NotBlank String postTypeCode) {
@@ -68,12 +65,12 @@ public class ReviewController {
             List<ReviewImageDTO> reviewImageList = new ArrayList<>();
 
             for (MultipartFile file : multipartFileList) {
-                if (!FileUploadUtil.fileExtensionValidCheck(file)) {
+                if (!fileUploadUtil.fileExtensionValidCheck(file)) {
                     throw new FileUploadException(FileUploadEnum.FILE_EXTENSION_EXCEPTION.getCode(), FileUploadEnum.FILE_EXTENSION_EXCEPTION.getMessage());
                 }
 
                 if (!file.isEmpty() && file.getOriginalFilename() != null) {
-                    reviewImageList.add(FileUploadUtil.fileUpload(saveFiles, file));
+                    reviewImageList.add(fileUploadUtil.fileUpload(saveFiles, file));
                 }
             }
 
@@ -96,15 +93,15 @@ public class ReviewController {
             result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
             result.put("createReviewNo", reviewApiService.insertReview(reviewRequestDTO));
         } catch (FileUploadException e) {
-            FileUploadUtil.deleteFile(saveFiles);
+            fileUploadUtil.deleteFile(saveFiles);
             log.error(e.getMessage(), e);
             result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
         } catch (ApiCommonException e) {
-            FileUploadUtil.deleteFile(saveFiles);
+            fileUploadUtil.deleteFile(saveFiles);
             log.error(e.getMessage(), e);
             result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
         } catch (Exception e) {
-            FileUploadUtil.deleteFile(saveFiles);
+            fileUploadUtil.deleteFile(saveFiles);
             log.error(e.getMessage(), e);
             result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
         }
@@ -131,7 +128,7 @@ public class ReviewController {
 
         try {
             List<String> reviewImageNameList = reviewApiService.deleteReview(deleteReviewDTO);
-            FileUploadUtil.deleteFile(reviewImageNameList);
+            fileUploadUtil.deleteFile(reviewImageNameList);
 
             result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
             result.put("isDeleteReviewSuccess", true);
