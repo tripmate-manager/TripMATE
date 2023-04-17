@@ -46,6 +46,13 @@ function createDailyPlanNotification(planNo, dailyPlanNo, dailyPlanDateTime) {
     dailyPlanNotificationPopUpOpen(planNo, dailyPlanNo, document.getElementById("memberNo").value, dailyPlanDateTime, constCode.global.N);
 }
 
+function viewReviewList(dailyPlanNo, postTypeCode) {
+    document.getElementById("dailyplan_no").value = dailyPlanNo;
+    document.getElementById("dailyplan_post_type_code").value = postTypeCode;
+
+    $("#dailyplanForm").attr("action", "/review/reviewList.trip").submit();
+}
+
 function deleteDailyPlanNotification(dailyPlanNo) {
     checkPopUpOpen("해당 데일리플랜의 알림을 삭제하시겠습니까?");
 
@@ -90,4 +97,10 @@ function deleteDailyPlanNotification(dailyPlanNo) {
 
 function updateDailyPlanNotification(planNo, dailyPlanNo, dailyPlanDateTime, notificationYn) {
     dailyPlanNotificationPopUpOpen(planNo, dailyPlanNo, document.getElementById("memberNo").value, dailyPlanDateTime, constCode.global.Y);
+}
+
+function createReview(dailyPlanNo, postTypeCode) {
+    document.getElementById("dailyplan_no").value = dailyPlanNo;
+    document.getElementById("dailyplan_post_type_code").value = postTypeCode;
+    $("#dailyplanForm").attr("action", "/review/createReview.trip").submit();
 }

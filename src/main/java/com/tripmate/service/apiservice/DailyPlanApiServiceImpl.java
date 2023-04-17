@@ -45,11 +45,11 @@ public class DailyPlanApiServiceImpl implements DailyPlanApiService {
     }
 
     @Override
-    public boolean deleteDailyPlan(DeleteDailyPlanDTO deleteDailyPlanDTO) throws Exception {
-        Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(DailyPlanService.class).deleteDailyPlan(deleteDailyPlanDTO.getDailyPlanNo(), deleteDailyPlanDTO);
-        boolean result;
+    public List<String> deleteDailyPlan(DeleteDailyPlanDTO deleteDailyPlanDTO) throws Exception {
+        Call<ResponseWrapper<String>> data = RetrofitClient.getApiService(DailyPlanService.class).deleteDailyPlan(deleteDailyPlanDTO.getDailyPlanNo(), deleteDailyPlanDTO);
+        List<String> result;
 
-        ResponseWrapper<Boolean> response = data.clone().execute().body();
+        ResponseWrapper<String> response = data.clone().execute().body();
 
         if (response == null) {
             throw new IOException("response is Empty");
@@ -59,7 +59,7 @@ public class DailyPlanApiServiceImpl implements DailyPlanApiService {
             if (response.getData() == null) {
                 throw new IOException("response's data is Empty");
             }
-            result = response.getData().get(0);
+            result = response.getData();
         } else {
             log.warn(response.getCode() + " : " + response.getMessage());
             throw new IOException(response.getMessage());
