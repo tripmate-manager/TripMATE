@@ -1,6 +1,7 @@
 package com.tripmate.controller;
 
 import com.tripmate.common.exception.ApiCommonException;
+import com.tripmate.common.util.FileUploadUtil;
 import com.tripmate.domain.DailyPlanDTO;
 import com.tripmate.domain.DeleteDailyPlanDTO;
 import com.tripmate.domain.NotificationDTO;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -53,8 +55,11 @@ public class DailyPlanController {
         ApiResult result;
 
         try {
+            List<String> reviewImageNameList = dailyPlanApiService.deleteDailyPlan(deleteDailyPlanDTO);
+            FileUploadUtil.deleteFile(reviewImageNameList);
+
             result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
-            result.put("isDeleteDailyPlanSuccess", dailyPlanApiService.deleteDailyPlan(deleteDailyPlanDTO));
+            result.put("isDeleteDailyPlanSuccess", true);
         } catch (ApiCommonException e) {
             result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
         } catch (Exception e) {

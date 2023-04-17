@@ -16,5 +16,5 @@ public interface ReviewService {
     @GET("v1/reviews/{dailyPlanNo}")
     Call<ResponseWrapper<ReviewVO>> searchReviewList(@Path("dailyPlanNo") String dailyPlanNo);
     @POST("v1/reviews/delete-review")
-    Call<ResponseWrapper<Boolean>> deleteReview(@Body DeleteReviewDTO deleteReviewDTO);
+    Call<ResponseWrapper<String>> deleteReview(@Body DeleteReviewDTO deleteReviewDTO);
 }

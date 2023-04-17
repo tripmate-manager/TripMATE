@@ -9,5 +9,5 @@ import java.util.List;
 public interface ReviewApiService {
     String insertReview(ReviewDTO reviewDTO) throws Exception;
     List<ReviewVO> searchReviewList(String dailyPlanNo) throws Exception;
-    Boolean deleteReview(DeleteReviewDTO deleteReviewDTO) throws Exception;
+    List<String> deleteReview(DeleteReviewDTO deleteReviewDTO) throws Exception;
 }

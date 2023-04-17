@@ -19,7 +19,7 @@ public interface DailyPlanService {
     @POST("v1/dailyplans/dailyplan")
     Call<ResponseWrapper<Boolean>> insertDailyPlan(@Body DailyPlanDTO dailyPlanDTO);
     @POST("v1/dailyplans/dailyplan/{dailyPlanNo}")
-    Call<ResponseWrapper<Boolean>> deleteDailyPlan(@Path("dailyPlanNo") String dailyPlanNo, @Body DeleteDailyPlanDTO deleteDailyPlanDTO);
+    Call<ResponseWrapper<String>> deleteDailyPlan(@Path("dailyPlanNo") String dailyPlanNo, @Body DeleteDailyPlanDTO deleteDailyPlanDTO);
     @GET("v1/dailyplans/dailyplan-count/{planNo}")
     Call<ResponseWrapper<DailyPlanCntVO>> searchDailyPlanCntByDay(@Path("planNo") String planNo);
     @GET("v1/dailyplans/dailyplan/{planNo}")

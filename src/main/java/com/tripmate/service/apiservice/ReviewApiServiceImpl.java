@@ -65,11 +65,11 @@ public class ReviewApiServiceImpl implements ReviewApiService {
     }
 
     @Override
-    public Boolean deleteReview(DeleteReviewDTO deleteReviewDTO) throws Exception {
-        Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(ReviewService.class).deleteReview(deleteReviewDTO);
-        boolean result;
+    public List<String> deleteReview(DeleteReviewDTO deleteReviewDTO) throws Exception {
+        Call<ResponseWrapper<String>> data = RetrofitClient.getApiService(ReviewService.class).deleteReview(deleteReviewDTO);
+        List<String> result;
 
-        ResponseWrapper<Boolean> response = data.clone().execute().body();
+        ResponseWrapper<String> response = data.clone().execute().body();
 
         if (response == null) {
             throw new IOException("response is Empty");
@@ -79,7 +79,7 @@ public class ReviewApiServiceImpl implements ReviewApiService {
             if (response.getData() == null) {
                 throw new IOException("response's data is Empty");
             }
-            result = response.getData().get(0);
+            result = response.getData();
         } else {
             log.warn(response.getCode() + " : " + response.getMessage());
             throw new ApiCommonException(response.getCode(), response.getMessage());

@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface DailyPlanApiService {
     boolean insertDailyPlan(DailyPlanDTO dailyPlanDTO) throws Exception;
-    boolean deleteDailyPlan(DeleteDailyPlanDTO deleteDailyPlanDTO) throws Exception;
+    List<String> deleteDailyPlan(DeleteDailyPlanDTO deleteDailyPlanDTO) throws Exception;
     List<DailyPlanCntVO> searchDailyPlanCntByDay(String planNo) throws Exception;
     List<DailyPlanVO> searchDailyPlanListByDay(String planNo, String memberNo, String dayGroup) throws Exception;
     boolean deleteDailyPlanNotification(String dailyPlanNo, String memberNo) throws Exception;

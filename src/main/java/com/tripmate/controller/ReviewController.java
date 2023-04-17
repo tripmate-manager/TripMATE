@@ -2,6 +2,7 @@ package com.tripmate.controller;
 
 import com.tripmate.common.exception.ApiCommonException;
 import com.tripmate.common.exception.FileUploadException;
+import com.tripmate.common.util.FileUploadUtil;
 import com.tripmate.domain.DeleteReviewDTO;
 import com.tripmate.domain.ReviewDTO;
 import com.tripmate.domain.ReviewImageDTO;
@@ -11,7 +12,6 @@ import com.tripmate.entity.Const;
 import com.tripmate.entity.FileUploadEnum;
 import com.tripmate.service.apiservice.ReviewApiService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -29,14 +29,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @Controller
@@ -70,12 +68,12 @@ public class ReviewController {
             List<ReviewImageDTO> reviewImageList = new ArrayList<>();
 
             for (MultipartFile file : multipartFileList) {
-                if (!fileExtensionValidCheck(file)) {
+                if (!FileUploadUtil.fileExtensionValidCheck(file)) {
                     throw new FileUploadException(FileUploadEnum.FILE_EXTENSION_EXCEPTION.getCode(), FileUploadEnum.FILE_EXTENSION_EXCEPTION.getMessage());
                 }
 
                 if (!file.isEmpty() && file.getOriginalFilename() != null) {
-                    reviewImageList.add(fileUpload(saveFiles, file));
+                    reviewImageList.add(FileUploadUtil.fileUpload(saveFiles, file));
                 }
             }
 
@@ -98,17 +96,15 @@ public class ReviewController {
             result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
             result.put("createReviewNo", reviewApiService.insertReview(reviewRequestDTO));
         } catch (FileUploadException e) {
-            for (String file : saveFiles) {
-                File existFile = new File(Const.FILE_DIR_PATH, file);
-                if (existFile.exists()) {
-                    existFile.delete();
-                }
-            }
+            FileUploadUtil.deleteFile(saveFiles);
             log.error(e.getMessage(), e);
             result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
         } catch (ApiCommonException e) {
+            FileUploadUtil.deleteFile(saveFiles);
+            log.error(e.getMessage(), e);
             result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
         } catch (Exception e) {
+            FileUploadUtil.deleteFile(saveFiles);
             log.error(e.getMessage(), e);
             result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
         }
@@ -116,46 +112,12 @@ public class ReviewController {
         return result.toJson();
     }
 
-    private ReviewImageDTO fileUpload(List<String> saveFiles, MultipartFile file) throws FileUploadException {
-        String originalName = file.getOriginalFilename();
-
-        String saveFileName = UUID.randomUUID() + "_" + originalName.substring(originalName.lastIndexOf("\\") + 1);
-        saveFiles.add(saveFileName);
-
-        ReviewImageDTO reviewImageDTO = ReviewImageDTO.builder()
-                        .reviewImageName(saveFileName)
-                        .reviewImagePath(File.separator + saveFileName)
-                        .reviewImageVolume(String.valueOf(file.getSize()))
-                        .build();
-
-        try {
-            file.transferTo(new File(Const.FILE_DIR_PATH, saveFileName));
-        } catch (IOException e) {
-            throw new FileUploadException(FileUploadEnum.FILE_UPLOAD_EXCEPTION.getCode(), FileUploadEnum.FILE_UPLOAD_EXCEPTION.getMessage());
-        }
-
-        return reviewImageDTO;
-    }
-
-    private boolean fileExtensionValidCheck(MultipartFile file) throws FileUploadException{
-        if (file.getSize() > Const.MULTIPART_MAX_UPLOAD_SIZE) {
-            throw new FileUploadException(FileUploadEnum.FILE_SIZE_EXCEPTION.getCode(), FileUploadEnum.FILE_SIZE_EXCEPTION.getMessage());
-        }
-
-        final String[] fileTypeList = {"jpg", "jpeg", "pjpeg", "png", "gif", "bmp"};
-        for (String fileType : fileTypeList) {
-            if (FilenameUtils.getExtension(file.getOriginalFilename()).equals(fileType)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     @PostMapping("/reviewList")
-    public String viewReviewList(Model model, @RequestParam(value = "dailyPlanNo") @NotBlank String dailyPlanNo) {
+    public String viewReviewList(Model model, @RequestParam(value = "dailyPlanNo") @NotBlank String dailyPlanNo,
+                                 @RequestParam(value = "postTypeCode") @NotBlank String postTypeCode) {
         try {
             model.addAttribute("reviewList", reviewApiService.searchReviewList(dailyPlanNo));
+            model.addAttribute("postTypeCode", postTypeCode);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
@@ -168,10 +130,11 @@ public class ReviewController {
         ApiResult result;
 
         try {
-            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
-            //todo: 삭제 시 로컬 이미지 파일 삭제
+            List<String> reviewImageNameList = reviewApiService.deleteReview(deleteReviewDTO);
+            FileUploadUtil.deleteFile(reviewImageNameList);
 
-            result.put("isDeleteReviewSuccess", reviewApiService.deleteReview(deleteReviewDTO));
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            result.put("isDeleteReviewSuccess", true);
         } catch (ApiCommonException e) {
             result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
         } catch (Exception e) {
