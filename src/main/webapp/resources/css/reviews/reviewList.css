@@ -22,6 +22,7 @@ body {
      display: flex;
      flex-direction: column;
      background-color: #ffffff;
+    overflow: hidden;
  }
 .reviewlist_wrap .reviewlist_title_wrap {
     margin: 0rem 14.8rem 1.492rem 1.375rem;
@@ -101,6 +102,17 @@ body {
     flex-shrink: 0;
 }
 .reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_img_wrap {
+    /*box-sizing: border-box;*/
+    position: static;
+    display: flex;
+    /*align-items: center;*/
+    /*border: solid 0.1rem #646464;*/
+    /*background-color: #ffffff;*/
+    /*border-radius: 2rem;*/
+    float: right;
+    overflow: scroll;
+}
+.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_img_wrap .reviewlist_item_img {
     box-sizing: border-box;
     width: 32.5rem;
     height: 32.5rem;
@@ -112,7 +124,7 @@ body {
     border-radius: 2rem;
     overflow: hidden;
 }
-.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_img_wrap .reviewlist_item_img {
+.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_img_wrap .reviewlist_item_img .reviewlist_item_img {
     position: static;
     overflow: hidden;
     display: flex;
@@ -121,7 +133,7 @@ body {
     width: 32.5rem;
     height: 32.5rem;
 }
-.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_img_wrap .icon_arrow_left {
+.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_img_wrap .reviewlist_item_img .icon_arrow_left {
     margin: 0rem 26.9rem 0.2rem 0rem;
     width: 2.7rem;
     height: 2.7rem;
@@ -130,7 +142,7 @@ body {
     border-radius: 2rem;
     flex-shrink: 0;
 }
-.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_img_wrap .icon_arrow_right {
+.reviewlist_wrap .reviewlist_list_wrap .reviewlist_item_wrap .reviewlist_item_img_wrap .reviewlist_item_img .icon_arrow_right {
     margin-top: 0.2rem;
     width: 2.6rem;
     height: 2.7rem;
@@ -143,7 +155,7 @@ body {
     width: 100%;
     position: static;
     margin: 1rem 0 1rem 0;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     font-weight: 500;
     line-height: 1.3625;
     color: #1e1e1e;
