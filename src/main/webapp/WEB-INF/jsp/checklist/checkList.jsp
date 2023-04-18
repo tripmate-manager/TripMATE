@@ -66,11 +66,10 @@
                                id="checklistItemName<%=checkListVO.getMaterialNo()%>" class="checkboxPublic"
                             <% if (Const.Y.equals(checkListVO.getCheckYn())) { %> checked <% } %>>
                         <label for="checklistItemName<%=checkListVO.getMaterialNo()%>"></label>
-                        <div class="checklist_item_no" style="display: none"><%=checkListVO.getMaterialNo()%>
-                        </div>
-                        <div class="checklist_item_name"><%=checkListVO.getMaterialName()%>
-                        </div>
-                        <img class="icon_list_delete_circle" src="<%=Const.STATIC_IMG_PATH%>/checklist/icon_list_delete_circle.png" style="display:none;"/>
+                        <div class="checklist_item_no" style="display: none"><%=checkListVO.getMaterialNo()%></div>
+                        <div class="checklist_item_name"><%=checkListVO.getMaterialName()%></div>
+                        <input type=text name="checkListType" value=<%=checkListVO.getCheckListTypeCode()%> hidden>
+                        <img class="icon_list_delete_circle" value="<%=checkListVO.getMaterialNo()%>" src="<%=Const.STATIC_IMG_PATH%>/checklist/icon_list_delete_circle.png" style="display:none;"/>
                     </div>
                     <% }
                     }%>
@@ -93,7 +92,8 @@
                         <label for="checklistItemName<%=checkListVO.getMaterialNo()%>"></label>
                         <div class="checklist_item_no" style="display: none"><%=checkListVO.getMaterialNo()%></div>
                         <div class="checklist_item_name"><%=checkListVO.getMaterialName()%></div>
-                        <img class="icon_list_delete_circle" src="<%=Const.STATIC_IMG_PATH%>/checklist/icon_list_delete_circle.png"/>
+                        <input type=text name="checkListType" value=<%=checkListVO.getCheckListTypeCode()%> hidden>
+                        <img class="icon_list_delete_circle" value="<%=checkListVO.getMaterialNo()%>" src="<%=Const.STATIC_IMG_PATH%>/checklist/icon_list_delete_circle.png"/>
                     </div>
                     <% }
                     }%>

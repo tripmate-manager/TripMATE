@@ -9,6 +9,8 @@ $(function () {
     const myCheckList = document.querySelector(".checklist_my_wrap");
     const planLeaderNo = document.getElementById("planLeaderNo").value;
     const memberNo = document.getElementById("sessionMemberNo").value;
+    const deleteBtn = document.querySelectorAll(".icon_list_delete_circle");
+    let editMaterialList = [];
 
     $("#icon_menu_checklist").hide();
     $("#icon_menu_checklist_choice").show();
@@ -47,19 +49,67 @@ $(function () {
     });
 
     editBtn.addEventListener('click', function () {
+        editMaterialList = [];
         editBtn.style.display = 'none';
         saveBtn.style.display = 'block';
 
-        document.querySelector(".icon_list_delete_circle").style.display = 'block';
-        document.querySelector(".checklistItemName").disabled = 'true';
+        document.querySelectorAll(".icon_list_delete_circle").forEach(function (e) {
+            e.style.display = 'block';
+        })
     });
 
-    saveBtn.addEventListener('click', function () {
-        saveBtn.style.display = 'none';
-        editBtn.style.display = 'block';
+    deleteBtn.forEach(function (e) {
+        e.addEventListener('click', function () {
+            editMaterialList.push(e.value);
+            e.parentElement.style.background = "#F1F1F1";
+        });
+    })
 
-        document.querySelector(".icon_list_delete_circle").style.display = 'none';
-        document.querySelector(".checklistItemName").disabled = 'false';
+    saveBtn.addEventListener('click', function () {
+        console.log(deleteBtn.previousElementSibling);
+        if (isAjaxProcessing) {
+            popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
+            return;
+        } else {
+            isAjaxProcessing = true;
+        }
+
+        $.ajax({
+            url: "/checkList/deleteCheckList.trip",
+            type: "post",
+            dataType: 'json',
+            traditional: true,
+            data: {
+                planNo: document.getElementById("planNo").value,
+                memberNo: document.getElementById("sessionMemberNo").value,
+                checkListTypeCode: deleteBtn[0].previousElementSibling.value,
+                materialNoList: editMaterialList
+            },
+            success: function (result) {
+                isAjaxProcessing = false;
+
+                if (result.code === constCode.global.resultCodeSuccess) {
+                    if (result.isDeleteCheckListSuccess === true) {
+                        location.reload();
+                    } else {
+                        popUpOpen("처리 중 오류가 발생하였습니다.");
+                    }
+                } else {
+                    popUpOpen(result.message);
+                }
+            },
+            error: function (error) {
+                isAjaxProcessing = false;
+                popUpOpen("처리 중 오류가 발생하였습니다.");
+            }
+        })
+
+        // saveBtn.style.display = 'none';
+        // editBtn.style.display = 'block';
+        //
+        // document.querySelectorAll(".icon_list_delete_circle").forEach(function (e) {
+        //     e.style.display = 'none';
+        // })
     });
 });
 
