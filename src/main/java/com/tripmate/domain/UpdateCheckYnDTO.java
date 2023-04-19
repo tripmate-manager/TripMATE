@@ -7,19 +7,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
-import java.util.List;
 
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class DeleteCheckListDTO {
-    @NotBlank(message = "플랜 번호를 입력해주세요.")
-    private String planNo;
-
+public class UpdateCheckYnDTO {
     @NotBlank(message = "회원 번호를 입력해주세요.")
     private String memberNo;
 
@@ -27,6 +22,6 @@ public class DeleteCheckListDTO {
     @Pattern(regexp = "^[12]0$", message = "체크리스트 타입코드는 10, 20만 입력 가능합니다.")
     private String checkListTypeCode;
 
-    @NotEmpty(message = "체크리스트 항목 번호를 입력해주세요.")
-    private List<String> materialNoList;
+    @NotBlank(message = "체크리스트 항목 번호를 입력해주세요.")
+    private String materialNo;
 }

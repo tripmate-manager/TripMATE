@@ -37,8 +37,9 @@
 
 <div class="checklist_wrap">
     <div class="checklist_title_wrap">
-        <img class="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png"
+        <img class="icon_arrow_left" id="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png"
              onclick="history.back()"/>
+        <div class="checklist_cancel" id="checklist_cancel" style="display: none">취소</div>
         <div class="checklist_title">CheckList</div>
         <div class="checklist_edit" id="checklist_edit" style="display: none">편집</div>
         <div class="checklist_save" id="checklist_save" style="display: none">완료</div>
@@ -56,24 +57,31 @@
             <div class="checklist_tab_list">
 
                 <div class="checklist_together_wrap">
-                    <% if (togetherCheckList != null) {
-                        for (CheckListVO checkListVO : togetherCheckList) { %>
+                    <% String mateNo = null; %>
+                    <% if (togetherCheckList != null && memberInfo != null) {
+                        for (CheckListVO checkListVO : togetherCheckList) {%>
                     <input type=text id="planLeaderNo" name="planLeaderNo" value=<%=checkListVO.getPlanLeaderNo()%> hidden>
 
-                    <div class="checklist_divi_nickname" style="display:none;">닉네임1</div>
+                    <% if (Const.Y.equals(checkListVO.getCheckYn()) && !checkListVO.getCheckMemberNo().equals(mateNo)) {
+                        mateNo = checkListVO.getCheckMemberNo(); %>
+                        <div class="checklist_divi_nickname"><%=checkListVO.getCheckMemberNickName()%></div>
+                    <% } %>
+
                     <div class="checklist_item_wrap">
-                        <input type="checkbox" name="checklistItemName"
-                               id="checklistItemName<%=checkListVO.getMaterialNo()%>" class="checkboxPublic"
-                            <% if (Const.Y.equals(checkListVO.getCheckYn())) { %> checked <% } %>>
+                        <input type="checkbox" name="checklistItemName" id="checklistItemName<%=checkListVO.getMaterialNo()%>" class="checkbox"
+                            <% if (Const.Y.equals(checkListVO.getCheckYn())) { %> checked <% } %>
+                            <% if (Const.Y.equals(checkListVO.getCheckYn()) && !String.valueOf(memberInfo.getMemberNo()).equals(mateNo)) { %> disabled <% } %>
+                               onclick='clickCheckbox("<%=checkListVO.getMaterialNo()%>", "<%=checkListVO.getCheckListTypeCode()%>")'>
                         <label for="checklistItemName<%=checkListVO.getMaterialNo()%>"></label>
-                        <div class="checklist_item_no" style="display: none"><%=checkListVO.getMaterialNo()%></div>
+                        <div class="checklist_item_no" hidden><%=checkListVO.getMaterialNo()%></div>
                         <div class="checklist_item_name"><%=checkListVO.getMaterialName()%></div>
                         <input type=text name="checkListType" value=<%=checkListVO.getCheckListTypeCode()%> hidden>
-                        <img class="icon_list_delete_circle" value="<%=checkListVO.getMaterialNo()%>" src="<%=Const.STATIC_IMG_PATH%>/checklist/icon_list_delete_circle.png" style="display:none;"/>
+                        <img class="icon_list_delete_circle" src="<%=Const.STATIC_IMG_PATH%>/checklist/icon_list_delete_circle.png" style="display:none;"/>
                     </div>
                     <% }
                     }%>
                     <div class="checklist_add_item_wrap">
+                        <img class="icon_plus_circle" src="<%=Const.STATIC_IMG_PATH%>/plans/icon_plus_circle.png"/>
                         <input type="text" name="materialName" class="input_checklist_item"
                                placeholder="추가">
                         <div class="checklist_add_item_btn"
@@ -86,19 +94,20 @@
                     <% if (myCheckList != null) {
                         for (CheckListVO checkListVO : myCheckList) { %>
                     <div class="checklist_item_wrap">
-                        <input type="checkbox" name="checklistItemName"
-                               id="checklistItemName<%=checkListVO.getMaterialNo()%>" class="checkboxPublic"
-                            <% if (Const.Y.equals(checkListVO.getCheckYn())) { %> checked <% } %>>
+                        <input type="checkbox" name="checklistItemName" id="checklistItemName<%=checkListVO.getMaterialNo()%>" class="checkbox"
+                            <% if (Const.Y.equals(checkListVO.getCheckYn())) { %> checked <% } %>
+                               onclick='clickCheckbox("<%=checkListVO.getMaterialNo()%>", "<%=checkListVO.getCheckListTypeCode()%>")'>
                         <label for="checklistItemName<%=checkListVO.getMaterialNo()%>"></label>
-                        <div class="checklist_item_no" style="display: none"><%=checkListVO.getMaterialNo()%></div>
+                        <div class="checklist_item_no" hidden><%=checkListVO.getMaterialNo()%></div>
                         <div class="checklist_item_name"><%=checkListVO.getMaterialName()%></div>
                         <input type=text name="checkListType" value=<%=checkListVO.getCheckListTypeCode()%> hidden>
-                        <img class="icon_list_delete_circle" value="<%=checkListVO.getMaterialNo()%>" src="<%=Const.STATIC_IMG_PATH%>/checklist/icon_list_delete_circle.png"/>
+                        <img class="icon_list_delete_circle" src="<%=Const.STATIC_IMG_PATH%>/checklist/icon_list_delete_circle.png" style="display:none;"/>
                     </div>
                     <% }
                     }%>
 
                     <div class="checklist_add_item_wrap">
+                        <img class="icon_plus_circle" src="<%=Const.STATIC_IMG_PATH%>/plans/icon_plus_circle.png"/>
                         <input type="text" name="materialName" class="input_checklist_item" placeholder="추가">
                         <div class="checklist_add_item_btn"
                              onclick='addMaterial(this, "<%=ConstCode.CHECKLIST_TYPE_CODE_MY%>")'>등록

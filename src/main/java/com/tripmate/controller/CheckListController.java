@@ -4,6 +4,7 @@ import com.tripmate.common.exception.ApiCommonException;
 import com.tripmate.domain.CheckListDTO;
 import com.tripmate.domain.DeleteCheckListDTO;
 import com.tripmate.domain.MemberDTO;
+import com.tripmate.domain.UpdateCheckYnDTO;
 import com.tripmate.entity.ApiResult;
 import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.entity.Const;
@@ -67,6 +68,23 @@ public class CheckListController {
         try {
             result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
             result.put("isDeleteCheckListSuccess", checkListApiService.deleteCheckList(deleteCheckListDTO));
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
+    }
+
+    @PostMapping("/updateCheckYn")
+    public @ResponseBody String updateCheckYn(@Valid UpdateCheckYnDTO updateCheckYnDTO) {
+        ApiResult result;
+
+        try {
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            result.put("isUpdateCheckYnSuccess", checkListApiService.updateCheckYn(updateCheckYnDTO));
         } catch (ApiCommonException e) {
             result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
         } catch (Exception e) {
