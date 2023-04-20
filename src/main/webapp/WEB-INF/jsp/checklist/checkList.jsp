@@ -52,7 +52,7 @@
 
         <form id="checkListForm" method="post">
             <% if (planNo != null) { %>
-            <input type=text id="planNo" name="planNo" value=<%=planNo%> hidden>
+            <input type="text" id="planNo" name="planNo" value=<%=planNo%> hidden>
             <% } %>
             <div class="checklist_tab_list">
 
@@ -60,7 +60,7 @@
                     <% String mateNo = null; %>
                     <% if (togetherCheckList != null && memberInfo != null) {
                         for (CheckListVO checkListVO : togetherCheckList) {%>
-                    <input type=text id="planLeaderNo" name="planLeaderNo" value=<%=checkListVO.getPlanLeaderNo()%> hidden>
+                    <input type="text" id="planLeaderNo" name="planLeaderNo" value=<%=checkListVO.getPlanLeaderNo()%> hidden>
 
                     <% if (Const.Y.equals(checkListVO.getCheckYn()) && !checkListVO.getCheckMemberNo().equals(mateNo)) {
                         mateNo = checkListVO.getCheckMemberNo(); %>
@@ -75,7 +75,7 @@
                         <label for="checklistItemName<%=checkListVO.getMaterialNo()%>"></label>
                         <div class="checklist_item_no" hidden><%=checkListVO.getMaterialNo()%></div>
                         <div class="checklist_item_name"><%=checkListVO.getMaterialName()%></div>
-                        <input type=text name="checkListType" value=<%=checkListVO.getCheckListTypeCode()%> hidden>
+                        <input type="text" name="checkListType" value=<%=checkListVO.getCheckListTypeCode()%> hidden>
                         <img class="icon_list_delete_circle" src="<%=Const.STATIC_IMG_PATH%>/checklist/icon_list_delete_circle.png" style="display:none;"/>
                     </div>
                     <% }
@@ -100,7 +100,7 @@
                         <label for="checklistItemName<%=checkListVO.getMaterialNo()%>"></label>
                         <div class="checklist_item_no" hidden><%=checkListVO.getMaterialNo()%></div>
                         <div class="checklist_item_name"><%=checkListVO.getMaterialName()%></div>
-                        <input type=text name="checkListType" value=<%=checkListVO.getCheckListTypeCode()%> hidden>
+                        <input type="text" name="checkListType" value=<%=checkListVO.getCheckListTypeCode()%> hidden>
                         <img class="icon_list_delete_circle" src="<%=Const.STATIC_IMG_PATH%>/checklist/icon_list_delete_circle.png" style="display:none;"/>
                     </div>
                     <% }
