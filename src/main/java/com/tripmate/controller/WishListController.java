@@ -3,12 +3,14 @@ package com.tripmate.controller;
 import com.tripmate.common.exception.ApiCommonException;
 import com.tripmate.domain.CommentDTO;
 import com.tripmate.domain.DeleteCommentDTO;
+import com.tripmate.domain.PlanVO;
 import com.tripmate.domain.PostDTO;
 import com.tripmate.entity.ApiResult;
 import com.tripmate.entity.ApiResultEnum;
+import com.tripmate.service.apiservice.PlanApiService;
 import com.tripmate.service.apiservice.WishListApiService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,21 +24,19 @@ import javax.validation.Valid;
 @Slf4j
 @Controller
 @RequestMapping(value = "/wishlist", produces = "application/json; charset=utf8")
+@RequiredArgsConstructor
 public class WishListController {
     private final WishListApiService wishListApiService;
-
-    @Autowired
-    public WishListController(WishListApiService wishListApiService) {
-        this.wishListApiService = wishListApiService;
-    }
+    private final PlanApiService planApiService;
 
     @PostMapping("/wishlist")
-    public @ResponseBody ModelAndView wishList(HttpServletRequest request, @RequestParam(value = "planNo") String planNo
-            , @RequestParam(value = "tripTerm") String tripTerm, @RequestParam(value = "tripStartDate") String tripStartDate) {
+    public @ResponseBody ModelAndView wishList(HttpServletRequest request, @RequestParam(value = "planNo") String planNo) {
         try {
             request.setAttribute("planNo", planNo);
-            request.setAttribute("tripStartDate", tripStartDate);
-            request.setAttribute("tripTerm", tripTerm);
+            PlanVO planVO = planApiService.getPlanInfo(planNo);
+
+            request.setAttribute("tripStartDate", planVO.getTripStartDate());
+            request.setAttribute("tripTerm", String.valueOf(planVO.getTripTerm()));
             request.setAttribute("wishList", wishListApiService.searchWishList(planNo));
         } catch (Exception e) {
             log.error(e.getMessage(), e);

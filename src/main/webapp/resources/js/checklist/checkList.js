@@ -9,7 +9,7 @@ $(function () {
     const myMenu = document.getElementById("tab_menu_my");
     const togetherCheckList = document.querySelector(".checklist_together_wrap");
     const myCheckList = document.querySelector(".checklist_my_wrap");
-    const planLeaderNo = document.getElementById("planLeaderNo").value;
+    const planLeaderNo = document.getElementById("planLeaderNo");
     const memberNo = document.getElementById("sessionMemberNo").value;
     const deleteBtn = $(".icon_list_delete_circle");
     let editMaterialList = [];
@@ -17,10 +17,12 @@ $(function () {
     $("#icon_menu_checklist").hide();
     $("#icon_menu_checklist_choice").show();
 
-    if (planLeaderNo === memberNo) {
-        editBtn.style.display = 'block';
-    } else {
+    checkboxDisabled();
+
+    if (!planLeaderNo) {
         editBtn.style.display = 'none';
+    } else if (planLeaderNo.value === memberNo) {
+        editBtn.style.display = 'block';
     }
 
     togetherMenu.addEventListener('click', function () {
@@ -58,6 +60,10 @@ $(function () {
         backBtn.style.display = 'none';
         cancelBtn.style.display = 'block';
 
+        document.querySelectorAll(".checkbox").forEach(function (e) {
+            e.disabled = true;
+        })
+
         document.querySelectorAll(".icon_list_delete_circle").forEach(function (e) {
             e.style.display = 'block';
         })
@@ -69,7 +75,22 @@ $(function () {
     });
 
     cancelBtn.addEventListener('click', function () {
-        location.reload();
+        editBtn.style.display = 'block';
+        saveBtn.style.display = 'none';
+
+        backBtn.style.display = 'block';
+        cancelBtn.style.display = 'none';
+
+        document.querySelectorAll(".checkbox").forEach(function (e) {
+            e.disabled = false;
+            checkboxDisabled();
+        })
+
+        document.querySelectorAll(".icon_list_delete_circle").forEach(function (e) {
+            e.style.display = 'none';
+        })
+
+        $(".checklist_item_wrap").css('background', '#FFFFFF');
     });
 
     saveBtn.addEventListener('click', function (e) {
@@ -115,6 +136,23 @@ $(function () {
             }
         })
     });
+
+    $("#icon_menu_home").on('click', function () {
+        $("#checkListForm").attr("action", "/plans/planMain.trip").submit();
+    });
+
+    $("#bottom_menu_wishlist").on('click', function () {
+        $("#checkListForm").attr("action", "/wishlist/wishlist.trip").submit();
+    });
+
+    function checkboxDisabled () {
+        document.querySelectorAll(".checkbox").forEach(function (e) {
+            if (e.value !== 'null' && e.value !== memberNo) {
+                e.disabled = true;
+            }
+        })
+    }
+
 });
 
 const addMaterial = (target, checkListTypeCode) => {

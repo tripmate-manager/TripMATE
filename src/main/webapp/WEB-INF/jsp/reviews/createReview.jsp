@@ -40,7 +40,7 @@
         <input type="text" id="member_no" name="memberNo" hidden value=<%=memberInfo.getMemberNo()%>>
         <% } %>
         <% if (dailyPlanNo != null) { %>
-        <input type=text id="dailyplan_no" name="dailyPlanNo" hidden value=<%=dailyPlanNo%>>
+        <input type="text" id="dailyplan_no" name="dailyPlanNo" hidden value=<%=dailyPlanNo%>>
         <% } %>
         <% if (postTypeCode != null) { %>
         <input type="text" id="post_type_code" name="postTypeCode" hidden value="<%=postTypeCode%>">

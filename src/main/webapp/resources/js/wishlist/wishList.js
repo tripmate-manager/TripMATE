@@ -29,4 +29,12 @@ $(function () {
         $("#wishlist_post_no").val(postNo);
         $("#wishListForm").attr("action", "/wishlist/postMain.trip").submit();
     });
+
+    $("#icon_menu_home").on('click', function () {
+        $("#wishListForm").attr("action", "/plans/planMain.trip").submit();
+    });
+
+    $("#bottom_menu_checklist").on('click', function () {
+        $("#wishListForm").attr("action", "/checkList/checkList.trip").submit();
+    });
 });

@@ -70,8 +70,7 @@
                     <div class="checklist_item_wrap">
                         <input type="checkbox" name="checklistItemName" id="checklistItemName<%=checkListVO.getMaterialNo()%>" class="checkbox"
                             <% if (Const.Y.equals(checkListVO.getCheckYn())) { %> checked <% } %>
-                            <% if (Const.Y.equals(checkListVO.getCheckYn()) && !String.valueOf(memberInfo.getMemberNo()).equals(mateNo)) { %> disabled <% } %>
-                               onclick='clickCheckbox("<%=checkListVO.getMaterialNo()%>", "<%=checkListVO.getCheckListTypeCode()%>")'>
+                                value="<%=mateNo%>" onclick='clickCheckbox("<%=checkListVO.getMaterialNo()%>", "<%=checkListVO.getCheckListTypeCode()%>")'>
                         <label for="checklistItemName<%=checkListVO.getMaterialNo()%>"></label>
                         <div class="checklist_item_no" hidden><%=checkListVO.getMaterialNo()%></div>
                         <div class="checklist_item_name"><%=checkListVO.getMaterialName()%></div>
@@ -95,7 +94,7 @@
                         for (CheckListVO checkListVO : myCheckList) { %>
                     <div class="checklist_item_wrap">
                         <input type="checkbox" name="checklistItemName" id="checklistItemName<%=checkListVO.getMaterialNo()%>" class="checkbox"
-                            <% if (Const.Y.equals(checkListVO.getCheckYn())) { %> checked <% } %>
+                            <% if (Const.Y.equals(checkListVO.getCheckYn())) { %> checked <% } %> value="<%=mateNo%>"
                                onclick='clickCheckbox("<%=checkListVO.getMaterialNo()%>", "<%=checkListVO.getCheckListTypeCode()%>")'>
                         <label for="checklistItemName<%=checkListVO.getMaterialNo()%>"></label>
                         <div class="checklist_item_no" hidden><%=checkListVO.getMaterialNo()%></div>
