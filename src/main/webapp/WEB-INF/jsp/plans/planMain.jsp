@@ -38,8 +38,6 @@
         <% } %>
         <% if (planVO != null) { %>
         <input type="hidden" class="plan_main_plan_no" name="planNo" value="<%=planVO.getPlanNo()%>">
-        <input type="hidden" class="plan_main_start_date" name="tripStartDate" value="<%=planVO.getTripStartDate()%>">
-        <input type="hidden" class="plan_main_trip_term" name="tripTerm" value="<%=planVO.getTripTerm()%>">
         <% } %>
         <div onclick="history.back();" class="page_cover"></div>
         <div class="plan_main_title_wrap">

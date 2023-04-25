@@ -20,7 +20,7 @@ function copyToClipboard(text) {
 
 $(function () {
     let isAjaxProcessing = false;
-    let isNonMemberMemnuClicked = false;
+    let isNonMemberMenuClicked = false;
 
     const memberMenu = $("#tab_menu_member");
     const nonMemberMenu = $("#tab_menu_nonmember");
@@ -48,7 +48,7 @@ $(function () {
         memberContents.hide();
         nonMemberContents.show();
 
-        if (isNonMemberMemnuClicked === false) {
+        if (isNonMemberMenuClicked === false) {
             const planNo = $("#planNo").val();
 
             if (isAjaxProcessing) {
@@ -69,7 +69,7 @@ $(function () {
                 success: function (result) {
                     isAjaxProcessing = false;
                     if (result.code === constCode.global.resultCodeSuccess) {
-                        isNonMemberMemnuClicked = true;
+                        isNonMemberMenuClicked = true;
                         $(".invite_nonmember_auth_code").text(result.inviteCode);
                         $("#inviteCodeNo").val(result.inviteCodeNo);
                     } else {

@@ -55,4 +55,8 @@ public interface ConstCode {
     String DAILYPLAN_NOTIFICATION_1H = "30";
     String DAILYPLAN_NOTIFICATION_2H = "40";
     String DAILYPLAN_NOTIFICATION_3H = "50";
+
+    String CHECKLIST_TYPE_CODE = "CT004";
+    String CHECKLIST_TYPE_CODE_MY = "10";
+    String CHECKLIST_TYPE_CODE_TOGETHER = "20";
 }
