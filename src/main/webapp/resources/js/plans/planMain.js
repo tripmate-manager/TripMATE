@@ -38,6 +38,10 @@ $(function () {
         $("#planMainForm").attr("action", "/checkList/checkList.trip").submit();
     });
 
+    $("#bottom_menu_account").on('click', function () {
+        $("#planMainForm").attr("action", "/accountBook/accountBook.trip").submit();
+    });
+
     $(".icon_arrow_right").on('click', function () {
         $("#dailyplan_day").val($(this).parent().find(".dailyplan_item_day").attr("value"));
         $("#planMainForm").attr("action", "/dailyPlans/dailyPlan.trip").submit();

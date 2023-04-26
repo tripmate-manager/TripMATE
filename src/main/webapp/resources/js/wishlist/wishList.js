@@ -37,4 +37,8 @@ $(function () {
     $("#bottom_menu_checklist").on('click', function () {
         $("#wishListForm").attr("action", "/checkList/checkList.trip").submit();
     });
+
+    $("#bottom_menu_account").on('click', function () {
+        $("#wishListForm").attr("action", "/accountBook/accountBook.trip").submit();
+    });
 });
