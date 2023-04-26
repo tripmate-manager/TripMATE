@@ -20,6 +20,7 @@ body {
      position: static;
      overflow: hidden;
      background-color: #ffffff;
+     height: 81.2rem;
  }
 .checklist_wrap .checklist_title_wrap {
     width: 100%;
@@ -70,6 +71,17 @@ body {
     font-family: Noto Sans, 'Source Sans Pro';
     white-space: nowrap;
     flex-shrink: 0;
+}
+.checklist_wrap .checklist_title_wrap .checklist_cancel {
+    margin: 0.192rem 8.5rem 0rem 0rem;
+    object-fit: contain;
+    vertical-align: top;
+    flex-shrink: 0;
+    font-size: 1.8rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
 }
 .checklist_wrap .checklist_list_wrap {
     width: 100%;
@@ -155,7 +167,7 @@ body {
     display: flex;
     align-items: flex-start;
     border-bottom: solid 0.1rem #50555C;
-    margin: 1rem 0 0 0;
+    padding: 1rem 0 0 0;
 }
 .checklist_item_wrap .icon_checkbox_off {
     margin-right: 0.4828rem;
@@ -177,7 +189,7 @@ body {
     width: 30rem;
     margin-bottom: 0.2rem;
     display: flex;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: 600;
     line-height: 1.3625;
     color: #1e1e1e;
@@ -188,6 +200,15 @@ body {
     width: 2rem;
     height: 2rem;
     margin-left: 1rem;
+}
+.icon_plus_circle {
+    margin-right: 0.5rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    position: relative;
+    object-fit: contain;
+    vertical-align: top;
+    flex-shrink: 0;
 }
 .checklist_add_item_wrap {
     margin: 0 0 0 2rem;
@@ -232,20 +253,20 @@ body {
 .checklist_divi_nickname {
     height: 2rem;
     padding: 0.5rem 0.5rem;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     font-weight: 500;
     line-height: 1.3625;
     color: #000000;
     font-family: Noto Sans, 'Source Sans Pro';
     white-space: nowrap;
-    background-color: #b7e1dc;
+    background-color: #FFF7EC;
     border-radius: 0.5rem;
 }
 
 input[id*='checklistItemName']+label {
     display: block;
-    width: 24px;
-    height: 24px;
+    width: 23px;
+    height: 23px;
     margin: 0 1rem;
     background: url('/resources/images/plans/icon_checkbox_off.png') no-repeat 0 0px / contain;
 }

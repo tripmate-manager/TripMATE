@@ -1,0 +1,480 @@
+html {
+    font-size: 62.5%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+input {
+    border: none;
+}
+
+body {
+    width: 100%;
+}
+
+.accountbook_wrap {
+    width: 100%;
+    align-items: center;
+    display: flex;
+    position: static;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.accountbook_wrap .add_account_wrap {
+    background-color: #f4f4f4;
+    padding: 1rem 0 2rem 0
+}
+
+.accountbook_wrap .add_account_wrap .add_account_input_wrap {
+    width: 100%;
+    height: 2.5rem;
+    position: static;
+    margin-left: 1.8rem;
+    display: flex;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+
+.accountbook_wrap .add_account_wrap .add_account_input_wrap .account_input_title {
+    margin: 0.1rem 14.7rem 0rem 0rem;
+    display: flex;
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.accountbook_wrap .add_account_wrap .add_account_input_wrap .accountbook_add_input {
+    margin-right: 0.1rem;
+    width: 14rem;
+    height: 2.5rem;
+    border: solid 0.1rem #646464;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    flex-shrink: 0;
+    position: absolute;
+    right: 2.5rem;
+    text-align: right;
+}
+
+.account_input_won {
+    display: flex;
+    font-size: 1.8rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #609690;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+    right: 0.5rem;
+    position: absolute;
+}
+
+.accountbook_wrap .add_account_wrap .add_account_wrap {
+    width: 15.7rem;
+    height: 2.6rem;
+    position: static;
+    margin-left: 1.9rem;
+    display: flex;
+    align-items: center;
+}
+
+.accountbook_wrap .add_account_wrap .add_account_wrap .label_selectbox_title {
+    margin: 0rem 2.8rem 0.2rem 0rem;
+    display: flex;
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.accountbook_wrap .add_account_wrap .add_account_wrap .select_post_type {
+    display: flex;
+    width: 10rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #000000;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.accountbook_wrap .add_account_wrap .account_desc_title {
+    width: 90%;
+    height: 3rem;
+    position: static;
+    display: flex;
+    margin-left: 1.5rem;
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    background-color: #f4f4f4;
+    color: #646464;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    border-bottom: solid 0.1rem #50555c
+}
+
+.accountbook_wrap .add_account_wrap .add_account_btn {
+    width: 7rem;
+    height: 2.5rem;
+    position: static;
+    margin-left: 17rem;
+    margin-top: 2rem;
+    display: flex;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #ffffff;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    align-items: center;
+    justify-content: center;
+    background-color: #646464;
+    border-radius: 0.5rem;
+}
+
+.accountbook_wrap .accountbook_title_wrap {
+    width: 33.125rem;
+    height: 2.9167rem;
+    position: absolute;
+    left: 1.975rem;
+    top: 1.4917rem;
+    display: flex;
+    align-items: flex-start;
+}
+
+.accountbook_wrap .accountbook_title_wrap .icon_arrow_left {
+    margin-right: 10.5085rem;
+    width: 1.7165rem;
+    height: 2.9167rem;
+    object-fit: contain;
+    vertical-align: top;
+    flex-shrink: 0;
+}
+
+.accountbook_wrap .icon_sorting {
+    margin-right: 1rem;
+    width: 2rem;
+    height: 2rem;
+    object-fit: contain;
+    vertical-align: top;
+    flex-shrink: 0;
+}
+
+.accountbook_wrap .accountbook_title_wrap .accountbook_cancel {
+    margin-right: 8.5rem;
+    height: 2.9167rem;
+    object-fit: contain;
+    vertical-align: top;
+    flex-shrink: 0;
+    font-size: 1.8rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+}
+
+.accountbook_wrap .accountbook_title_wrap .accountbook_title {
+    margin: 0.058rem 9rem 0rem 0rem;
+    display: flex;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.accountbook_wrap .accountbook_title_wrap .accountbook_edit {
+    margin-top: 0.0083rem;
+    display: flex;
+    font-size: 1.8rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.accountbook_wrap .accountbook_title_wrap .accountbook_save {
+    margin-top: 0.0083rem;
+    display: flex;
+    font-size: 1.8rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.accountbook_wrap .accountbook_divi_line {
+    width: 100%;
+    height: 0.1rem;
+    position: absolute;
+    top: 5.9rem;
+    background-color: #646464;
+}
+
+#accountBookForm {
+    width: 100%;
+}
+
+.accountbook_wrap .accountbook_list_wrap {
+    width: 100%;
+    padding-bottom: 20rem;
+}
+
+.accountbook_wrap .accountbook_list_wrap .accountbook_list {
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+}
+
+.accountbook_wrap .accountbook_day_list_wrap {
+    box-sizing: border-box;
+    padding: 0.7rem;
+    width: 40rem;
+    position: static;
+    margin-top: 6rem;
+    overflow: scroll;
+    white-space: nowrap;
+}
+
+.accountbook_wrap .accountbook_day_list_wrap .accountbook_day_wrap {
+    height: 3.9rem;
+    display: flex;
+    align-items: center;
+}
+
+.accountbook_wrap .accountbook_day_list_wrap .accountbook_day_wrap .accountbook_day_item {
+    margin-right: 1rem;
+    width: 6.7rem;
+    height: 80%;
+    display: flex;
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.select_day {
+    background-color: #b7e1dc;
+    border-radius: 2rem;
+}
+
+.accountbook_input {
+    margin: 0.2rem 0.1rem 0rem 0rem;
+    width: 8rem;
+    height: 2.5rem;
+    border: solid 0.1rem #EEEDED;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    flex-shrink: 0;
+    right: 2.5rem;
+    position: absolute;
+    text-align: right;
+    padding: 0 0.5rem 0 0.5rem;
+}
+
+.accountbook_wrap .accountbook_item_wrap {
+    width: 35.2rem;
+    height: 3rem;
+    position: static;
+    padding: 1rem;
+    display: flex;
+    align-items: flex-start;
+}
+
+.accountbook_wrap .accountbook_item_wrap .accountbook_item_type {
+    margin: 0.1rem 0.8rem 0rem 0rem;
+    width: 5rem;
+    height: 2.3rem;
+    display: flex;
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #96608a;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    align-items: center;
+    justify-content: center;
+    border: solid 0.1rem #96608a;
+    box-sizing: border-box;
+    background-color: #ffe6f9;
+    border-radius: 1rem;
+    flex-shrink: 0;
+}
+
+.accountbook_wrap .accountbook_item_wrap .accountbook_item_name {
+    display: flex;
+    font-size: 1.8rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #646464;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.accountbook_wrap .accountbook_item_wrap .accountbook_item_won {
+    margin-top: 0.5rem;
+    display: flex;
+    font-size: 1.8rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #609690;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+    right: 0.5rem;
+    position: absolute;
+}
+
+.accountbook_wrap .add_account_item_wrap {
+    display: flex;
+    align-items: center;
+}
+
+.accountbook_wrap .add_account_item_wrap .icon_plus_circle {
+    width: 2.2rem;
+    height: 2.2rem;
+    position: static;
+    object-fit: contain;
+    vertical-align: top;
+    flex-shrink: 0;
+    margin: 1rem;
+}
+
+.accountbook_wrap .add_account_item_wrap .input_account_item {
+    display: flex;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    width: 30rem;
+    color: #646464;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+    border-bottom: solid 0.1rem #50555c
+}
+
+.accountbook_wrap .total_wrap {
+    width: 100%;
+    height: 9.8rem;
+    position: fixed;
+    bottom: 12.4rem;
+}
+
+.accountbook_wrap .total_wrap .total_person_wrap {
+    width: 100%;
+    position: static;
+    background-color: #b7e1dc;
+    padding: 1.5rem 0 2rem 0.5rem;
+}
+
+.accountbook_wrap .total_wrap .total_person_wrap .total_account_wrap {
+    width: 100%;
+    position: static;
+    display: flex;
+    margin-top: 0.5rem
+}
+
+.accountbook_wrap .total_wrap .total_person_wrap .total_account_wrap .total_title {
+    height: 2.5rem;
+    position: static;
+    margin-left: 1.4rem;
+    display: flex;
+    font-size: 1.8rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+}
+.accountbook_wrap .total_wrap .total_person_wrap .total_account_wrap .total_won {
+    height: 2.5rem;
+    position: static;
+    display: flex;
+    font-size: 1.8rem;
+    font-weight: 600;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    position: absolute;
+    right: 2rem;
+}
+
+.accountbook_wrap .total_wrap .day_total_wrap {
+    box-sizing: border-box;
+    padding: 1rem 2rem 1rem 2rem;
+    width: 100%;
+    height: 5rem;
+    position: static;
+    display: flex;
+    align-items: center;
+    background-color: #f1f1f1;
+}
+
+.accountbook_wrap .total_wrap .day_total_wrap .day_total_title {
+    margin-right: 23.4rem;
+    display: flex;
+    font-size: 1.8rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.accountbook_wrap .total_wrap .day_total_wrap .day_total_won {
+    display: flex;
+    font-size: 1.8rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #212352;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    flex-shrink: 0;
+    position: absolute;
+    right: 2rem;
+}
+
+.icon_list_delete_circle {
+    width: 2rem;
+    height: 2rem;
+    margin-left: 1rem;
+    position: absolute;
+    right: 2rem;
+}
+
+.delete_account {
+    position: absolute;
+    right: 3rem;
+}
