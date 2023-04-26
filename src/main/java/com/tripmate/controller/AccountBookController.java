@@ -4,6 +4,7 @@ import com.tripmate.common.exception.ApiCommonException;
 import com.tripmate.domain.AccountBookDTO;
 import com.tripmate.domain.AccountBookVO;
 import com.tripmate.domain.DeleteAccountBookDTO;
+import com.tripmate.domain.UpdateAccountBookDTO;
 import com.tripmate.entity.ApiResult;
 import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.service.apiservice.AccountBookApiService;
@@ -19,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -29,10 +29,11 @@ public class AccountBookController {
     private final AccountBookApiService accountBookApiService;
 
     @PostMapping("/accountBook")
-    public @ResponseBody ModelAndView viewCheckList(HttpServletRequest request,
-                               @RequestParam(value = "planNo") @NotBlank String planNo) {
+    public @ResponseBody ModelAndView viewAccountBook(HttpServletRequest request,
+                                                    @RequestParam(value = "planNo") @NotBlank String planNo,
+                                                    @RequestParam(value = "dayGroup", required = false) String dayGroup) {
         try {
-            AccountBookVO accountList = accountBookApiService.searchAccountListByDay(planNo, "1");
+            AccountBookVO accountList = accountBookApiService.searchAccountListByDay(planNo, ("".equals(dayGroup)) ? "1" : dayGroup);
 
             request.setAttribute("planNo", planNo);
             request.setAttribute("accountList", accountList);
@@ -60,8 +61,25 @@ public class AccountBookController {
         return result.toJson();
     }
 
+    @PostMapping("/updateAmount")
+    public @ResponseBody String updateAccountAmount(@Valid UpdateAccountBookDTO updateAccountBookDTO) {
+        ApiResult result;
+
+        try {
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            result.put("isUpdateAmountSuccess", accountBookApiService.updateAccountAmount(updateAccountBookDTO));
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
+    }
+
     @PostMapping("/deleteAccount")
-    public @ResponseBody String addAccount(@Valid DeleteAccountBookDTO deleteAccountBookDTO) {
+    public @ResponseBody String deleteAccount(@Valid DeleteAccountBookDTO deleteAccountBookDTO) {
         ApiResult result;
 
         try {

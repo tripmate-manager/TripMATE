@@ -1,6 +1,7 @@
 let isAjaxProcessing = false;
 
 $(function () {
+    const memberNo = document.getElementById("sessionMemberNo").value;
     const editBtn = document.getElementById("accountbook_edit");
     const saveBtn = document.getElementById("accountbook_save");
     const cancelBtn = document.getElementById("accountbook_cancel");
@@ -9,7 +10,7 @@ $(function () {
     const selectDays = document.querySelectorAll(".accountbook_day_item");
     const inputAccount = document.querySelectorAll(".accountbook_input_wrap");
     const sortingBtn = document.querySelectorAll(".icon_sorting")
-    const dayGroupSelected = $('.select_day').attr("value");
+    let dayGroupSelected = $('.select_day').attr("value");
     let deleteAccountList = [];
 
     $("#icon_menu_home").on('click', function () {
@@ -24,16 +25,21 @@ $(function () {
         $("#accountBookForm").attr("action", "/checkList/checkList.trip").submit();
     });
 
+    backBtn.addEventListener('click', function () {
+        $("#accountBookForm").attr("method", "post").attr("action", "/plans/planMain.trip").submit();
+    });
+
    selectDays.forEach(function (e) {
        e.addEventListener('click', function () {
            selectDays.forEach(function (days) {
                days.classList.remove("select_day");
            });
            e.classList.add("select_day");
+           dayGroupSelected = $('.select_day').attr("value");
+
+           $("#dayGroup").val(dayGroupSelected);
+           $("#accountBookForm").attr("action", "/accountBook/accountBook.trip").submit();
         });
-
-       //조회
-
     })
 
 
@@ -95,7 +101,8 @@ $(function () {
     });
 
     saveBtn.addEventListener('click', function () {
-        // 수정 / 삭제
+        // todo: 정렬 순서 수정 기능 추가
+
         if (isAjaxProcessing) {
             popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
             return;
@@ -104,21 +111,20 @@ $(function () {
         }
 
         $.ajax({
-            url: "/checkList/deleteCheckList.trip",
+            url: "/accountBook/deleteAccount.trip",
             type: "post",
             dataType: 'json',
             traditional: true,
             data: {
-                planNo: document.getElementById("planNo").value,
-                memberNo: document.getElementById("sessionMemberNo").value,
-                checkListTypeCode: deleteBtn[0].previousElementSibling.value,
-                materialNoList: editMaterialList
+                memberNo: memberNo,
+                dayGroup: dayGroupSelected,
+                accountNoList: deleteAccountList
             },
             success: function (result) {
                 isAjaxProcessing = false;
 
                 if (result.code === constCode.global.resultCodeSuccess) {
-                    if (result.isDeleteCheckListSuccess === true) {
+                    if (result.isDeleteAccountSuccess === true) {
                         location.reload();
                     } else {
                         popUpOpen("처리 중 오류가 발생하였습니다.");
@@ -132,7 +138,6 @@ $(function () {
                 popUpOpen("처리 중 오류가 발생하였습니다.");
             }
         })
-
     })
 
     document.querySelector(".add_account_item_wrap").addEventListener('click', function () {
@@ -153,7 +158,7 @@ $(function () {
             dataType: 'json',
             traditional: true,
             data: {
-                memberNo: document.getElementById("sessionMemberNo").value,
+                memberNo: memberNo,
                 planNo: document.getElementById("planNo").value,
                 postTypeCode: $("#select_post_type option:selected").val(),
                 accountName: document.getElementById("account_desc_title").value,
@@ -182,8 +187,41 @@ $(function () {
 
     inputAccount.forEach(function (e) {
         e.addEventListener('change', function () {
-            console.log('event!! ');
-            console.log(e.querySelector(".accountbook_input").value);
+            if (isAjaxProcessing) {
+                popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
+                return;
+            } else {
+                isAjaxProcessing = true;
+            }
+
+            $.ajax({
+                url: "/accountBook/updateAmount.trip",
+                type: "post",
+                dataType: 'json',
+                traditional: true,
+                data: {
+                    accountNo: e.parentElement.querySelector("#accountbook_item_no").value,
+                    memberNo: memberNo,
+                    amount: e.querySelector(".accountbook_input").value
+                },
+                success: function (result) {
+                    isAjaxProcessing = false;
+
+                    if (result.code === constCode.global.resultCodeSuccess) {
+                        if (result.isUpdateAmountSuccess === true) {
+                            location.reload();
+                        } else {
+                            popUpOpen("처리 중 오류가 발생하였습니다.");
+                        }
+                    } else {
+                        popUpOpen(result.message);
+                    }
+                },
+                error: function (error) {
+                    isAjaxProcessing = false;
+                    popUpOpen("처리 중 오류가 발생하였습니다.");
+                }
+            })
         });
     })
 });

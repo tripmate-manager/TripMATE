@@ -68,7 +68,7 @@ public class AccountBookApiServiceImpl implements AccountBookApiService {
 
     @Override
     public boolean updateAccountAmount(UpdateAccountBookDTO updateAccountBookDTO) throws Exception {
-        Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(AccountBookService.class).updateAccountAmount(updateAccountBookDTO.getPlanNo(), updateAccountBookDTO);
+        Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(AccountBookService.class).updateAccountAmount(updateAccountBookDTO);
         boolean result;
 
         ResponseWrapper<Boolean> response = data.clone().execute().body();
@@ -92,7 +92,7 @@ public class AccountBookApiServiceImpl implements AccountBookApiService {
 
     @Override
     public boolean updateAccountSortSequence(UpdateAccountBookDTO updateAccountBookDTO) throws Exception {
-        Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(AccountBookService.class).updateAccountSortSequence(updateAccountBookDTO.getPlanNo(), updateAccountBookDTO);
+        Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(AccountBookService.class).updateAccountSortSequence(updateAccountBookDTO);
         boolean result;
 
         ResponseWrapper<Boolean> response = data.clone().execute().body();

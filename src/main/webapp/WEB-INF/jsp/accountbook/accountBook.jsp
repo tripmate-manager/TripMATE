@@ -37,13 +37,12 @@
 <div class="accountbook_wrap">
 
     <div class="accountbook_title_wrap">
-        <img class="icon_arrow_left" id="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png" onclick="history.back()"/>
+        <img class="icon_arrow_left" id="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png"/>
         <div class="accountbook_cancel" id="accountbook_cancel" style="display: none">취소</div>
         <div class="accountbook_title">여행가계부</div>
         <div class="accountbook_edit" id="accountbook_edit">편집</div>
         <div class="accountbook_save" id="accountbook_save" style="display: none">완료</div>
     </div>
-    <div class="accountbook_divi_line"></div>
 
     <form id="accountBookForm" method="post">
         <% if (planNo != null) { %>
@@ -53,16 +52,18 @@
         <% if (accountBookVO != null) { %>
         <div class="accountbook_day_list_wrap">
             <div class="accountbook_day_wrap">
+                <input type="text" id="dayGroup" name="dayGroup" value=<%=accountBookVO.getDayGroup()%> hidden>
                 <% for (int day = 1; day <= Integer.parseInt(accountBookVO.getTripTerm()) + 1; day++) { %>
-                <div class="accountbook_day_item <% if (day == 1) { %>select_day<%}%>" value="<%=day%>">Day<%=day%></div>
+                <div class="accountbook_day_item <% if (String.valueOf(day).equals(accountBookVO.getDayGroup())) { %>select_day<%}%>" value="<%=day%>">Day<%=day%></div>
                 <% } %>
             </div>
         </div>
 
-        <% for (AccountVO accountVO : accountBookVO.getAccountList()) { %>
         <div class="accountbook_list_wrap">
-            <div class="accountbook_list draggable-container"> <%-- draggable-container --%>
-                <div class="accountbook_item_wrap shallow-draggable" draggable="true"> <%-- shallow-draggable --%>
+        <% if (accountBookVO.getAccountList().size() > 0) {
+           for (AccountVO accountVO : accountBookVO.getAccountList()) { %>
+            <div class="accountbook_list">
+                <div class="accountbook_item_wrap" draggable="true">
                     <input type=hidden id="accountbook_item_no" name="accountNo" value=<%=accountVO.getAccountNo()%>>
 
                     <img class="icon_sorting" src="<%=Const.STATIC_IMG_PATH%>/accountbook/icon_sorting.png" style="display:none;"/>
@@ -81,7 +82,8 @@
                          src="<%=Const.STATIC_IMG_PATH%>/checklist/icon_list_delete_circle.png" style="display:none;"/>
                 </div>
             </div>
-            <% } %>
+            <% }
+            } %>
 
             <div class="add_account_item_wrap">
                 <img class="icon_plus_circle" src="<%=Const.STATIC_IMG_PATH%>/plans/icon_plus_circle.png"/>
