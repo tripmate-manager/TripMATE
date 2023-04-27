@@ -241,8 +241,8 @@ public class PlanApiServiceImpl implements PlanApiService {
     }
 
     @Override
-    public InviteCodeVO createInviteAuthCode(String planNo, String inviteTypeCode) throws Exception {
-        Call<ResponseWrapper<InviteCodeVO>> data = RetrofitClient.getApiService(PlanService.class).createInviteAuthCode(planNo, inviteTypeCode);
+    public InviteCodeVO createInviteAuthCode(String planNo, String memberNo, String inviteTypeCode) throws Exception {
+        Call<ResponseWrapper<InviteCodeVO>> data = RetrofitClient.getApiService(PlanService.class).createInviteAuthCode(planNo, memberNo, inviteTypeCode);
         InviteCodeVO result;
 
         ResponseWrapper<InviteCodeVO> response = data.clone().execute().body();

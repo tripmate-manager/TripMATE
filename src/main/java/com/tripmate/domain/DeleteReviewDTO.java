@@ -14,6 +14,10 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 public class DeleteReviewDTO {
+
+    @NotBlank(message = "플랜 번호를 입력해주세요.")
+    private String planNo;
+
     @NotBlank(message = "리뷰 번호를 입력해주세요.")
     private String reviewNo;
 

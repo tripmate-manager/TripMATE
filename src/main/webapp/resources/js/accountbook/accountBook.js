@@ -13,6 +13,9 @@ $(function () {
     let dayGroupSelected = $('.select_day').attr("value");
     let deleteAccountList = [];
 
+    $("#icon_menu_account").hide();
+    $("#icon_menu_account_choice").show();
+
     $("#icon_menu_home").on('click', function () {
         $("#accountBookForm").attr("action", "/plans/planMain.trip").submit();
     });

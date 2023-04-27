@@ -9,7 +9,7 @@ $(function () {
     $("#icon_menu_home_choice").show();
 
     $(".icon_arrow_left").on('click', function () {
-        $("#planMainForm").attr("method", "get").attr("action", "/main/main.trip").submit();
+        pageLink("/plans/myPlan.trip");
     });
 
     $(".plan_main_plan_edit").on('click', function () {

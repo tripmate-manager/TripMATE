@@ -169,4 +169,20 @@ $(function () {
             }
         })
     });
+
+    $("#icon_menu_home").on('click', function () {
+        $("#commentForm").attr("action", "/plans/planMain.trip").submit();
+    });
+
+    $("#bottom_menu_wishlist").on('click', function () {
+        $("#commentForm").attr("action", "/wishlist/wishlist.trip").submit();
+    });
+
+    $("#bottom_menu_checklist").on('click', function () {
+        $("#commentForm").attr("action", "/checkList/checkList.trip").submit();
+    });
+
+    $("#icon_arrow_left").on('click', function () {
+        $("#commentForm").attr("action", "/wishlist/wishlist.trip").submit();
+    });
 });

@@ -64,6 +64,7 @@ $(function () {
                 dataType: 'json',
                 data: {
                     planNo: planNo,
+                    memberNo: memberNo,
                     inviteTypeCode: constCode.global.inviteTypeCodeNonMember
                 },
                 success: function (result) {

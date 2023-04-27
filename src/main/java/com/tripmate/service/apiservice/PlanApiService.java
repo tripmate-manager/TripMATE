@@ -23,7 +23,7 @@ public interface PlanApiService {
     List<PlanMateVO> searchPlanMateList(String planNo) throws Exception;
     boolean updatePlan(String planNo, PlanDTO planDTO) throws Exception;
     List<PlanMateVO> searchMemberList(String searchDiviCode, String searchKeyword) throws Exception;
-    InviteCodeVO createInviteAuthCode(String planNo, String inviteTypeCode) throws Exception;
+    InviteCodeVO createInviteAuthCode(String planNo, String memberNo, String inviteTypeCode) throws Exception;
     boolean createNotification(NotificationDTO notificationDTO) throws Exception;
     List<NotificationVO> searchNotificationList(String memberNo) throws Exception;
     int getUnreadNotificationCnt(String memberNo) throws Exception;
