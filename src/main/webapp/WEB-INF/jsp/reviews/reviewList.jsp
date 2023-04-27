@@ -37,8 +37,7 @@
 
 <div class="reviewlist_wrap">
     <div class="reviewlist_title_wrap">
-        <img class="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png"
-             onclick="history.back()"/>
+        <img class="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png"/>
         <div class="reviewlist_title">Review</div>
     </div>
     <div class="reviewlist_divi_line">

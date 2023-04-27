@@ -41,4 +41,8 @@ $(function () {
     $("#bottom_menu_account").on('click', function () {
         $("#wishListForm").attr("action", "/accountBook/accountBook.trip").submit();
     });
+
+    $("#icon_arrow_left").on('click', function () {
+        $("#wishListForm").attr("action", "/plans/planMain.trip").submit();
+    });
 });

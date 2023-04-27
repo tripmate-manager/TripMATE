@@ -29,7 +29,7 @@ function deleteReview(reviewNo, dailyPlanNo) {
                     popUpOpen('리뷰가 삭제되었습니다.');
 
                     $(".popup_close_btn").attr("onclick", null).on('click', function () {
-                        history.back();
+                        location.href = document.referrer;
                     });
                 }
             } else {

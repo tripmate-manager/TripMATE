@@ -149,6 +149,10 @@ $(function () {
         $("#checkListForm").attr("action", "/accountBook/accountBook.trip").submit();
     });
 
+    $("#icon_arrow_left").on('click', function () {
+        $("#checkListForm").attr("action", "/plans/planMain.trip").submit();
+    });
+
     function checkboxDisabled () {
         document.querySelectorAll(".checkbox").forEach(function (e) {
             if (e.value !== 'null' && e.value !== memberNo) {

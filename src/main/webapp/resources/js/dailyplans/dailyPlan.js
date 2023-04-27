@@ -104,3 +104,9 @@ function createReview(dailyPlanNo, postTypeCode) {
     document.getElementById("dailyplan_post_type_code").value = postTypeCode;
     $("#dailyplanForm").attr("action", "/review/createReview.trip").submit();
 }
+
+$(function () {
+    $(".icon_arrow_left").on('click', function () {
+        $("#dailyplanForm").attr("action", "/plans/planMain.trip").submit();
+    });
+});
