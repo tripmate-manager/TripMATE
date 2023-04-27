@@ -145,6 +145,14 @@ $(function () {
     });
 
     document.getElementById("add_account_btn").addEventListener('click', function (e) {
+        const inputAmount = document.getElementById("accountbook_add_input").value;
+        const inputAccountName = document.getElementById("account_desc_title").valuee;
+
+        if (inputAmount.trim() === "" || inputAccountName.trim() === "") {
+            popUpOpen('경비 항목을 입력해주세요.');
+            return;
+        }
+
         if (isAjaxProcessing) {
             popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
             return;
@@ -161,9 +169,9 @@ $(function () {
                 memberNo: memberNo,
                 planNo: document.getElementById("planNo").value,
                 postTypeCode: $("#select_post_type option:selected").val(),
-                accountName: document.getElementById("account_desc_title").value,
+                accountName: inputAccountName,
                 dayGroup: dayGroupSelected,
-                amount: document.getElementById("accountbook_add_input").value
+                amount: inputAmount
             },
             success: function (result) {
                 isAjaxProcessing = false;
