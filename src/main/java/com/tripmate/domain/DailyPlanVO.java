@@ -33,4 +33,6 @@ public class DailyPlanVO {
     private String spotAddress;
 
     private String postRegistrationNo;
+
+    private String achieveRate;
 }

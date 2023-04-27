@@ -45,7 +45,7 @@
         <div class="dailyplan_title">Day <%=dayGroup%></div>
         <div class="dailyplan_rate_wrap">
             <div class="dailyplan_rate_box">
-                <div class="dailyplan_rate_number">10</div>
+                <div class="dailyplan_rate_number"><%=dailyPlanList.get(0).getAchieveRate()%></div>
                 <div class="dailyplan_rate_percent">%</div>
             </div>
         </div>

@@ -13,6 +13,7 @@ import com.tripmate.entity.FileUploadEnum;
 import com.tripmate.service.apiservice.ReviewApiService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -65,12 +66,14 @@ public class ReviewController {
             List<ReviewImageDTO> reviewImageList = new ArrayList<>();
 
             for (MultipartFile file : multipartFileList) {
-                if (!fileUploadUtil.fileExtensionValidCheck(file)) {
-                    throw new FileUploadException(FileUploadEnum.FILE_EXTENSION_EXCEPTION.getCode(), FileUploadEnum.FILE_EXTENSION_EXCEPTION.getMessage());
-                }
+                if (!StringUtils.isEmpty(file.getOriginalFilename())) {
+                    if (!fileUploadUtil.fileExtensionValidCheck(file)) {
+                        throw new FileUploadException(FileUploadEnum.FILE_EXTENSION_EXCEPTION.getCode(), FileUploadEnum.FILE_EXTENSION_EXCEPTION.getMessage());
+                    }
 
-                if (!file.isEmpty() && file.getOriginalFilename() != null) {
-                    reviewImageList.add(fileUploadUtil.fileUpload(saveFiles, file));
+                    if (!file.isEmpty() && file.getOriginalFilename() != null) {
+                        reviewImageList.add(fileUploadUtil.fileUpload(saveFiles, file));
+                    }
                 }
             }
 
