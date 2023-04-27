@@ -10,6 +10,7 @@ import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.service.apiservice.AccountBookApiService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +34,7 @@ public class AccountBookController {
                                                     @RequestParam(value = "planNo") @NotBlank String planNo,
                                                     @RequestParam(value = "dayGroup", required = false) String dayGroup) {
         try {
-            AccountBookVO accountList = accountBookApiService.searchAccountListByDay(planNo, ("".equals(dayGroup)) ? "1" : dayGroup);
+            AccountBookVO accountList = accountBookApiService.searchAccountListByDay(planNo, StringUtils.isEmpty(dayGroup) ? "1" : dayGroup);
 
             request.setAttribute("planNo", planNo);
             request.setAttribute("accountList", accountList);
