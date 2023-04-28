@@ -17,6 +17,7 @@ function deleteReview(reviewNo, dailyPlanNo) {
         type: "post",
         dataType: 'json',
         data: {
+            planNo: document.getElementById("planNo").value,
             reviewNo: reviewNo,
             memberNo: document.getElementById("memberNo").value,
             dailyPlanNo: dailyPlanNo
@@ -29,7 +30,7 @@ function deleteReview(reviewNo, dailyPlanNo) {
                     popUpOpen('리뷰가 삭제되었습니다.');
 
                     $(".popup_close_btn").attr("onclick", null).on('click', function () {
-                        location.href = document.referrer;
+                        $("#reviewListForm").attr("action", "/review/reviewList.trip").submit();
                     });
                 }
             } else {
@@ -70,4 +71,8 @@ $(function () {
             }
         });
     }
+
+    $("#icon_arrow_left").on('click', function () {
+        $("#reviewListForm").attr("action", "/dailyPlans/dailyPlan.trip").submit();
+    });
 });

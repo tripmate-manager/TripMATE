@@ -46,10 +46,15 @@ public class ReviewController {
     private final FileUploadUtil fileUploadUtil;
 
     @PostMapping("/createReview")
-    public String viewCreateReview(Model model, @RequestParam(value = "dailyPlanNo") @NotBlank String dailyPlanNo, @RequestParam(value = "postTypeCode") @NotBlank String postTypeCode) {
+    public String viewCreateReview(Model model, @RequestParam(value = "dailyPlanNo") @NotBlank String dailyPlanNo,
+                                   @RequestParam(value = "planNo") @NotBlank String planNo,
+                                   @RequestParam(value = "postTypeCode") @NotBlank String postTypeCode,
+                                   @RequestParam(value = "dayGroup") @NotBlank String dayGroup) {
         try {
             model.addAttribute("dailyPlanNo", dailyPlanNo);
+            model.addAttribute("planNo", planNo);
             model.addAttribute("postTypeCode", postTypeCode);
+            model.addAttribute("dayGroup", dayGroup);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
@@ -79,6 +84,7 @@ public class ReviewController {
 
             ReviewDTO reviewRequestDTO = ReviewDTO.builder()
                     .memberNo(reviewDTO.getMemberNo())
+                    .planNo(reviewDTO.getPlanNo())
                     .dailyPlanNo(reviewDTO.getDailyPlanNo())
                     .postTypeCode(reviewDTO.getPostTypeCode())
                     .scoreLocation(reviewDTO.getScoreLocation())
@@ -114,10 +120,14 @@ public class ReviewController {
 
     @PostMapping("/reviewList")
     public String viewReviewList(Model model, @RequestParam(value = "dailyPlanNo") @NotBlank String dailyPlanNo,
-                                 @RequestParam(value = "postTypeCode") @NotBlank String postTypeCode) {
+                                 @RequestParam(value = "planNo") @NotBlank String planNo,
+                                 @RequestParam(value = "postTypeCode") @NotBlank String postTypeCode,
+                                 @RequestParam(value = "dayGroup") @NotBlank String dayGroup) {
         try {
             model.addAttribute("reviewList", reviewApiService.searchReviewList(dailyPlanNo));
+            model.addAttribute("planNo", planNo);
             model.addAttribute("postTypeCode", postTypeCode);
+            model.addAttribute("dayGroup", dayGroup);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }

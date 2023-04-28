@@ -69,7 +69,7 @@ $(function () {
                         popUpOpen("리뷰가 저장되었습니다.");
 
                         $(".popup_close_btn").attr("onclick", null).on('click', function () {
-                            location.href = document.referrer;
+                            $("#createReviewForm").attr("action", "/review/reviewList.trip").submit();
                         });
                     }
                 } else {

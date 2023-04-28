@@ -16,10 +16,14 @@ import java.util.List;
 @Getter
 @Setter
 public class ReviewDTO {
+
     private String reviewNo;
 
     @NotBlank(message = "회원 번호를 입력해주세요.")
     private String memberNo;
+
+    @NotBlank(message = "플랜 번호를 입력해주세요.")
+    private String planNo;
 
     @NotBlank(message = "데일리플랜 번호를 입력해주세요.")
     private String dailyPlanNo;
@@ -47,4 +51,5 @@ public class ReviewDTO {
     private String reviewAverageScore;
 
     private List<ReviewImageDTO> reviewImageList;
+
 }

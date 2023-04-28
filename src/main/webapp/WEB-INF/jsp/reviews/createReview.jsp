@@ -19,6 +19,8 @@
 <%
     String postTypeCode = (String) request.getAttribute("postTypeCode");
     String dailyPlanNo = (String) request.getAttribute("dailyPlanNo");
+    String planNo = (String) request.getAttribute("planNo");
+    String dayGroup = (String) request.getAttribute("dayGroup");
 
     MemberDTO memberInfo = null;
     session = request.getSession();
@@ -44,6 +46,12 @@
         <% } %>
         <% if (postTypeCode != null) { %>
         <input type="text" id="post_type_code" name="postTypeCode" hidden value="<%=postTypeCode%>">
+        <% } %>
+        <% if (planNo != null) { %>
+        <input type="text" id="plan_no" name="planNo" hidden value="<%=planNo%>">
+        <% } %>
+        <% if (dayGroup != null) { %>
+        <input type="text" id="day_group" name="dayGroup" hidden value="<%=dayGroup%>">
         <% } %>
         <input type="text" id="review_average_score" name="reviewAverageScore" hidden>
 
