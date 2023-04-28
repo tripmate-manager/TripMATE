@@ -15,7 +15,7 @@ import retrofit2.http.Path;
 public interface AccountBookService {
     @GET("v1/accountbook/{planNo}/{dayGroup}")
     Call<ResponseWrapper<AccountBookVO>> searchAccountListByDay(@Path("planNo") String planNo, @Path("dayGroup") String dayGroup);
-    @POST("v1/accountbook/{planNo}}/{dayGroup}")
+    @POST("v1/accountbook/{planNo}/{dayGroup}")
     Call<ResponseWrapper<Boolean>> insertAccount(@Path("planNo") String planNo, @Path("dayGroup") String dayGroup, @Body AccountBookDTO accountBookDTO);
     @PUT("v1/accountbook/amount")
     Call<ResponseWrapper<Boolean>> updateAccountAmount(@Body UpdateAccountBookDTO updateAccountBookDTO);

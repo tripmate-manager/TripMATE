@@ -149,7 +149,7 @@ $(function () {
 
     document.getElementById("add_account_btn").addEventListener('click', function (e) {
         const inputAmount = document.getElementById("accountbook_add_input").value;
-        const inputAccountName = document.getElementById("account_desc_title").valuee;
+        const inputAccountName = document.getElementById("account_desc_title").value;
 
         if (inputAmount.trim() === "" || inputAccountName.trim() === "") {
             popUpOpen('경비 항목을 입력해주세요.');

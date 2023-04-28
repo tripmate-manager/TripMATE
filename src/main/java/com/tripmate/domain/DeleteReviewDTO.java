@@ -26,4 +26,5 @@ public class DeleteReviewDTO {
 
     @NotBlank(message = "데일리플랜 번호를 입력해주세요.")
     private String dailyPlanNo;
+
 }
