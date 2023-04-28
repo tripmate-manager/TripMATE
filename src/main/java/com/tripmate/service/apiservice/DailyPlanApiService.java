@@ -12,7 +12,7 @@ public interface DailyPlanApiService {
     boolean insertDailyPlan(DailyPlanDTO dailyPlanDTO) throws Exception;
     List<String> deleteDailyPlan(DeleteDailyPlanDTO deleteDailyPlanDTO) throws Exception;
     List<DailyPlanCntVO> searchDailyPlanCntByDay(String planNo) throws Exception;
-    List<DailyPlanVO> searchDailyPlanListByDay(String planNo, String memberNo, String dayGroup) throws Exception;
+    DailyPlanVO searchDailyPlanListByDay(String planNo, String memberNo, String dayGroup) throws Exception;
     boolean deleteDailyPlanNotification(String dailyPlanNo, String memberNo) throws Exception;
     boolean updateDailyPlanNotification(NotificationDTO notificationDTO) throws Exception;
 }

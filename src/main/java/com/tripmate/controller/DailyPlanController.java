@@ -74,7 +74,7 @@ public class DailyPlanController {
                                @RequestParam(value = "dayGroup") @NotBlank String dayGroup) {
         try {
             request.setAttribute("dayGroup", dayGroup);
-            request.setAttribute("dailyPlanList", dailyPlanApiService.searchDailyPlanListByDay(planNo, memberNo, dayGroup));
+            request.setAttribute("dailyPlanVO", dailyPlanApiService.searchDailyPlanListByDay(planNo, memberNo, dayGroup));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
