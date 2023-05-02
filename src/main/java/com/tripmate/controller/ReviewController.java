@@ -13,6 +13,7 @@ import com.tripmate.entity.FileUploadEnum;
 import com.tripmate.service.apiservice.ReviewApiService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -45,10 +46,15 @@ public class ReviewController {
     private final FileUploadUtil fileUploadUtil;
 
     @PostMapping("/createReview")
-    public String viewCreateReview(Model model, @RequestParam(value = "dailyPlanNo") @NotBlank String dailyPlanNo, @RequestParam(value = "postTypeCode") @NotBlank String postTypeCode) {
+    public String viewCreateReview(Model model, @RequestParam(value = "dailyPlanNo") @NotBlank String dailyPlanNo,
+                                   @RequestParam(value = "planNo") @NotBlank String planNo,
+                                   @RequestParam(value = "postTypeCode") @NotBlank String postTypeCode,
+                                   @RequestParam(value = "dayGroup") @NotBlank String dayGroup) {
         try {
             model.addAttribute("dailyPlanNo", dailyPlanNo);
+            model.addAttribute("planNo", planNo);
             model.addAttribute("postTypeCode", postTypeCode);
+            model.addAttribute("dayGroup", dayGroup);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
@@ -65,17 +71,20 @@ public class ReviewController {
             List<ReviewImageDTO> reviewImageList = new ArrayList<>();
 
             for (MultipartFile file : multipartFileList) {
-                if (!fileUploadUtil.fileExtensionValidCheck(file)) {
-                    throw new FileUploadException(FileUploadEnum.FILE_EXTENSION_EXCEPTION.getCode(), FileUploadEnum.FILE_EXTENSION_EXCEPTION.getMessage());
-                }
+                if (!StringUtils.isEmpty(file.getOriginalFilename())) {
+                    if (!fileUploadUtil.fileExtensionValidCheck(file)) {
+                        throw new FileUploadException(FileUploadEnum.FILE_EXTENSION_EXCEPTION.getCode(), FileUploadEnum.FILE_EXTENSION_EXCEPTION.getMessage());
+                    }
 
-                if (!file.isEmpty() && file.getOriginalFilename() != null) {
-                    reviewImageList.add(fileUploadUtil.fileUpload(saveFiles, file));
+                    if (!file.isEmpty() && file.getOriginalFilename() != null) {
+                        reviewImageList.add(fileUploadUtil.fileUpload(saveFiles, file));
+                    }
                 }
             }
 
             ReviewDTO reviewRequestDTO = ReviewDTO.builder()
                     .memberNo(reviewDTO.getMemberNo())
+                    .planNo(reviewDTO.getPlanNo())
                     .dailyPlanNo(reviewDTO.getDailyPlanNo())
                     .postTypeCode(reviewDTO.getPostTypeCode())
                     .scoreLocation(reviewDTO.getScoreLocation())
@@ -111,10 +120,14 @@ public class ReviewController {
 
     @PostMapping("/reviewList")
     public String viewReviewList(Model model, @RequestParam(value = "dailyPlanNo") @NotBlank String dailyPlanNo,
-                                 @RequestParam(value = "postTypeCode") @NotBlank String postTypeCode) {
+                                 @RequestParam(value = "planNo") @NotBlank String planNo,
+                                 @RequestParam(value = "postTypeCode") @NotBlank String postTypeCode,
+                                 @RequestParam(value = "dayGroup") @NotBlank String dayGroup) {
         try {
             model.addAttribute("reviewList", reviewApiService.searchReviewList(dailyPlanNo));
+            model.addAttribute("planNo", planNo);
             model.addAttribute("postTypeCode", postTypeCode);
+            model.addAttribute("dayGroup", dayGroup);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }

@@ -93,9 +93,9 @@ public class DailyPlanApiServiceImpl implements DailyPlanApiService {
     }
 
     @Override
-    public List<DailyPlanVO> searchDailyPlanListByDay(String planNo, String memberNo, String dayGroup) throws Exception {
+    public DailyPlanVO searchDailyPlanListByDay(String planNo, String memberNo, String dayGroup) throws Exception {
         Call<ResponseWrapper<DailyPlanVO>> data = RetrofitClient.getApiService(DailyPlanService.class).searchDailyPlanListByDay(planNo, memberNo, dayGroup);
-        List<DailyPlanVO> result;
+        DailyPlanVO result;
 
         ResponseWrapper<DailyPlanVO> response = data.clone().execute().body();
 
@@ -107,7 +107,7 @@ public class DailyPlanApiServiceImpl implements DailyPlanApiService {
             if (response.getData() == null) {
                 throw new IOException("response's data is Empty");
             }
-            result = response.getData();
+            result = response.getData().get(0);
         } else {
             log.warn(response.getCode() + " : " + response.getMessage());
             throw new IOException(response.getMessage());

@@ -9,15 +9,11 @@ $(function () {
     $("#icon_menu_home_choice").show();
 
     $(".icon_arrow_left").on('click', function () {
-        if (document.referrer === '') {
-            history.back();
-        } else {
-            location.replace(document.referrer);
-        }
+        pageLink("/plans/myPlan.trip");
     });
 
     $(".plan_main_plan_edit").on('click', function () {
-        $("#planMainForm").attr("method", "post").attr("action", "/plans/editPlan.trip").submit();
+        $("#planMainForm").attr("action", "/plans/editPlan.trip").submit();
     });
 
     $(".icon_plan_mate").click(function () {

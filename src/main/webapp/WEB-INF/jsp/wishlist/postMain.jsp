@@ -41,8 +41,7 @@
 
 <div class="wishlist_detail_wrap">
     <div class="wishlist_detail_title_wrap">
-        <img class="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png"
-             onclick="history.back()"/>
+        <img class="icon_arrow_left" id="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png"/>
         <div class="wishlist_detail_title">WishList</div>
         <% if (postInfo != null && memberInfo != null) {
             if (postInfo.getRegistrationNo().equals(String.valueOf(memberInfo.getMemberNo()))) { %>

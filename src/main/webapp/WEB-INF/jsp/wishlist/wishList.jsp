@@ -29,8 +29,7 @@
 %>
 
 <div class="wishlist_wrap">
-    <img class="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png"
-         onclick="history.back()"/>
+    <img class="icon_arrow_left" id="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png"/>
     <div class="wishlist_title_wrap">
         <div class="wishlist_title">WishList</div>
         <img class="icon_write" src="<%=Const.STATIC_IMG_PATH%>/common/icon_menu_wishlist_choice.png"/>

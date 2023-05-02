@@ -277,6 +277,9 @@ $(function () {
                 if (result.code === constCode.global.resultCodeSuccess) {
                     if (result.isUpdatePlanSuccess === true) {
                         popUpOpen("플랜 수정이 완료되었습니다.");
+                        $(".popup_close_btn").attr("onclick", null).on('click', function () {
+                            location.href = document.referrer;
+                        });
                     }
                 } else {
                     popUpOpen(result.message);

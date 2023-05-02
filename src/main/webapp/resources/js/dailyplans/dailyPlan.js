@@ -17,7 +17,7 @@ function deleteDailyPlan(dailyPlanNo) {
             dataType: 'json',
             async: false,
             data: {
-                memberNo: document.getElementById("memberNo").value,
+                memberNo: document.getElementById("member_no").value,
                 dailyPlanNo: dailyPlanNo
             },
             success: function (result) {
@@ -71,7 +71,7 @@ function deleteDailyPlanNotification(dailyPlanNo) {
             async: false,
             data: {
                 dailyPlanNo: dailyPlanNo,
-                memberNo: document.getElementById("memberNo").value
+                memberNo: document.getElementById("member_no").value
             },
             success: function (result) {
                 isAjaxProcessing = false;
@@ -96,7 +96,7 @@ function deleteDailyPlanNotification(dailyPlanNo) {
 }
 
 function updateDailyPlanNotification(planNo, dailyPlanNo, dailyPlanDateTime, notificationYn) {
-    dailyPlanNotificationPopUpOpen(planNo, dailyPlanNo, document.getElementById("memberNo").value, dailyPlanDateTime, constCode.global.Y);
+    dailyPlanNotificationPopUpOpen(planNo, dailyPlanNo, document.getElementById("member_no").value, dailyPlanDateTime, constCode.global.Y);
 }
 
 function createReview(dailyPlanNo, postTypeCode) {
@@ -104,3 +104,9 @@ function createReview(dailyPlanNo, postTypeCode) {
     document.getElementById("dailyplan_post_type_code").value = postTypeCode;
     $("#dailyplanForm").attr("action", "/review/createReview.trip").submit();
 }
+
+$(function () {
+    $(".icon_arrow_left").on('click', function () {
+        $("#dailyplanForm").attr("action", "/plans/planMain.trip").submit();
+    });
+});

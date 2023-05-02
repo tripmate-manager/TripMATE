@@ -95,7 +95,7 @@
             <div class="dailyplan_daily_title">DailyPlan</div>
             <div class="dailyplan_achieve_percent">
                 <img src="<%=Const.STATIC_IMG_PATH%>/plans/icon_percent_wrap.png"/>
-                <div class="dailyplan_achieve_percent_number">10</div>
+                <div class="dailyplan_achieve_percent_number"><%=planVO.getAchieveRate()%></div>
             </div>
         </div>
         <div class="plan_main_divi_line"></div>

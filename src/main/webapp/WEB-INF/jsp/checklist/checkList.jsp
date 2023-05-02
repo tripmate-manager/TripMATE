@@ -37,8 +37,7 @@
 
 <div class="checklist_wrap">
     <div class="checklist_title_wrap">
-        <img class="icon_arrow_left" id="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png"
-             onclick="history.back()"/>
+        <img class="icon_arrow_left" id="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png"/>
         <div class="checklist_cancel" id="checklist_cancel" style="display: none">취소</div>
         <div class="checklist_title">CheckList</div>
         <div class="checklist_edit" id="checklist_edit" style="display: none">편집</div>

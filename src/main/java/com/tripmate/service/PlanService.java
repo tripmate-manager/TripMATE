@@ -39,7 +39,7 @@ public interface PlanService {
     @GET("v1/plans/search-member")
     Call<ResponseWrapper<PlanMateVO>> searchMemberList(@Query("searchDiviCode") String searchDiviCode, @Query("searchKeyword") String searchKeyword);
     @POST("v1/plans/invite-code")
-    Call<ResponseWrapper<InviteCodeVO>> createInviteAuthCode(@Query("planNo") String planNo, @Query("inviteTypeCode") String inviteTypeCode);
+    Call<ResponseWrapper<InviteCodeVO>> createInviteAuthCode(@Query("planNo") String planNo, @Query("memberNo") String memberNo, @Query("inviteTypeCode") String inviteTypeCode);
     @POST("v1/plans/notification")
     Call <ResponseWrapper<Boolean>> createNotification(@Body NotificationDTO notificationDTO);
     @GET("v1/plans/notification")

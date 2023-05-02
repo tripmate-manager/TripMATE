@@ -201,11 +201,13 @@ public class PlanController {
     }
 
     @PostMapping("/createInviteCode")
-    public @ResponseBody String createInviteCode (@RequestParam(value = "planNo") String planNo, @RequestParam(value = "inviteTypeCode") String inviteTypeCode) {
+    public @ResponseBody String createInviteCode (@RequestParam(value = "planNo") String planNo,
+                                                  @RequestParam(value = "memberNo") String memberNo,
+                                                  @RequestParam(value = "inviteTypeCode") String inviteTypeCode) {
         ApiResult result;
 
         try {
-            InviteCodeVO inviteCodeVO = planApiService.createInviteAuthCode(planNo, inviteTypeCode);
+            InviteCodeVO inviteCodeVO = planApiService.createInviteAuthCode(planNo, memberNo, inviteTypeCode);
 
             result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
             result.put("inviteCodeNo", inviteCodeVO.getInviteCodeNo());

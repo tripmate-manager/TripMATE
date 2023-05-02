@@ -29,22 +29,32 @@
 
     List<ReviewVO> reviewList = (List<ReviewVO>) request.getAttribute("reviewList");
     String postTypeCode = (String) request.getAttribute("postTypeCode");
+    String planNo = (String) request.getAttribute("planNo");
+    String dayGroup = (String) request.getAttribute("dayGroup");
 %>
-<% if (memberInfo != null) { %>
-<input type="text" id="memberNo" value="<%=memberInfo.getMemberNo()%>" hidden>
-<% } %>
-<input type="text" id="postTypeCode" value="<%=postTypeCode%>" hidden>
 
 <div class="reviewlist_wrap">
     <div class="reviewlist_title_wrap">
-        <img class="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png"
-             onclick="history.back()"/>
+        <img class="icon_arrow_left" id="icon_arrow_left"src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png" onclick="history.back()"/>
         <div class="reviewlist_title">Review</div>
     </div>
     <div class="reviewlist_divi_line">
     </div>
 
     <form id="reviewListForm" name="reviewListForm" method="post">
+        <input type="text" id="dailyPlanNo" name="dailyPlanNo" hidden>
+        <% if (memberInfo != null) { %>
+        <input type="text" id="memberNo" name="memberNo" value="<%=memberInfo.getMemberNo()%>" hidden>
+        <% } %>
+        <% if (postTypeCode != null) { %>
+        <input type="text" id="postTypeCode" name="postTypeCode" value="<%=postTypeCode%>" hidden>
+        <% } %>
+        <% if (planNo != null) { %>
+        <input type="text" id="planNo" name="planNo" hidden value="<%=planNo%>">
+        <% } %>
+        <% if (dayGroup != null) { %>
+        <input type="text" id="dayGroup" name="dayGroup" hidden value="<%=dayGroup%>">
+        <% } %>
         <% if (reviewList != null) {
             for (ReviewVO reviewVO : reviewList) {
         %>
