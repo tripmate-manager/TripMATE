@@ -26,3 +26,40 @@ function dateToString(date) {
 
     return year + month + day + hour + minites + seconds;
 }
+
+function address_comboBox(option, comboBoxArea) {
+    if (option === 'default') {
+        comboBoxArea.empty().attr("disabled", true);
+
+        let optionItem = $('<option value="default">--시군구 선택--</option>');
+        comboBoxArea.append(optionItem);
+        return false;
+    }
+
+    $.ajax({
+        type: 'GET',
+        url: '/plans/addressOption/' + option + '.trip',
+        dataType: 'json',
+        data: {
+            sidoName: option
+        },
+        success: function (result) {
+            isAjaxProcessing = false;
+            comboBoxArea.empty();
+
+            const fragment = $(document.createDocumentFragment());
+
+            for (i = 0; i < result.addressOptionList.length; i++) {
+                const jsonOptionObject = JSON.parse(JSON.stringify(result.addressOptionList[i]));
+
+                fragment.append('<option value="' + jsonOptionObject.addressNo + '">' + jsonOptionObject.sigunguName + '</option>');
+            }
+            comboBoxArea.attr("disabled", false);
+            comboBoxArea.append(fragment);
+        },
+        error: function (error) {
+            isAjaxProcessing = false;
+            popUpOpen("처리 중 오류가 발생하였습니다.");
+        }
+    })
+}

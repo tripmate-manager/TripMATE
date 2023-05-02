@@ -1,40 +1,5 @@
 function address_option(option) {
-    const selectOptionSigungu = $('#select_option_sigungu');
-
-    if (option === 'default') {
-        selectOptionSigungu.empty().attr("disabled", true);
-
-        let optionItem = $('<option value="default">--시군구 선택--</option>');
-        selectOptionSigungu.append(optionItem);
-        return false;
-    }
-
-    $.ajax({
-        type: 'GET',
-        url: '/plans/addressOption/' + option + '.trip',
-        dataType: 'json',
-        data: {
-            sidoName: option
-        },
-        success: function (result) {
-            isAjaxProcessing = false;
-            selectOptionSigungu.empty();
-
-            const fragment = $(document.createDocumentFragment());
-
-            for (i = 0; i < result.addressOptionList.length; i++) {
-                const jsonOptionObject = JSON.parse(JSON.stringify(result.addressOptionList[i]));
-
-                fragment.append('<option value="' + jsonOptionObject.addressNo + '">' + jsonOptionObject.sigunguName + '</option>');
-            }
-            selectOptionSigungu.attr("disabled", false);
-            selectOptionSigungu.append(fragment);
-        },
-        error: function (error) {
-            isAjaxProcessing = false;
-            popUpOpen("처리 중 오류가 발생하였습니다.");
-        }
-    })
+    address_comboBox(option, $("#select_option_sigungu"));
 }
 
 $(function () {
