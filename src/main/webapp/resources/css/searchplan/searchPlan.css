@@ -31,11 +31,7 @@ body {
     background-color: #ffffff;
 }
 
-.searchplan_wrap .searchplan_form {
-    width: 100%;
-}
-
-.searchplan_wrap .searchplan_form .input_search_wrap {
+.searchplan_wrap .input_search_wrap {
     margin: 0rem 2.117rem 1.3rem 1.375rem;
     width: calc(100% - 3.4917rem);
     height: 4rem;
@@ -44,7 +40,7 @@ body {
     flex-shrink: 0;
 }
 
-.searchplan_wrap .searchplan_form .input_search_wrap .icon_arrow_left {
+.searchplan_wrap .input_search_wrap .icon_arrow_left {
     margin: 0rem 1.709rem 0.9rem 0rem;
     width: 1.7165rem;
     height: 2.9167rem;
@@ -53,7 +49,7 @@ body {
     flex-shrink: 0;
 }
 
-.searchplan_wrap .searchplan_form .input_search_wrap .input_search {
+.searchplan_wrap .input_search_wrap .input_search {
     margin-right: 1.05rem;
     box-sizing: border-box;
     padding: 0.9rem 1.8rem;
@@ -71,7 +67,7 @@ body {
     flex-shrink: 0;
 }
 
-.searchplan_wrap .searchplan_form .input_search_wrap .icon_search {
+.searchplan_wrap .input_search_wrap .icon_search {
     margin-bottom: 0.3438rem;
     width: 2.1333rem;
     height: 2rem;
@@ -82,7 +78,7 @@ body {
     right: 2rem;
 }
 
-.searchplan_wrap .searchplan_form .searchplan_tab_menu {
+.searchplan_wrap .searchplan_tab_menu {
     width: 100%;
     height: 4.6rem;
     position: static;
@@ -90,7 +86,7 @@ body {
     display: flex;
 }
 
-.searchplan_wrap .searchplan_form .searchplan_tab_menu .tab_menu_text {
+.searchplan_wrap .searchplan_tab_menu .tab_menu_text {
     width: 50%;
     height: 100%;
     display: flex;
@@ -109,7 +105,7 @@ body {
     flex-shrink: 0;
 }
 
-.searchplan_wrap .searchplan_form .searchplan_tab_menu .tab_menu_attribute {
+.searchplan_wrap .searchplan_tab_menu .tab_menu_attribute {
     width: 50%;
     height: 100%;
     display: flex;
@@ -128,15 +124,15 @@ body {
     flex-shrink: 0;
 }
 
-.searchplan_wrap .searchplan_form .searchplan_contents_text_wrap {
+.searchplan_wrap .searchplan_contents_text_wrap {
     width: 100%;
     padding: 2rem;
     position: static;
-    margin-top: 7rem;
+    margin-top: 3rem;
     align-items: center;
 }
 
-.searchplan_wrap .searchplan_form .searchplan_contents_text_wrap .recommend_word_title {
+.searchplan_wrap .searchplan_contents_text_wrap .recommend_word_title {
     display: flex;
     position: static;
     font-size: 1.8rem;
@@ -147,7 +143,7 @@ body {
     white-space: nowrap;
 }
 
-.searchplan_wrap .searchplan_form .searchplan_contents_text_wrap .recommend_word_wrap {
+.searchplan_wrap .searchplan_contents_text_wrap .recommend_word_wrap {
     margin: 0.5rem 9rem 4rem 0rem;
     width: 100%;
     display: flex;
@@ -155,7 +151,7 @@ body {
     flex-shrink: 0;
 }
 
-.searchplan_wrap .searchplan_form .searchplan_contents_text_wrap .recommend_word_wrap .recommend_word {
+.searchplan_wrap .searchplan_contents_text_wrap .recommend_word_wrap .recommend_word {
     margin: 0 1rem 0 0;
     padding: 0.8rem 1rem 0.8rem 1rem;
     display: flex;
@@ -173,7 +169,7 @@ body {
     flex-shrink: 0;
 }
 
-.searchplan_wrap .searchplan_form .searchplan_contents_text_wrap .popular_hashtag_title {
+.searchplan_wrap .searchplan_contents_text_wrap .popular_hashtag_title {
     margin: 0rem 0rem 0.7rem 0.8rem;
     display: flex;
     font-size: 1.8rem;
@@ -185,7 +181,7 @@ body {
     flex-shrink: 0;
 }
 
-.searchplan_wrap .searchplan_form .searchplan_contents_text_wrap .popular_hashtag_wrap {
+.searchplan_wrap .searchplan_contents_text_wrap .popular_hashtag_wrap {
     width: 100%;
     position: static;
     display: flex;
@@ -194,7 +190,7 @@ body {
     overflow: scroll;
 }
 
-.searchplan_wrap .searchplan_form .searchplan_contents_text_wrap .popular_hashtag_wrap .popular_hashtag {
+.searchplan_wrap .searchplan_contents_text_wrap .popular_hashtag_wrap .popular_hashtag {
     margin: 0 1rem 0 0;
     padding: 0.8rem 1rem 0.8rem 1rem;
     display: flex;
@@ -218,15 +214,15 @@ body {
     border-bottom: solid 0.1rem #ffffff !important;
 }
 
-.searchplan_wrap .searchplan_form .searchplan_contents_attribute_wrap {
+.searchplan_wrap .searchplan_contents_attribute_wrap {
     width: 100%;
     position: static;
     display: block;
     font-family: Noto Sans, 'Source Sans Pro';
-    margin-top: 7rem;
+    margin-top: 2rem;
 }
 
-.searchplan_wrap .searchplan_form .searchplan_contents_attribute_wrap .searchplan_choice_sub_title_wrap {
+.searchplan_wrap .searchplan_contents_attribute_wrap .searchplan_choice_sub_title_wrap {
     width: 100%;
     height: 3rem;
     position: static;
@@ -240,7 +236,7 @@ body {
     vertical-align: center;
 }
 
-.searchplan_wrap .searchplan_form .searchplan_contents_attribute_wrap .searchplan_choice_sub_title_wrap .searchplan_sub_title_choice {
+.searchplan_wrap .searchplan_contents_attribute_wrap .searchplan_choice_sub_title_wrap .searchplan_sub_title_choice {
     width: 100%;
     margin-left: 2.2rem;
     position: static;
@@ -253,7 +249,7 @@ body {
     align-items: center;
 }
 
-.searchplan_wrap .searchplan_form .searchplan_choice_wrap .icon_arrow_up {
+.searchplan_wrap .searchplan_choice_wrap .icon_arrow_up {
     width: 2rem;
     height: 2rem;
     object-fit: contain;
@@ -261,7 +257,7 @@ body {
     right: 2rem;
 }
 
-.searchplan_wrap .searchplan_form .searchplan_save {
+.searchplan_wrap .searchplan_save {
     width: 100%;
     height: 5rem;
     position: absolute;
@@ -279,7 +275,7 @@ body {
     background-color: #393c88;
 }
 
-.searchplan_wrap .searchplan_form .searchplan_trip_theme_wrap .plan_theme_item_list {
+.searchplan_wrap .searchplan_trip_theme_wrap .plan_theme_item_list {
     box-sizing: border-box;
     padding: 0 2rem 0 2rem;
     width: 100%;
@@ -293,7 +289,7 @@ body {
     white-space: normal;
 }
 
-.searchplan_wrap .searchplan_form .searchplan_trip_theme_wrap .plan_theme_item_list .plan_theme_item_list_group {
+.searchplan_wrap .searchplan_trip_theme_wrap .plan_theme_item_list .plan_theme_item_list_group {
     display: flex;
     column-gap: 0.5rem;
     align-items: center;
@@ -304,7 +300,7 @@ body {
     flex-wrap: wrap;
 }
 
-.searchplan_wrap .searchplan_form .searchplan_choice_wrap .icon_arrow_down {
+.searchplan_wrap .searchplan_choice_wrap .icon_arrow_down {
     width: 2rem;
     height: 3rem;
     object-fit: contain;
@@ -313,7 +309,7 @@ body {
     right: 2rem;
 }
 
-.searchplan_wrap .searchplan_form .searchplan_input_default_wrap {
+.searchplan_wrap .searchplan_input_default_wrap {
     box-sizing: border-box;
     padding: 1.5rem;
     width: 100%;
@@ -321,7 +317,7 @@ body {
     left: 0;
 }
 
-.searchplan_wrap .searchplan_form .searchplan_input_default_wrap .attribute_gender_wrap {
+.searchplan_wrap .searchplan_input_default_wrap .attribute_gender_wrap {
     margin: 0rem 0rem 0.883rem 0.1rem;
     width: calc(100% - 0.1rem);
     display: flex;
