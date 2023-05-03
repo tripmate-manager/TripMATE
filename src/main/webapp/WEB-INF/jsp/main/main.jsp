@@ -51,7 +51,7 @@
         </div>
         <div class="main_search_wrap">
             <img class="icon_search" src="<%=Const.STATIC_IMG_PATH%>/common/icon_search.png">
-            <div class="main_search_text">검색어를 입력하세요</div>
+            <div class="main_search_text" id="main_search_text">검색어를 입력하세요</div>
         </div>
         <div class="main_sub_title">현재 인기 플랜</div>
         <div class="popular_plan_item_wrap">

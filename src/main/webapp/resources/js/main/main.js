@@ -7,6 +7,7 @@ window.onhashchange = function () {
 $(function () {
     const sessionMemberInfo = $("#memberInfo").val();
     const sessionInviteCode = $("#invitePlanNo").val();
+    const searchText = document.getElementById("main_search_text");
 
     if (sessionMemberInfo) {
         $(".icon_alarm_wrap").show();
@@ -29,4 +30,8 @@ $(function () {
     $(".icon_alarm").on('click', function () {
         $("#mainForm").attr("action", "/main/notificationList.trip").submit();
     });
+
+    searchText.addEventListener('click',function () {
+        $("#mainForm").attr("method", "get").attr("action", "/searchPlan/search.trip").submit();
+    })
 });
