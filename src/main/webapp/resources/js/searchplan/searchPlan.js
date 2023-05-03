@@ -24,7 +24,6 @@ $(function () {
     let personnel = document.getElementById("input_personnel").value;
 
     textSearchMenu.addEventListener('click', function () {
-        console.log('click');
         if (textSearchMenu.classList.contains("tab_select") === false) {
             textSearchMenu.classList.add("tab_select");
             attributeSearchMenu.classList.remove("tab_select");

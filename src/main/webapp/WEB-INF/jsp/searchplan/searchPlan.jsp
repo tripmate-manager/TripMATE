@@ -97,7 +97,6 @@
             </div>
             <div class="attribute_personnel_wrap">
                 <div class="searchplan_sub_title">인원</div>
-                <%--                    <input type="text" name="personnel" id="personnel" class="input_plan_personnel" hidden>--%>
                 <div class="attribute_personnel">
                     <img class="icon_minus" id="personnel_minus"
                          src="<%=Const.STATIC_IMG_PATH%>/searchplan/icon_minus_circle.png"/>
