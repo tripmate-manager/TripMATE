@@ -13,7 +13,7 @@ input {
     border: none;
 }
 body {
-    width: 37.5rem;
+    width: 100%;
 }.main_wrap {
      box-sizing: border-box;
      padding: 1.4rem 1.2rem 27.7rem 1.5rem;

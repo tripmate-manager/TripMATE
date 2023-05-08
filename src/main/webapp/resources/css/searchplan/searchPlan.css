@@ -22,7 +22,7 @@ body {
 
 .searchplan_wrap {
     box-sizing: border-box;
-    padding-top: 1.4rem;
+    padding: 1.4rem 0 5rem 0;
     width: 100%;
     overflow: hidden;
     position: static;
@@ -128,7 +128,6 @@ body {
     width: 100%;
     padding: 2rem;
     position: static;
-    margin-top: 3rem;
     align-items: center;
 }
 
@@ -336,7 +335,7 @@ body {
     white-space: nowrap;
 }
 
-.searchplan_input_default_wrap .searchplan_address_list {
+.searchplan_trip_address .searchplan_address_list {
     width: 100%;
     height: 3rem;
     margin-bottom: 1.5rem;
@@ -344,6 +343,25 @@ body {
     position: static;
     display: flex;
     align-items: center;
+    overflow: scroll;
+}
+
+.searchplan_address_list .address_item_text {
+    box-sizing: border-box;
+    padding: 0.6rem 1rem 0.6rem 1rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    background-color: #b7e1dc;
+    border-radius: 2rem;
+    flex-shrink: 0;
+    position: static;
+    margin-right: 1rem;
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 1.3625;
+    color: #212352;
+    white-space: nowrap;
 }
 
 .searchplan_choice_wrap {
@@ -374,11 +392,11 @@ body {
     right: 1.5rem;
 }
 
-.period_choice_wrap .select_option {
+.trip_term_choice_wrap .select_option {
     width: 13rem;
     height: 3rem;
     font-size: 1.5rem;
-    margin: 0 1rem 1rem 5rem;
+    margin: 1rem 1rem 1rem 5rem;
     position: static;
     right: 1.5rem;
 }
@@ -604,12 +622,12 @@ input[id*="plan_theme_item"]:checked+label {
     flex-shrink: 0;
 }
 
-.period_choice {
+.trip_term_choice {
     position: static;
     display: flex;
 }
 
-.period_choice .searchplan_period {
+.trip_term_choice .searchplan_trip_term {
     margin: 1rem 7.8rem 0 0;
     width: 9rem;
     height: 3rem;
@@ -674,4 +692,24 @@ input[id*="attribute_age"] + label {
 
 input[id*="attribute_age"]:checked + label {
     background-color: #B7E1DC;
+}
+
+[type="radio"] {
+    appearance: none;
+}
+
+.searchplan_attribute {
+    bottom: 0rem;
+    width: 100%;
+    height: 5rem;
+    position: fixed;
+    display: flex;
+    font-size: 1.8rem;
+    font-weight: 600;
+    line-height: 3;
+    color: #ffffff;
+    font-family: Noto Sans, 'Source Sans Pro';
+    white-space: nowrap;
+    text-align: center;
+    background-color: #393c88;
 }

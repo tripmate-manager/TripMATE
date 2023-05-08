@@ -390,6 +390,7 @@ body {
     position: static;
     display: flex;
     align-items: center;
+    overflow: scroll;
 }
 .createplan_input_default_wrap .createplan_address_list .address_item_text {
     box-sizing: border-box;
