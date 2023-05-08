@@ -141,7 +141,7 @@ $(function () {
         let isAddressDuplicate = false;
 
         if ($("div[class='address_item_text']").length === 3) {
-            popUpOpen("여행테마는 최대 3개까지만 선택할 수 있습니다.");
+            popUpOpen("여행지는 최대 3개까지만 선택할 수 있습니다.");
             return;
         }
 
