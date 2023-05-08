@@ -30,6 +30,10 @@ body {
     background-color: #ffffff;
 }
 
+#searchPlanResultForm {
+    width: 100%;
+}
+
 .searchplan_result_wrap #searcPlanResultForm {
     width: 100%;
 }
@@ -118,7 +122,7 @@ body {
     flex-shrink: 0;
 }
 
-.searchplan_result_wrap .searchplan_result_list_wrap .searchplan_result_item_contents_wrap {
+.searchplan_result_wrap .searchplan_result_list_wrap .searchplan_result_plan_item_wrap .searchplan_result_item_contents_wrap {
     width: 98%;
     height: 100%;
 }
@@ -145,15 +149,7 @@ body {
     flex-shrink: 0;
 }
 
-.searchplan_result_wrap .searchplan_result_list_wrap .searchplan_result_plan_item_wrap .searchplan_result_item_contents_wrap .searchplan_result_item_title_wrap {
-    /*width: 30rem;*/
-    display: flex;
-    align-items: flex-start;
-    flex-shrink: 0;
-}
-
-.searchplan_result_wrap .searchplan_result_list_wrap .searchplan_result_plan_item_wrap .searchplan_result_item_contents_wrap .searchplan_result_item_title_wrap .searchplan_result_item_title {
-    width: 100%;
+.searchplan_result_wrap .searchplan_result_list_wrap .searchplan_result_plan_item_wrap .searchplan_result_item_contents_wrap .searchplan_result_item_title {
     margin-right: 1.5rem;
     display: flex;
     font-size: 2rem;
@@ -163,6 +159,8 @@ body {
     font-family: Noto Sans, 'Source Sans Pro';
     white-space: nowrap;
     flex-shrink: 0;
+    width: 30rem;
+    align-items: flex-start;
 }
 
 .searchplan_result_wrap .searchplan_result_list_wrap .searchplan_result_plan_item_wrap .searchplan_result_item_contents_wrap .searchplan_result_item_title_wrap .icon_dot_menu {
@@ -182,7 +180,7 @@ body {
     color: #1e1e1e;
     font-family: Noto Sans, 'Source Sans Pro';
     white-space: nowrap;
-    flex-shrink: 0;
+    overflow: hidden;
 }
 
 .searchplan_result_wrap .searchplan_result_list_wrap .searchplan_result_plan_item_wrap .searchplan_result_item_contents_wrap .searchplan_result_item_wrap {
@@ -199,6 +197,17 @@ body {
     object-fit: contain;
     vertical-align: top;
     flex-shrink: 0;
+    background: url('/resources/images/common/icon_location.png') no-repeat 0 0px / contain;
+}
+
+.searchplan_result_wrap .searchplan_result_list_wrap .searchplan_result_plan_item_wrap .searchplan_result_item_contents_wrap .searchplan_result_item_wrap .icon_leader {
+    margin-right: 0.7rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    object-fit: contain;
+    vertical-align: top;
+    flex-shrink: 0;
+    background: url('/resources/images/searchplan/icon_leader.png') no-repeat 0 0px / contain;
 }
 
 .searchplan_result_wrap .searchplan_result_list_wrap .searchplan_result_plan_item_wrap .searchplan_result_item_contents_wrap .searchplan_result_item_wrap .icon_calendar {
@@ -208,6 +217,7 @@ body {
     object-fit: contain;
     vertical-align: top;
     flex-shrink: 0;
+    background: url('/resources/images/common/icon_calendar.png') no-repeat 0 0px / contain;
 }
 
 .searchplan_result_wrap .searchplan_result_list_wrap .searchplan_result_plan_item_wrap .searchplan_result_item_contents_wrap .searchplan_result_item_wrap .searchplan_result_plan_text {
@@ -258,7 +268,7 @@ body {
     align-items: center;
     flex-shrink: 0;
     overflow: scroll;
-    padding-left: 1rem;
+    padding: 1rem 0 0 1rem;
 }
 
 .search_attribute_list .search_attribute {
@@ -280,11 +290,33 @@ body {
 }
 
 .select_option {
-    width: 9rem;
+    margin-left: 26rem;
+    width: 12rem;
+    margin-top: 1rem;
     height: 2rem;
     font-size: 1.5rem;
-    margin: 1rem 1rem 0.5rem 70%;
     position: static;
     border: solid 0.1rem #ffffff;
     text-align: center;
+}
+
+input[id*="checkboxHeart"] + label {
+    display: block;
+    width: 1.8rem;
+    height: 1.6rem;
+    position: absolute;
+    right: 1rem;
+    background: url('/resources/images/common/icon_heart_unfilled.png') no-repeat 0 0px / contain;
+}
+
+input[id*='checkboxHeart']:checked + label {
+    background: url('/resources/images/common/icon_heart_filled.png') no-repeat 0 1px / contain;
+}
+
+input[id*="checkboxHeart"] {
+    display: none;
+}
+
+.searchPlanResultItemForm {
+    width: 100%;
 }
