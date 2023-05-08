@@ -140,6 +140,11 @@ $(function () {
         const inputSigungu = $("#select_option_sigungu option:selected").text();
         let isAddressDuplicate = false;
 
+        if ($("div[class='address_item_text']").length === 3) {
+            popUpOpen("여행테마는 최대 3개까지만 선택할 수 있습니다.");
+            return;
+        }
+
         if (inputSido === 'default' || inputAddressNo === 'default') {
             popUpOpen("여행지를 선택해주세요.");
             return false;
