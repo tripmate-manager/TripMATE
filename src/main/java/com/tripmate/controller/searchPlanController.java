@@ -3,6 +3,7 @@ package com.tripmate.controller;
 
 import com.tripmate.domain.PlanAddressVO;
 import com.tripmate.domain.PlanAttributeVO;
+import com.tripmate.domain.SearchAttributeDTO;
 import com.tripmate.entity.ConstCode;
 import com.tripmate.service.apiservice.PlanApiService;
 import com.tripmate.service.apiservice.SearchPlanApiService;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotBlank;
+import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -52,10 +53,23 @@ public class searchPlanController {
 
     @PostMapping("/keyword")
     public @ResponseBody ModelAndView searchPlanByKeyword(HttpServletRequest request,
-                                                          @RequestParam(value = "memberNo") @NotBlank String memberNo,
+                                                          @RequestParam(value = "memberNo") String memberNo,
                                                           @RequestParam(value = "keyword") String keyword) {
         try {
             request.setAttribute("searchPlanResultList", searchPlanApiService.searchPlanByKeyword(memberNo, keyword));
+            request.setAttribute("keyword", keyword);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+
+        return new ModelAndView("searchplan/searchPlanResult");
+    }
+
+    @PostMapping("/attribute")
+    public @ResponseBody ModelAndView searchPlanByAttribute(HttpServletRequest request, @Valid SearchAttributeDTO searchAttributeDTO) {
+        try {
+            request.setAttribute("searchPlanResultList", searchPlanApiService.searchPlanByAttribute(searchAttributeDTO));
+            request.setAttribute("searchAttributeDTO", searchAttributeDTO);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }

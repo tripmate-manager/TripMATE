@@ -54,6 +54,12 @@
             notification1Hours: "<%=ConstCode.DAILYPLAN_NOTIFICATION_1H%>",
             notification2Hours: "<%=ConstCode.DAILYPLAN_NOTIFICATION_2H%>",
             notification3Hours: "<%=ConstCode.DAILYPLAN_NOTIFICATION_3H%>",
+
+            searchResultSortRecent: "<%=ConstCode.SEARCH_RESULT_SORT_RECENT%>",
+            searchResultSortPopular: "<%=ConstCode.SEARCH_RESULT_SORT_POPULAR%>",
+            searchResultSortOldest: "<%=ConstCode.SEARCH_RESULT_SORT_OLDEST%>",
+            searchResultSortAchieveRate: "<%=ConstCode.SEARCH_RESULT_SORT_ACHIEVE_RATE%>",
+            searchResultSortReview: "<%=ConstCode.SEARCH_RESULT_SORT_REVIEW%>",
         }
     }());
 </script>
