@@ -179,15 +179,12 @@ public class PlanController {
     }
 
     @PostMapping("/planMain")
-    public ModelAndView viewPlanMain(HttpServletRequest request, @RequestParam(value = "planNo") String planNo) {
+    public ModelAndView viewPlanMain(HttpServletRequest request, @RequestParam(value = "planNo") String planNo,
+                                     @RequestParam(value = "memberNo") String memberNo) {
         try {
-            PlanVO planVO = planApiService.getPlanInfo(planNo);
-            List<PlanMateVO> planMateList = planApiService.searchPlanMateList(planNo);
-            List<DailyPlanCntVO> dailyPlanCntList = dailyPlanApiService.searchDailyPlanCntByDay(planNo);
-
-            request.setAttribute("planVO", planVO);
-            request.setAttribute("planMateList", planMateList);
-            request.setAttribute("dailyPlanCntList", dailyPlanCntList);
+            request.setAttribute("planVO", planApiService.getPlanInfo(planNo, memberNo));
+            request.setAttribute("planMateList", planApiService.searchPlanMateList(planNo));
+            request.setAttribute("dailyPlanCntList", dailyPlanApiService.searchDailyPlanCntByDay(planNo));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
@@ -196,20 +193,18 @@ public class PlanController {
     }
 
     @PostMapping("/editPlan")
-    public ModelAndView viewEditPlan(HttpServletRequest request, @RequestParam(value = "planNo") String planNo) {
+    public ModelAndView viewEditPlan(HttpServletRequest request, @RequestParam(value = "planNo") String planNo,
+                                     @RequestParam(value = "memberNo") String memberNo) {
         try {
-            List<PlanAttributeVO> planAttributeVOList = planApiService.searchPlanAttributeList(ConstCode.ATTRIBUTE_TYPE_CODE_TRIP_THEME);
             List<PlanAddressVO> planAddressVOList = planApiService.searchAddressList();
-            PlanVO planVO = planApiService.getPlanInfo(planNo);
-
             Set<String> sidoNameList = new HashSet<>();
             for (PlanAddressVO planAddressVO : planAddressVOList) {
                 sidoNameList.add(planAddressVO.getSidoName());
             }
 
-            request.setAttribute("planThemeList", planAttributeVOList);
+            request.setAttribute("planThemeList", planApiService.searchPlanAttributeList(ConstCode.ATTRIBUTE_TYPE_CODE_TRIP_THEME));
             request.setAttribute("sidoNameList", sidoNameList);
-            request.setAttribute("planVO", planVO);
+            request.setAttribute("planVO", planApiService.getPlanInfo(planNo, memberNo));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
