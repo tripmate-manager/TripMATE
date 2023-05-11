@@ -59,7 +59,7 @@
         <% if (memberInfo != null) { %>
         <div id="session_member_no" style="display: none"><%=memberInfo.getMemberNo()%></div>
         <% } %>
-        <input type=hidden id="member_no" id="member_no" name="memberNo" hidden>
+        <input type=hidden id="member_no" name="memberNo" hidden>
 
         <% if (dailyPlanVO.getDailyPlanItemList().size() > 0) {
         for (DailyPlanItemVO dailyPlanItem : dailyPlanVO.getDailyPlanItemList()) { %>
