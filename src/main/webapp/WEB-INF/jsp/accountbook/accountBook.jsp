@@ -30,10 +30,6 @@
     }
 %>
 
-<% if (memberInfo != null) { %>
-<input type=hidden id="sessionMemberNo" value=<%=memberInfo.getMemberNo()%>>
-<% } %>
-
 <div class="accountbook_wrap">
 
     <div class="accountbook_title_wrap">
@@ -45,6 +41,10 @@
     </div>
 
     <form id="accountBookForm" method="post">
+        <% if (memberInfo != null) { %>
+        <input type=hidden id="sessionMemberNo" name="memberNo" value=<%=memberInfo.getMemberNo()%>>
+        <% } %>
+
         <% if (planNo != null) { %>
         <input type="text" id="planNo" name="planNo" value=<%=planNo%> hidden>
         <% } %>

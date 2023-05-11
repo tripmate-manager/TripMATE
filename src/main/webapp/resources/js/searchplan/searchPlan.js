@@ -23,6 +23,12 @@ $(function () {
     let inputPersonnel = document.getElementById("input_personnel");
     let personnel = document.getElementById("input_personnel").value;
 
+    if (document.getElementById("session_member_no") !== null) {
+        inputMemberNo.value = document.getElementById("session_member_no").innerText;
+    } else {
+        inputMemberNo.value = 0;
+    }
+
     textSearchMenu.addEventListener('click', function () {
         if (textSearchMenu.classList.contains("tab_select") === false) {
             textSearchMenu.classList.add("tab_select");

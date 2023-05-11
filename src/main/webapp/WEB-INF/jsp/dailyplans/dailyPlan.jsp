@@ -34,17 +34,16 @@
     DailyPlanVO dailyPlanVO = (DailyPlanVO) request.getAttribute("dailyPlanVO");
 %>
 
-<% if (memberInfo != null) { %>
-<input type=hidden id="member_no" value=<%=memberInfo.getMemberNo()%>>
-<% } %>
-
 <div class="dailyplan_wrap">
     <img class="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png"/>
     <div class="dailyplan_title_wrap">
         <div class="dailyplan_title">Day <%=dayGroup%></div>
         <div class="dailyplan_rate_wrap">
             <div class="dailyplan_rate_box">
-                <div class="dailyplan_rate_number"><%=dailyPlanVO.getAchieveRate()%></div>
+                <div class="dailyplan_rate_number">
+                    <% String achieveRate = dailyPlanVO.getAchieveRate() == null ? "0" : dailyPlanVO.getAchieveRate(); %>
+                    <%=achieveRate%>
+                </div>
                 <div class="dailyplan_rate_percent">%</div>
             </div>
         </div>
@@ -56,6 +55,10 @@
         <input type="hidden" name="postTypeCode" class="postTypeCode" id="dailyplan_post_type_code">
         <input type="hidden" name="dayGroup" class="day_group" id="day_group" value="<%=dayGroup%>">
         <input type="hidden" name="planNo" class="plan_no" id="plan_no" value="<%=dailyPlanVO.getPlanNo()%>">
+        <% if (memberInfo != null) { %>
+        <div id="session_member_no" style="display: none"><%=memberInfo.getMemberNo()%></div>
+        <% } %>
+        <input type=hidden id="member_no" id="member_no" name="memberNo" hidden>
 
         <% if (dailyPlanVO.getDailyPlanItemList().size() > 0) {
         for (DailyPlanItemVO dailyPlanItem : dailyPlanVO.getDailyPlanItemList()) { %>

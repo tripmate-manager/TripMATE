@@ -12,6 +12,12 @@ $(function () {
         pageLink("/plans/myPlan.trip");
     });
 
+    if (document.getElementById("session_member_no") !== null) {
+        inputMemberNo.value = document.getElementById("session_member_no").innerText;
+    } else {
+        inputMemberNo.value = 0;
+    }
+
     $(".plan_main_plan_edit").on('click', function () {
         $("#planMainForm").attr("action", "/plans/editPlan.trip").submit();
     });

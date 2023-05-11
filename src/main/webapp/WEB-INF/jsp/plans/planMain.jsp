@@ -5,7 +5,6 @@
 <%@ page import="com.tripmate.domain.DailyPlanCntVO" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/jsp/common/include/commonImport.jsp" %>
-<%@ include file="/WEB-INF/jsp/common/bottomNavigationMenu.jsp" %>
 <%@ include file="/WEB-INF/jsp/plans/planMateNavigationMenu.jsp" %>
 
 <html>
@@ -34,10 +33,11 @@
 <div class="plan_main_wrap">
     <form id="planMainForm" method="post">
         <% if (memberInfo != null) { %>
-        <input type="hidden" class="plan_main_member_no" name="memberNo" value="<%=memberInfo.getMemberNo()%>">
+        <div id="session_member_no" style="display: none"><%=memberInfo.getMemberNo()%></div>
         <% } %>
+        <input type=hidden id="input_member_no" name="memberNo" hidden>
         <% if (planVO != null) { %>
-        <input type="hidden" class="plan_main_plan_no" name="planNo" value="<%=planVO.getPlanNo()%>">
+        <input type="hidden" class="plan_main_plan_no" id="plan_no" name="planNo" value="<%=planVO.getPlanNo()%>">
         <% } %>
         <div onclick="history.back();" class="page_cover"></div>
         <div class="plan_main_title_wrap">
@@ -123,5 +123,13 @@
         </div>
     </form>
 </div>
+<% if (memberInfo != null) {
+    for (PlanMateVO planMateVO : planMateList) {
+        if (memberInfo.getMemberNo() == planMateVO.getMemberNo()) { %>
+        <jsp:include page="/WEB-INF/jsp/common/bottomNavigationMenu.jsp"/>
+        <% }
+    }
+} %>
+
 </body>
 </html>
