@@ -144,8 +144,8 @@ public class PlanApiServiceImpl implements PlanApiService {
     }
 
     @Override
-    public PlanVO getPlanInfo(String planNo) throws Exception {
-        Call<ResponseWrapper<PlanVO>> data = RetrofitClient.getApiService(PlanService.class).getPlanInfo(planNo);
+    public PlanVO getPlanInfo(String planNo, String memberNo) throws Exception {
+        Call<ResponseWrapper<PlanVO>> data = RetrofitClient.getApiService(PlanService.class).getPlanInfo(planNo, memberNo);
         PlanVO result;
 
         ResponseWrapper<PlanVO> response = data.clone().execute().body();
