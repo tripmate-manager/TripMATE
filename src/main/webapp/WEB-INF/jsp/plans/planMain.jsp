@@ -123,13 +123,9 @@
         </div>
     </form>
 </div>
-<% if (memberInfo != null) {
-    for (PlanMateVO planMateVO : planMateList) {
-        if (memberInfo.getMemberNo() == planMateVO.getMemberNo()) { %>
-        <jsp:include page="/WEB-INF/jsp/common/bottomNavigationMenu.jsp"/>
-        <% }
-    }
-} %>
+<% if (isPlanMate) { %>
+<jsp:include page="/WEB-INF/jsp/common/bottomNavigationMenu.jsp"/>
+<% } %>
 
 </body>
 </html>

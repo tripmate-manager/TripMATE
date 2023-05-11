@@ -182,8 +182,11 @@ public class PlanController {
     public ModelAndView viewPlanMain(HttpServletRequest request, @RequestParam(value = "planNo") String planNo,
                                      @RequestParam(value = "memberNo") String memberNo) {
         try {
+            List<PlanMateVO> planMateList = planApiService.searchPlanMateList(planNo);
+
             request.setAttribute("planVO", planApiService.getPlanInfo(planNo, memberNo));
-            request.setAttribute("planMateList", planApiService.searchPlanMateList(planNo));
+            request.setAttribute("planMateList", planMateList);
+            request.setAttribute("isPlanMate", planMateList.stream().anyMatch(mate -> String.valueOf(mate.getMemberNo()).equals(memberNo)));
             request.setAttribute("dailyPlanCntList", dailyPlanApiService.searchDailyPlanCntByDay(planNo));
         } catch (Exception e) {
             log.error(e.getMessage(), e);

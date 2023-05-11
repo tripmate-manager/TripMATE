@@ -32,6 +32,7 @@
 
     String dayGroup = (String) request.getAttribute("dayGroup");
     DailyPlanVO dailyPlanVO = (DailyPlanVO) request.getAttribute("dailyPlanVO");
+    boolean isPlanMate = (boolean) request.getAttribute("isPlanMate");
 %>
 
 <div class="dailyplan_wrap">
@@ -82,6 +83,8 @@
                         <% } else if (ConstCode.POST_TYPE_CODE_RESTAURANT.equals(dailyPlanItem.getPostTypeCode())) { %>식당
                         <% } else { %>기타<% } %>
                     </div>
+
+                    <% if (isPlanMate) { %>
                     <details class="flag">
                         <summary class="ellipsis"></summary>
                         <div class="report">
@@ -98,6 +101,7 @@
                             <p id="dailyplan_item_menu_delete" onclick='deleteDailyPlan("<%=dailyPlanItem.getDailyPlanNo()%>")'>삭제하기</p>
                         </div>
                     </details>
+                    <% } %>
                 </div>
                 <div class="dailyplan_post_contents"><%=dailyPlanItem.getPostContents()%></div>
                 <div class="dailyplan_item_info_wrap">
