@@ -1,3 +1,5 @@
+let isAjaxProcessing = false;
+
 $(function () {
     const inputMemberNo = document.getElementById("input_member_no");
     let searchResultItemArr = [];
@@ -23,7 +25,8 @@ $(function () {
             "sidoName": item.querySelector(".item_sido_name").getAttribute('value'),
             "sigunguName": item.querySelector(".item_sigungu_name").getAttribute('value'),
             "leaderNickName": item.querySelector(".item_leader_nick_name").getAttribute('value'),
-            "registrationDateTime": item.querySelector(".item_registration_date_time").getAttribute('value')
+            "registrationDateTime": item.querySelector(".item_registration_date_time").getAttribute('value'),
+            "planLikeCnt": item.querySelector(".item_plan_like_cnt").getAttribute('value'),
         }
         searchResultItemArr.push(searchResultItem);
     });
@@ -83,6 +86,7 @@ $(function () {
         const searchResultList = $(".searchplan_result_list_wrap");
 
         for (let i = 0; i < array.length; i++) {
+            let isChecked = array[i]['planLikeCnt'] > 0 ? 'checked' : '';
             fragment.append(
                 '<div class="searchplan_result_plan_item_wrap">' +
                     '<div class="searchplan_result_item_contents_wrap">' +
@@ -101,8 +105,8 @@ $(function () {
                             '<img class="icon_calendar"/>' +
                             '<div class="searchplan_result_plan_text" id="trip_term">' + array[i]['tripStartDate'] + " ~ " + array[i]['tripEndDate'] + " [" +
                                 array[i]['tripTerm'] + "] " + '</div>' +
-                                '<input type="checkbox" name="checkboxHeart" id="checkboxHeart'+ i + '" class="checkboxHeart">' +
-                                '<label for="checkboxHeart' + i + '"></label>' +
+                                '<input type="checkbox" name="checkboxHeart" id="checkboxHeart'+ i + '" class="checkboxHeart"' + isChecked + '>' +
+                                '<label for="checkboxHeart' + i + '" class="checkboxHeart"></label>' +
                         '</input>' +
                     '</div>' +
                 '</div>'
@@ -110,10 +114,10 @@ $(function () {
         }
         searchResultList.append(fragment);
 
-        if (inputMemberNo.value === 0) {
-            $('label[for *= "checkboxHeart"]').hide();
+        if (inputMemberNo.value === "0") {
+            $("label[for *= 'checkboxHeart']").hide();
         } else {
-            $('label[for *= "checkboxHeart"]').show();
+            $("label[for *= 'checkboxHeart']").show();
         }
     }
 

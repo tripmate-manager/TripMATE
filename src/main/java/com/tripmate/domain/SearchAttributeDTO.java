@@ -18,6 +18,8 @@ import java.util.List;
 @Setter
 public class SearchAttributeDTO {
 
+    private String memberNo;
+
     @Pattern(regexp = "^[123456]0$", message = "연령대는 10, 20, 30, 40, 50, 60만 입력 가능합니다.")
     private String age;
 

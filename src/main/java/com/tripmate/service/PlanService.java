@@ -6,6 +6,7 @@ import com.tripmate.domain.NotificationDTO;
 import com.tripmate.domain.NotificationVO;
 import com.tripmate.domain.PlanAddressVO;
 import com.tripmate.domain.PlanAttributeVO;
+import com.tripmate.domain.PlanBasicInfoVO;
 import com.tripmate.domain.PlanDTO;
 import com.tripmate.domain.PlanMateDTO;
 import com.tripmate.domain.PlanMateVO;
@@ -13,6 +14,7 @@ import com.tripmate.domain.PlanVO;
 import com.tripmate.domain.ResponseWrapper;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -31,7 +33,7 @@ public interface PlanService {
     @GET("v1/plans/{memberNo}")
     Call<ResponseWrapper<PlanVO>> searchMemberPlanList(@Path("memberNo") String memberNo);
     @GET("v1/plans/plan-detail/{planNo}")
-    Call<ResponseWrapper<PlanVO>> getPlanInfo(@Path("planNo") String planNo);
+    Call<ResponseWrapper<PlanVO>> getPlanInfo(@Path("planNo") String planNo, @Query("memberNo") String memberNo);
     @GET("v1/plans/plan-mate/{planNo}")
     Call <ResponseWrapper<PlanMateVO>> searchPlanMateList(@Path("planNo") String planNo);
     @PUT("v1/plans/{planNo}")
@@ -54,4 +56,10 @@ public interface PlanService {
     Call<ResponseWrapper<InviteCodeVO>> getInviteCodeInfo(@Query("inviteCodeNo") String inviteCodeNo);
     @POST("v1/plans/plan-mate")
     Call <ResponseWrapper<Boolean>> insertPlanMate(@Body PlanMateDTO planMateDTO);
+    @POST("v1/plans/plan-like")
+    Call <ResponseWrapper<Boolean>> insertPlanLike(@Query("planNo") String planNo, @Query("memberNo") String memberNo);
+    @DELETE("v1/plans/plan-like")
+    Call <ResponseWrapper<Boolean>> deletePlanLike(@Query("planNo") String planNo, @Query("memberNo") String memberNo);
+    @GET("v1/plans/plan-like/{memberNo}")
+    Call <ResponseWrapper<PlanBasicInfoVO>> searchMyPlanLikeList(@Path("memberNo") String memberNo);
 }

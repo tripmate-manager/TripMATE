@@ -19,7 +19,7 @@ public interface PlanApiService {
     List<PlanAddressVO> searchAddressList(String sidoName) throws Exception;
     int createPlan(PlanDTO planDTO) throws Exception;
     List<PlanVO> searchMemberPlanList(String memberNo) throws Exception;
-    PlanVO getPlanInfo(String memberNo) throws Exception;
+    PlanVO getPlanInfo(String planNo, String memberNo) throws Exception;
     List<PlanMateVO> searchPlanMateList(String planNo) throws Exception;
     boolean updatePlan(String planNo, PlanDTO planDTO) throws Exception;
     List<PlanMateVO> searchMemberList(String searchDiviCode, String searchKeyword) throws Exception;

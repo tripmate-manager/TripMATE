@@ -30,10 +30,11 @@ public class WishListController {
     private final PlanApiService planApiService;
 
     @PostMapping("/wishlist")
-    public @ResponseBody ModelAndView wishList(HttpServletRequest request, @RequestParam(value = "planNo") String planNo) {
+    public @ResponseBody ModelAndView wishList(HttpServletRequest request, @RequestParam(value = "planNo") String planNo,
+                                               @RequestParam(value = "memberNo") String memberNo) {
         try {
             request.setAttribute("planNo", planNo);
-            PlanVO planVO = planApiService.getPlanInfo(planNo);
+            PlanVO planVO = planApiService.getPlanInfo(planNo, memberNo);
 
             request.setAttribute("tripStartDate", planVO.getTripStartDate());
             request.setAttribute("tripTerm", String.valueOf(planVO.getTripTerm()));

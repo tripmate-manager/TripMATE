@@ -86,7 +86,11 @@
                     <img class="icon_calendar" src="<%=Const.STATIC_IMG_PATH%>/common/icon_calendar.png"/>
                     <% String tripTerm = planVO.getTripTerm() == 0 ? "당일치기" : planVO.getTripTerm() + "박 " + (planVO.getTripTerm() + 1) + "일"; %>
                     <div class="plan_main_trip_term"><%=planVO.getTripStartDate()%> ~ <%=planVO.getTripEndDate()%> [ <%=tripTerm%> ]</div>
-                    <img class="icon_heart_filled" src="<%=Const.STATIC_IMG_PATH%>/common/icon_heart_filled.png"/>
+                    <% if (memberInfo != null) { %>
+                    <input type="checkbox" name="checkboxHeart" id="checkboxHeart<%=planVO.getPlanNo()%>" class="checkboxHeart"
+                        <% if (planVO.getPlanLikeCnt() > 0) { %>checked<% } %>>
+                    <label for="checkboxHeart<%=planVO.getPlanNo()%>"></label>
+                    <% } %>
                 </div>
             </div>
         </div>
