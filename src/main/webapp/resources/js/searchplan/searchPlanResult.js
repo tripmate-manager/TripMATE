@@ -121,8 +121,35 @@ $(function () {
         }
     }
 
-    document.getElementById("icon_search").addEventListener('click', function () {
-        sessionStorage.removeItem("sortTypeCode");
-        $("#searchPlanResultForm").attr('action', '/searchPlan/keyword.trip').submit();
+    if (document.getElementById("icon_search") !== null) {
+        document.getElementById("icon_search").addEventListener('click', function () {
+            sessionStorage.removeItem("sortTypeCode");
+            $("#searchPlanResultForm").attr('action', '/searchPlan/keyword.trip').submit();
+        });
+    }
+
+    document.querySelectorAll(".searchplan_result_item_contents_wrap").forEach(function (resultItem) {
+        resultItem.addEventListener('click', function (event) {
+            document.getElementById("input_plan_no").value = resultItem.firstElementChild.getAttribute("value");
+
+            if (event.target.className !== "checkboxHeart") {
+                $("#searchPlanResultForm").attr("action", "/plans/planMain.trip").submit();
+            }
+        })
+    })
+
+    $("input.checkboxHeart").on('click', function () {
+        this.checked ? this.checked = true : this.checked = false;
+
+        if (isAjaxProcessing) {
+            popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
+            return;
+        } else {
+            isAjaxProcessing = true;
+        }
+
+        clickPlanLike(this,
+            document.getElementById("input_plan_no").value,
+            document.getElementById("input_member_no").value);
     });
 });
