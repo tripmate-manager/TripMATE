@@ -31,6 +31,11 @@ body {
     background-color: #ffffff;
 }
 
+#searchPlanForm {
+    width: 100%;
+    position: static;
+}
+
 .searchplan_wrap .input_search_wrap {
     margin: 0rem 2.117rem 1.3rem 1.375rem;
     width: calc(100% - 3.4917rem);
@@ -128,7 +133,7 @@ body {
     width: 100%;
     padding: 2rem;
     position: static;
-    align-items: center;
+    margin-top: 7rem;
 }
 
 .searchplan_wrap .searchplan_contents_text_wrap .recommend_word_title {
@@ -313,7 +318,7 @@ body {
     padding: 1.5rem;
     width: 100%;
     position: static;
-    left: 0;
+    margin-top: 5rem;
 }
 
 .searchplan_wrap .searchplan_input_default_wrap .attribute_gender_wrap {
