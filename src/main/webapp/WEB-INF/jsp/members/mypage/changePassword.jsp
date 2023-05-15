@@ -25,15 +25,15 @@
     <div class="input_change_password">
         <div class="input_present_password">
             <input type="password" name="presentMemberPassword" id="presentMemberPassword"
-                   class="presentMemberPassword">
+                   class="presentMemberPassword" autocomplete="off">
         </div>
         <div class="change_password_sub_title_2">새 비밀번호</div>
         <input type="password" name="newMemberPassword" id="newMemberPassword" class="newMemberPassword"
-               placeholder="8-20자 이내 영문, 숫자, 기호 중 2가지 이상 조합">
+               placeholder="8-20자 이내 영문, 숫자, 기호 중 2가지 이상 조합" autocomplete="off">
         <div class="change_password_sub_title_3">새 비밀번호 확인</div>
         <div class="change_password_form_input_3">
             <input type="password" name="checkNewMemberPassword" id="checkNewMemberPassword"
-                   class="checkNewMemberPassword">
+                   class="checkNewMemberPassword" autocomplete="off">
         </div>
         <div class="change_password_message" id="checkMemberPasswordMessage" style="display:none;">비밀번호 값이 일치하지 않습니다.
         </div>

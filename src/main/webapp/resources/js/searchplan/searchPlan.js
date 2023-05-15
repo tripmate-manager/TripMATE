@@ -23,6 +23,12 @@ $(function () {
     let inputPersonnel = document.getElementById("input_personnel");
     let personnel = document.getElementById("input_personnel").value;
 
+    if (document.getElementById("session_member_no") !== null) {
+        inputMemberNo.value = document.getElementById("session_member_no").innerText;
+    } else {
+        inputMemberNo.value = 0;
+    }
+
     textSearchMenu.addEventListener('click', function () {
         if (textSearchMenu.classList.contains("tab_select") === false) {
             textSearchMenu.classList.add("tab_select");
@@ -92,7 +98,7 @@ $(function () {
     })
 
     backBtn.addEventListener('click', function () {
-        $("#searchPlanKeywordForm").attr('method', 'get').attr("action", "/main/main.trip").submit();
+        $("#searchPlanForm").attr('method', 'get').attr("action", "/main/main.trip").submit();
     })
 
     tripAddressDownBtn.addEventListener('click', function () {
@@ -201,7 +207,7 @@ $(function () {
             document.getElementById("input_tripTerm").disabled = true;
         }
 
-        $("#searchPlanAttributeForm").attr('action', '/searchPlan/attribute.trip').submit();
+        $("#searchPlanForm").attr('action', '/searchPlan/attribute.trip').submit();
     });
 
     function searchKeyword() {
@@ -210,13 +216,7 @@ $(function () {
             return;
         }
 
-        if (document.getElementById("session_member_no") !== null) {
-            inputMemberNo.value = document.getElementById("session_member_no").innerText;
-        } else {
-            inputMemberNo.value = 0;
-        }
-
-        $("#searchPlanKeywordForm").attr('action', '/searchPlan/keyword.trip').submit();
+        $("#searchPlanForm").attr('action', '/searchPlan/keyword.trip').submit();
     }
 
     searchBtn.addEventListener('click', function () {

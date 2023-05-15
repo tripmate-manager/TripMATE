@@ -14,7 +14,6 @@
     <jsp:include page="/WEB-INF/jsp/plans/planAuthorityPopUp.jsp"/>
     <link rel="stylesheet" href="<%=Const.STATIC_CSS_PATH%>/plans/myPlan.css"/>
     <script src="<%=Const.STATIC_JS_PATH%>/plans/myPlan.js"></script>
-    <script src="<%=Const.STATIC_JS_PATH%>/plans/planValidationCheck.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/common/popUp.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/common/checkPopUp.js"></script>
     <script src="<%=Const.STATIC_JS_PATH%>/plans/planAuthorityPopUp.js"></script>
@@ -29,7 +28,6 @@
     }
 %>
 
-<input type=hidden id="memberNo" value=<%=memberInfo.getMemberNo()%>>
 <div class="myplanlist_wrap">
     <form id="myPlanForm">
         <div class="myplanlist_title_wrap">
@@ -51,6 +49,7 @@
             <div class="myplanlist_plan_item_wrap">
                 <div class="myplanlist_item_contents_wrap">
                     <form id="planNoForm" method="post">
+                        <input type=hidden id="memberNo" name="memberNo" value=<%=memberInfo.getMemberNo()%>>
                         <div id="myplanList_item_no" value="<%=planVO.getPlanNo()%>"></div>
                         <input type="hidden" class="myplanlist_item_plan_no" name="planNo" value="<%=planVO.getPlanNo()%>">
                     </form>

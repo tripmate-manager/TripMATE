@@ -6,9 +6,10 @@ import com.tripmate.domain.ExitPlanDTO;
 import com.tripmate.domain.InviteCodeVO;
 import com.tripmate.domain.NotificationDTO;
 import com.tripmate.domain.NotificationVO;
-import com.tripmate.domain.PlanDTO;
 import com.tripmate.domain.PlanAddressVO;
 import com.tripmate.domain.PlanAttributeVO;
+import com.tripmate.domain.PlanBasicInfoVO;
+import com.tripmate.domain.PlanDTO;
 import com.tripmate.domain.PlanMateDTO;
 import com.tripmate.domain.PlanMateVO;
 import com.tripmate.domain.PlanVO;
@@ -144,8 +145,8 @@ public class PlanApiServiceImpl implements PlanApiService {
     }
 
     @Override
-    public PlanVO getPlanInfo(String planNo) throws Exception {
-        Call<ResponseWrapper<PlanVO>> data = RetrofitClient.getApiService(PlanService.class).getPlanInfo(planNo);
+    public PlanVO getPlanInfo(String planNo, String memberNo) throws Exception {
+        Call<ResponseWrapper<PlanVO>> data = RetrofitClient.getApiService(PlanService.class).getPlanInfo(planNo, memberNo);
         PlanVO result;
 
         ResponseWrapper<PlanVO> response = data.clone().execute().body();
@@ -424,6 +425,78 @@ public class PlanApiServiceImpl implements PlanApiService {
                 throw new IOException("response's data is Empty");
             }
             result = response.getData().get(0);
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new IOException(response.getMessage());
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean insertPlanLike(String planNo, String memberNo) throws Exception {
+        Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(PlanService.class).insertPlanLike(planNo, memberNo);
+        boolean result;
+
+        ResponseWrapper<Boolean> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
+        }
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData() == null) {
+                throw new IOException("response's data is Empty");
+            }
+            result = response.getData().get(0);
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new IOException(response.getMessage());
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean deletePlanLike(String planNo, String memberNo) throws Exception {
+        Call<ResponseWrapper<Boolean>> data = RetrofitClient.getApiService(PlanService.class).deletePlanLike(planNo, memberNo);
+        boolean result;
+
+        ResponseWrapper<Boolean> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
+        }
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData() == null) {
+                throw new IOException("response's data is Empty");
+            }
+            result = response.getData().get(0);
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new IOException(response.getMessage());
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<PlanBasicInfoVO> searchMyPlanLikeList(String memberNo) throws Exception {
+        Call<ResponseWrapper<PlanBasicInfoVO>> data = RetrofitClient.getApiService(PlanService.class).searchMyPlanLikeList(memberNo);
+        List<PlanBasicInfoVO> result;
+
+        ResponseWrapper<PlanBasicInfoVO> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
+        }
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData() == null) {
+                throw new IOException("response's data is Empty");
+            }
+            result = response.getData();
         } else {
             log.warn(response.getCode() + " : " + response.getMessage());
             throw new IOException(response.getMessage());

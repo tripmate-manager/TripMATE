@@ -13,6 +13,7 @@
 <body>
 <%
     List<PlanMateVO> planMateList = (List<PlanMateVO>) request.getAttribute("planMateList");
+    boolean isPlanMate = (boolean) request.getAttribute("isPlanMate");
 %>
 
 <div class="planmate_menu_wrap" id="menu">
@@ -22,6 +23,7 @@
     </div>
     <div class="planmate_menu_divi_line">
     </div>
+    <% if (isPlanMate) { %>
     <div class="planmate_menu_contents_wrap">
         <div class="planmate_menu_invite_wrap">
             <img class="icon_plus_circle" src="<%=Const.STATIC_IMG_PATH%>/plans/icon_plus_circle.png"/>
@@ -37,6 +39,7 @@
         </div>
         <% } %>
     </div>
+    <% } %>
     <div onclick="history.back();" class="close"></div>
 </div>
 </body>

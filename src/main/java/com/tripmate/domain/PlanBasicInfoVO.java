@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class SearchPlanResultVO {
+public class PlanBasicInfoVO {
     private int planNo;
 
     private String planTitle;
@@ -37,4 +37,7 @@ public class SearchPlanResultVO {
     private String leaderNickName;
 
     private String registrationDateTime;
+
+    private int planLikeCnt;
 }
+

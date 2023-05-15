@@ -63,3 +63,55 @@ function address_comboBox(option, comboBoxArea) {
         }
     })
 }
+
+function clickPlanLike(checkBoxHeart, planNo, memberNo) {
+    if(checkBoxHeart.checked) {
+        $.ajax({
+            url: "/plans/insertPlanLike.trip",
+            type: "post",
+            dataType: 'json',
+            data: {
+                planNo: planNo,
+                memberNo: memberNo
+            },
+            success: function (result) {
+                isAjaxProcessing = false;
+                if (result.code === constCode.global.resultCodeSuccess) {
+                    if (result.isInsertPlanLikeSuccess !== true) {
+                        checkBoxHeart.checked = false;
+                    }
+                } else {
+                    popUpOpen(result.message);
+                }
+            },
+            error: function (error) {
+                isAjaxProcessing = false;
+                popUpOpen("처리 중 오류가 발생하였습니다.");
+            }
+        })
+    } else {
+        $.ajax({
+            url: "/plans/deletePlanLike.trip",
+            type: "post",
+            dataType: 'json',
+            data: {
+                planNo: planNo,
+                memberNo: memberNo
+            },
+            success: function (result) {
+                isAjaxProcessing = false;
+                if (result.code === constCode.global.resultCodeSuccess) {
+                    if (result.isDeletePlanLikeSuccess !== true) {
+                        checkBoxHeart.checked = false;
+                    }
+                } else {
+                    popUpOpen(result.message);
+                }
+            },
+            error: function (error) {
+                isAjaxProcessing = false;
+                popUpOpen("처리 중 오류가 발생하였습니다.");
+            }
+        })
+    }
+}

@@ -26,9 +26,9 @@
     <img class="arrow_left_icon" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png" onclick="history.back()"/>
     <div class="withdraw_title">회원 탈퇴</div>
     <div class="withdraw_subtitle_password">비밀번호</div>
-    <input type="password" name="memberPassword" id="memberPassword" class="withdraw_input_password">
+    <input type="password" name="memberPassword" id="memberPassword" class="withdraw_input_password" autocomplete="off">
     <div class="withdraw_subtitle_check_password">비밀번호 확인</div>
-    <input type="password" name="checkMemberPassword" id="checkMemberPassword" class="withdraw_input_check_password">
+    <input type="password" name="checkMemberPassword" id="checkMemberPassword" class="withdraw_input_check_password" autocomplete="off">
     <div class="withdraw_contents_title_wrap">
         <div class="withdraw_icon_wrap">
             <img class="withdraw_icon_1" src="<%=Const.STATIC_IMG_PATH%>/members/icon_emphasis_1.png" />

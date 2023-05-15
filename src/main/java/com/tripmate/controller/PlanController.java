@@ -1,13 +1,13 @@
 package com.tripmate.controller;
 
 import com.tripmate.common.exception.ApiCommonException;
-import com.tripmate.domain.DailyPlanCntVO;
 import com.tripmate.domain.ExitPlanDTO;
 import com.tripmate.domain.InviteCodeVO;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.NotificationDTO;
 import com.tripmate.domain.PlanAddressVO;
 import com.tripmate.domain.PlanAttributeVO;
+import com.tripmate.domain.PlanBasicInfoVO;
 import com.tripmate.domain.PlanDTO;
 import com.tripmate.domain.PlanMateDTO;
 import com.tripmate.domain.PlanMateVO;
@@ -32,7 +32,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -123,16 +122,72 @@ public class PlanController {
         return new ModelAndView("plans/myPlan");
     }
 
-    @PostMapping("/planMain")
-    public ModelAndView viewPlanMain(HttpServletRequest request, @RequestParam(value = "planNo") String planNo) {
-        try {
-            PlanVO planVO = planApiService.getPlanInfo(planNo);
-            List<PlanMateVO> planMateList = planApiService.searchPlanMateList(planNo);
-            List<DailyPlanCntVO> dailyPlanCntList = dailyPlanApiService.searchDailyPlanCntByDay(planNo);
 
-            request.setAttribute("planVO", planVO);
+    @GetMapping("/myPlanLike")
+    public @ResponseBody ModelAndView myPlanLike(HttpServletRequest request) {
+        MemberDTO memberInfoSession = (MemberDTO) request.getSession().getAttribute(Const.MEMBER_INFO_SESSION);
+
+        try {
+            List<PlanBasicInfoVO> myPlanLikeList = planApiService.searchMyPlanLikeList(String.valueOf(memberInfoSession.getMemberNo()));
+
+            request.setAttribute("myPlanLikeList", myPlanLikeList);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+
+        return new ModelAndView("plans/myPlanLike");
+    }
+
+    @PostMapping("/insertPlanLike")
+    public @ResponseBody String insertPlanLike(@RequestParam(value = "planNo") String planNo,
+                                               @RequestParam(value = "memberNo") String memberNo) {
+        ApiResult result;
+
+        try {
+            boolean isInsertPlanLikeSuccess = planApiService.insertPlanLike(planNo, memberNo);
+
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            result.put("isInsertPlanLikeSuccess", isInsertPlanLikeSuccess);
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
+    }
+
+    @PostMapping("/deletePlanLike")
+    public @ResponseBody String deletePlanLike(@RequestParam(value = "planNo") String planNo,
+                                               @RequestParam(value = "memberNo") String memberNo) {
+        ApiResult result;
+
+        try {
+            boolean isDeletePlanLikeSuccess = planApiService.deletePlanLike(planNo, memberNo);
+
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            result.put("isDeletePlanLikeSuccess", isDeletePlanLikeSuccess);
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
+    }
+
+    @PostMapping("/planMain")
+    public ModelAndView viewPlanMain(HttpServletRequest request, @RequestParam(value = "planNo") String planNo,
+                                     @RequestParam(value = "memberNo") String memberNo) {
+        try {
+            List<PlanMateVO> planMateList = planApiService.searchPlanMateList(planNo);
+
+            request.setAttribute("planVO", planApiService.getPlanInfo(planNo, memberNo));
             request.setAttribute("planMateList", planMateList);
-            request.setAttribute("dailyPlanCntList", dailyPlanCntList);
+            request.setAttribute("isPlanMate", planMateList.stream().anyMatch(mate -> String.valueOf(mate.getMemberNo()).equals(memberNo)));
+            request.setAttribute("dailyPlanCntList", dailyPlanApiService.searchDailyPlanCntByDay(planNo));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
@@ -141,20 +196,18 @@ public class PlanController {
     }
 
     @PostMapping("/editPlan")
-    public ModelAndView viewEditPlan(HttpServletRequest request, @RequestParam(value = "planNo") String planNo) {
+    public ModelAndView viewEditPlan(HttpServletRequest request, @RequestParam(value = "planNo") String planNo,
+                                     @RequestParam(value = "memberNo") String memberNo) {
         try {
-            List<PlanAttributeVO> planAttributeVOList = planApiService.searchPlanAttributeList(ConstCode.ATTRIBUTE_TYPE_CODE_TRIP_THEME);
             List<PlanAddressVO> planAddressVOList = planApiService.searchAddressList();
-            PlanVO planVO = planApiService.getPlanInfo(planNo);
-
             Set<String> sidoNameList = new HashSet<>();
             for (PlanAddressVO planAddressVO : planAddressVOList) {
                 sidoNameList.add(planAddressVO.getSidoName());
             }
 
-            request.setAttribute("planThemeList", planAttributeVOList);
+            request.setAttribute("planThemeList", planApiService.searchPlanAttributeList(ConstCode.ATTRIBUTE_TYPE_CODE_TRIP_THEME));
             request.setAttribute("sidoNameList", sidoNameList);
-            request.setAttribute("planVO", planVO);
+            request.setAttribute("planVO", planApiService.getPlanInfo(planNo, memberNo));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }

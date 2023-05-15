@@ -1,9 +1,9 @@
 package com.tripmate.service.apiservice;
 
 import com.tripmate.client.RetrofitClient;
+import com.tripmate.domain.PlanBasicInfoVO;
 import com.tripmate.domain.ResponseWrapper;
 import com.tripmate.domain.SearchAttributeDTO;
-import com.tripmate.domain.SearchPlanResultVO;
 import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.service.SearchPlanService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,11 +18,11 @@ import java.util.List;
 public class SearchPlanApiServiceImpl implements SearchPlanApiService {
 
     @Override
-    public List<SearchPlanResultVO> searchPlanByKeyword(String memberNo, String keyword) throws Exception {
-        Call<ResponseWrapper<SearchPlanResultVO>> data = RetrofitClient.getApiService(SearchPlanService.class).searchPlanByKeyword(memberNo, keyword);
-        List<SearchPlanResultVO> result;
+    public List<PlanBasicInfoVO> searchPlanByKeyword(String memberNo, String keyword) throws Exception {
+        Call<ResponseWrapper<PlanBasicInfoVO>> data = RetrofitClient.getApiService(SearchPlanService.class).searchPlanByKeyword(memberNo, keyword);
+        List<PlanBasicInfoVO> result;
 
-        ResponseWrapper<SearchPlanResultVO> response = data.clone().execute().body();
+        ResponseWrapper<PlanBasicInfoVO> response = data.clone().execute().body();
 
         if (response == null) {
             throw new IOException("response is Empty");
@@ -42,11 +42,11 @@ public class SearchPlanApiServiceImpl implements SearchPlanApiService {
     }
 
     @Override
-    public List<SearchPlanResultVO> searchPlanByAttribute(SearchAttributeDTO searchAttributeDTO) throws Exception {
-        Call<ResponseWrapper<SearchPlanResultVO>> data = RetrofitClient.getApiService(SearchPlanService.class).searchPlanByAttribute(searchAttributeDTO);
-        List<SearchPlanResultVO> result;
+    public List<PlanBasicInfoVO> searchPlanByAttribute(SearchAttributeDTO searchAttributeDTO) throws Exception {
+        Call<ResponseWrapper<PlanBasicInfoVO>> data = RetrofitClient.getApiService(SearchPlanService.class).searchPlanByAttribute(searchAttributeDTO);
+        List<PlanBasicInfoVO> result;
 
-        ResponseWrapper<SearchPlanResultVO> response = data.clone().execute().body();
+        ResponseWrapper<PlanBasicInfoVO> response = data.clone().execute().body();
 
         if (response == null) {
             throw new IOException("response is Empty");

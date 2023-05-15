@@ -32,14 +32,14 @@
                 <div class="signup_subtitle">비밀번호</div>
                 <div class="signup_form_input_2">
                     <input type="password" name="memberPassword" id="memberPassword" class="memberPassword"
-                           placeholder="8-20자 이내 영문, 숫자, 기호 중 2가지 이상 조합">
+                           placeholder="8-20자 이내 영문, 숫자, 기호 중 2가지 이상 조합" autocomplete="off">
                 </div>
             </div>
             <div class="signup_form_item">
                 <div class="signup_subtitle">비밀번호 확인</div>
                 <div class="signup_form_input_2">
                     <input type="password" name="checkMemberPassword" id="checkMemberPassword"
-                           class="checkMemberPassword">
+                           class="checkMemberPassword" autocomplete="off">
                     <div class="signup_form_message" id="checkMemberPasswordMessage" style="display: none;">비밀번호 값이 일치하지
                         않습니다.
                     </div>

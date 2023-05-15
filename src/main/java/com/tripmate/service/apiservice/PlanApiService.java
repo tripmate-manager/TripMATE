@@ -6,6 +6,7 @@ import com.tripmate.domain.NotificationDTO;
 import com.tripmate.domain.NotificationVO;
 import com.tripmate.domain.PlanAddressVO;
 import com.tripmate.domain.PlanAttributeVO;
+import com.tripmate.domain.PlanBasicInfoVO;
 import com.tripmate.domain.PlanDTO;
 import com.tripmate.domain.PlanMateDTO;
 import com.tripmate.domain.PlanMateVO;
@@ -19,7 +20,7 @@ public interface PlanApiService {
     List<PlanAddressVO> searchAddressList(String sidoName) throws Exception;
     int createPlan(PlanDTO planDTO) throws Exception;
     List<PlanVO> searchMemberPlanList(String memberNo) throws Exception;
-    PlanVO getPlanInfo(String memberNo) throws Exception;
+    PlanVO getPlanInfo(String planNo, String memberNo) throws Exception;
     List<PlanMateVO> searchPlanMateList(String planNo) throws Exception;
     boolean updatePlan(String planNo, PlanDTO planDTO) throws Exception;
     List<PlanMateVO> searchMemberList(String searchDiviCode, String searchKeyword) throws Exception;
@@ -31,4 +32,7 @@ public interface PlanApiService {
     boolean exitPlan(ExitPlanDTO exitPlanDTO) throws Exception;
     InviteCodeVO getInviteCodeInfo(String inviteCodeNo) throws Exception;
     boolean insertPlanMate(PlanMateDTO planMateDTO) throws Exception;
+    boolean insertPlanLike(String planNo, String memberNo) throws Exception;
+    boolean deletePlanLike(String planNo, String memberNo) throws Exception;
+    List<PlanBasicInfoVO> searchMyPlanLikeList(String memberNo) throws Exception;
 }

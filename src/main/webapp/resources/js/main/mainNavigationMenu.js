@@ -30,7 +30,7 @@ $(function () {
             popUpOpen("로그인 시 이용할 수 있는 서비스입니다.");
             return false;
         }
-
+        pageLink("/plans/myPlanLike.trip");
     });
 
     $("#menu_edit_member_info").on('click', function () {

@@ -38,6 +38,8 @@ public class PlanVO {
 
     private String registrationDateTime;
 
+    private int planLikeCnt;
+
     private List<PlanAddressVO> planAddressList;
 
     private List<PlanAttributeVO> planAttributeList;

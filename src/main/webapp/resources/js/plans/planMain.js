@@ -1,3 +1,5 @@
+let isAjaxProcessing = false;
+
 window.onhashchange = function () {
     if (location.hash !== "#open") {
         $("#menu,.page_cover,html").removeClass("open");
@@ -5,12 +7,20 @@ window.onhashchange = function () {
 };
 
 $(function () {
+    let inputMemberNo = document.getElementById("input_member_no");
+
     $("#icon_menu_home").hide();
     $("#icon_menu_home_choice").show();
 
     $(".icon_arrow_left").on('click', function () {
         pageLink("/plans/myPlan.trip");
     });
+
+    if (document.getElementById("session_member_no") !== null) {
+        inputMemberNo.value = document.getElementById("session_member_no").innerText;
+    } else {
+        inputMemberNo.value = 0;
+    }
 
     $(".plan_main_plan_edit").on('click', function () {
         $("#planMainForm").attr("action", "/plans/editPlan.trip").submit();
@@ -41,5 +51,18 @@ $(function () {
     $(".icon_arrow_right").on('click', function () {
         $("#dailyplan_day").val($(this).parent().find(".dailyplan_item_day").attr("value"));
         $("#planMainForm").attr("action", "/dailyPlans/dailyPlan.trip").submit();
+    });
+
+    document.querySelector(".checkboxHeart").addEventListener('click', function () {
+        if (isAjaxProcessing) {
+            popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
+            return;
+        } else {
+            isAjaxProcessing = true;
+        }
+
+        clickPlanLike(document.querySelector(".checkboxHeart"),
+            document.getElementById("plan_no").value,
+            document.getElementById("input_member_no").value);
     });
 });

@@ -1,6 +1,7 @@
 <%@ page import="com.tripmate.domain.PostVO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.tripmate.common.util.DateUtil" %>
+<%@ page import="com.tripmate.domain.MemberDTO" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/jsp/common/include/commonImport.jsp" %>
@@ -22,6 +23,13 @@
 </head>
 <body>
 <%
+    MemberDTO memberInfo = null;
+    session = request.getSession();
+
+    if (session != null) {
+        memberInfo = (MemberDTO) session.getAttribute(Const.MEMBER_INFO_SESSION);
+    }
+
     String planNo = (String) request.getAttribute("planNo");
     String tripStartDate = (String) request.getAttribute("tripStartDate");
     String tripTerm = (String) request.getAttribute("tripTerm");
@@ -38,6 +46,9 @@
 
     <% if (wishList != null) { %>
     <form name="wishListForm" id="wishListForm" method="post">
+        <% if (memberInfo != null) { %>
+        <input type=hidden id="member_no" name="memberNo" hidden>
+        <% } %>
         <% if (planNo != null && tripStartDate != null && tripTerm != null) { %>
         <input type="hidden" name="planNo" id="wishlist_plan_no" value="<%=planNo%>">
         <input type="hidden" name="tripStartDate" id="wishlist_trip_start_date" value="<%=tripStartDate%>">

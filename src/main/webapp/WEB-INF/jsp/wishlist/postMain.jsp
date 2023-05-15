@@ -35,10 +35,6 @@
     }
 %>
 
-<% if (memberInfo != null) { %>
-<input type=hidden id="sessionMemberNo" value=<%=memberInfo.getMemberNo()%>>
-<% } %>
-
 <div class="wishlist_detail_wrap">
     <div class="wishlist_detail_title_wrap">
         <img class="icon_arrow_left" id="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png"/>
@@ -93,9 +89,10 @@
     <div class="wishlist_detail_divi_line"></div>
 
     <form name="commentForm" id="commentForm" method="post">
-        <% if (postInfo != null) { %>
+        <% if (postInfo != null && memberInfo != null) { %>
         <input type=hidden class="planNo" id="planNo" name="planNo" value=<%=postInfo.getPlanNo()%>>
         <input type=hidden class="postNo" id="postNo" name="postNo" value=<%=postInfo.getPostNo()%>>
+        <input type=hidden id="sessionMemberNo" name="memberNo" value=<%=memberInfo.getMemberNo()%>>
         <% } %>
 
         <div class="wishlist_detail_comment_wrap">

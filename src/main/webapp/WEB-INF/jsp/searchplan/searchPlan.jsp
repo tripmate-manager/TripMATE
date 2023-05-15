@@ -31,7 +31,7 @@
 %>
 
 <div class="searchplan_wrap">
-    <form name="searchPlanKeywordForm" id="searchPlanKeywordForm" method="post">
+    <form name="searchPlanForm" id="searchPlanForm" method="post">
         <% if (memberInfo != null) { %>
         <div id="session_member_no" style="display: none"><%=memberInfo.getMemberNo()%></div>
         <% } %>
@@ -43,29 +43,27 @@
             <input type="text" name="keyword" class="input_search" id="input_search" placeholder="검색어를 입력하세요">
             <img class="icon_search" id="icon_search" src="<%=Const.STATIC_IMG_PATH%>/common/icon_search.png"/>
         </div>
-    </form>
-    <div class="searchplan_tab_menu">
-        <div class="tab_menu_text tab_select" id="tab_menu_text">일반 검색</div>
-        <div class="tab_menu_attribute" id="tab_menu_attribute">속성 검색</div>
-    </div>
-    <div class="searchplan_contents_text_wrap">
-        <div class="recommend_word_title">추천 검색어</div>
-        <div class="recommend_word_wrap">
-            <div class="recommend_word">여행</div>
-            <div class="recommend_word">1박 2일</div>
-            <div class="recommend_word">검색어</div>
+        <div class="searchplan_tab_menu">
+            <div class="tab_menu_text tab_select" id="tab_menu_text">일반 검색</div>
+            <div class="tab_menu_attribute" id="tab_menu_attribute">속성 검색</div>
         </div>
-        <div class="popular_hashtag_title">해시태그 인기 키워드</div>
-        <div class="popular_hashtag_wrap">
-            <div class="popular_hashtag"># 가을여행</div>
-            <div class="popular_hashtag"># 제주맛집</div>
-            <div class="popular_hashtag"># 당일치기</div>
-            <div class="popular_hashtag"># 당일치기</div>
-            <div class="popular_hashtag"># 당일치기</div>
+        <div class="searchplan_contents_text_wrap">
+            <div class="recommend_word_title">추천 검색어</div>
+            <div class="recommend_word_wrap">
+                <div class="recommend_word">여행</div>
+                <div class="recommend_word">1박 2일</div>
+                <div class="recommend_word">검색어</div>
+            </div>
+            <div class="popular_hashtag_title">해시태그 인기 키워드</div>
+            <div class="popular_hashtag_wrap">
+                <div class="popular_hashtag"># 가을여행</div>
+                <div class="popular_hashtag"># 제주맛집</div>
+                <div class="popular_hashtag"># 당일치기</div>
+                <div class="popular_hashtag"># 당일치기</div>
+                <div class="popular_hashtag"># 당일치기</div>
+            </div>
         </div>
-    </div>
 
-    <form name="searchPlanAttributeForm" id="searchPlanAttributeForm" method="post">
         <div class="searchplan_contents_attribute_wrap" style="display: none;">
             <div class="searchplan_input_default_wrap">
                 <div class="searchplan_sub_title">연령대</div>
@@ -169,7 +167,7 @@
                 <div class="trip_term_choice_wrap" id="trip_term_choice_wrap" style="display: none">
                     <div class="trip_term_choice">
                         <div class="searchplan_trip_term" id="searchplan_trip_term" style="display: none"></div>
-                        <input name="tripTerm"id="input_tripTerm" hidden disabled>
+                        <input name="tripTerm" id="input_tripTerm" hidden disabled>
                         <label class="label_selectbox_title"></label>
                         <select class="select_option" id="select_option_trip_term">
                             <option value="default">--여행 기간--</option>

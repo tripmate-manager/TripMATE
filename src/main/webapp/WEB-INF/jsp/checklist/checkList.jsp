@@ -31,10 +31,6 @@
     }
 %>
 
-<% if (memberInfo != null) { %>
-<input type=hidden id="sessionMemberNo" value=<%=memberInfo.getMemberNo()%>>
-<% } %>
-
 <div class="checklist_wrap">
     <div class="checklist_title_wrap">
         <img class="icon_arrow_left" id="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png"/>
@@ -50,6 +46,9 @@
         </div>
 
         <form id="checkListForm" method="post">
+            <% if (memberInfo != null) { %>
+            <input type=hidden id="sessionMemberNo" name="memberNo" value=<%=memberInfo.getMemberNo()%>>
+            <% } %>
             <% if (planNo != null) { %>
             <input type="text" id="planNo" name="planNo" value=<%=planNo%> hidden>
             <% } %>

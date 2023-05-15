@@ -8,6 +8,7 @@ import com.tripmate.domain.NotificationDTO;
 import com.tripmate.entity.ApiResult;
 import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.service.apiservice.DailyPlanApiService;
+import com.tripmate.service.apiservice.PlanApiService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DailyPlanController {
     private final DailyPlanApiService dailyPlanApiService;
+    private final PlanApiService planApiService;
     private final FileUploadUtil fileUploadUtil;
 
     @PostMapping("/addDailyPlan")
@@ -75,6 +77,8 @@ public class DailyPlanController {
         try {
             request.setAttribute("dayGroup", dayGroup);
             request.setAttribute("dailyPlanVO", dailyPlanApiService.searchDailyPlanListByDay(planNo, memberNo, dayGroup));
+            request.setAttribute("isPlanMate", planApiService.searchPlanMateList(planNo).stream()
+                    .anyMatch(mate -> String.valueOf(mate.getMemberNo()).equals(memberNo)));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }

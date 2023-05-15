@@ -5,7 +5,6 @@
 <%@ page import="com.tripmate.domain.DailyPlanCntVO" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/jsp/common/include/commonImport.jsp" %>
-<%@ include file="/WEB-INF/jsp/common/bottomNavigationMenu.jsp" %>
 <%@ include file="/WEB-INF/jsp/plans/planMateNavigationMenu.jsp" %>
 
 <html>
@@ -34,10 +33,11 @@
 <div class="plan_main_wrap">
     <form id="planMainForm" method="post">
         <% if (memberInfo != null) { %>
-        <input type="hidden" class="plan_main_member_no" name="memberNo" value="<%=memberInfo.getMemberNo()%>">
+        <div id="session_member_no" style="display: none"><%=memberInfo.getMemberNo()%></div>
         <% } %>
+        <input type=hidden id="input_member_no" name="memberNo" hidden>
         <% if (planVO != null) { %>
-        <input type="hidden" class="plan_main_plan_no" name="planNo" value="<%=planVO.getPlanNo()%>">
+        <input type="hidden" class="plan_main_plan_no" id="plan_no" name="planNo" value="<%=planVO.getPlanNo()%>">
         <% } %>
         <div onclick="history.back();" class="page_cover"></div>
         <div class="plan_main_title_wrap">
@@ -86,7 +86,11 @@
                     <img class="icon_calendar" src="<%=Const.STATIC_IMG_PATH%>/common/icon_calendar.png"/>
                     <% String tripTerm = planVO.getTripTerm() == 0 ? "당일치기" : planVO.getTripTerm() + "박 " + (planVO.getTripTerm() + 1) + "일"; %>
                     <div class="plan_main_trip_term"><%=planVO.getTripStartDate()%> ~ <%=planVO.getTripEndDate()%> [ <%=tripTerm%> ]</div>
-                    <img class="icon_heart_filled" src="<%=Const.STATIC_IMG_PATH%>/common/icon_heart_filled.png"/>
+                    <% if (memberInfo != null) { %>
+                    <input type="checkbox" name="checkboxHeart" id="checkboxHeart<%=planVO.getPlanNo()%>" class="checkboxHeart"
+                        <% if (planVO.getPlanLikeCnt() > 0) { %>checked<% } %>>
+                    <label for="checkboxHeart<%=planVO.getPlanNo()%>"></label>
+                    <% } %>
                 </div>
             </div>
         </div>
@@ -119,5 +123,9 @@
         </div>
     </form>
 </div>
+<% if (isPlanMate) { %>
+<jsp:include page="/WEB-INF/jsp/common/bottomNavigationMenu.jsp"/>
+<% } %>
+
 </body>
 </html>

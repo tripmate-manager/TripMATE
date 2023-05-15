@@ -95,7 +95,7 @@ function deleteDailyPlanNotification(dailyPlanNo) {
     });
 }
 
-function updateDailyPlanNotification(planNo, dailyPlanNo, dailyPlanDateTime, notificationYn) {
+function updateDailyPlanNotification(planNo, dailyPlanNo, dailyPlanDateTime) {
     dailyPlanNotificationPopUpOpen(planNo, dailyPlanNo, document.getElementById("member_no").value, dailyPlanDateTime, constCode.global.Y);
 }
 
@@ -106,6 +106,14 @@ function createReview(dailyPlanNo, postTypeCode) {
 }
 
 $(function () {
+    let inputMemberNo = document.getElementById("member_no");
+
+    if (document.getElementById("session_member_no") !== null) {
+        inputMemberNo.value = document.getElementById("session_member_no").innerText;
+    } else {
+        inputMemberNo.value = 0;
+    }
+
     $(".icon_arrow_left").on('click', function () {
         $("#dailyplanForm").attr("action", "/plans/planMain.trip").submit();
     });
