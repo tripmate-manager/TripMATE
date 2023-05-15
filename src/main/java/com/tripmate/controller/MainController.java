@@ -5,12 +5,15 @@ import com.tripmate.common.exception.ApiCommonException;
 import com.tripmate.domain.InviteCodeVO;
 import com.tripmate.domain.MemberDTO;
 import com.tripmate.domain.NotificationVO;
+import com.tripmate.domain.PlanBasicInfoVO;
+import com.tripmate.domain.PopularPlanVO;
 import com.tripmate.entity.ApiResult;
 import com.tripmate.entity.ApiResultEnum;
 import com.tripmate.entity.Const;
+import com.tripmate.service.apiservice.MainApiService;
 import com.tripmate.service.apiservice.PlanApiService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,14 +27,11 @@ import java.util.List;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 @RequestMapping(value = "/main", produces = "application/json; charset=utf8")
 public class MainController {
     private final PlanApiService planApiService;
-
-    @Autowired
-    public MainController(PlanApiService planApiService) {
-        this.planApiService = planApiService;
-    }
+    private final MainApiService mainApiService;
 
     @GetMapping("/main")
     public ModelAndView viewMain(HttpServletRequest request) {
@@ -40,10 +40,28 @@ public class MainController {
         String inviteMemberIdSession = (String) request.getSession().getAttribute(Const.INVITE_MEMBER_ID_SESSION);
 
         try {
+            List<PopularPlanVO> popularPlanList;
+
             if (memberInfoSession != null) {
                 int unreadNotificationCnt = planApiService.getUnreadNotificationCnt(String.valueOf(memberInfoSession.getMemberNo()));
                 request.setAttribute("unreadNotificationCnt", unreadNotificationCnt);
+
+                popularPlanList = mainApiService.searchPopularPlanList(String.valueOf(memberInfoSession.getMemberNo()));
+
+                // TODO: 사용자 추천 플랜 조회
+                List<PlanBasicInfoVO> userRecommendationPlanList = mainApiService.searchUserRecommendationPlanList(String.valueOf(memberInfoSession.getMemberNo()));
+                request.setAttribute("userRecommendationPlanList", userRecommendationPlanList);
+
+                List<PlanBasicInfoVO> myPlanLikeList = planApiService.searchMyPlanLikeList(String.valueOf(memberInfoSession.getMemberNo()));
+                request.setAttribute("myPlanLikeList", myPlanLikeList);
+
+            } else {
+                popularPlanList = mainApiService.searchPopularPlanList();
+
+                // TODO: 추천 플랜 조회
             }
+
+            request.setAttribute("popularPlanList", popularPlanList);
 
             if (inviteCodeSession != null && inviteMemberIdSession != null) {
                 if (inviteMemberIdSession.equals(memberInfoSession.getMemberId())) {
@@ -58,7 +76,8 @@ public class MainController {
     }
 
     @GetMapping("/notificationList")
-    public @ResponseBody ModelAndView notificationList(HttpServletRequest request) {
+    public @ResponseBody
+    ModelAndView notificationList(HttpServletRequest request) {
         MemberDTO memberInfoSession = (MemberDTO) request.getSession().getAttribute(Const.MEMBER_INFO_SESSION);
 
         try {
@@ -73,7 +92,8 @@ public class MainController {
     }
 
     @PostMapping("/notification")
-    public @ResponseBody String updateNotificationReadDateTime(@RequestParam(value = "memberNo") String memberNo,
+    public @ResponseBody
+    String updateNotificationReadDateTime(@RequestParam(value = "memberNo") String memberNo,
                                           @RequestParam(value = "notificationNo") String notificationNo) {
         ApiResult result;
 
