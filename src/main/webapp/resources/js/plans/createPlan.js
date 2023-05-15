@@ -239,6 +239,7 @@ $(function () {
                 isAjaxProcessing = false;
                 if (result.code === constCode.global.resultCodeSuccess) {
                     if (result.createPlanNo > 0) {
+                        $("#planNo").val(result.createPlanNo);
                         checkPopUpOpen("플랜이 생성되었습니다. \n" + "플랜메이트를 추가하시겠습니까?");
                         $(".check_popup_btn_ok").attr("onclick", null).on('click', function () {
                             popUpCancel();
@@ -249,7 +250,7 @@ $(function () {
                             });
                         });
                         $(".check_popup_btn_cancel").attr("onclick", null).on('click', function () {
-                            $("#createPlanForm").attr("action", "/plans/myPlan.trip").submit();
+                            $("#inviteMatePopUpForm").attr("action", "/plans/planMain.trip").submit();
                         });
                     }
                 } else {
