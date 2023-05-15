@@ -64,4 +64,52 @@ public class SearchPlanApiServiceImpl implements SearchPlanApiService {
 
         return result;
     }
+
+    @Override
+    public List<String> searchPopularSearchKeyword() throws Exception {
+        Call<ResponseWrapper<String>> data = RetrofitClient.getApiService(SearchPlanService.class).searchPopularSearchKeyword();
+        List<String> result;
+
+        ResponseWrapper<String> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
+        }
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData() == null) {
+                throw new IOException("response's data is Empty");
+            }
+            result = response.getData();
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new IOException(response.getMessage());
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<String> searchPopularHashtag() throws Exception {
+        Call<ResponseWrapper<String>> data = RetrofitClient.getApiService(SearchPlanService.class).searchPopularHashtag();
+        List<String> result;
+
+        ResponseWrapper<String> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
+        }
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData() == null) {
+                throw new IOException("response's data is Empty");
+            }
+            result = response.getData();
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new IOException(response.getMessage());
+        }
+
+        return result;
+    }
 }

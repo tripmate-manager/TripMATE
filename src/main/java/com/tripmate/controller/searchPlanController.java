@@ -44,6 +44,8 @@ public class searchPlanController {
 
             request.setAttribute("planThemeList", planAttributeVOList);
             request.setAttribute("sidoNameList", sidoNameList);
+            request.setAttribute("popularSearchKeywordList", searchPlanApiService.searchPopularSearchKeyword());
+            request.setAttribute("popularHashtagList", searchPlanApiService.searchPopularHashtag());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }

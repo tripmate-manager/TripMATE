@@ -14,4 +14,8 @@ public interface SearchPlanService {
     Call<ResponseWrapper<PlanBasicInfoVO>> searchPlanByKeyword(@Query("memberNo") String memberNo, @Query("keyword") String keyword);
     @POST("v1/search-plan/attribute")
     Call<ResponseWrapper<PlanBasicInfoVO>> searchPlanByAttribute(@Body SearchAttributeDTO searchAttributeDTO);
+    @GET("v1/search-plan/popular-keyword")
+    Call<ResponseWrapper<String>> searchPopularSearchKeyword();
+    @GET("v1/search-plan/popular-hashtag")
+    Call<ResponseWrapper<String>> searchPopularHashtag();
 }
