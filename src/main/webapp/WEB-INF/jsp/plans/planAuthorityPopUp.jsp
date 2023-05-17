@@ -17,7 +17,6 @@
 
 <input type=hidden id="planNo">
 <input type=hidden id="memberNo" value=<%=memberInfo.getMemberNo()%>>
-<input type=hidden id="memberNo">
 <div class="authority_popup_wrap" style="display: none">
   <div class="authority_popup_message">생성자 권한을 위임할 메이트를 선택해 주세요.</div>
   <form name="authorityPopUpForm" id="authorityPopUpForm" method="post">

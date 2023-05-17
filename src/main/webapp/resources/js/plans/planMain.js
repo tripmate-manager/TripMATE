@@ -13,7 +13,8 @@ $(function () {
     $("#icon_menu_home_choice").show();
 
     $(".icon_arrow_left").on('click', function () {
-        pageLink("/plans/myPlan.trip");
+        //todo: 페이지이동 수정
+        pageLink(document.referrer);
     });
 
     if (document.getElementById("session_member_no") !== null) {

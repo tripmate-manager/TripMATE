@@ -1,3 +1,5 @@
+let isAjaxProcessing = false;
+
 window.onhashchange = function () {
     if (location.hash !== "#open") {
         $("#menu,.page_cover,html").removeClass("open");
@@ -5,12 +7,15 @@ window.onhashchange = function () {
 };
 
 $(function () {
-    const sessionMemberInfo = $("#memberInfo").val();
-    const sessionInviteCode = $("#invitePlanNo").val();
+    let inputMemberNo = document.getElementById("member_no");
+    const sessionInviteCode = document.getElementById("invitePlanNo");
     const searchText = document.getElementById("main_search_text");
+    const planLikeMore = document.getElementById("main_sub_title_more");
 
-    if (sessionMemberInfo) {
-        $(".icon_alarm_wrap").show();
+    if (document.getElementById("session_member_no") !== null) {
+        inputMemberNo.value = document.getElementById("session_member_no").innerText;
+    } else {
+        inputMemberNo.value = 0;
     }
 
     if (sessionInviteCode) {
@@ -31,7 +36,33 @@ $(function () {
         $("#mainForm").attr("action", "/main/notificationList.trip").submit();
     });
 
-    searchText.addEventListener('click',function () {
-        $("#mainForm").attr("method", "get").attr("action", "/searchPlan/search.trip").submit();
-    })
+    if (searchText) {
+        searchText.addEventListener('click', function () {
+            $("#mainForm").attr("method", "get").attr("action", "/searchPlan/search.trip").submit();
+        })
+    }
+
+    if (planLikeMore) {
+        planLikeMore.addEventListener('click', function () {
+            pageLink("/plans/myPlanLike.trip");
+        });
+    }
+
 });
+
+function planLike(planNo) {
+    if (isAjaxProcessing) {
+        popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
+        return;
+    } else {
+        isAjaxProcessing = true;
+    }
+    clickPlanLike(this, planNo, document.getElementById("member_no").value);
+}
+
+function planMain(planNo) {
+    if (this.event.target.className !== "checkboxHeart") {
+        document.getElementById("plan_no").value = planNo;
+        $("#mainForm").attr("action", "/plans/planMain.trip").submit();
+    }
+}

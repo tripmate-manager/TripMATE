@@ -8,4 +8,6 @@ import java.util.List;
 public interface SearchPlanApiService {
     List<PlanBasicInfoVO> searchPlanByKeyword(String memberNo, String keyword) throws Exception;
     List<PlanBasicInfoVO> searchPlanByAttribute(SearchAttributeDTO searchAttributeDTO) throws Exception;
+    List<String> searchPopularSearchKeyword() throws Exception;
+    List<String> searchPopularHashtag() throws Exception;
 }

@@ -28,6 +28,8 @@
 
     List<PlanAttributeVO> planThemeList = (List<PlanAttributeVO>) request.getAttribute("planThemeList");
     Set<String> sidoNameList = (Set<String>) request.getAttribute("sidoNameList");
+    List<String> popularSearchKeywordList = (List<String>) request.getAttribute("popularSearchKeywordList");
+    List<String> popularHashtagList = (List<String>) request.getAttribute("popularHashtagList");
 %>
 
 <div class="searchplan_wrap">
@@ -48,20 +50,22 @@
             <div class="tab_menu_attribute" id="tab_menu_attribute">속성 검색</div>
         </div>
         <div class="searchplan_contents_text_wrap">
+            <% if (popularSearchKeywordList != null && popularSearchKeywordList.size() > 0) { %>
             <div class="recommend_word_title">추천 검색어</div>
             <div class="recommend_word_wrap">
-                <div class="recommend_word">여행</div>
-                <div class="recommend_word">1박 2일</div>
-                <div class="recommend_word">검색어</div>
+                <% for (String searchKeyword : popularSearchKeywordList) { %>
+                <div class="recommend_word"><%=searchKeyword%></div>
+                <% } %>
             </div>
+            <% } %>
+            <% if (popularHashtagList != null && popularHashtagList.size() > 0) { %>
             <div class="popular_hashtag_title">해시태그 인기 키워드</div>
             <div class="popular_hashtag_wrap">
-                <div class="popular_hashtag"># 가을여행</div>
-                <div class="popular_hashtag"># 제주맛집</div>
-                <div class="popular_hashtag"># 당일치기</div>
-                <div class="popular_hashtag"># 당일치기</div>
-                <div class="popular_hashtag"># 당일치기</div>
+                <% for (String hashtag : popularHashtagList) { %>
+                <div class="popular_hashtag"># <%=hashtag%></div>
+                <% } %>
             </div>
+            <% } %>
         </div>
 
         <div class="searchplan_contents_attribute_wrap" style="display: none;">

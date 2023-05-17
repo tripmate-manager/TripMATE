@@ -32,10 +32,6 @@
     Set<String> sidoNameList = (Set<String>) request.getAttribute("sidoNameList");
 %>
 
-<% if (memberInfo != null) { %>
-<input type=hidden id="memberNo" value=<%=memberInfo.getMemberNo()%>>
-<% } %>
-
 <div class="createplan_wrap">
     <div class="createplan_title_wrap">
         <img class="icon_arrow_left" src="<%=Const.STATIC_IMG_PATH%>/common/icon_arrow_left.png"/>
@@ -43,6 +39,11 @@
     </div>
     <div class="createplan_divi_line"></div>
     <form name="createPlanForm" id="createPlanForm" method="get">
+        <% if (memberInfo != null) { %>
+        <input type=hidden id="memberNo" name="memberNo" value=<%=memberInfo.getMemberNo()%>>
+        <% } %>
+        <input type=hidden id="planNo" name="planNo">
+
         <div class="createplan_input_wrap">
             <div class="createplan_input_default_wrap">
                 <div class="input_checkbox_public_wrap">
