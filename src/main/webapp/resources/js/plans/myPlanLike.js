@@ -2,11 +2,11 @@ let isAjaxProcessing = false;
 
 $(function () {
     $(".icon_arrow_left").on('click', function () {
-        $("#myPlanLikeForm").attr("action", "/main/main.trip").submit();
+        pageLink("/main/main.trip");
     });
 
     document.getElementById("icon_arrow_left").addEventListener('click', function () {
-        $("#myPlanLikeForm").attr("method", "get").attr("action", "/main/main.trip").submit();
+        pageLink("/main/main.trip");
     });
 
     document.querySelectorAll(".myplanlike_item_contents_wrap").forEach(function (resultItem) {
@@ -27,6 +27,7 @@ $(function () {
             isAjaxProcessing = true;
         }
 
+        console.log(this);
         clickPlanLike(this,
             document.getElementById("input_plan_no").value,
             document.getElementById("input_member_no").value);

@@ -41,27 +41,24 @@ public class MainController {
 
         try {
             List<PopularPlanVO> popularPlanList;
+            List<PlanBasicInfoVO> recommendationPlanList;
 
             if (memberInfoSession != null) {
                 int unreadNotificationCnt = planApiService.getUnreadNotificationCnt(String.valueOf(memberInfoSession.getMemberNo()));
                 request.setAttribute("unreadNotificationCnt", unreadNotificationCnt);
 
                 popularPlanList = mainApiService.searchPopularPlanList(String.valueOf(memberInfoSession.getMemberNo()));
-
-                // TODO: 사용자 추천 플랜 조회
-                List<PlanBasicInfoVO> userRecommendationPlanList = mainApiService.searchUserRecommendationPlanList(String.valueOf(memberInfoSession.getMemberNo()));
-                request.setAttribute("userRecommendationPlanList", userRecommendationPlanList);
+                recommendationPlanList = mainApiService.searchUserRecommendationPlanList(String.valueOf(memberInfoSession.getMemberNo()));
 
                 List<PlanBasicInfoVO> myPlanLikeList = planApiService.searchMyPlanLikeList(String.valueOf(memberInfoSession.getMemberNo()));
                 request.setAttribute("myPlanLikeList", myPlanLikeList);
 
             } else {
                 popularPlanList = mainApiService.searchPopularPlanList();
-
-                // TODO: 추천 플랜 조회
+                recommendationPlanList = mainApiService.searchRecommendationPlanList();
             }
-
             request.setAttribute("popularPlanList", popularPlanList);
+            request.setAttribute("recommendationPlanList", recommendationPlanList);
 
             if (inviteCodeSession != null && inviteMemberIdSession != null) {
                 if (inviteMemberIdSession.equals(memberInfoSession.getMemberId())) {
@@ -76,8 +73,7 @@ public class MainController {
     }
 
     @GetMapping("/notificationList")
-    public @ResponseBody
-    ModelAndView notificationList(HttpServletRequest request) {
+    public @ResponseBody ModelAndView notificationList(HttpServletRequest request) {
         MemberDTO memberInfoSession = (MemberDTO) request.getSession().getAttribute(Const.MEMBER_INFO_SESSION);
 
         try {
@@ -92,8 +88,7 @@ public class MainController {
     }
 
     @PostMapping("/notification")
-    public @ResponseBody
-    String updateNotificationReadDateTime(@RequestParam(value = "memberNo") String memberNo,
+    public @ResponseBody String updateNotificationReadDateTime(@RequestParam(value = "memberNo") String memberNo,
                                           @RequestParam(value = "notificationNo") String notificationNo) {
         ApiResult result;
 

@@ -8,13 +8,54 @@ window.onhashchange = function () {
 
 $(function () {
     let inputMemberNo = document.getElementById("input_member_no");
+    let checkboxHeart = document.querySelector(".checkboxHeart");
+
+    // TODO: 수정
+    const referrerUrl = document.referrer.substring(21);
 
     $("#icon_menu_home").hide();
     $("#icon_menu_home_choice").show();
 
+    if (referrerUrl === "/main/main.trip" || referrerUrl === "/searchPlan/attribute.trip" || referrerUrl === "/searchPlan/keyword.trip") {
+        if (isAjaxProcessing) {
+            popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
+            return;
+        } else {
+            isAjaxProcessing = true;
+        }
+
+        $.ajax({
+            url: "/plans/updatePlanViews.trip",
+            type: "post",
+            dataType: 'json',
+            data: {
+                planNo: document.getElementById("plan_no").value
+            },
+            success: function (result) {
+                isAjaxProcessing = false;
+
+                if (result.code !== constCode.global.resultCodeSuccess) {
+                    popUpOpen(result.message);
+                    return;
+                }
+            },
+            error: function (error) {
+                popUpOpen("처리 중 오류가 발생하였습니다.");
+            }
+        })
+    }
+
+    if (sessionStorage.getItem('planMainReferrer') === null) {
+        sessionStorage.setItem('planMainReferrer', referrerUrl);
+    }
+
     $(".icon_arrow_left").on('click', function () {
-        //todo: 페이지이동 수정
-        pageLink(document.referrer);
+        if (sessionStorage.getItem('planMainReferrer') === '/searchPlan/attribute.trip') {
+            pageLink('/searchPlan/search.trip');
+        } else {
+            pageLink(sessionStorage.getItem('planMainReferrer'));
+        }
+        sessionStorage.removeItem('planMainReferrer');
     });
 
     if (document.getElementById("session_member_no") !== null) {
@@ -54,16 +95,18 @@ $(function () {
         $("#planMainForm").attr("action", "/dailyPlans/dailyPlan.trip").submit();
     });
 
-    document.querySelector(".checkboxHeart").addEventListener('click', function () {
-        if (isAjaxProcessing) {
-            popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
-            return;
-        } else {
-            isAjaxProcessing = true;
-        }
+    if (checkboxHeart) {
+        checkboxHeart.addEventListener('click', function () {
+            if (isAjaxProcessing) {
+                popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
+                return;
+            } else {
+                isAjaxProcessing = true;
+            }
 
-        clickPlanLike(document.querySelector(".checkboxHeart"),
-            document.getElementById("plan_no").value,
-            document.getElementById("input_member_no").value);
-    });
+            clickPlanLike(document.querySelector(".checkboxHeart"),
+                document.getElementById("plan_no").value,
+                document.getElementById("input_member_no").value);
+        });
+    }
 });

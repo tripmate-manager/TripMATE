@@ -12,6 +12,8 @@ $(function () {
     const searchText = document.getElementById("main_search_text");
     const planLikeMore = document.getElementById("main_sub_title_more");
 
+    sessionStorage.removeItem('planMainReferrer');
+
     if (document.getElementById("session_member_no") !== null) {
         inputMemberNo.value = document.getElementById("session_member_no").innerText;
     } else {
@@ -33,12 +35,12 @@ $(function () {
     })
 
     $(".icon_alarm").on('click', function () {
-        $("#mainForm").attr("action", "/main/notificationList.trip").submit();
+        pageLink("/main/notificationList.trip");
     });
 
     if (searchText) {
         searchText.addEventListener('click', function () {
-            $("#mainForm").attr("method", "get").attr("action", "/searchPlan/search.trip").submit();
+            pageLink("/searchPlan/search.trip");
         })
     }
 
@@ -50,14 +52,14 @@ $(function () {
 
 });
 
-function planLike(planNo) {
+const planLike = (target, planNo) => {
     if (isAjaxProcessing) {
         popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
         return;
     } else {
         isAjaxProcessing = true;
     }
-    clickPlanLike(this, planNo, document.getElementById("member_no").value);
+    clickPlanLike(target, planNo, document.getElementById("member_no").value);
 }
 
 function planMain(planNo) {

@@ -79,7 +79,7 @@
                 <div class="plan_main_address_wrap">
                     <img class="icon_location" src="<%=Const.STATIC_IMG_PATH%>/common/icon_location.png"/>
                     <% for (PlanAddressVO planAddressVO : planVO.getPlanAddressList()) { %>
-                        <div class="plan_main_plan_address"><%=planAddressVO.getSidoName()%> <%=planAddressVO.getSigunguName()%></div>
+                        <div class="plan_main_plan_address"><%=planAddressVO.getSidoName()%> <%=planAddressVO.getSigunguName()%>&nbsp;&nbsp;</div>
                     <% } %>
                 </div>
                 <div class="plan_main_trip_term_wrap">

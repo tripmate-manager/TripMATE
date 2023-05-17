@@ -27,14 +27,14 @@
 <%
     int unreadNotificationCnt = 0;
     List<PlanBasicInfoVO> myPlanLikeList = new ArrayList<>();
-    List<PlanBasicInfoVO> userRecommendationPlanList = new ArrayList<>();
     InviteCodeVO inviteCodeVO = null;
 
     List<PopularPlanVO> popularPlanList = (List<PopularPlanVO>) request.getAttribute("popularPlanList");
+    List<PlanBasicInfoVO> recommendationPlanList = (List<PlanBasicInfoVO>) request.getAttribute("recommendationPlanList");
+
     if (memberInfo != null) {
         unreadNotificationCnt = (int) request.getAttribute("unreadNotificationCnt");
         myPlanLikeList = (List<PlanBasicInfoVO>) request.getAttribute("myPlanLikeList");
-        userRecommendationPlanList = (List<PlanBasicInfoVO>) request.getAttribute("userRecommendationPlanList");
     }
 
     if (request.getAttribute("inviteCodeInfo") != null) {
@@ -90,7 +90,7 @@
                 <% if (memberInfo != null) { %>
                 <div class="icon_heart_wrap">
                     <input type="checkbox" name="checkboxHeart" id="popular_plan_checkboxHeart<%=popularPlanList.get(i).getPlanNo()%>" class="checkboxHeart"
-                           <% if (popularPlanList.get(i).getPlanLikeCnt() > 0) { %>checked<% } %> onclick="planLike(<%=popularPlanList.get(i).getPlanNo()%>)">
+                           <% if (popularPlanList.get(i).getPlanLikeCnt() > 0) { %>checked<% } %> onclick="planLike(this, <%=popularPlanList.get(i).getPlanNo()%>)">
                     <label for="popular_plan_checkboxHeart<%=popularPlanList.get(i).getPlanNo()%>" class="checkboxHeart"></label>
                 </div>
                 <% } %>
@@ -100,10 +100,7 @@
 
         <div class="recommend_plan_wrap">
             <% String recommendPlanTitle;
-                List<PlanBasicInfoVO> recommendPlanList = new ArrayList<>();
                 if (memberInfo != null) {
-                    recommendPlanList = userRecommendationPlanList;
-
                     Date date = new Date();
                     SimpleDateFormat year = new SimpleDateFormat("yyyy");
 
@@ -118,28 +115,29 @@
             %>
             <div class="main_sub_title"><%=recommendPlanTitle%></div>
 
-            <% for (int i = 0; i < recommendPlanList.size(); i++) { %>
-            <div class="recommend_plan_item_wrap" onclick="planMain(<%=recommendPlanList.get(i).getPlanNo()%>)">
+            <% for (int i = 0; i < Math.min(recommendationPlanList.size(), 2); i++) { %>
+            <div class="recommend_plan_item_wrap" onclick="planMain(<%=recommendationPlanList.get(i).getPlanNo()%>)">
                 <div class="main_plan_item_nick_name_wrap">
-                    <span class="main_plan_item_nick_name"><%=recommendPlanList.get(i).getLeaderNickName()%></span>
+                    <span class="main_plan_item_nick_name"><%=recommendationPlanList.get(i).getLeaderNickName()%></span>
                     <span class="main_plan_item_nick_name_sub">님의</span>
                 </div>
-                <div class="main_plan_item_title"><%=recommendPlanList.get(i).getPlanTitle()%></div>
-                <div class="main_plan_item_trip_address"><%=recommendPlanList.get(i).getSidoName()%> <%=recommendPlanList.get(i).getSigunguName()%></div>
-                <% String tripTerm = recommendPlanList.get(i).getTripTerm() == 0 ? "당일치기" : recommendPlanList.get(i).getTripTerm() + "박 " + (recommendPlanList.get(i).getTripTerm() + 1) + "일"; %>
+                <div class="main_plan_item_title"><%=recommendationPlanList.get(i).getPlanTitle()%></div>
+                <div class="main_plan_item_trip_address"><%=recommendationPlanList.get(i).getSidoName()%> <%=recommendationPlanList.get(i).getSigunguName()%></div>
+                <% String tripTerm = recommendationPlanList.get(i).getTripTerm() == 0 ? "당일치기" : recommendationPlanList.get(i).getTripTerm() + "박 " + (recommendationPlanList.get(i).getTripTerm() + 1) + "일"; %>
                 <div class="main_plan_item_trip_period"><%=tripTerm%></div>
 
                 <% if (memberInfo != null) { %>
                 <div class="icon_heart_wrap">
-                    <input type="checkbox" name="checkboxHeart" id="checkboxHeart<%=recommendPlanList.get(i).getPlanNo()%>" class="checkboxHeart"
-                           <% if (recommendPlanList.get(i).getPlanLikeCnt() > 0) { %>checked<% } %> onclick="planLike(<%=recommendPlanList.get(i).getPlanNo()%>)">
-                    <label for="checkboxHeart<%=recommendPlanList.get(i).getPlanNo()%>" class="checkboxHeart"></label>
+                    <input type="checkbox" name="checkboxHeart" id="checkboxHeart<%=recommendationPlanList.get(i).getPlanNo()%>" class="checkboxHeart"
+                           <% if (recommendationPlanList.get(i).getPlanLikeCnt() > 0) { %>checked<% } %> onclick="planLike(this, <%=recommendationPlanList.get(i).getPlanNo()%>)">
+                    <label for="checkboxHeart<%=recommendationPlanList.get(i).getPlanNo()%>" class="checkboxHeart"></label>
                 </div>
                 <% } %>
                 <img class="icon_location" src="<%=Const.STATIC_IMG_PATH%>/common/icon_location.png"/>
                 <img class="icon_calendar" src="<%=Const.STATIC_IMG_PATH%>/common/icon_calendar.png"/>
             </div>
             <% } %>
+
         </div>
 
         <% if (memberInfo != null) { %>
@@ -162,7 +160,7 @@
                 <div class="main_plan_item_trip_period"><%=tripTerm%></div>
                 <div class="icon_heart_wrap">
                     <input type="checkbox" name="checkboxHeart" id="checkboxHeart<%=myPlanLikeList.get(i).getPlanNo()%>" class="checkboxHeart"
-                           <% if (myPlanLikeList.get(i).getPlanLikeCnt() > 0) { %>checked<% } %> onclick="planLike(<%=myPlanLikeList.get(i).getPlanNo()%>)">
+                           <% if (myPlanLikeList.get(i).getPlanLikeCnt() > 0) { %>checked<% } %> onclick="planLike(this, <%=myPlanLikeList.get(i).getPlanNo()%>)">
                     <label for="checkboxHeart<%=myPlanLikeList.get(i).getPlanNo()%>" class="checkboxHeart"></label>
                 </div>
                 <img class="icon_location" src="<%=Const.STATIC_IMG_PATH%>/common/icon_location.png"/>

@@ -72,11 +72,11 @@ function itemMenuExit(planNo, leadYn) {
 
 $(function () {
     $(".icon_arrow_left").on('click', function () {
-        $("#myPlanForm").attr("action", "/main/main.trip").submit();
+        pageLink("/main/main.trip");
     });
 
     $(".icon_plus_rectangle, .myplanlist_empty_item_wrap").on('click', function () {
-        $("#myPlanForm").attr("action", "/plans/createPlan.trip").submit();
+       pageLink("/plans/createPlan.trip");
     });
 
     $(".myplanlist_item_contents_wrap").on('click', function () {

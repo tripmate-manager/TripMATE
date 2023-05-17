@@ -25,13 +25,16 @@
 <%
     MemberDTO memberInfo = null;
     session = request.getSession();
+    DailyPlanVO dailyPlanVO = null;
 
     if (session != null) {
         memberInfo = (MemberDTO) session.getAttribute(Const.MEMBER_INFO_SESSION);
     }
 
     String dayGroup = (String) request.getAttribute("dayGroup");
-    DailyPlanVO dailyPlanVO = (DailyPlanVO) request.getAttribute("dailyPlanVO");
+    if (request.getAttribute("dailyPlanVO") != null) {
+        dailyPlanVO = (DailyPlanVO) request.getAttribute("dailyPlanVO");
+    }
     boolean isPlanMate = (boolean) request.getAttribute("isPlanMate");
 %>
 
@@ -42,7 +45,7 @@
         <div class="dailyplan_rate_wrap">
             <div class="dailyplan_rate_box">
                 <div class="dailyplan_rate_number">
-                    <% String achieveRate = dailyPlanVO.getAchieveRate() == null ? "0" : dailyPlanVO.getAchieveRate(); %>
+                    <% String achieveRate= dailyPlanVO == null ? "0" : dailyPlanVO.getAchieveRate(); %>
                     <%=achieveRate%>
                 </div>
                 <div class="dailyplan_rate_percent">%</div>
@@ -61,8 +64,8 @@
         <% } %>
         <input type=hidden id="member_no" name="memberNo" hidden>
 
-        <% if (dailyPlanVO.getDailyPlanItemList().size() > 0) {
-        for (DailyPlanItemVO dailyPlanItem : dailyPlanVO.getDailyPlanItemList()) { %>
+        <% if (dailyPlanVO != null && dailyPlanVO.getDailyPlanItemList().size() > 0) {
+            for (DailyPlanItemVO dailyPlanItem : dailyPlanVO.getDailyPlanItemList()) { %>
         <div class="dailyplan_item_list_wrap">
             <div class="dailyplan_item_sub_info_wrap">
                 <div class="dailyplan_item_noti_time" id="dailyplan_item_noti_time" value="<%=dailyPlanItem.getDailyPlanDateTime()%>"><%=dailyPlanItem.getDailyPlanDateTime().substring(11, 16)%></div>
