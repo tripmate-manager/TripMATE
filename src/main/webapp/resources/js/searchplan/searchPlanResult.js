@@ -5,7 +5,7 @@ $(function () {
     let searchResultItemArr = [];
 
     document.getElementById("icon_arrow_left").addEventListener('click', function () {
-        $("#searchPlanResultForm").attr("method", "get").attr("action", "/searchPlan/search.trip").submit();
+        pageLink('/searchPlan/search.trip');
         sessionStorage.removeItem("sortTypeCode");
     });
 

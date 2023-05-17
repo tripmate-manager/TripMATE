@@ -98,7 +98,7 @@ $(function () {
     })
 
     backBtn.addEventListener('click', function () {
-        $("#searchPlanForm").attr('method', 'get').attr("action", "/main/main.trip").submit();
+        pageLink("/main/main.trip");
     })
 
     tripAddressDownBtn.addEventListener('click', function () {

@@ -7,7 +7,7 @@ $(function () {
     let planNo =  $("#formPlanNo").val();
 
     $(".icon_arrow_left").on('click', function () {
-        $("#notificationForm").attr("method", "get").attr("action", "/main/main.trip").submit();
+        pageLink("/main/main.trip");
     });
 
     function updateReadTimeAjax() {
@@ -105,7 +105,7 @@ $(function () {
                 return;
             }
             if (notificationTypeCode === constCode.global.notificationTypeCodeTripSchedule) {
-                const postNo = $(this).find("#postNo").val();
+                $("#inputPostNo").val($(this).find("#postNo").val());
                 $("#notificationForm").attr("action", "/wishlist/postMain.trip").submit();
             } else if (notificationTypeCode === constCode.global.notificationTypeCodeChangeLeader) {
                 $("#notificationForm").attr("action", "/plans/planMain.trip").submit();

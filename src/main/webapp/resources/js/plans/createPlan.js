@@ -47,7 +47,7 @@ $(function () {
     $(".icon_arrow_left").on('click', function () {
         checkPopUpOpen("작성한 내용은 저장되지 않습니다.\n" + "작성을 취소하시겠습니까?");
         $(".check_popup_btn_ok").attr("onclick", null).on('click', function () {
-            $("#createPlanForm").attr("method", "get").attr("action", "/plans/myPlan.trip").submit();
+            pageLink("/plans/myPlan.trip");
         });
     });
 
@@ -160,7 +160,7 @@ $(function () {
         if (!isAddressDuplicate) {
             let optionItem = $('<div class="address_item_text" value="' + inputAddressNo + '">' + inputSido + " " + inputSigungu + '</div>');
             $(".createplan_address_list").append(optionItem);
-            $("#planAddress").text(inputSido + " " + inputSigungu);
+            $("#planAddress").attr('value',inputSido + " " + inputSigungu);
 
             if (isAddressInputFirst) {
                 inputPlanAddress.attr('value', inputSido + " " + inputSigungu);
@@ -176,8 +176,12 @@ $(function () {
     $(".createplan_address_list").on('click', '.address_item_text', function () {
         $(this).remove();
 
-        if ($("div[class='address_item_text']").length == 0) {
+        if ($("div[class='address_item_text']").length === 0) {
             $(".createplan_address_list").hide();
+            $("#planAddress").attr('value', "");
+        } else {
+            $("#planAddress").attr('value', document.getElementsByClassName("address_item_text").item(0).textContent);
+
         }
     });
 

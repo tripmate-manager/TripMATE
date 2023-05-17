@@ -23,6 +23,9 @@
 
 <div class="invite_mate_popup_wrap" style="display:none">
     <form name="inviteMatePopUpForm" id="inviteMatePopUpForm" method="post">
+        <% if (memberInfo != null) { %>
+        <input type=hidden id="memberNo" name="memberNo" value=<%=memberInfo.getMemberNo()%>>
+        <% } %>
         <input type="hidden" name="planNo" id="planNo">
     </form>
     <div class="invite_planmate_tab_wrap">

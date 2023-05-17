@@ -47,7 +47,7 @@
     <% if (wishList != null) { %>
     <form name="wishListForm" id="wishListForm" method="post">
         <% if (memberInfo != null) { %>
-        <input type=hidden id="member_no" name="memberNo" hidden>
+        <input type=hidden id="member_no" name="memberNo" value="<%=memberInfo.getMemberNo()%>" hidden>
         <% } %>
         <% if (planNo != null && tripStartDate != null && tripTerm != null) { %>
         <input type="hidden" name="planNo" id="wishlist_plan_no" value="<%=planNo%>">
