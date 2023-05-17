@@ -52,14 +52,14 @@ $(function () {
 
 });
 
-function planLike(planNo) {
+const planLike = (target, planNo) => {
     if (isAjaxProcessing) {
         popUpOpen('이전 요청을 처리중 입니다. 잠시 후 다시 시도하세요.');
         return;
     } else {
         isAjaxProcessing = true;
     }
-    clickPlanLike(this, planNo, document.getElementById("member_no").value);
+    clickPlanLike(target, planNo, document.getElementById("member_no").value);
 }
 
 function planMain(planNo) {

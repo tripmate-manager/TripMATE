@@ -90,7 +90,7 @@
                 <% if (memberInfo != null) { %>
                 <div class="icon_heart_wrap">
                     <input type="checkbox" name="checkboxHeart" id="popular_plan_checkboxHeart<%=popularPlanList.get(i).getPlanNo()%>" class="checkboxHeart"
-                           <% if (popularPlanList.get(i).getPlanLikeCnt() > 0) { %>checked<% } %> onclick="planLike(<%=popularPlanList.get(i).getPlanNo()%>)">
+                           <% if (popularPlanList.get(i).getPlanLikeCnt() > 0) { %>checked<% } %> onclick="planLike(this, <%=popularPlanList.get(i).getPlanNo()%>)">
                     <label for="popular_plan_checkboxHeart<%=popularPlanList.get(i).getPlanNo()%>" class="checkboxHeart"></label>
                 </div>
                 <% } %>
@@ -132,7 +132,7 @@
                 <% if (memberInfo != null) { %>
                 <div class="icon_heart_wrap">
                     <input type="checkbox" name="checkboxHeart" id="checkboxHeart<%=recommendPlanList.get(i).getPlanNo()%>" class="checkboxHeart"
-                           <% if (recommendPlanList.get(i).getPlanLikeCnt() > 0) { %>checked<% } %> onclick="planLike(<%=recommendPlanList.get(i).getPlanNo()%>)">
+                           <% if (recommendPlanList.get(i).getPlanLikeCnt() > 0) { %>checked<% } %> onclick="planLike(this, <%=recommendPlanList.get(i).getPlanNo()%>)">
                     <label for="checkboxHeart<%=recommendPlanList.get(i).getPlanNo()%>" class="checkboxHeart"></label>
                 </div>
                 <% } %>
@@ -162,7 +162,7 @@
                 <div class="main_plan_item_trip_period"><%=tripTerm%></div>
                 <div class="icon_heart_wrap">
                     <input type="checkbox" name="checkboxHeart" id="checkboxHeart<%=myPlanLikeList.get(i).getPlanNo()%>" class="checkboxHeart"
-                           <% if (myPlanLikeList.get(i).getPlanLikeCnt() > 0) { %>checked<% } %> onclick="planLike(<%=myPlanLikeList.get(i).getPlanNo()%>)">
+                           <% if (myPlanLikeList.get(i).getPlanLikeCnt() > 0) { %>checked<% } %> onclick="planLike(this, <%=myPlanLikeList.get(i).getPlanNo()%>)">
                     <label for="checkboxHeart<%=myPlanLikeList.get(i).getPlanNo()%>" class="checkboxHeart"></label>
                 </div>
                 <img class="icon_location" src="<%=Const.STATIC_IMG_PATH%>/common/icon_location.png"/>
