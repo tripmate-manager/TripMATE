@@ -35,4 +35,5 @@ public interface PlanApiService {
     boolean insertPlanLike(String planNo, String memberNo) throws Exception;
     boolean deletePlanLike(String planNo, String memberNo) throws Exception;
     List<PlanBasicInfoVO> searchMyPlanLikeList(String memberNo) throws Exception;
+    boolean updatePlanViews(String planNo) throws Exception;
 }

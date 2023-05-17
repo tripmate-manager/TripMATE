@@ -385,4 +385,21 @@ public class PlanController {
 
         return result.toJson();
     }
+
+    @PostMapping("/updatePlanViews")
+    public @ResponseBody String updatePlanViews(@RequestParam(value = "planNo") @NotBlank String planNo) {
+        ApiResult result;
+
+        try {
+            result = ApiResult.builder().code(ApiResultEnum.SUCCESS.getCode()).message(ApiResultEnum.SUCCESS.getMessage()).build();
+            result.put("isUpdatePlanViewsSuccess", planApiService.updatePlanViews(planNo));
+        } catch (ApiCommonException e) {
+            result = ApiResult.builder().code(e.getResultCode()).message(e.getResultMessage()).build();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = ApiResult.builder().code(ApiResultEnum.UNKNOWN.getCode()).message(ApiResultEnum.UNKNOWN.getMessage()).build();
+        }
+
+        return result.toJson();
+    }
 }

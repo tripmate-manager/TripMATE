@@ -9,4 +9,5 @@ public interface MainApiService {
     List<PopularPlanVO> searchPopularPlanList() throws Exception;
     List<PopularPlanVO> searchPopularPlanList(String memberNo) throws Exception;
     List<PlanBasicInfoVO> searchUserRecommendationPlanList(String memberNo) throws Exception;
+    List<PlanBasicInfoVO> searchRecommendationPlanList() throws Exception;
 }

@@ -87,4 +87,28 @@ public class MainApiServiceImpl implements MainApiService {
 
         return result;
     }
+
+    @Override
+    public List<PlanBasicInfoVO> searchRecommendationPlanList() throws Exception {
+        Call<ResponseWrapper<PlanBasicInfoVO>> data = RetrofitClient.getApiService(MainService.class).searchRecommendationPlanList();
+        List<PlanBasicInfoVO> result;
+
+        ResponseWrapper<PlanBasicInfoVO> response = data.clone().execute().body();
+
+        if (response == null) {
+            throw new IOException("response is Empty");
+        }
+
+        if (ApiResultEnum.SUCCESS.getCode().equals(response.getCode())) {
+            if (response.getData() == null) {
+                throw new IOException("response's data is Empty");
+            }
+            result = response.getData();
+        } else {
+            log.warn(response.getCode() + " : " + response.getMessage());
+            throw new IOException(response.getMessage());
+        }
+
+        return result;
+    }
 }

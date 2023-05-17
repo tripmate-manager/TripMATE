@@ -62,4 +62,6 @@ public interface PlanService {
     Call <ResponseWrapper<Boolean>> deletePlanLike(@Query("planNo") String planNo, @Query("memberNo") String memberNo);
     @GET("v1/plans/plan-like/{memberNo}")
     Call <ResponseWrapper<PlanBasicInfoVO>> searchMyPlanLikeList(@Path("memberNo") String memberNo);
+    @PUT("v1/plans/plan-views/{planNo}")
+    Call <ResponseWrapper<Boolean>> updatePlanViews(@Path("planNo") String memberNo);
 }
